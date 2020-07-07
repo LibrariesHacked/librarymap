@@ -1,2 +1,3 @@
-# librarymap
-UK physical libraries map displaying libraries that use the standard data schema
+# Library map
+
+UK public libraries map showing libraries that publish data to the standard library schema.
