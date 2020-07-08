@@ -1,0 +1,5 @@
+{
+  "api": "https://api.librarydata.uk/",
+  "postcodeApi": "https://api-geography.librarydata.uk/rest/postcodes/",
+  "libraryAuthorityTiles": "https://api-geography.librarydata.uk/rest/libraryauthorities/{z}/{x}/{y}.mvt"
+}
