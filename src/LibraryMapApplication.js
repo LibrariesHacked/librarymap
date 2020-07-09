@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
 
 import AppHeader from './AppHeader'
+import Libraries from './Libraries'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
 
@@ -33,10 +34,11 @@ function LibraryMapApplication () {
   return (
     <BrowserRouter>
       <div className={classes.root}>
-        <AppHeader />
+        <AppHeader site={2} />
         <Container maxWidth='lg'>
           <main className={classes.content}>
-            <Route path='/' exact render={() => <LibraryMap />} />
+            <Route path='/' exact render={() => <Libraries />} />
+            <Route path='/map' exact render={() => <LibraryMap />} />
             <Route path={['/http:', '/https:']} component={props => { window.location.replace(props.location.pathname.substr(1)); return null }} />
           </main>
         </Container>

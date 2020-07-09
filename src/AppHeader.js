@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 
-import WidgetsIcon from '@material-ui/icons/WidgetsTwoTone'
+import BusinessIcon from '@material-ui/icons/BusinessTwoTone'
 import DirectionBusIcon from '@material-ui/icons/DirectionsBusTwoTone'
 import HomeIcon from '@material-ui/icons/HomeTwoTone'
 import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
@@ -24,6 +24,7 @@ import BookIcon from '@material-ui/icons/BookTwoTone'
 import HeadsetIcon from '@material-ui/icons/HeadsetTwoTone'
 import MovieIcon from '@material-ui/icons/MovieTwoTone'
 import SearchIcon from '@material-ui/icons/SearchTwoTone'
+import WidgetsIcon from '@material-ui/icons/WidgetsTwoTone'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -33,11 +34,9 @@ import PostcodeSearch from './PostcodeSearch'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    zIndex: theme.zIndex.drawer + 1
-  },
-  appBarTransparent: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: 'rgba(250, 250, 250, 0.8)'
+    backgroundColor: 'rgba(250, 250, 250, 0.8)',
+    position: 'relative'
   },
   grow: {
     flexGrow: 1
@@ -56,14 +55,25 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     display: 'inline-block',
     verticalAlign: 'middle'
+  },
+  topIcon: {
+    backgroundColor: 'rgba(250, 250, 250, 0.8)',
+    border: '1px solid #e5e5e5',
+    '&:hover': {
+      backgroundColor: 'rgba(250, 250, 250, 0.8)'
+    }
+  },
+  topTitle: {
+    position: 'relative',
+    zIndex: theme.zIndex.drawer + 1
   }
 }))
 
-function AppHeader () {
+function AppHeader (props) {
   const [{ loadingOrganisations, loadingMobiles, loadingRoutes, loadingMobileLocations, loadingNearestMobiles, loadingPostcode }] = useViewStateValue()
 
   const [appsOpen, setAppsOpen] = useState(false)
-  const [tabValue, setTabValue] = useState(2)
+  const [tabValue, setTabValue] = useState(props.site)
 
   const loading = loadingOrganisations || loadingMobiles || loadingRoutes || loadingMobileLocations || loadingNearestMobiles || loadingPostcode
 
@@ -80,25 +90,25 @@ function AppHeader () {
           title: <span className={classes.iconTitle}>Search</span>,
           short: <span className={classes.iconTitle}>Search</span>,
           icon: <SearchIcon />,
-          to: 'https://www.librariesathome.co.uk'
+          to: '/'
         },
         {
           title: <span className={classes.iconTitle}>Watch</span>,
           short: <span className={classes.iconTitle}>Watch</span>,
           icon: <MovieIcon />,
-          to: 'https://www.librariesathome.co.uk/watch'
+          to: '/watch'
         },
         {
           title: <span className={classes.iconTitle}>Read</span>,
           short: <span className={classes.iconTitle}>Read</span>,
           icon: <BookIcon />,
-          to: 'https://www.librariesathome.co.uk/read'
+          to: '/read'
         },
         {
           title: <span className={classes.iconTitle}>Listen</span>,
           short: <span className={classes.iconTitle}>Listen</span>,
           icon: <HeadsetIcon />,
-          to: 'https://www.librariesathome.co.uk/listen'
+          to: '/listen'
         }
       ]
     },
@@ -111,19 +121,19 @@ function AppHeader () {
           title: <span className={classes.iconTitle}>Mobile vans</span>,
           short: <span className={classes.iconTitle}>Vans</span>,
           icon: <DirectionBusIcon />,
-          to: 'https://www.mobilelibraries.org/'
+          to: '/'
         },
         {
           title: <span className={classes.iconTitle}>Stop locations</span>,
           short: <span className={classes.iconTitle}>Stops</span>,
           icon: <LocationOnIcon />,
-          to: 'https://www.mobilelibraries.org/stops'
+          to: '/stops'
         },
         {
           title: <span className={classes.iconTitle}>Map</span>,
           short: <span className={classes.iconTitle}>Map</span>,
           icon: <MapIcon />,
-          to: 'https://www.mobilelibraries.org/map'
+          to: '/map'
         }
       ]
     },
@@ -133,10 +143,16 @@ function AppHeader () {
       icon: <LocalLibraryIcon />,
       links: [
         {
+          title: <span className={classes.iconTitle}>Libraries</span>,
+          short: <span className={classes.iconTitle}>Libraries</span>,
+          icon: <BusinessIcon />,
+          to: '/'
+        },
+        {
           title: <span className={classes.iconTitle}>Library map</span>,
           short: <span className={classes.iconTitle}>Map</span>,
           icon: <MapIcon />,
-          to: '/'
+          to: '/map'
         }
       ]
     }
@@ -144,18 +160,18 @@ function AppHeader () {
 
   const site = tabValue
 
-  const siteUrl = sites[site].url
+  const siteUrl = sites[props.site].url
 
   return (
     <>
-      <Container maxWidth='lg'>
-        <IconButton color='primary' onClick={() => { setAppsOpen(!appsOpen) }}>
+      <Container maxWidth='lg' className={classes.topTitle}>
+        <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen) }}>
           <WidgetsIcon />
         </IconButton>
         <Typography color='secondary' variant='h6' component='h1' className={classes.title}>{sites[site].title}</Typography>
       </Container>
       {appsOpen ? (
-        <AppBar position='static' color='default' elevation={0}>
+        <AppBar position='static' color='default' elevation={0} className={classes.appBar}>
           <Container maxWidth='lg'>
             <Tabs
               className={classes.tabBar}
@@ -176,10 +192,10 @@ function AppHeader () {
         </AppBar>
       ) : null}
       <AppBar
-        position={(location.pathname === '/' ? 'fixed' : 'static')}
+        position='static'
         color='inherit'
         elevation={0}
-        className={(location.pathname === '/' ? classes.appBarTransparent : classes.appBar)}
+        className={classes.appBar}
       >
         <Container maxWidth='lg'>
           <Toolbar>
