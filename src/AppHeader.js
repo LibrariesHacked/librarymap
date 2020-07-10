@@ -16,10 +16,9 @@ import Typography from '@material-ui/core/Typography'
 
 import BusinessIcon from '@material-ui/icons/BusinessTwoTone'
 import DirectionBusIcon from '@material-ui/icons/DirectionsBusTwoTone'
-import HomeIcon from '@material-ui/icons/HomeTwoTone'
+import WeekendIcon from '@material-ui/icons/WeekendTwoTone'
 import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 import MapIcon from '@material-ui/icons/MapTwoTone'
-import LocalLibraryIcon from '@material-ui/icons/LocalLibraryTwoTone'
 import BookIcon from '@material-ui/icons/BookTwoTone'
 import HeadsetIcon from '@material-ui/icons/HeadsetTwoTone'
 import MovieIcon from '@material-ui/icons/MovieTwoTone'
@@ -84,7 +83,7 @@ function AppHeader (props) {
     {
       title: 'Libraries at home',
       url: 'https://www.librariesathome.co.uk',
-      icon: <HomeIcon />,
+      icon: <WeekendIcon />,
       links: [
         {
           title: <span className={classes.iconTitle}>Search</span>,
@@ -140,7 +139,7 @@ function AppHeader (props) {
     {
       title: 'Library map',
       url: 'https://www.librarymap.co.uk',
-      icon: <LocalLibraryIcon />,
+      icon: <MapIcon />,
       links: [
         {
           title: <span className={classes.iconTitle}>Libraries</span>,
@@ -158,14 +157,12 @@ function AppHeader (props) {
     }
   ]
 
-  const site = tabValue
-
-  const siteUrl = sites[props.site].url
+  const site = props.site
 
   return (
     <>
       <Container maxWidth='lg' className={classes.topTitle}>
-        <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen) }}>
+        <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen); setTabValue(site) }}>
           <WidgetsIcon />
         </IconButton>
         <Typography color='secondary' variant='h6' component='h1' className={classes.title}>{sites[site].title}</Typography>
@@ -182,9 +179,9 @@ function AppHeader (props) {
               indicatorColor='primary'
               textColor='primary'
             >
-              {sites.map((site, idx) => {
+              {sites.map((s, idx) => {
                 return (
-                  <Tab key={'tb_site_' + idx} label={site.title} icon={site.icon} />
+                  <Tab key={'tb_site_' + idx} label={s.title} icon={s.icon} />
                 )
               })}
             </Tabs>
@@ -205,10 +202,10 @@ function AppHeader (props) {
                   <Tooltip title={link.title} key={'icnb_menu_md_' + idx}>
                     <IconButton
                       component={Link}
-                      to={link.to.replace(siteUrl, '')}
-                      disableRipple={location.pathname === link.to.replace(siteUrl, '')}
-                      disableFocusRipple={location.pathname === link.to.replace(siteUrl, '')}
-                      color={(location.pathname === link.to.replace(siteUrl, '') ? 'secondary' : 'primary')}
+                      to={(tabValue === site ? link.to : sites[tabValue].url + link.to)}
+                      disableRipple={location.pathname === link.to}
+                      disableFocusRipple={location.pathname === link.to}
+                      color={(tabValue === site && location.pathname === link.to ? 'secondary' : 'primary')}
                     >
                       {link.icon}
                     </IconButton>
@@ -222,10 +219,10 @@ function AppHeader (props) {
                   <Tooltip title={link.title} key={'icnb_menu_lg_' + idx}>
                     <Button
                       component={Link}
-                      to={link.to.replace(siteUrl, '')}
-                      disableRipple={location.pathname === link.to.replace(siteUrl, '')}
-                      disableFocusRipple={location.pathname === link.to.replace(siteUrl, '')}
-                      color={(location.pathname === link.to.replace(siteUrl, '') ? 'secondary' : 'primary')}
+                      to={(tabValue === site ? link.to : sites[tabValue].url + link.to)}
+                      disableRipple={location.pathname === link.to}
+                      disableFocusRipple={location.pathname === link.to}
+                      color={(tabValue === site && location.pathname === link.to ? 'secondary' : 'primary')}
                       size='large'
                     >
                       {link.icon}{link.short}
@@ -240,10 +237,10 @@ function AppHeader (props) {
                   <Tooltip title={link.title} key={'icnb_menu_lg_' + idx}>
                     <Button
                       component={Link}
-                      to={link.to.replace(siteUrl, '')}
-                      disableRipple={location.pathname === link.to.replace(siteUrl, '')}
-                      disableFocusRipple={location.pathname === link.to.replace(siteUrl, '')}
-                      color={(location.pathname === link.to.replace(siteUrl, '') ? 'secondary' : 'primary')}
+                      to={(tabValue === site ? link.to : sites[tabValue].url + link.to)}
+                      disableRipple={location.pathname === link.to}
+                      disableFocusRipple={location.pathname === link.to}
+                      color={(tabValue === site && location.pathname === link.to ? 'secondary' : 'primary')}
                       size='large'
                     >
                       {link.icon}{link.title}
