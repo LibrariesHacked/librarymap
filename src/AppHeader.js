@@ -27,8 +27,6 @@ import WidgetsIcon from '@material-ui/icons/WidgetsTwoTone'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import { useViewStateValue } from './context/viewState'
-
 import PostcodeSearch from './PostcodeSearch'
 
 const useStyles = makeStyles((theme) => ({
@@ -69,12 +67,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function AppHeader (props) {
-  const [{ loadingOrganisations, loadingMobiles, loadingRoutes, loadingMobileLocations, loadingNearestMobiles, loadingPostcode }] = useViewStateValue()
+  const { loading, site } = props
 
   const [appsOpen, setAppsOpen] = useState(false)
-  const [tabValue, setTabValue] = useState(props.site)
-
-  const loading = loadingOrganisations || loadingMobiles || loadingRoutes || loadingMobileLocations || loadingNearestMobiles || loadingPostcode
+  const [tabValue, setTabValue] = useState(site)
 
   const location = useLocation()
   const classes = useStyles()
@@ -156,8 +152,6 @@ function AppHeader (props) {
       ]
     }
   ]
-
-  const site = props.site
 
   return (
     <>
