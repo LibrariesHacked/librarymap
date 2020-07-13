@@ -1,6 +1,6 @@
 {
   "api": "https://api.librarydata.uk/",
   "postcodeApi": "https://api-geography.librarydata.uk/rest/postcodes/",
-  "libraryTiles": "http://localhost:8080/libraries/{z}/{x}/{y}.mvt",
+  "libraryTiles": "https://api.librarydata.uk/libraries/{z}/{x}/{y}.mvt",
   "libraryAuthorityTiles": "https://api-geography.librarydata.uk/rest/libraryauthorities/{z}/{x}/{y}.mvt"
 }
