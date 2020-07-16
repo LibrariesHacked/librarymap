@@ -2,5 +2,7 @@
   "api": "https://api.librarydata.uk/",
   "postcodeApi": "https://api-geography.librarydata.uk/rest/postcodes/",
   "libraryTiles": "https://api.librarydata.uk/libraries/{z}/{x}/{y}.mvt",
-  "libraryAuthorityTiles": "https://api-geography.librarydata.uk/rest/libraryauthorities/{z}/{x}/{y}.mvt"
+  "libraryAuthorityTiles": "https://api-geography.librarydata.uk/rest/libraryauthorities/{z}/{x}/{y}.mvt",
+  "stopTiles": "https://api.mobilelibraries.org/api/stops/{z}/{x}/{y}.mvt",
+  "tripTiles": "https://api.mobilelibraries.org/api/trips/{z}/{x}/{y}.mvt"
 }
