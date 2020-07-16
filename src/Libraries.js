@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react'
 
-import Hidden from '@material-ui/core/Hidden'
-import IconButton from '@material-ui/core/IconButton'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Paper from '@material-ui/core/Paper'
-import Tooltip from '@material-ui/core/Tooltip'
 
 import MaterialTable from 'material-table'
 
@@ -17,10 +14,6 @@ import ChevronRight from '@material-ui/icons/ChevronRightTwoTone'
 import FirstPage from '@material-ui/icons/FirstPageTwoTone'
 import FilterList from '@material-ui/icons/FilterListTwoTone'
 import LastPage from '@material-ui/icons/LastPageTwoTone'
-import MoreVertIcon from '@material-ui/icons/MoreVertTwoTone'
-import EventIcon from '@material-ui/icons/EventTwoTone'
-import PrintIcon from '@material-ui/icons/PrintTwoTone'
-import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 
 import * as libraryModel from './models/library'
 

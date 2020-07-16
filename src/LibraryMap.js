@@ -64,6 +64,104 @@ function LibraryMap () {
         containerStyle={{ top: 0, bottom: 0, right: 0, left: 0, height: '100vh', width: '100vw', position: 'absolute' }}
       >
         <Source
+          id='src_library_authorities'
+          tileJsonSource={{
+            type: 'vector',
+            tiles: libraryAuthorityTiles
+          }}
+        />
+        {mapSettings.authorityBoundary
+          ? (
+            <>
+              <Layer
+                id='lyr_library_authorities_lines'
+                type='line'
+                sourceId='src_library_authorities'
+                sourceLayer='library_authority_boundaries'
+                minZoom={6}
+                layout={{
+                  'line-join': 'round',
+                  'line-cap': 'square'
+                }}
+                paint={{
+                  'line-color': '#a7a39b',
+                  'line-opacity': 1,
+                  'line-width': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    6, 1,
+                    22, 4
+                  ]
+                }}
+              />
+              <Layer
+                id='lyr_library_authorities_fill'
+                type='fill'
+                sourceId='src_library_authorities'
+                sourceLayer='library_authority_boundaries'
+                minZoom={6}
+                paint={{
+                  'fill-color': '#ccc',
+                  'fill-opacity': 0.1
+                }}
+              />
+            </>
+          ) : null}
+        <Source
+          id='src_trips'
+          tileJsonSource={{
+            type: 'vector',
+            tiles: tripTiles
+          }}
+        />
+        <Layer
+          id='lyr_trips_lines'
+          type='line'
+          sourceId='src_trips'
+          sourceLayer='trip'
+          minZoom={14}
+          layout={{
+            'line-join': 'round',
+            'line-cap': 'square'
+          }}
+          paint={{
+            'line-color': '#a7a39b',
+            'line-offset': [
+              'interpolate',
+              [
+                'linear'
+              ],
+              [
+                'zoom'
+              ],
+              14, 1,
+              22, 6
+            ],
+            'line-opacity': 1,
+            'line-width': [
+              'interpolate',
+              [
+                'linear'
+              ],
+              [
+                'zoom'
+              ],
+              14, 1,
+              22, 6
+            ],
+            'line-dasharray': [
+              2,
+              0.5
+            ]
+          }}
+          onClick={() => { }}
+        />
+        <Source
           id='src_stops'
           tileJsonSource={{
             type: 'vector',
@@ -120,9 +218,19 @@ function LibraryMap () {
                 'zoom'
               ],
               13, 12,
-              17, 22
+              17, 18
             ],
-            'text-offset': [0, 2]
+            'text-offset': [
+              'interpolate',
+              [
+                'linear'
+              ],
+              [
+                'zoom'
+              ],
+              13, ['literal', [0, 1.5]],
+              17, ['literal', [0, 2]]
+            ]
           }}
           paint={{
             'text-halo-color': 'hsl(0, 0%, 100%)',
@@ -156,7 +264,17 @@ function LibraryMap () {
               14, 10,
               17, 16
             ],
-            'text-offset': [0, -2.8]
+            'text-offset': [
+              'interpolate',
+              [
+                'linear'
+              ],
+              [
+                'zoom'
+              ],
+              13, ['literal', [0, -1.5]],
+              17, ['literal', [0, -2]]
+            ]
           }}
           paint={{
             'text-halo-color': 'hsl(0, 0%, 100%)',
@@ -166,112 +284,6 @@ function LibraryMap () {
           }}
           onClick={() => { }}
         />
-        <Source
-          id='src_trips'
-          tileJsonSource={{
-            type: 'vector',
-            tiles: tripTiles
-          }}
-        />
-        <Layer
-          id='lyr_trips_lines'
-          type='line'
-          sourceId='src_trips'
-          sourceLayer='trip'
-          minZoom={13}
-          layout={{
-            'line-join': 'round',
-            'line-cap': 'square'
-          }}
-          paint={{
-            'line-color': '#a7a39b',
-            'line-offset': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              13, 0.5,
-              14, 1,
-              15, 2,
-              16, 3,
-              18, 10,
-              22, 20
-            ],
-            'line-opacity': 1,
-            'line-width': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              13, 0.5,
-              14, 1,
-              15, 2,
-              16, 3,
-              18, 10,
-              22, 20
-            ],
-            'line-dasharray': [
-              2,
-              0.5
-            ]
-          }}
-          onClick={() => { }}
-        />
-        <Source
-          id='src_library_authorities'
-          tileJsonSource={{
-            type: 'vector',
-            tiles: libraryAuthorityTiles
-          }}
-        />
-        {mapSettings.authorityBoundary
-          ? (
-            <>
-              <Layer
-                id='lyr_library_authorities_lines'
-                type='line'
-                sourceId='src_library_authorities'
-                sourceLayer='library_authority_boundaries'
-                minZoom={6}
-                layout={{
-                  'line-join': 'round',
-                  'line-cap': 'square'
-                }}
-                paint={{
-                  'line-color': '#a7a39b',
-                  'line-opacity': 1,
-                  'line-width': [
-                    'interpolate',
-                    [
-                      'linear'
-                    ],
-                    [
-                      'zoom'
-                    ],
-                    6, 1,
-                    22, 4
-                  ]
-                }}
-              />
-              <Layer
-                id='lyr_library_authorities_fill'
-                type='fill'
-                sourceId='src_library_authorities'
-                sourceLayer='library_authority_boundaries'
-                minZoom={6}
-                paint={{
-                  'fill-color': '#ccc',
-                  'fill-opacity': 0.1
-                }}
-              />
-            </>
-          ) : null}
         <Source
           id='src_libraries'
           tileJsonSource={{
