@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import Container from '@material-ui/core/Container'
+import StopDetails from './StopDetails'
+import LibraryDetails from './LibraryDetails'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -44,6 +46,8 @@ function LibraryMapApplication () {
         </Container>
         <Notification />
       </div>
+      <StopDetails />
+      <LibraryDetails />
     </BrowserRouter>
   )
 }

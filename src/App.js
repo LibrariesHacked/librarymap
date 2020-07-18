@@ -27,11 +27,23 @@ const initialSearchState = {
   searchPostcode: '',
   searchType: '',
   searchDistance: 1609,
-  searchPosition: []
+  searchPosition: [],
+  currentStopId: null,
+  currentLibraryId: null
 }
 
 const searchReducer = (state, action) => {
   switch (action.type) {
+    case 'SetCurrentStop':
+      return {
+        ...state,
+        currentStopId: action.stopId
+      }
+    case 'SetCurrentLibrary':
+      return {
+        ...state,
+        currentLibraryId: action.libraryId
+      }
     case 'SetSearchDistance':
       return {
         ...state,
@@ -58,6 +70,8 @@ const initialViewState = {
     authorityBoundary: false
   },
   mapSettingsDialogOpen: false,
+  libraryDialogOpen: false,
+  stopDialogOpen: false,
   loadingPostcode: false
 }
 
@@ -71,6 +85,8 @@ const viewReducer = (state, action) => {
       return { ...state, notificationOpen: true, notificationMessage: action.notificationMessage }
     case 'SetStopDialog':
       return { ...state, stopDialogOpen: action.stopDialogOpen }
+    case 'SetLibraryDialog':
+      return { ...state, libraryDialogOpen: action.libraryDialogOpen }
     case 'SetMapSettingsDialog':
       return { ...state, mapSettingsDialogOpen: action.mapSettingsDialogOpen }
     case 'ToggleMapSetting': {

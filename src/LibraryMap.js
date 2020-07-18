@@ -49,6 +49,13 @@ function LibraryMap () {
   useEffect(() => {
   }, [])
 
+  const clickStop = (map) => {
+    if (map && map.features && map.features.length > 0 && map.features[0].properties) {
+      dispatchSearch({ type: 'SetCurrentStop', stopId: map.features[0].properties.id })
+      dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
+    }
+  }
+
   const classes = useStyles()
 
   return (
@@ -194,7 +201,7 @@ function LibraryMap () {
             'circle-stroke-color': '#ffffff',
             'circle-opacity': 0.5
           }}
-          onClick={() => { }}
+          onClick={clickStop}
         />
         <Layer
           id='lyr_stops_labels'
@@ -238,7 +245,7 @@ function LibraryMap () {
             'text-halo-blur': 1,
             'text-color': '#6a6f73'
           }}
-          onClick={() => { }}
+          onClick={clickStop}
         />
         <Layer
           id='lyr_stops_next_visiting'
@@ -282,7 +289,7 @@ function LibraryMap () {
             'text-halo-blur': 1,
             'text-color': '#6a6f73'
           }}
-          onClick={() => { }}
+          onClick={clickStop}
         />
         <Source
           id='src_libraries'
