@@ -33,6 +33,7 @@ const Map = ReactMapboxGl({
 })
 
 const libraryTiles = [config.libraryTiles]
+const libraryBuildingsTiles = [config.libraryBuildingsTiles]
 const libraryAuthorityTiles = [config.libraryAuthorityTiles]
 const stopTiles = [config.stopTiles]
 const tripTiles = [config.tripTiles]
@@ -64,12 +65,56 @@ function LibraryMap () {
         style='style.json' // eslint-disable-line
         center={mapPosition}
         zoom={mapZoom}
-        maxZoom={17}
+        maxZoom={18}
         pitch={[0]}
         bearing={[0]}
         fitBounds={null}
         containerStyle={{ top: 0, bottom: 0, right: 0, left: 0, height: '100vh', width: '100vw', position: 'absolute' }}
       >
+        <Source
+          id='src_libraries_buildings'
+          tileJsonSource={{
+            type: 'vector',
+            tiles: libraryBuildingsTiles
+          }}
+        />
+        <Layer
+          id='lyr_library_buildings_lines'
+          type='line'
+          sourceId='src_libraries_buildings'
+          sourceLayer='library_buildings'
+          minZoom={15}
+          layout={{
+            'line-join': 'round',
+            'line-cap': 'square'
+          }}
+          paint={{
+            'line-color': '#455a64',
+            'line-opacity': 1,
+            'line-width': [
+              'interpolate',
+              [
+                'linear'
+              ],
+              [
+                'zoom'
+              ],
+              15, 3,
+              18, 4
+            ]
+          }}
+        />
+        <Layer
+          id='lyr_library_buildings_fill'
+          type='fill'
+          sourceId='src_libraries_buildings'
+          sourceLayer='library_buildings'
+          minZoom={15}
+          paint={{
+            'fill-color': '#455a64',
+            'fill-opacity': 0.4
+          }}
+        />
         <Source
           id='src_library_authorities'
           tileJsonSource={{
@@ -102,7 +147,7 @@ function LibraryMap () {
                       'zoom'
                     ],
                     6, 1,
-                    22, 4
+                    18, 4
                   ]
                 }}
               />
@@ -147,7 +192,7 @@ function LibraryMap () {
                 'zoom'
               ],
               14, 1,
-              22, 6
+              18, 4
             ],
             'line-opacity': 1,
             'line-width': [
@@ -159,7 +204,7 @@ function LibraryMap () {
                 'zoom'
               ],
               14, 1,
-              22, 6
+              18, 4
             ],
             'line-dasharray': [
               2,
@@ -180,23 +225,23 @@ function LibraryMap () {
           type='circle'
           sourceId='src_stops'
           sourceLayer='stop'
-          minZoom={8}
+          minZoom={5}
           layout={{}}
           paint={{
             'circle-radius': [
               'interpolate',
               ['linear'],
               ['zoom'],
-              8, 2,
-              17, 8
+              5, 2,
+              18, 8
             ],
-            'circle-color': '#388e3c',
+            'circle-color': '#455a64',
             'circle-stroke-width': [
               'interpolate',
               ['linear'],
               ['zoom'],
-              8, 1,
-              17, 3
+              5, 1,
+              18, 3
             ],
             'circle-stroke-color': '#ffffff',
             'circle-opacity': 0.5
@@ -225,7 +270,7 @@ function LibraryMap () {
                 'zoom'
               ],
               13, 12,
-              17, 18
+              18, 18
             ],
             'text-offset': [
               'interpolate',
@@ -236,7 +281,7 @@ function LibraryMap () {
                 'zoom'
               ],
               13, ['literal', [0, 1.5]],
-              17, ['literal', [0, 2]]
+              18, ['literal', [0, 2]]
             ]
           }}
           paint={{
@@ -269,7 +314,7 @@ function LibraryMap () {
                 'zoom'
               ],
               14, 10,
-              17, 16
+              18, 16
             ],
             'text-offset': [
               'interpolate',
@@ -280,7 +325,7 @@ function LibraryMap () {
                 'zoom'
               ],
               13, ['literal', [0, -1.5]],
-              17, ['literal', [0, -2]]
+              18, ['literal', [0, -2]]
             ]
           }}
           paint={{
@@ -321,7 +366,7 @@ function LibraryMap () {
                 'zoom'
               ],
               12, 10,
-              17, 14
+              18, 14
             ],
             'text-offset': [
               'interpolate',
@@ -332,7 +377,7 @@ function LibraryMap () {
                 'zoom'
               ],
               12, ['literal', [0, 1.5]],
-              17, ['literal', [0, 2]]
+              18, ['literal', [0, 2]]
             ]
           }}
           paint={{
@@ -367,7 +412,7 @@ function LibraryMap () {
                 'zoom'
               ],
               12, 10,
-              17, 14
+              18, 14
             ],
             'text-offset': [
               'interpolate',
@@ -378,7 +423,7 @@ function LibraryMap () {
                 'zoom'
               ],
               12, ['literal', [0, -1.5]],
-              17, ['literal', [0, -2]]
+              18, ['literal', [0, -2]]
             ]
           }}
           paint={{
@@ -403,15 +448,15 @@ function LibraryMap () {
               ['linear'],
               ['zoom'],
               12, 3,
-              17, 8
+              18, 8
             ],
-            'circle-color': '#d32f2f',
+            'circle-color': '#b71c1c',
             'circle-stroke-width': [
               'interpolate',
               ['linear'],
               ['zoom'],
               12, 1,
-              17, 3
+              18, 3
             ],
             'circle-stroke-color': '#ffffff',
             'circle-stroke-opacity': 0.9,
@@ -442,7 +487,7 @@ function LibraryMap () {
                 'zoom'
               ],
               13, 12,
-              17, 16
+              18, 16
             ],
             'text-offset': [
               'interpolate',
@@ -453,7 +498,7 @@ function LibraryMap () {
                 'zoom'
               ],
               13, ['literal', [0, -1.5]],
-              17, ['literal', [0, -2]]
+              18, ['literal', [0, -2]]
             ]
           }}
           paint={{
@@ -487,7 +532,7 @@ function LibraryMap () {
                 'zoom'
               ],
               10, 14,
-              17, 18
+              18, 18
             ],
             'text-offset': [
               'interpolate',
@@ -498,7 +543,7 @@ function LibraryMap () {
                 'zoom'
               ],
               10, ['literal', [0, 1.5]],
-              17, ['literal', [0, 2]]
+              18, ['literal', [0, 2]]
             ]
           }}
           paint={{
@@ -522,16 +567,16 @@ function LibraryMap () {
               'interpolate',
               ['linear'],
               ['zoom'],
-              5, 2,
-              17, 12
+              5, 3,
+              18, 12
             ],
-            'circle-color': ['match', ['get', 'Library type'], 'LAL', '#388e3c', 'LAL-', '#81c784', 'CL', '#1769aa', 'CRL', '#f57c00', 'ICL', '#d32f2f', '#d32f2f'],
+            'circle-color': ['match', ['get', 'Library type'], 'LAL', '#1b5e20', 'LAL-', '#388e3c', 'CL', '#0d47a1', 'CRL', '#e65100', 'ICL', '#bf360c', '#bf360c'],
             'circle-stroke-width': [
               'interpolate',
               ['linear'],
               ['zoom'],
               5, 1,
-              17, 5
+              18, 4
             ],
             'circle-stroke-color': '#ffffff',
             'circle-stroke-opacity': [
@@ -539,14 +584,14 @@ function LibraryMap () {
               ['linear'],
               ['zoom'],
               5, 0.8,
-              17, 1
+              18, 1
             ],
             'circle-opacity': [
               'interpolate',
               ['linear'],
               ['zoom'],
               5, 0.4,
-              17, 0.9
+              18, 0.9
             ]
           }}
           onClick={clickLibrary}
