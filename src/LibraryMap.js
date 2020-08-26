@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react'
 
 import Fab from '@material-ui/core/Fab'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import Tooltip from '@material-ui/core/Tooltip'
 
-import ReactMapboxGl, { ZoomControl, Source, Layer, Marker } from 'react-mapbox-gl'
+import ReactMapboxGl, { ZoomControl, Source, Layer, GeoJSONLayer, Marker } from 'react-mapbox-gl'
 
 import LayersIcon from '@material-ui/icons/LayersTwoTone'
+import DirectionsBike from '@material-ui/icons/DirectionsBikeTwoTone'
+import DirectionsWalk from '@material-ui/icons/DirectionsWalkTwoTone'
+import DirectionsCar from '@material-ui/icons/DirectionsCarTwoTone'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -16,7 +23,12 @@ import { useViewStateValue } from './context/viewState'
 import MeAvatar from './MeAvatar'
 import MapSettings from './MapSettings'
 
+import * as isochroneModel from './models/isochrone'
+
 const useStyles = makeStyles((theme) => ({
+  menu: {
+    border: '1px solid #E0E0E0'
+  },
   settings: {
     position: 'absolute',
     bottom: theme.spacing(4),
@@ -39,23 +51,43 @@ const stopTiles = [config.stopTiles]
 const tripTiles = [config.tripTiles]
 
 function LibraryMap () {
-  const [{ }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
-  const [{ searchType, searchPosition }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
-  const [{ mapZoom, mapPosition, mapSettings, mapSettingsDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
-
-  var clickLibrary = () => {
-    // Do nothing
-  }
+  const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+  const [{ searchType, searchPosition, currentStopId, CurrentLibraryId, currentPoint }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ mapZoom, mapPosition, mapSettings, mapSettingsDialogOpen, isochronesMenuOpen, isochronesMenuAnchor }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
   }, [])
 
-  const clickStop = (map) => {
+  var clickLibrary = (map) => {
     if (map && map.features && map.features.length > 0 && map.features[0].properties) {
-      dispatchSearch({ type: 'SetCurrentStop', stopId: map.features[0].properties.id })
-      dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
+      dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: map.features[0].properties.id, currentPoint: [map.features[0].geometry.coordinates[0].toFixed(2), map.features[0].geometry.coordinates[1].toFixed(2)] })
+      dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: map.point.x, top: map.point.y } })
     }
   }
+
+  const clickStop = (map) => {
+    if (map && map.features && map.features.length > 0 && map.features[0].properties) {
+      dispatchSearch({ type: 'SetCurrentStop', currentStopId: map.features[0].properties.id, currentPoint: [map.features[0].geometry.coordinates[0].toFixed(2), map.features[0].geometry.coordinates[1].toFixed(2)] })
+      dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: map.point.x, top: map.point.y } })
+    }
+  }
+
+  var moreInfoIsochronesMenu = () => {
+    closeIsochronesMenu()
+    if (currentStopId) dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
+    if (CurrentLibraryId) dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
+  }
+
+  var toggleIsochrone = async (transport) => {
+    if (isochrones[currentPoint] && isochrones[currentPoint][transport]) {
+      dispatchApplication({ type: 'SetIsochroneDisplay', point: currentPoint, transport: transport, display: !isochrones[currentPoint][transport].display })
+    } else {
+      const isochrone = await isochroneModel.getIsochrone(currentPoint, transport)
+      dispatchApplication({ type: 'AddIsochrone', point: currentPoint, transport: transport, isochrone: isochrone })
+    }
+  }
+
+  var closeIsochronesMenu = () => dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: false, isochronesMenuAnchor: null })
 
   const classes = useStyles()
 
@@ -71,6 +103,56 @@ function LibraryMap () {
         fitBounds={null}
         containerStyle={{ top: 0, bottom: 0, right: 0, left: 0, height: '100vh', width: '100vw', position: 'absolute' }}
       >
+        {Object.keys(isochrones).map(point => {
+          return Object.keys(isochrones[point])
+            .filter(transport => {
+              return isochrones[point][transport].display
+            })
+            .map((transport, x) => {
+              return (
+                <span key={'sp_isotransport_' + x}>
+                  <GeoJSONLayer // Shows the shaded polygons
+                    data={isochrones[point][transport].geo}
+                    fillPaint={{
+                      'fill-opacity': 0.1,
+                      'fill-antialias': true,
+                      'fill-color': '#455a64'
+                    }}
+                    fillOnClick={(e) => { }}
+                  />
+                  <GeoJSONLayer // Shows the outlines of the distances
+                    data={isochrones[point][transport].geo}
+                    linePaint={{
+                      'line-opacity': 0.4,
+                      'line-width': 2,
+                      'line-color': '#455a64'
+                    }}
+                  />
+                  <GeoJSONLayer // Shows the distances labels
+                    data={isochrones[point][transport].geo}
+                    symbolLayout={{
+                      'text-field': ['concat', ['to-string', ['/', ['get', 'value'], 60]], ' mins'],
+                      'text-font': ['Source Sans Pro Bold'],
+                      'symbol-placement': 'line',
+                      'text-allow-overlap': false,
+                      'text-padding': 2,
+                      'text-max-angle': 90,
+                      'text-size': {
+                        base: 1.2,
+                        stops: [[8, 12], [22, 30]]
+                      },
+                      'text-letter-spacing': 0.1
+                    }}
+                    symbolPaint={{
+                      'text-halo-color': 'rgba(255, 255, 255, 0.8)',
+                      'text-halo-width': 8,
+                      'text-halo-blur': 3,
+                      'text-color': '#455a64'
+                    }}
+                  />
+                </span>)
+            })
+        })}
         <Source
           id='src_libraries_buildings'
           tileJsonSource={{
@@ -211,7 +293,6 @@ function LibraryMap () {
               0.5
             ]
           }}
-          onClick={() => { }}
         />
         <Source
           id='src_stops'
@@ -628,6 +709,42 @@ function LibraryMap () {
         mapSettings={mapSettings}
         mapSettingsDialogOpen={mapSettingsDialogOpen}
       />
+      <Menu
+        id='mnu-isochrones'
+        anchorPosition={isochronesMenuAnchor}
+        anchorReference='anchorPosition'
+        elevation={0}
+        className={classes.menu}
+        keepMounted
+        open={isochronesMenuOpen}
+        onClose={closeIsochronesMenu}
+      >
+        <MenuItem onClick={moreInfoIsochronesMenu}>
+          <ListItemIcon>
+            <LayersIcon fontSize='small' />
+          </ListItemIcon>
+          <ListItemText primary='More info' />
+        </MenuItem>
+        <MenuItem onClick={() => toggleIsochrone('foot-walking')}>
+          <ListItemIcon>
+            <DirectionsWalk fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['foot-walking'] && isochrones[currentPoint]['foot-walking'].display ? 'primary' : 'secondary'} />
+          </ListItemIcon>
+          <ListItemText primary='Walking distance' />
+        </MenuItem>
+        <MenuItem onClick={() => toggleIsochrone('cycling-regular')}>
+          <ListItemIcon>
+            <DirectionsBike fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['cycling-regular'] && isochrones[currentPoint]['cycling-regular'].display ? 'primary' : 'secondary'} />
+          </ListItemIcon>
+          <ListItemText primary='Cycling distance' />
+        </MenuItem>
+        <MenuItem onClick={() => toggleIsochrone('driving-car')}>
+          <ListItemIcon>
+            <DirectionsCar fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['driving-car'] && isochrones[currentPoint]['driving-car'].display ? 'primary' : 'secondary'} />
+          </ListItemIcon>
+          <ListItemText primary='Driving distance' />
+
+        </MenuItem>
+      </Menu>
     </>
   )
 }

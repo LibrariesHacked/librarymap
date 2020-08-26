@@ -13,11 +13,33 @@ import { ViewStateProvider } from './context/viewState'
 import LibraryMapApplication from './LibraryMapApplication'
 
 const initialApplicationState = {
-
+  isochrones: {}
 }
 
 const applicationReducer = (state, action) => {
+  const isochrones = state.isochrones
   switch (action.type) {
+    case 'AddIsochrone':
+      if (!isochrones[action.point]) isochrones[action.point] = {}
+      isochrones[action.point][action.transport] = action.isochrone
+      console.log(isochrones)
+      return {
+        ...state,
+        isochrones: isochrones
+      }
+    case 'SetIsochroneDisplay':
+      isochrones[action.point][action.transport].display = action.display
+      return {
+        ...state,
+        isochrones: isochrones
+      }
+    case 'SetIsochroneLoading':
+      if (!isochrones[action.point]) isochrones[action.point] = {}
+      isochrones[action.point][action.transport] = { geo: null, display: false, loading: true }
+      return {
+        ...state,
+        isochrones: isochrones
+      }
     default:
       return state
   }
@@ -29,7 +51,8 @@ const initialSearchState = {
   searchDistance: 1609,
   searchPosition: [],
   currentStopId: null,
-  currentLibraryId: null
+  currentLibraryId: null,
+  currentPoint: []
 }
 
 const searchReducer = (state, action) => {
@@ -37,12 +60,14 @@ const searchReducer = (state, action) => {
     case 'SetCurrentStop':
       return {
         ...state,
-        currentStopId: action.stopId
+        currentStopId: action.currentStopId,
+        currentPoint: action.currentPoint
       }
     case 'SetCurrentLibrary':
       return {
         ...state,
-        currentLibraryId: action.libraryId
+        currentLibraryId: action.currentLibraryId,
+        currentPoint: action.currentPoint
       }
     case 'SetSearchDistance':
       return {
@@ -72,7 +97,9 @@ const initialViewState = {
   mapSettingsDialogOpen: false,
   libraryDialogOpen: false,
   stopDialogOpen: false,
-  loadingPostcode: false
+  loadingPostcode: false,
+  isochronesMenuOpen: false,
+  isochronesMenuAnchor: null
 }
 
 const viewReducer = (state, action) => {
@@ -98,6 +125,8 @@ const viewReducer = (state, action) => {
       return { ...state, loadingPostcode: false, mapPosition: action.mapPosition, mapZoom: [13] }
     case 'SetMapPosition':
       return { ...state, mapPosition: action.mapPosition, mapZoom: [action.mapZoom] }
+    case 'SetIsochronesMenu':
+      return { ...state, isochronesMenuOpen: action.isochronesMenuOpen, isochronesMenuAnchor: action.isochronesMenuAnchor }
     default:
       return state
   }
