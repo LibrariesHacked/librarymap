@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 
+import Chip from '@material-ui/core/Chip'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Paper from '@material-ui/core/Paper'
 
@@ -16,6 +17,7 @@ import FilterList from '@material-ui/icons/FilterListTwoTone'
 import LastPage from '@material-ui/icons/LastPageTwoTone'
 
 import * as libraryModel from './models/library'
+import * as hoursHelper from './helpers/hours'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -24,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 200
+  },
+  hoursChip: {
+    margin: theme.spacing(1)
   },
   margin: {
     margin: theme.spacing(1)
@@ -82,16 +87,6 @@ function Libraries () {
         }}
         columns={[
           {
-            title: 'Service',
-            field: 'localAuthority',
-            filtering: false,
-            hidden: false,
-            cellStyle: {
-              borderBottom: '1px solid #f5f5f5',
-              backgroundColor: '#ffffff'
-            }
-          },
-          {
             title: 'Name',
             field: 'name',
             filtering: false,
@@ -102,8 +97,8 @@ function Libraries () {
             }
           },
           {
-            title: 'Type',
-            field: 'type',
+            title: 'Service',
+            field: 'localAuthority',
             filtering: false,
             hidden: false,
             cellStyle: {
@@ -112,8 +107,19 @@ function Libraries () {
             }
           },
           {
-            title: 'Closed',
-            field: 'yearClosed',
+            title: 'Address',
+            field: 'address1',
+            filtering: false,
+            hidden: false,
+            cellStyle: {
+              borderBottom: '1px solid #f5f5f5',
+              backgroundColor: '#ffffff'
+            },
+            render: (rowData) => [rowData.address1, rowData.address2, rowData.address3].filter(Boolean).join(', ')
+          },
+          {
+            title: 'Postcode',
+            field: 'postcode',
             filtering: false,
             hidden: false,
             cellStyle: {
@@ -122,13 +128,19 @@ function Libraries () {
             }
           },
           {
-            title: 'Co-located with',
-            field: 'colocatedWith',
+            title: 'Today',
+            field: 'mondayStaffedHours',
             filtering: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
               backgroundColor: '#ffffff'
+            },
+            render: (rowData) => {
+              const hours = hoursHelper.getTodayHours(rowData)
+              return hours.map((entry, idx) => {
+                return <Chip key={'chp_' + idx} color='secondary' className={classes.hoursChip} size='small' label={entry} />
+              })
             }
           }
         ]}

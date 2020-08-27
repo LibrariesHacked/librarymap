@@ -2,6 +2,10 @@ import axios from 'axios'
 
 const config = require('../helpers/config.json')
 
+const libraryTypes = {
+  LAL: 'Local authority library'
+}
+
 export class Library {
   constructor (obj) {
     Object.assign(this, obj)
@@ -22,6 +26,7 @@ export class Library {
     this.uprnLongitude = json['Unique property reference number latitude']
     this.statutory = json.Statutory
     this.type = json['Library type']
+    this.typeDescription = libraryTypes[json['Library type']]
     this.yearOpened = json['Year opened']
     this.yearClosed = json['Year closed']
     this.mondayStaffedHours = json['Monday staffed hours']
