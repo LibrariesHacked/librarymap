@@ -34,13 +34,9 @@ export class Stop {
   }
 }
 
-export async function getQueryStops (query, organisationFilters, mobileFilters, routeFilters, searchPosition, distance) {
+export async function getQueryStops (query, searchPosition, distance) {
   let url = config.mobilesApi + '/stops?page=' + (query.page + 1) + '&limit=' + query.pageSize
   if (query.orderBy && query.orderBy.field) url = url + '&sort=' + query.orderBy.field + '&direction=' + query.orderDirection
-
-  if (mobileFilters.length > 0) url = url + '&mobile_ids=' + mobileFilters.join('|')
-  if (organisationFilters.length > 0) url = url + '&organisation_ids=' + organisationFilters.join('|')
-  if (routeFilters.length > 0) url = url + '&route_ids=' + routeFilters.join('|')
 
   if (searchPosition && searchPosition.length > 1) url = url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
   if (distance && distance !== '') url = url + '&distance=' + distance

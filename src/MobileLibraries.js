@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 
-import Chip from '@material-ui/core/Chip'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Paper from '@material-ui/core/Paper'
 
@@ -16,8 +15,7 @@ import FirstPage from '@material-ui/icons/FirstPageTwoTone'
 import FilterList from '@material-ui/icons/FilterListTwoTone'
 import LastPage from '@material-ui/icons/LastPageTwoTone'
 
-import * as libraryModel from './models/library'
-import * as hoursHelper from './helpers/hours'
+import * as stopHelper from './models/stop'
 
 import { useSearchStateValue } from './context/searchState'
 
@@ -31,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Libraries () {
+function MobileLibraries () {
   const [{ searchDistance, searchPosition }] = useSearchStateValue() //eslint-disable-line
 
   const tableRef = React.createRef()
@@ -45,7 +43,7 @@ function Libraries () {
 
   return (
     <div>
-      <ListSubheader disableSticky>Libraries</ListSubheader>
+      <ListSubheader disableSticky>Mobile library stops</ListSubheader>
       <MaterialTable
         tableRef={tableRef}
         components={{
@@ -85,7 +83,17 @@ function Libraries () {
           },
           {
             title: 'Service',
-            field: 'localAuthority',
+            field: 'organisationName',
+            filtering: false,
+            hidden: false,
+            cellStyle: {
+              borderBottom: '1px solid #f5f5f5',
+              backgroundColor: '#ffffff'
+            }
+          },
+          {
+            title: 'Community',
+            field: 'community',
             filtering: false,
             hidden: false,
             cellStyle: {
@@ -95,57 +103,30 @@ function Libraries () {
           },
           {
             title: 'Address',
-            field: 'address1',
+            field: 'address',
             filtering: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
               backgroundColor: '#ffffff'
-            },
-            render: (rowData) => [rowData.address1, rowData.address2, rowData.address3].filter(Boolean).join(', ')
-          },
-          {
-            title: 'Postcode',
-            field: 'postcode',
-            filtering: false,
-            hidden: false,
-            cellStyle: {
-              borderBottom: '1px solid #f5f5f5',
-              backgroundColor: '#ffffff'
-            }
-          },
-          {
-            title: 'Today',
-            field: 'mondayStaffedHours',
-            filtering: false,
-            hidden: false,
-            cellStyle: {
-              borderBottom: '1px solid #f5f5f5',
-              backgroundColor: '#ffffff'
-            },
-            render: (rowData) => {
-              const hours = hoursHelper.getTodayHours(rowData)
-              return hours.map((entry, idx) => {
-                return <Chip key={'chp_' + idx} color='secondary' className={classes.hoursChip} size='small' label={entry} />
-              })
             }
           }
         ]}
         data={query =>
           new Promise((resolve) => {
-            async function getLibraries () {
-              const libraryData = await libraryModel.getQueryLibraries(query, searchPosition, searchDistance)
+            async function getStops () {
+              const stopData = await stopHelper.getQueryStops(query, searchPosition, searchDistance)
               resolve({
-                data: libraryData.libraries,
-                page: (libraryData.page - 1),
-                totalCount: libraryData.total
+                data: stopData.stops,
+                page: (stopData.page - 1),
+                totalCount: stopData.total
               })
             }
-            getLibraries()
+            getStops()
           })}
       />
     </div>
   )
 }
 
-export default Libraries
+export default MobileLibraries

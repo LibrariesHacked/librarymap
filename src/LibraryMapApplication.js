@@ -9,9 +9,9 @@ import LibraryDetails from './LibraryDetails'
 import { makeStyles } from '@material-ui/core/styles'
 
 import AppHeader from './AppHeader'
-import Libraries from './Libraries'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
+import Search from './Search'
 
 import { useApplicationStateValue } from './context/applicationState'
 
@@ -40,7 +40,7 @@ function LibraryMapApplication () {
         <AppHeader loading={false} site={2} />
         <Container maxWidth='lg'>
           <main className={classes.content}>
-            <Route path='/' exact render={() => <Libraries />} />
+            <Route path='/' exact render={() => <Search />} />
             <Route path='/map' exact render={() => <LibraryMap />} />
             <Route path={['/http:', '/https:']} component={props => { window.location.replace(props.location.pathname.substr(1)); return null }} />
           </main>

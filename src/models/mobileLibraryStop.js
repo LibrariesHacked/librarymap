@@ -1,0 +1,92 @@
+import axios from 'axios'
+
+const config = require('../helpers/config.json')
+
+const libraryTypes = {
+  LAL: 'Local authority library'
+}
+
+export class Library {
+  constructor (obj) {
+    Object.assign(this, obj)
+  }
+
+  fromJson (json) {
+    this.localAuthority = json['Local authority']
+    this.localAuthorityCode = json['Local authority code']
+    this.name = json['Library name']
+    this.address1 = json['Address 1']
+    this.address2 = json['Address 2']
+    this.address3 = json['Address 3']
+    this.postcode = json.Postcode
+    this.postcodeLongitude = json['Postcode longitude']
+    this.postcodeLatitude = json['Postcode latitude']
+    this.uprn = json['Unique property reference number']
+    this.uprnLongitude = json['Unique property reference number longitude']
+    this.uprnLongitude = json['Unique property reference number latitude']
+    this.statutory = json.Statutory
+    this.type = json['Library type']
+    this.typeDescription = libraryTypes[json['Library type']]
+    this.yearOpened = json['Year opened']
+    this.yearClosed = json['Year closed']
+    this.mondayStaffedHours = json['Monday staffed hours']
+    this.tuesdayStaffedHours = json['Tuesday staffed hours']
+    this.wednesdayStaffedHours = json['Wednesday staffed hours']
+    this.thursdayStaffedHours = json['Thursday staffed hours']
+    this.fridayStaffedHours = json['Friday staffed hours']
+    this.saturdaydayStaffedHours = json['Saturday staffed hours']
+    this.sundayStaffedHours = json['Sunday staffed hours']
+    this.mondayUnstaffedHours = json['Monday unstaffed hours']
+    this.tuesdayUnstaffedHours = json['Tuesday unstaffed hours']
+    this.wednesdayUnstaffedHours = json['Wednesday unstaffed hours']
+    this.thursdayUnstaffedHours = json['Thursday unstaffed hours']
+    this.fridayUnstaffedHours = json['Friday unstaffed hours']
+    this.saturdaydayUnstaffedHours = json['Saturday unstaffed hours']
+    this.sundayUnstaffedHours = json['Sunday unstaffed hours']
+    this.colocated = json['Co-located']
+    this.colocatedWith = json['Co-located with']
+    this.notes = json.Notes
+    this.url = json.URL
+    this.emailAddress = json['Email address']
+    this.longitude = json.Longitude
+    this.latitude = json.Latitude
+    return this
+  }
+}
+
+export async function getQueryLibraries (query, searchPosition, distance) {
+  let url = config.api + '/libraries?page=' + (query.page + 1) + '&limit=' + query.pageSize
+  if (query.orderBy && query.orderBy.field) url = url + '&sort=' + query.orderBy.field + '&direction=' + query.orderDirection
+
+  if (searchPosition && searchPosition.length > 1) url = url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
+  if (distance && distance !== '') url = url + '&distance=' + distance
+
+  const response = await axios.get(url)
+  if (response && response.data && response.data.length > 0) {
+    return {
+      libraries: response.data.map(s => (new Library()).fromJson(s)),
+      total: parseInt(response.headers['x-total-count']),
+      page: parseInt(response.headers['x-page'])
+    }
+  } else {
+    return { libraries: [], total: 0, page: 1 }
+  }
+}
+
+export async function getAllLibraries () {
+  const response = await axios.get(config.api + '/libraries')
+  if (response && response.data && response.data.length > 0) {
+    return response.data.map(s => (new Library()).fromJson(s))
+  } else {
+    return []
+  }
+}
+
+export async function getLibraryById (id) {
+  const response = await axios.get(config.api + '/libraries/' + id)
+  if (response && response.data) {
+    return (new Library()).fromJson(response.data)
+  } else {
+    return {}
+  }
+}
