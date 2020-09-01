@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(),
     paddingBottom: theme.spacing(),
     paddingLeft: theme.spacing(2),
-    fontWeight: 500
+    fontWeight: theme.typography.fontWeightBold
   },
   search: {
     position: 'relative',
@@ -57,8 +57,9 @@ function usePrevious (value) {
   return ref.current
 }
 
-function PostcodeSearch () {
-  const [{ }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+function PostcodeSearch (props) {
+  const { settings } = props
+  const [{ services }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
   const [{ searchType, searchPostcode, searchDistance }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
@@ -81,19 +82,20 @@ function PostcodeSearch () {
   }
 
   const postcodeSearch = async () => {
+    dispatchView({ type: 'ToggleLoadingPostcode' })
     if (tempPostcode === '') {
       dispatchView({ type: 'ShowNotification', notificationMessage: 'You must enter a postcode' })
       return
     }
-
     dispatchView({ type: 'LoadingPostcode' })
-    const postcodeData = await geoHelper.getPostcode(tempPostcode)
-    if (postcodeData.location && postcodeData.location.length === 2) {
-      dispatchSearch({ type: 'SetPostcodeSearch', searchPostcode: tempPostcode, searchPosition: postcodeData.location })
-      dispatchView({ type: 'SetPostcodeSearch', mapPosition: postcodeData.location })
+    const validatePostcode = (pc) => /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/.test(pc)
+    if (validatePostcode(tempPostcode.trim())) {
+      const service = await geoHelper.getPostcode(tempPostcode.trim())
+      dispatchSearch({ type: 'SetPostcodeSearch', searchPostcode: tempPostcode, searchPosition: service.location })
     } else {
       dispatchView({ type: 'ShowNotification', notificationMessage: 'Could not find postcode' })
     }
+    dispatchView({ type: 'ToggleLoadingPostcode' })
   }
 
   const classes = useStyles()
@@ -106,7 +108,7 @@ function PostcodeSearch () {
           input: classes.inputInput
         }}
         value={tempPostcode}
-        onChange={(e) => setTempPostcode(e.target.value)}
+        onChange={(e) => setTempPostcode(e.target.value.toUpperCase())}
       />
       <div className={classes.grow} />
       {searchType === 'postcode'
@@ -130,15 +132,18 @@ function PostcodeSearch () {
           <SearchIcon />
         </IconButton>
       </Tooltip>
-      <Tooltip title='Change search settings'>
-        <IconButton
-          className={classes.iconButton}
-          color='secondary'
-          onClick={(e) => { openSettingsMenu(e) }}
-        >
-          <SettingsIcon />
-        </IconButton>
-      </Tooltip>
+      {settings
+        ? (
+          <Tooltip title='Change search settings'>
+            <IconButton
+              className={classes.iconButton}
+              color='secondary'
+              onClick={(e) => { openSettingsMenu(e) }}
+            >
+              <SettingsIcon />
+            </IconButton>
+          </Tooltip>
+        ) : null}
       <Menu
         id='mnu-settings'
         anchorEl={anchor}

@@ -69,7 +69,7 @@ export async function getQueryLibraries (query, searchPosition, distance) {
       page: parseInt(response.headers['x-page'])
     }
   } else {
-    return { stops: [], total: 0, page: 1 }
+    return { libraries: [], total: 0, page: 1 }
   }
 }
 

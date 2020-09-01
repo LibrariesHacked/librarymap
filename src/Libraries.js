@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import Chip from '@material-ui/core/Chip'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 import MaterialTable from 'material-table'
 
@@ -22,7 +23,24 @@ import * as hoursHelper from './helpers/hours'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
+import PostcodeSearch from './PostcodeSearch'
+
 const useStyles = makeStyles((theme) => ({
+  search: {
+    alignContent: 'center',
+    textAlign: 'center',
+    display: 'table',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '10px'
+  },
+  subtitle: {
+    textAlign: 'center',
+    marginBottom: '5px'
+  },
+  title: {
+    textAlign: 'center'
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 200
@@ -44,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Libraries () {
-  const [{ searchType, searchPostcode, searchDistance, searchPosition }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ searchDistance, searchPosition }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const tableRef = React.createRef()
@@ -57,7 +75,12 @@ function Libraries () {
   const theme = useTheme()
 
   return (
-    <div style={{ maxWidth: '100%' }}>
+    <div>
+      <Typography component='h2' variant='h6' color='secondary' className={classes.title}>Your library</Typography>
+      <Typography component='p' variant='body1' className={classes.subtitle}>Search by postcode to find libraries within {searchDistance / 1609} mile(s)</Typography>
+      <div className={classes.search}>
+        <PostcodeSearch settings />
+      </div>
       <ListSubheader disableSticky>Libraries</ListSubheader>
       <MaterialTable
         tableRef={tableRef}

@@ -81,6 +81,13 @@ const searchReducer = (state, action) => {
         searchPosition: action.searchPosition,
         searchType: 'postcode'
       }
+    case 'ClearAll':
+      return {
+        ...state,
+        searchPostcode: '',
+        searchPosition: [],
+        searchType: ''
+      }
     default:
       return state
   }
@@ -138,7 +145,7 @@ const theme = createMuiTheme({
       main: deepOrange[800]
     },
     secondary: {
-      main: blueGrey[700]
+      main: blueGrey[600]
     }
   },
   overrides: {

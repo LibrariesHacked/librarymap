@@ -1,5 +1,5 @@
 {
-  "api": "https://api.librarydata.uk/",
+  "api": "https://api.librarydata.uk",
   "mobilesApi": "https://api.mobilelibraries.org/api",
   "isochroneApi": "https://api-geography.librarydata.uk/rest/routing/isochrone/",
   "postcodeApi": "https://api-geography.librarydata.uk/rest/postcodes/",
