@@ -5,7 +5,6 @@ import { Link, useLocation } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Hidden from '@material-ui/core/Hidden'
 import IconButton from '@material-ui/core/IconButton'
 import Tab from '@material-ui/core/Tab'
@@ -14,10 +13,9 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 
-import BusinessIcon from '@material-ui/icons/BusinessTwoTone'
 import DirectionBusIcon from '@material-ui/icons/DirectionsBusTwoTone'
+import GridOnIcon from '@material-ui/icons/GridOnTwoTone'
 import WeekendIcon from '@material-ui/icons/WeekendTwoTone'
-import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 import MapIcon from '@material-ui/icons/MapTwoTone'
 import BookIcon from '@material-ui/icons/BookTwoTone'
 import HeadsetIcon from '@material-ui/icons/HeadsetTwoTone'
@@ -32,6 +30,11 @@ import PostcodeSearch from './PostcodeSearch'
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'white',
+    position: 'relative'
+  },
+  appBarTransparent: {
+    zIndex: theme.zIndex.drawer + 1,
     backgroundColor: 'rgba(250, 250, 250, 0.8)',
     position: 'relative'
   },
@@ -41,12 +44,8 @@ const useStyles = makeStyles((theme) => ({
   iconTitle: {
     marginLeft: theme.spacing(1)
   },
-  progress: {
-    margin: theme.spacing(1)
-  },
   tabBar: {
-    borderTop: '1px solid #e8e8e8',
-    borderBottom: '1px solid #e8e8e8'
+
   },
   title: {
     margin: theme.spacing(2),
@@ -67,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function AppHeader (props) {
-  const { loading, site } = props
+  const { site } = props
 
   const [appsOpen, setAppsOpen] = useState(false)
   const [tabValue, setTabValue] = useState(site)
@@ -82,26 +81,26 @@ function AppHeader (props) {
       icon: <WeekendIcon />,
       links: [
         {
-          title: <span className={classes.iconTitle}>Search</span>,
-          short: <span className={classes.iconTitle}>Search</span>,
+          title: 'Find your service',
+          short: 'Find',
           icon: <SearchIcon />,
           to: '/'
         },
         {
-          title: <span className={classes.iconTitle}>Watch</span>,
-          short: <span className={classes.iconTitle}>Watch</span>,
+          title: 'Watch library TV',
+          short: 'Watch',
           icon: <MovieIcon />,
           to: '/watch'
         },
         {
-          title: <span className={classes.iconTitle}>Read</span>,
-          short: <span className={classes.iconTitle}>Read</span>,
+          title: 'Read blogs',
+          short: 'Read',
           icon: <BookIcon />,
           to: '/read'
         },
         {
-          title: <span className={classes.iconTitle}>Listen</span>,
-          short: <span className={classes.iconTitle}>Listen</span>,
+          title: 'Listen to podcasts',
+          short: 'Listen',
           icon: <HeadsetIcon />,
           to: '/listen'
         }
@@ -113,20 +112,20 @@ function AppHeader (props) {
       icon: <DirectionBusIcon />,
       links: [
         {
-          title: <span className={classes.iconTitle}>Mobile vans</span>,
-          short: <span className={classes.iconTitle}>Vans</span>,
+          title: 'Stop locations',
+          short: 'Stops',
+          icon: <GridOnIcon />,
+          to: '/stops'
+        },
+        {
+          title: 'Mobile vans',
+          short: 'Vans',
           icon: <DirectionBusIcon />,
           to: '/'
         },
         {
-          title: <span className={classes.iconTitle}>Stop locations</span>,
-          short: <span className={classes.iconTitle}>Stops</span>,
-          icon: <LocationOnIcon />,
-          to: '/stops'
-        },
-        {
-          title: <span className={classes.iconTitle}>Map</span>,
-          short: <span className={classes.iconTitle}>Map</span>,
+          title: 'Map of stops',
+          short: 'Map',
           icon: <MapIcon />,
           to: '/map'
         }
@@ -138,14 +137,14 @@ function AppHeader (props) {
       icon: <MapIcon />,
       links: [
         {
-          title: <span className={classes.iconTitle}>Libraries</span>,
-          short: <span className={classes.iconTitle}>Libraries</span>,
-          icon: <BusinessIcon />,
+          title: 'Libraries list',
+          short: 'Libraries',
+          icon: <GridOnIcon />,
           to: '/'
         },
         {
-          title: <span className={classes.iconTitle}>Library map</span>,
-          short: <span className={classes.iconTitle}>Map</span>,
+          title: 'Map of libraries',
+          short: 'Map',
           icon: <MapIcon />,
           to: '/map'
         }
@@ -153,25 +152,31 @@ function AppHeader (props) {
     }
   ]
 
+  const appBarClass = (location.pathname === '/map' ? classes.appBarTransparent : classes.appBar)
+
   return (
     <>
       <Container maxWidth='lg' className={classes.topTitle}>
-        <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen); setTabValue(site) }}>
-          <WidgetsIcon />
-        </IconButton>
-        <Typography color='secondary' variant='h6' component='h1' className={classes.title}>{sites[site].title}</Typography>
+        <Toolbar>
+          <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen); setTabValue(site) }}>
+            <WidgetsIcon />
+          </IconButton>
+          <span className={classes.grow} />
+          <Typography color='secondary' variant='h6' component='h1' className={classes.title}>{sites[site].title}</Typography>
+        </Toolbar>
       </Container>
       {appsOpen ? (
-        <AppBar position='static' color='default' elevation={0} className={classes.appBar}>
+        <AppBar position='static' color='default' elevation={0} className={appBarClass}>
           <Container maxWidth='lg'>
             <Tabs
+              centered
               className={classes.tabBar}
               value={tabValue}
               onChange={(e, v) => { setTabValue(v) }}
               variant='scrollable'
               scrollButtons='on'
               indicatorColor='primary'
-              textColor='primary'
+              textColor='secondary'
             >
               {sites.map((s, idx) => {
                 return (
@@ -186,28 +191,11 @@ function AppHeader (props) {
         position='static'
         color='inherit'
         elevation={0}
-        className={classes.appBar}
+        className={appBarClass}
       >
         <Container maxWidth='lg'>
           <Toolbar>
-            <Hidden smUp>
-              {sites[tabValue].links.map((link, idx) => {
-                return (
-                  <Tooltip title={link.title} key={'icnb_menu_md_' + idx}>
-                    <IconButton
-                      component={Link}
-                      to={(tabValue === site ? link.to : sites[tabValue].url + link.to)}
-                      disableRipple={location.pathname === link.to}
-                      disableFocusRipple={location.pathname === link.to}
-                      color={(tabValue === site && location.pathname === link.to ? 'secondary' : 'primary')}
-                    >
-                      {link.icon}
-                    </IconButton>
-                  </Tooltip>
-                )
-              })}
-            </Hidden>
-            <Hidden xsDown mdUp>
+            <Hidden mdUp>
               {sites[tabValue].links.map((link, idx) => {
                 return (
                   <Tooltip title={link.title} key={'icnb_menu_lg_' + idx}>
@@ -216,10 +204,11 @@ function AppHeader (props) {
                       to={(tabValue === site ? link.to : sites[tabValue].url + link.to)}
                       disableRipple={location.pathname === link.to}
                       disableFocusRipple={location.pathname === link.to}
-                      color={(tabValue === site && location.pathname === link.to ? 'secondary' : 'primary')}
+                      color='secondary'
                       size='large'
+                      startIcon={link.icon}
                     >
-                      {link.icon}{link.short}
+                      {link.short}
                     </Button>
                   </Tooltip>
                 )
@@ -234,16 +223,16 @@ function AppHeader (props) {
                       to={(tabValue === site ? link.to : sites[tabValue].url + link.to)}
                       disableRipple={location.pathname === link.to}
                       disableFocusRipple={location.pathname === link.to}
-                      color={(tabValue === site && location.pathname === link.to ? 'secondary' : 'primary')}
+                      color='secondary'
                       size='large'
+                      startIcon={link.icon}
                     >
-                      {link.icon}{link.title}
+                      {link.title}
                     </Button>
                   </Tooltip>
                 )
               })}
             </Hidden>
-            {loading ? <CircularProgress className={classes.progress} color='primary' size={30} /> : null}
             <span className={classes.grow} />
             {location.pathname === '/map' ? <PostcodeSearch /> : null}
           </Toolbar>

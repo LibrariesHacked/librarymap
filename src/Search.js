@@ -45,7 +45,7 @@ function Search () {
         <PostcodeSearch settings />
       </div>
       <Libraries />
-      <Divider className={classes.divider} />
+      <Divider variant='inset' light className={classes.divider} />
       <MobileLibraries />
     </div>
   )
