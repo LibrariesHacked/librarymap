@@ -9,9 +9,13 @@ import LibraryDetails from './LibraryDetails'
 import { makeStyles } from '@material-ui/core/styles'
 
 import AppHeader from './AppHeader'
+import Footer from './Footer'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
 import Search from './Search'
+import MarkdownPage from './MarkdownPage'
+
+import Data from './pages/data.md'
 
 import { useApplicationStateValue } from './context/applicationState'
 
@@ -42,8 +46,12 @@ function LibraryMapApplication () {
           <main className={classes.content}>
             <Route path='/' exact render={() => <Search />} />
             <Route path='/map' exact render={() => <LibraryMap />} />
+            <Route path='/data' exact render={() => <MarkdownPage page={Data} />} />
             <Route path={['/http:', '/https:']} component={props => { window.location.replace(props.location.pathname.substr(1)); return null }} />
           </main>
+        </Container>
+        <Container maxWidth='lg'>
+          <Footer />
         </Container>
         <Notification />
       </div>

@@ -152,16 +152,19 @@ const theme = createMuiTheme({
     MuiButton: {
       text: {
         textTransform: 'none'
+      },
+      root: {
+        textTransform: 'none'
+      }
+    },
+    MuiTypography: {
+      button: {
+        textTransform: 'none'
       }
     },
     MuiTab: {
       root: {
         textTransform: 'none'
-      }
-    },
-    MuiTableCell: {
-      root: {
-        borderBottom: 'none'
       }
     }
   }

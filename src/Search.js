@@ -9,12 +9,8 @@ import { useSearchStateValue } from './context/searchState'
 import Libraries from './Libraries'
 import PostcodeSearch from './PostcodeSearch'
 import MobileLibraries from './MobileLibraries'
-import { Divider } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
-  divider: {
-    margin: theme.spacing(8)
-  },
   search: {
     alignContent: 'center',
     textAlign: 'center',
@@ -45,7 +41,7 @@ function Search () {
         <PostcodeSearch settings />
       </div>
       <Libraries />
-      <Divider variant='inset' light className={classes.divider} />
+      <br />
       <MobileLibraries />
     </div>
   )
