@@ -35,8 +35,8 @@ function Search () {
 
   return (
     <div>
-      <Typography component='h2' variant='h6' color='secondary' className={classes.title}>Your library</Typography>
-      <Typography component='p' variant='body1' className={classes.subtitle}>Search by postcode to find libraries within {searchDistance / 1609} mile(s)</Typography>
+      <Typography component='h2' variant='h6' color='secondary' className={classes.title}>Find my library</Typography>
+      <Typography component='p' variant='subtitle1' className={classes.subtitle}>Search by postcode to find your nearest library</Typography>
       <div className={classes.search}>
         <PostcodeSearch settings />
       </div>

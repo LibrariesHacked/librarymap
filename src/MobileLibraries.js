@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 
+import IconButton from '@material-ui/core/IconButton'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Paper from '@material-ui/core/Paper'
+import Tooltip from '@material-ui/core/Tooltip'
 
 import MaterialTable from 'material-table'
 
@@ -14,10 +16,12 @@ import ChevronRight from '@material-ui/icons/ChevronRightTwoTone'
 import FirstPage from '@material-ui/icons/FirstPageTwoTone'
 import FilterList from '@material-ui/icons/FilterListTwoTone'
 import LastPage from '@material-ui/icons/LastPageTwoTone'
+import MoreVertIcon from '@material-ui/icons/MoreVertTwoTone'
 
 import * as stopHelper from './models/stop'
 
 import { useSearchStateValue } from './context/searchState'
+import { useViewStateValue } from './context/viewState'
 
 const useStyles = makeStyles((theme) => ({
   hoursChip: {
@@ -30,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function MobileLibraries () {
-  const [{ searchDistance, searchPosition }] = useSearchStateValue() //eslint-disable-line
+  const [{ searchDistance, searchPosition }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const tableRef = React.createRef()
 
@@ -40,6 +45,11 @@ function MobileLibraries () {
 
   const classes = useStyles()
   const theme = useTheme()
+
+  var selectStop = (stop) => {
+    dispatchSearch({ type: 'SetCurrentStop', currentStopId: stop.id })
+    dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
+  }
 
   return (
     <div>
@@ -71,6 +81,26 @@ function MobileLibraries () {
           }
         }}
         columns={[
+          {
+            title: '',
+            field: 'name',
+            filtering: false,
+            render: rowData => {
+              return (
+                <>
+                  <Tooltip title='See more stop details'>
+                    <IconButton size='small' onClick={() => selectStop(rowData)}>
+                      <MoreVertIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              )
+            },
+            cellStyle: {
+              borderBottom: '1px solid #f5f5f5',
+              backgroundColor: '#ffffff'
+            }
+          },
           {
             title: 'Name',
             field: 'name',

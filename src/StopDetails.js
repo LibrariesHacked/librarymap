@@ -7,15 +7,24 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Divider from '@material-ui/core/Divider'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
+import CancelIcon from '@material-ui/icons/CancelTwoTone'
 import EventIcon from '@material-ui/icons/EventTwoTone'
-import PrintIcon from '@material-ui/icons/PrintTwoTone'
+import LaunchIcon from '@material-ui/icons/LaunchTwoTone'
 import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
+import PrintIcon from '@material-ui/icons/PrintTwoTone'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -31,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
   dialog: {
     border: '1px solid #E0E0E0'
   },
+  dialogContentActions: {
+    backgroundColor: '#ffebee',
+    border: '1px solid #ffcdd2',
+    borderRadius: 3,
+    padding: 4
+  },
   leftIcon: {
     marginRight: theme.spacing(1)
   },
@@ -41,6 +56,8 @@ const useStyles = makeStyles((theme) => ({
   },
   progress: {
     margin: theme.spacing(2)
+  },
+  tablePaper: {
   }
 }))
 
@@ -69,6 +86,7 @@ function StopDetails () {
   }
 
   const close = () => {
+    dispatchSearch({ type: 'SetCurrentStop', currentStopId: null, currentPoint: null })
     dispatchView({ type: 'SetStopDialog', stopDialogOpen: false })
   }
 
@@ -86,24 +104,46 @@ function StopDetails () {
       BackdropProps={{ invisible: true }}
       PaperProps={{ elevation: 0, className: classes.dialog }}
     >
-      {stop && stop.routeDays
+      {Object.keys(stop).length > 0 && stop.routeDays
         ? (
           <>
-            <DialogTitle id='dlg-title'>{stop.name + '. ' + stop.community}</DialogTitle>
+            <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
             <DialogContent>
-              <ListSubheader>{(stop.routeSchedule && stop.routeSchedule.length > 0 ? stop.routeSchedule[0].format('dddd Do MMMM h:mma') : '')}</ListSubheader>
+              <Typography component='h3' variant='subtitle1'>{'Mobile library stop in ' + stop.community + ' ' + stop.organisationName}</Typography>
+              <Typography component='p' variant='body2'>{stop.address}</Typography>
+              <ListSubheader>Schedules</ListSubheader>
+              <TableContainer component={Paper} elevation={0} className={classes.tablePaper}>
+                <Table size='small'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Frequency</TableCell>
+                      <TableCell align='right'>Next visit</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {stop.routeFrequencies.map((rs, idx) => (
+                      <TableRow key={'tc_rs_' + idx}>
+                        <TableCell component='th' scope='row'>
+                          {rs}
+                        </TableCell>
+                        <TableCell align='right'>{stop.routeSchedule[0].format('dddd Do MMMM h:mma')}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
               <br />
-              <Divider />
-              <br />
-              <Button onClick={getStopCalendar} className={classes.button} color='primary' startIcon={<EventIcon />}>Calendar</Button>
-              <Button onClick={getStopPdf} className={classes.button} color='primary' startIcon={<PrintIcon />}>Timetable</Button>
-              <Button onClick={viewMapStop} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>Map</Button>
+              <div className={classes.dialogContentActions}>
+                <Button onClick={() => goToWebsite()} color='primary' startIcon={<LaunchIcon />}>Go to website</Button>
+                <Button onClick={getStopCalendar} className={classes.button} color='primary' startIcon={<EventIcon />}>Get calendar</Button>
+                <Button onClick={getStopPdf} className={classes.button} color='primary' startIcon={<PrintIcon />}>Print</Button>
+                <Button onClick={viewMapStop} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
+              </div>
             </DialogContent>
           </>
         ) : <CircularProgress className={classes.progress} color='primary' size={30} />}
       <DialogActions>
-        <Button onClick={() => goToWebsite()} color='primary'>Website</Button>
-        <Button onClick={() => close()} color='secondary'>Close</Button>
+        <Button onClick={() => close()} color='secondary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
   )

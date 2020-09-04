@@ -52,7 +52,7 @@ const tripTiles = [config.tripTiles]
 
 function LibraryMap () {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
-  const [{ searchType, searchPosition, currentStopId, CurrentLibraryId, currentPoint }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ searchType, searchPosition, currentStopId, currentLibraryId, currentPoint }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ mapZoom, mapPosition, mapSettings, mapSettingsDialogOpen, isochronesMenuOpen, isochronesMenuAnchor }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function LibraryMap () {
   var moreInfoIsochronesMenu = () => {
     closeIsochronesMenu()
     if (currentStopId) dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
-    if (CurrentLibraryId) dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
+    if (currentLibraryId) dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
   }
 
   var toggleIsochrone = async (transport) => {
@@ -554,7 +554,7 @@ function LibraryMap () {
           filter={['!', ['has', 'Year closed']]}
           layout={{
             'text-ignore-placement': false,
-            'text-field': ['match', ['get', 'Library type'], 'LAL', 'Local authority library', 'LAL-', 'Local authority run - unstaffed', 'CL', 'Commissioned library', 'CRL', 'Community run library', 'ICL', 'Independent community library', 'Unknown library'],
+            'text-field': ['match', ['get', 'Library type'], 'LAL', 'Local authority library', 'LAL-', 'Local authority run - unstaffed', 'CL', 'Commissioned library', 'CRL', 'Community run library', 'IL', 'Independent library', 'Unknown library'],
             'text-font': [
               'Source Sans Pro Bold'
             ],
@@ -742,7 +742,6 @@ function LibraryMap () {
             <DirectionsCar fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['driving-car'] && isochrones[currentPoint]['driving-car'].display ? 'primary' : 'secondary'} />
           </ListItemIcon>
           <ListItemText primary='Driving distance' />
-
         </MenuItem>
       </Menu>
     </>

@@ -3,7 +3,11 @@ import axios from 'axios'
 const config = require('../helpers/config.json')
 
 const libraryTypes = {
-  LAL: 'Local authority library'
+  LAL: 'Local authority library',
+  'LAL-': 'Local authority run - unstaffed',
+  CL: 'Commissioned library',
+  CRL: 'Community run library',
+  IL: 'Independent library'
 }
 
 export class Library {
@@ -12,6 +16,7 @@ export class Library {
   }
 
   fromJson (json) {
+    this.id = json.id
     this.localAuthority = json['Local authority']
     this.localAuthorityCode = json['Local authority code']
     this.name = json['Library name']

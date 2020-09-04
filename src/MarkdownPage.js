@@ -85,7 +85,7 @@ const options = {
   }
 }
 
-function MarkdownPage (props) {
+export function MarkdownPage (props) {
   const { page } = props
   const [pageText, setPageText] = useState('')
   const classes = useStyles()
@@ -102,4 +102,4 @@ function MarkdownPage (props) {
   return <ReactMarkdown className={classes.root} options={options} {...props}>{pageText}</ReactMarkdown>
 }
 
-export default MarkdownPage
+export const MemoMarkdownPage = React.memo(MarkdownPage)
