@@ -7,5 +7,28 @@
   "libraryBuildingsTiles": "https://api.librarydata.uk/libraries/buildings/{z}/{x}/{y}.mvt",
   "libraryAuthorityTiles": "https://api-geography.librarydata.uk/rest/libraryauthorities/{z}/{x}/{y}.mvt",
   "stopTiles": "https://api.mobilelibraries.org/api/stops/{z}/{x}/{y}.mvt",
-  "tripTiles": "https://api.mobilelibraries.org/api/trips/{z}/{x}/{y}.mvt"
+  "tripTiles": "https://api.mobilelibraries.org/api/trips/{z}/{x}/{y}.mvt",
+  "travel": [
+    {
+      "description": "Driving time",
+      "name": "driving-car",
+      "duration": 300,
+      "interval": 60,
+      "colour": "#b71c1c"
+    },
+    {
+      "description": "Walking time",
+      "name": "foot-walking",
+      "duration": 1200,
+      "interval": 300,
+      "colour": "#1b5e20"
+    },
+    {
+      "description": "Cycling time",
+      "name": "cycling-regular",
+      "duration": 900,
+      "interval": 180,
+      "colour": "#900"
+    }
+  ]
 }

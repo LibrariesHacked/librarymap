@@ -85,6 +85,7 @@ function MobileLibraries () {
             title: '',
             field: 'name',
             filtering: false,
+            sorting: false,
             render: rowData => {
               return (
                 <>
@@ -125,6 +126,7 @@ function MobileLibraries () {
             title: 'Community',
             field: 'community',
             filtering: false,
+            sorting: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
@@ -135,6 +137,7 @@ function MobileLibraries () {
             title: 'Address',
             field: 'address',
             filtering: false,
+            sorting: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',

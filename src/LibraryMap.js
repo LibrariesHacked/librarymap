@@ -26,6 +26,9 @@ import MapSettings from './MapSettings'
 import * as isochroneModel from './models/isochrone'
 
 const useStyles = makeStyles((theme) => ({
+  listItemRoot: {
+    minWidth: 34
+  },
   menu: {
     border: '1px solid #E0E0E0'
   },
@@ -91,6 +94,12 @@ function LibraryMap () {
 
   const classes = useStyles()
 
+  const travelIcons = {
+    'cycling-regular': <DirectionsBike fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['cycling-regular'] && isochrones[currentPoint]['cycling-regular'].display ? 'primary' : 'secondary'} />,
+    'driving-car': <DirectionsCar fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['driving-car'] && isochrones[currentPoint]['driving-car'].display ? 'primary' : 'secondary'} />,
+    'foot-walking': <DirectionsWalk fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['foot-walking'] && isochrones[currentPoint]['foot-walking'].display ? 'primary' : 'secondary'} />
+  }
+
   return (
     <>
       <Map
@@ -116,7 +125,7 @@ function LibraryMap () {
                     fillPaint={{
                       'fill-opacity': 0.1,
                       'fill-antialias': true,
-                      'fill-color': '#455a64'
+                      'fill-color': config.travel.filter(t => t.name === transport)[0].colour
                     }}
                     fillOnClick={(e) => { }}
                   />
@@ -125,13 +134,13 @@ function LibraryMap () {
                     linePaint={{
                       'line-opacity': 0.4,
                       'line-width': 2,
-                      'line-color': '#455a64'
+                      'line-color': config.travel.filter(t => t.name === transport)[0].colour
                     }}
                   />
                   <GeoJSONLayer // Shows the distances labels
                     data={isochrones[point][transport].geo}
                     symbolLayout={{
-                      'text-field': ['concat', ['to-string', ['/', ['get', 'value'], 60]], ' mins'],
+                      'text-field': ['concat', ['to-string', ['/', ['get', 'value'], 60]], ' min'],
                       'text-font': ['Source Sans Pro Bold'],
                       'symbol-placement': 'line',
                       'text-allow-overlap': false,
@@ -144,10 +153,34 @@ function LibraryMap () {
                       'text-letter-spacing': 0.1
                     }}
                     symbolPaint={{
-                      'text-halo-color': 'rgba(255, 255, 255, 0.8)',
-                      'text-halo-width': 8,
-                      'text-halo-blur': 3,
-                      'text-color': '#455a64'
+                      'text-halo-color': 'rgba(255, 255, 255, 0.9)',
+                      'text-halo-width': 4,
+                      'text-halo-blur': 2,
+                      'text-color': config.travel.filter(t => t.name === transport)[0].colour
+                    }}
+                  />
+                  <GeoJSONLayer // Shows the distances labels
+                    data={isochrones[point][transport].geo}
+                    symbolLayout={{
+                      'text-field': ['concat', ['get', 'total_pop']],
+                      'text-font': ['Source Sans Pro Regular'],
+                      'symbol-placement': 'line',
+                      'text-allow-overlap': false,
+                      'text-keep-upright': false,
+                      'text-padding': 2,
+                      'text-max-angle': 90,
+                      'text-offset': [0, 1],
+                      'text-size': {
+                        base: 1.2,
+                        stops: [[8, 8], [22, 14]]
+                      },
+                      'text-letter-spacing': 0.1
+                    }}
+                    symbolPaint={{
+                      'text-halo-color': 'rgba(255, 255, 255, 0.9)',
+                      'text-halo-width': 0,
+                      'text-halo-blur': 0,
+                      'text-color': config.travel.filter(t => t.name === transport)[0].colour
                     }}
                   />
                 </span>)
@@ -719,30 +752,28 @@ function LibraryMap () {
         open={isochronesMenuOpen}
         onClose={closeIsochronesMenu}
       >
-        <MenuItem onClick={moreInfoIsochronesMenu}>
-          <ListItemIcon>
+        <MenuItem dense onClick={moreInfoIsochronesMenu}>
+          <ListItemIcon classes={{
+            root: classes.listItemRoot
+          }}
+          >
             <LayersIcon fontSize='small' />
           </ListItemIcon>
           <ListItemText primary='More info' />
         </MenuItem>
-        <MenuItem onClick={() => toggleIsochrone('foot-walking')}>
-          <ListItemIcon>
-            <DirectionsWalk fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['foot-walking'] && isochrones[currentPoint]['foot-walking'].display ? 'primary' : 'secondary'} />
-          </ListItemIcon>
-          <ListItemText primary='Walking distance' />
-        </MenuItem>
-        <MenuItem onClick={() => toggleIsochrone('cycling-regular')}>
-          <ListItemIcon>
-            <DirectionsBike fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['cycling-regular'] && isochrones[currentPoint]['cycling-regular'].display ? 'primary' : 'secondary'} />
-          </ListItemIcon>
-          <ListItemText primary='Cycling distance' />
-        </MenuItem>
-        <MenuItem onClick={() => toggleIsochrone('driving-car')}>
-          <ListItemIcon>
-            <DirectionsCar fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['driving-car'] && isochrones[currentPoint]['driving-car'].display ? 'primary' : 'secondary'} />
-          </ListItemIcon>
-          <ListItemText primary='Driving distance' />
-        </MenuItem>
+        {config.travel.map((travel, idx) => {
+          return (
+            <MenuItem dense key={'mnu_trv_' + idx} onClick={() => toggleIsochrone(travel.name)}>
+              <ListItemIcon classes={{
+                root: classes.listItemRoot
+              }}
+              >
+                {travelIcons[travel.name]}
+              </ListItemIcon>
+              <ListItemText primary={travel.description} />
+            </MenuItem>
+          )
+        })}
       </Menu>
     </>
   )

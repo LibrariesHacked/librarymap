@@ -87,6 +87,7 @@ function Libraries () {
             title: '',
             field: 'name',
             filtering: false,
+            sorting: false,
             render: rowData => {
               return (
                 <>
@@ -127,6 +128,7 @@ function Libraries () {
             title: 'Address',
             field: 'address1',
             filtering: false,
+            sorting: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
@@ -138,6 +140,7 @@ function Libraries () {
             title: 'Postcode',
             field: 'postcode',
             filtering: false,
+            sorting: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
@@ -148,6 +151,7 @@ function Libraries () {
             title: 'Today',
             field: 'mondayStaffedHours',
             filtering: false,
+            sorting: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
