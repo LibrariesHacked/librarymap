@@ -24,6 +24,8 @@ import MeAvatar from './MeAvatar'
 import MapSettings from './MapSettings'
 
 import * as isochroneModel from './models/isochrone'
+import * as stopModel from './models/stop'
+import * as libraryModel from './models/library'
 
 const useStyles = makeStyles((theme) => ({
   listItemRoot: {
@@ -61,16 +63,20 @@ function LibraryMap () {
   useEffect(() => {
   }, [])
 
-  var clickLibrary = (map) => {
+  var clickLibrary = async (map) => {
     if (map && map.features && map.features.length > 0 && map.features[0].properties) {
-      dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: map.features[0].properties.id, currentPoint: [map.features[0].geometry.coordinates[0].toFixed(2), map.features[0].geometry.coordinates[1].toFixed(2)] })
+      var id = map.features[0].properties.id
+      var library = await libraryModel.getLibraryById(id)
+      dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: id, currentPoint: [library.longitude, library.latitude] })
       dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: map.point.x, top: map.point.y } })
     }
   }
 
-  const clickStop = (map) => {
+  const clickStop = async (map) => {
     if (map && map.features && map.features.length > 0 && map.features[0].properties) {
-      dispatchSearch({ type: 'SetCurrentStop', currentStopId: map.features[0].properties.id, currentPoint: [map.features[0].geometry.coordinates[0].toFixed(2), map.features[0].geometry.coordinates[1].toFixed(2)] })
+      var id = map.features[0].properties.id
+      var stop = await stopModel.getStopById(id)
+      dispatchSearch({ type: 'SetCurrentStop', currentStopId: id, currentPoint: [stop.longitude, stop.latitude] })
       dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: map.point.x, top: map.point.y } })
     }
   }
@@ -163,16 +169,16 @@ function LibraryMap () {
                     data={isochrones[point][transport].geo}
                     symbolLayout={{
                       'text-field': ['concat', ['get', 'total_pop']],
-                      'text-font': ['Source Sans Pro Regular'],
+                      'text-font': ['Source Sans Pro Bold'],
                       'symbol-placement': 'line',
                       'text-allow-overlap': false,
                       'text-keep-upright': false,
                       'text-padding': 2,
-                      'text-max-angle': 90,
+                      'text-max-angle': 0,
                       'text-offset': [0, 1],
                       'text-size': {
                         base: 1.2,
-                        stops: [[8, 8], [22, 14]]
+                        stops: [[10, 8], [22, 14]]
                       },
                       'text-letter-spacing': 0.1
                     }}
@@ -198,14 +204,14 @@ function LibraryMap () {
           type='line'
           sourceId='src_libraries_buildings'
           sourceLayer='library_buildings'
-          minZoom={15}
+          minZoom={14}
           layout={{
             'line-join': 'round',
             'line-cap': 'square'
           }}
           paint={{
             'line-color': '#455a64',
-            'line-opacity': 1,
+            'line-opacity': 0.8,
             'line-width': [
               'interpolate',
               [
@@ -214,8 +220,8 @@ function LibraryMap () {
               [
                 'zoom'
               ],
-              15, 3,
-              18, 4
+              14, 2,
+              18, 3
             ]
           }}
         />
@@ -224,10 +230,10 @@ function LibraryMap () {
           type='fill'
           sourceId='src_libraries_buildings'
           sourceLayer='library_buildings'
-          minZoom={15}
+          minZoom={14}
           paint={{
             'fill-color': '#455a64',
-            'fill-opacity': 0.4
+            'fill-opacity': 0.3
           }}
         />
         <Source

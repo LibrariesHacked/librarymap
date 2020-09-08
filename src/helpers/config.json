@@ -10,13 +10,6 @@
   "tripTiles": "https://api.mobilelibraries.org/api/trips/{z}/{x}/{y}.mvt",
   "travel": [
     {
-      "description": "Driving time",
-      "name": "driving-car",
-      "duration": 300,
-      "interval": 60,
-      "colour": "#b71c1c"
-    },
-    {
       "description": "Walking time",
       "name": "foot-walking",
       "duration": 1200,
@@ -29,6 +22,13 @@
       "duration": 900,
       "interval": 180,
       "colour": "#900"
+    },
+    {
+      "description": "Driving time",
+      "name": "driving-car",
+      "duration": 300,
+      "interval": 60,
+      "colour": "#b71c1c"
     }
   ]
 }
