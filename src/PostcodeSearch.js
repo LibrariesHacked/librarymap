@@ -25,13 +25,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   iconButton: {
-    padding: 10
+    padding: theme.spacing(1)
   },
   inputInput: {
-    paddingTop: theme.spacing(),
-    paddingRight: theme.spacing(),
-    paddingBottom: theme.spacing(),
-    paddingLeft: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
     fontWeight: theme.typography.fontWeightBold
   },
   search: {
@@ -43,9 +43,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.9)
     },
     marginLeft: 0,
-    marginRight: theme.spacing(),
+    marginRight: theme.spacing(0),
     display: 'flex',
-    maxWidth: 240
+    maxWidth: 215
   }
 }))
 
@@ -61,7 +61,7 @@ function PostcodeSearch (props) {
   const { settings } = props
   const [{ services }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
   const [{ searchType, searchPostcode, searchDistance }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
-  const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{ loadingPostcode }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [tempPostcode, setTempPostcode] = useState(searchPostcode)
   const [anchor, setAnchor] = useState(null)
@@ -87,13 +87,12 @@ function PostcodeSearch (props) {
       dispatchView({ type: 'ShowNotification', notificationMessage: 'You must enter a postcode' })
       return
     }
-    dispatchView({ type: 'LoadingPostcode' })
     const validatePostcode = (pc) => /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/.test(pc)
     if (validatePostcode(tempPostcode.trim())) {
       const service = await geoHelper.getPostcode(tempPostcode.trim())
       dispatchSearch({ type: 'SetPostcodeSearch', searchPostcode: tempPostcode, searchPosition: service.location })
     } else {
-      dispatchView({ type: 'ShowNotification', notificationMessage: 'Could not find postcode' })
+      dispatchView({ type: 'ShowNotification', notificationMessage: 'Is that a valid postcode? Please check.' })
     }
     dispatchView({ type: 'ToggleLoadingPostcode' })
   }
@@ -127,6 +126,7 @@ function PostcodeSearch (props) {
         <IconButton
           color='primary'
           className={classes.iconButton}
+          disabled={loadingPostcode}
           onClick={() => postcodeSearch()}
         >
           <SearchIcon />

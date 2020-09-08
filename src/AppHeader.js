@@ -13,12 +13,13 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 
+import BookIcon from '@material-ui/icons/BookTwoTone'
+import CancelIcon from '@material-ui/icons/CancelTwoTone'
 import DirectionBusIcon from '@material-ui/icons/DirectionsBusTwoTone'
 import GridOnIcon from '@material-ui/icons/GridOnTwoTone'
-import WeekendIcon from '@material-ui/icons/WeekendTwoTone'
-import MapIcon from '@material-ui/icons/MapTwoTone'
-import BookIcon from '@material-ui/icons/BookTwoTone'
 import HeadsetIcon from '@material-ui/icons/HeadsetTwoTone'
+import ImportContactsIcon from '@material-ui/icons/ImportContactsTwoTone'
+import MapIcon from '@material-ui/icons/MapTwoTone'
 import MovieIcon from '@material-ui/icons/MovieTwoTone'
 import SearchIcon from '@material-ui/icons/SearchTwoTone'
 import WidgetsIcon from '@material-ui/icons/WidgetsTwoTone'
@@ -40,12 +41,6 @@ const useStyles = makeStyles((theme) => ({
   },
   grow: {
     flexGrow: 1
-  },
-  iconTitle: {
-    marginLeft: theme.spacing(1)
-  },
-  tabBar: {
-
   },
   title: {
     margin: theme.spacing(2),
@@ -78,10 +73,10 @@ function AppHeader (props) {
     {
       title: 'Libraries at home',
       url: 'https://www.librariesathome.co.uk',
-      icon: <WeekendIcon />,
+      icon: <ImportContactsIcon />,
       links: [
         {
-          title: 'Find your service',
+          title: 'Find service',
           short: 'Find',
           icon: <SearchIcon />,
           to: '/'
@@ -99,7 +94,7 @@ function AppHeader (props) {
           to: '/read'
         },
         {
-          title: 'Listen to podcasts',
+          title: 'Listen podcasts',
           short: 'Listen',
           icon: <HeadsetIcon />,
           to: '/listen'
@@ -112,7 +107,7 @@ function AppHeader (props) {
       icon: <DirectionBusIcon />,
       links: [
         {
-          title: 'Stop locations',
+          title: 'Find my stop',
           short: 'Stops',
           icon: <GridOnIcon />,
           to: '/stops'
@@ -137,8 +132,8 @@ function AppHeader (props) {
       icon: <MapIcon />,
       links: [
         {
-          title: 'Libraries list',
-          short: 'Libraries',
+          title: 'Find my library',
+          short: 'Find',
           icon: <GridOnIcon />,
           to: '/'
         },
@@ -159,7 +154,7 @@ function AppHeader (props) {
       <Container maxWidth='lg' className={classes.topTitle}>
         <Toolbar>
           <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen); setTabValue(site) }}>
-            <WidgetsIcon />
+            {appsOpen ? <CancelIcon /> : <WidgetsIcon />}
           </IconButton>
           <span className={classes.grow} />
           <Typography color='secondary' variant='h6' component='h1' className={classes.title}>{sites[site].title}</Typography>
@@ -170,7 +165,6 @@ function AppHeader (props) {
           <Container maxWidth='lg'>
             <Tabs
               centered
-              className={classes.tabBar}
               value={tabValue}
               onChange={(e, v) => { setTabValue(v) }}
               variant='scrollable'

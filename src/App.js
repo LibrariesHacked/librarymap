@@ -128,6 +128,9 @@ const viewReducer = (state, action) => {
       settings[action.mapSetting] = !settings[action.mapSetting]
       return { ...state, mapSettings: settings }
     }
+    case 'ToggleLoadingPostcode': {
+      return { ...state, loadingPostcode: !state.loadingPostcode }
+    }
     case 'SetPostcodeSearch':
       return { ...state, loadingPostcode: false, mapPosition: action.mapPosition, mapZoom: [13] }
     case 'SetMapPosition':
