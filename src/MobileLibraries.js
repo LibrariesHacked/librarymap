@@ -34,14 +34,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function MobileLibraries () {
-  const [{ searchDistance, searchPosition }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const tableRef = React.createRef()
 
   useEffect(() => {
     tableRef.current.onQueryChange()
-  }, [searchPosition, searchDistance]) // eslint-disable-line
+  }, [searchPosition, searchDistance, serviceFilter]) // eslint-disable-line
 
   const classes = useStyles()
   const theme = useTheme()
@@ -148,7 +148,7 @@ function MobileLibraries () {
         data={query =>
           new Promise((resolve) => {
             async function getStops () {
-              const stopData = await stopHelper.getQueryStops(query, searchPosition, searchDistance)
+              const stopData = await stopHelper.getQueryStops(query, searchPosition, searchDistance, serviceFilter)
               resolve({
                 data: stopData.stops,
                 page: (stopData.page - 1),

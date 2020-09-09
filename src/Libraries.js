@@ -36,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Libraries () {
-  const [{ searchDistance, searchPosition }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const tableRef = React.createRef()
 
   useEffect(() => {
     tableRef.current.onQueryChange()
-  }, [searchPosition, searchDistance]) // eslint-disable-line
+  }, [searchPosition, searchDistance, serviceFilter]) // eslint-disable-line
 
   const classes = useStyles()
   const theme = useTheme()
@@ -168,7 +168,7 @@ function Libraries () {
         data={query =>
           new Promise((resolve) => {
             async function getLibraries () {
-              const libraryData = await libraryModel.getQueryLibraries(query, searchPosition, searchDistance)
+              const libraryData = await libraryModel.getQueryLibraries(query, searchPosition, searchDistance, serviceFilter)
               resolve({
                 data: libraryData.libraries,
                 page: (libraryData.page - 1),

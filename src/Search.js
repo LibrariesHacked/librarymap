@@ -4,11 +4,10 @@ import Typography from '@material-ui/core/Typography'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import { useSearchStateValue } from './context/searchState'
-
 import Libraries from './Libraries'
 import PostcodeSearch from './PostcodeSearch'
 import MobileLibraries from './MobileLibraries'
+import ServiceFilter from './ServiceFilter'
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -29,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Search () {
-  const [{ searchDistance }] = useSearchStateValue() //eslint-disable-line
-
   const classes = useStyles()
 
   return (
@@ -39,6 +36,10 @@ function Search () {
       <Typography component='p' variant='subtitle1' className={classes.subtitle}>Search by postcode to find your nearest library</Typography>
       <div className={classes.search}>
         <PostcodeSearch settings />
+      </div>
+      <Typography component='p' variant='subtitle1' className={classes.subtitle}>Or choose a library service</Typography>
+      <div className={classes.search}>
+        <ServiceFilter />
       </div>
       <Libraries />
       <br />

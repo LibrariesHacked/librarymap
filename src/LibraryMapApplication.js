@@ -17,6 +17,8 @@ import { MemoMarkdownPage } from './MarkdownPage'
 
 import Data from './pages/data.md'
 
+import * as serviceModel from './models/service'
+
 import { useApplicationStateValue } from './context/applicationState'
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +36,13 @@ function LibraryMapApplication () {
 
   useEffect(() => {
     // Initial data setup
+    async function getServices () {
+      const services = await serviceModel.getServices()
+      const serviceLookup = {}
+      services.forEach(service => { serviceLookup[service.Code] = service })
+      dispatchApplicationState({ type: 'AddServices', services: services, serviceLookup: serviceLookup })
+    }
+    getServices()
   }, []) //eslint-disable-line
 
   const classes = useStyles()

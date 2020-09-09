@@ -13,12 +13,20 @@ import { ViewStateProvider } from './context/viewState'
 import LibraryMapApplication from './LibraryMapApplication'
 
 const initialApplicationState = {
+  services: [],
+  serviceLookup: {},
   isochrones: {}
 }
 
 const applicationReducer = (state, action) => {
   const isochrones = state.isochrones
   switch (action.type) {
+    case 'AddServices':
+      return {
+        ...state,
+        services: action.services,
+        serviceLookup: action.serviceLookup
+      }
     case 'AddIsochrone':
       if (!isochrones[action.point]) isochrones[action.point] = {}
       isochrones[action.point][action.transport] = action.isochrone
@@ -52,7 +60,8 @@ const initialSearchState = {
   searchPosition: [],
   currentStopId: null,
   currentLibraryId: null,
-  currentPoint: []
+  currentPoint: [],
+  serviceFilter: []
 }
 
 const searchReducer = (state, action) => {
@@ -81,9 +90,18 @@ const searchReducer = (state, action) => {
         searchPosition: action.searchPosition,
         searchType: 'postcode'
       }
+    case 'FilterByService':
+      return {
+        ...state,
+        serviceFilter: [action.serviceCode],
+        searchPostcode: '',
+        searchPosition: [],
+        searchType: ''
+      }
     case 'ClearAll':
       return {
         ...state,
+        serviceFilter: [],
         searchPostcode: '',
         searchPosition: [],
         searchType: ''
@@ -105,6 +123,7 @@ const initialViewState = {
   libraryDialogOpen: false,
   stopDialogOpen: false,
   loadingPostcode: false,
+  loadingServices: false,
   isochronesMenuOpen: false,
   isochronesMenuAnchor: null
 }
@@ -130,6 +149,9 @@ const viewReducer = (state, action) => {
     }
     case 'ToggleLoadingPostcode': {
       return { ...state, loadingPostcode: !state.loadingPostcode }
+    }
+    case 'ToggleLoadingServices': {
+      return { ...state, loadingServices: !state.loadingServices }
     }
     case 'SetPostcodeSearch':
       return { ...state, loadingPostcode: false, mapPosition: action.mapPosition, mapZoom: [13] }

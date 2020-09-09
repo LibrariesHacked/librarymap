@@ -34,12 +34,14 @@ export class Stop {
   }
 }
 
-export async function getQueryStops (query, searchPosition, distance) {
+export async function getQueryStops (query, searchPosition, distance, serviceFilter) {
   let url = config.mobilesApi + '/stops?page=' + (query.page + 1) + '&limit=' + query.pageSize
   if (query.orderBy && query.orderBy.field) url = url + '&sort=' + query.orderBy.field + '&direction=' + query.orderDirection
 
   if (searchPosition && searchPosition.length > 1) url = url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
   if (distance && distance !== '') url = url + '&distance=' + distance
+
+  if (serviceFilter.length > 0) url = url + '&service_codes=' + serviceFilter.join('|')
 
   const response = await axios.get(url)
   if (response && response.data && response.data.length > 0) {
