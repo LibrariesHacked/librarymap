@@ -39,7 +39,7 @@ function LibraryMapApplication () {
     async function getServices () {
       const services = await serviceModel.getServices()
       const serviceLookup = {}
-      services.forEach(service => { serviceLookup[service.Code] = service })
+      services.forEach(service => { serviceLookup[service.code] = service })
       dispatchApplicationState({ type: 'AddServices', services: services, serviceLookup: serviceLookup })
     }
     getServices()

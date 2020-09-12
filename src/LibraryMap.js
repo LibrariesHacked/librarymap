@@ -57,8 +57,8 @@ const tripTiles = [config.tripTiles]
 
 function LibraryMap () {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
-  const [{ searchType, searchPosition, currentStopId, currentLibraryId, currentPoint }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
-  const [{ mapZoom, mapPosition, mapSettings, mapSettingsDialogOpen, isochronesMenuOpen, isochronesMenuAnchor }, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{ searchType, searchPosition, currentStopId, currentLibraryId, currentPoint, currentService }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ mapZoom, mapPosition, mapSettings, mapSettingsDialogOpen, mapBounds, isochronesMenuOpen, isochronesMenuAnchor }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
   }, [])
@@ -115,9 +115,19 @@ function LibraryMap () {
         maxZoom={18}
         pitch={[0]}
         bearing={[0]}
-        fitBounds={null}
+        fitBounds={mapBounds}
         containerStyle={{ top: 0, bottom: 0, right: 0, left: 0, height: '100vh', width: '100vw', position: 'absolute' }}
       >
+        {currentService && currentService.geom
+          ? (
+            <GeoJSONLayer // Shows the outlines of the distances
+              data={JSON.parse(currentService.geom)}
+              linePaint={{
+                'line-opacity': 0.4,
+                'line-width': 2,
+                'line-color': '#455a64'
+              }}
+            />) : null}
         {Object.keys(isochrones).map(point => {
           return Object.keys(isochrones[point])
             .filter(transport => {

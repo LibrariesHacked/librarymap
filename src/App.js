@@ -61,7 +61,10 @@ const initialSearchState = {
   currentStopId: null,
   currentLibraryId: null,
   currentPoint: [],
-  serviceFilter: []
+  serviceFilter: [],
+  serviceFilterBbox: null,
+  serviceFilterBoundary: null,
+  currentService: null
 }
 
 const searchReducer = (state, action) => {
@@ -93,7 +96,8 @@ const searchReducer = (state, action) => {
     case 'FilterByService':
       return {
         ...state,
-        serviceFilter: [action.serviceCode],
+        serviceFilter: [action.service.code],
+        currentService: action.service,
         searchPostcode: '',
         searchPosition: [],
         searchType: ''
@@ -116,6 +120,7 @@ const initialViewState = {
   notificationMessage: '',
   mapZoom: [7],
   mapPosition: [-1.155414, 52.691432],
+  mapBounds: null,
   mapSettings: {
     authorityBoundary: false
   },
@@ -146,6 +151,9 @@ const viewReducer = (state, action) => {
       const settings = state.mapSettings
       settings[action.mapSetting] = !settings[action.mapSetting]
       return { ...state, mapSettings: settings }
+    }
+    case 'FitToBounds': {
+      return { ...state, mapBounds: action.bounds }
     }
     case 'ToggleLoadingPostcode': {
       return { ...state, loadingPostcode: !state.loadingPostcode }

@@ -27,6 +27,7 @@ import WidgetsIcon from '@material-ui/icons/WidgetsTwoTone'
 import { makeStyles } from '@material-ui/core/styles'
 
 import PostcodeSearch from './PostcodeSearch'
+import ServiceFilter from './ServiceFilter'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -157,6 +158,7 @@ function AppHeader (props) {
             {appsOpen ? <CancelIcon /> : <WidgetsIcon />}
           </IconButton>
           <span className={classes.grow} />
+          {location.pathname === '/map' ? <ServiceFilter /> : null}
           <Typography color='secondary' variant='h6' component='h1' className={classes.title}>{sites[site].title}</Typography>
         </Toolbar>
       </Container>
