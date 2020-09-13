@@ -22,7 +22,7 @@ import ImportContactsIcon from '@material-ui/icons/ImportContactsTwoTone'
 import MapIcon from '@material-ui/icons/MapTwoTone'
 import MovieIcon from '@material-ui/icons/MovieTwoTone'
 import SearchIcon from '@material-ui/icons/SearchTwoTone'
-import WidgetsIcon from '@material-ui/icons/WidgetsTwoTone'
+import PetsIcon from '@material-ui/icons/PetsTwoTone'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -44,6 +44,19 @@ const useStyles = makeStyles((theme) => ({
   },
   grow: {
     flexGrow: 1
+  },
+  siteTitle: {
+    margin: theme.spacing(1),
+    padding: theme.spacing(1),
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    color: theme.palette.primary.main,
+    backgroundColor: 'rgba(250, 250, 250, 0.8)',
+    border: '1px solid #e5e5e5',
+    borderRadius: 26
+  },
+  siteTitleIcon: {
+    verticalAlign: 'sub'
   },
   title: {
     margin: theme.spacing(2),
@@ -163,11 +176,11 @@ function AppHeader (props) {
       <Container maxWidth='lg' className={classes.topTitle}>
         <Toolbar>
           <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen); setTabValue(site) }}>
-            {appsOpen ? <CancelIcon /> : <WidgetsIcon />}
+            {appsOpen ? <CancelIcon /> : <PetsIcon />}
           </IconButton>
           <span className={classes.grow} />
           {location.pathname === '/map' ? <ServiceFilter /> : null}
-          <Typography color='secondary' variant='h6' component='h1' className={classes.title}>{sites[site].title}</Typography>
+          <Typography color='secondary' variant='h6' component='h1' className={classes.siteTitle}><Typography component='span' className={classes.siteTitleIcon}>{sites[site].icon}</Typography> {sites[site].title}</Typography>
         </Toolbar>
       </Container>
       {appsOpen ? (
