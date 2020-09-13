@@ -11,7 +11,7 @@ export class Service {
     this.code = json.utla19cd
     this.name = json.utla19nm
     this.nameWales = json.utla19nmw
-    this.systemName = json.utla19nm.split(', ').reverse().join(' ').replace(/[. ,:-]+/g, '-').toLowerCase()
+    this.systemName = getServiceSystemName(json.utla19nm)
     this.geom = json.geom
     this.bbox = json.bbox
 
@@ -26,4 +26,8 @@ export async function getServices () {
   } else {
     return []
   }
+}
+
+export function getServiceSystemName (name) {
+  return name.split(', ').reverse().join(' ').replace(/[. ,:-]+/g, '-').toLowerCase()
 }

@@ -43,17 +43,17 @@ function LibraryMapApplication () {
     async function getServices () {
       const services = await serviceModel.getServices()
       const serviceLookup = {}
-      const serviceNameLookup = {}
+      const serviceSystemNameLookup = {}
       services.forEach(service => {
         serviceLookup[service.code] = service
-        serviceNameLookup[service.name] = service
+        serviceSystemNameLookup[service.systemName] = service
       })
       dispatchApplication({ type: 'AddServices', services: services, serviceLookup: serviceLookup })
       // Process any service query parameters
       const currentUrlParams = new URLSearchParams(window.location.search)
       const serviceName = currentUrlParams.get('service')
-      if (serviceName && serviceNameLookup[serviceName]) {
-        const service = serviceNameLookup[serviceName]
+      if (serviceName && serviceSystemNameLookup[serviceName]) {
+        const service = serviceSystemNameLookup[serviceName]
         const coords = JSON.parse(service.bbox).coordinates[0]
         dispatchSearch({ type: 'FilterByService', service: service })
         dispatchView({ type: 'FitToBounds', bounds: [coords[0], coords[2]] })
