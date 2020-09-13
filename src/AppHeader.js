@@ -29,6 +29,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import PostcodeSearch from './PostcodeSearch'
 import ServiceFilter from './ServiceFilter'
 
+import { useSearchStateValue } from './context/searchState'
+
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -63,12 +65,18 @@ const useStyles = makeStyles((theme) => ({
 
 function AppHeader (props) {
   const { site } = props
+  const [{ currentServiceSystemName }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
 
   const [appsOpen, setAppsOpen] = useState(false)
   const [tabValue, setTabValue] = useState(site)
 
   const location = useLocation()
   const classes = useStyles()
+
+  const currentServicePath = (path) => {
+    if (currentServiceSystemName) return path + '?service=' + currentServiceSystemName
+    return path
+  }
 
   const sites = [
     {
@@ -80,7 +88,7 @@ function AppHeader (props) {
           title: 'Find service',
           short: 'Find',
           icon: <SearchIcon />,
-          to: '/'
+          to: currentServicePath('/')
         },
         {
           title: 'Watch library TV',
@@ -136,13 +144,13 @@ function AppHeader (props) {
           title: 'Find my library',
           short: 'Find',
           icon: <GridOnIcon />,
-          to: '/'
+          to: currentServicePath('/')
         },
         {
           title: 'Map of libraries',
           short: 'Map',
           icon: <MapIcon />,
-          to: '/map'
+          to: currentServicePath('/map')
         }
       ]
     }

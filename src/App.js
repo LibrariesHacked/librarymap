@@ -64,7 +64,8 @@ const initialSearchState = {
   serviceFilter: [],
   serviceFilterBbox: null,
   serviceFilterBoundary: null,
-  currentService: null
+  currentService: null,
+  currentServiceSystemName: null
 }
 
 const searchReducer = (state, action) => {
@@ -98,6 +99,7 @@ const searchReducer = (state, action) => {
         ...state,
         serviceFilter: [action.service.code],
         currentService: action.service,
+        currentServiceSystemName: action.service.systemName,
         searchPostcode: '',
         searchPosition: [],
         searchType: ''

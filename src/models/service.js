@@ -10,7 +10,8 @@ export class Service {
   fromJson (json) {
     this.code = json.utla19cd
     this.name = json.utla19nm
-    this.name_wales = json.utla19nmw
+    this.nameWales = json.utla19nmw
+    this.systemName = json.utla19nm.split(', ').reverse().join(' ').replace(/[. ,:-]+/g, '-').toLowerCase()
     this.geom = json.geom
     this.bbox = json.bbox
 

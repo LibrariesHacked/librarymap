@@ -20,6 +20,8 @@ import Data from './pages/data.md'
 import * as serviceModel from './models/service'
 
 import { useApplicationStateValue } from './context/applicationState'
+import { useSearchStateValue } from './context/searchState'
+import { useViewStateValue } from './context/viewState'
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -32,15 +34,30 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function LibraryMapApplication () {
-  const [{ }, dispatchApplicationState] = useApplicationStateValue() //eslint-disable-line
+  const [{ }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+  const [{ }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
     // Initial data setup
     async function getServices () {
       const services = await serviceModel.getServices()
       const serviceLookup = {}
-      services.forEach(service => { serviceLookup[service.code] = service })
-      dispatchApplicationState({ type: 'AddServices', services: services, serviceLookup: serviceLookup })
+      const serviceNameLookup = {}
+      services.forEach(service => {
+        serviceLookup[service.code] = service
+        serviceNameLookup[service.name] = service
+      })
+      dispatchApplication({ type: 'AddServices', services: services, serviceLookup: serviceLookup })
+      // Process any service query parameters
+      const currentUrlParams = new URLSearchParams(window.location.search)
+      const serviceName = currentUrlParams.get('service')
+      if (serviceName && serviceNameLookup[serviceName]) {
+        const service = serviceNameLookup[serviceName]
+        const coords = JSON.parse(service.bbox).coordinates[0]
+        dispatchSearch({ type: 'FilterByService', service: service })
+        dispatchView({ type: 'FitToBounds', bounds: [coords[0], coords[2]] })
+      }
     }
     getServices()
   }, []) //eslint-disable-line
