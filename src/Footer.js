@@ -48,7 +48,7 @@ function Footer () {
           <Typography variant='body1' className={classes.footerText}>A library lab project built by Libraries Hacked.</Typography><br />
           <Typography variant='button'>
             <Link component={RouteLink} to='/data' title='Maintaining the data used on this site and licensing' className={classes.tapTarget}>Data</Link><br />
-            <Link href='https://github.com/LibrariesHacked/librarymap' target='_blank' title='Project on GitHub' className={classes.tapTarget}>GitHub</Link><br/>
+            <Link href='https://github.com/LibrariesHacked/librarymap' target='_blank' title='Project on GitHub' className={classes.tapTarget}>GitHub</Link><br />
             <Link href='https://www.librarylab.co.uk' target='_blank' title='About the library lab projects and documentation for each' className={classes.tapTarget}>About Library lab</Link>
           </Typography>
         </Grid>

@@ -15,6 +15,8 @@ import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
+import * as urlHelper from './helpers/url'
+
 const useStyles = makeStyles((theme) => ({
   button: {
     marginRight: theme.spacing(1)
@@ -39,17 +41,13 @@ function ServiceFilter (props) {
     const coords = JSON.parse(service.bbox).coordinates[0]
     dispatchSearch({ type: 'FilterByService', service: service })
     dispatchView({ type: 'FitToBounds', bounds: [coords[0], coords[2]] })
-    const currentUrlParams = new URLSearchParams(window.location.search)
-    currentUrlParams.set('service', service.systemName)
-    props.history.push(window.location.pathname + '?' + currentUrlParams.toString())
+    urlHelper.addService(props.history, service.systemName)
     closeServiceMenu()
   }
 
   const clearServiceFilter = () => {
     dispatchSearch({ type: 'ClearAll' })
-    const currentUrlParams = new URLSearchParams(window.location.search)
-    currentUrlParams.delete('service')
-    props.history.push(window.location.pathname)
+    urlHelper.clearService(props.history)
   }
 
   const classes = useStyles()
@@ -59,7 +57,7 @@ function ServiceFilter (props) {
       {serviceFilter.length === 0 ? (
         <Tooltip title='Choose library service'>
           <Button color='primary' className={classes.button} onClick={(e) => openServiceMenu(e.currentTarget)} startIcon={<BusinessIcon />}>
-            Select service
+            Choose service
           </Button>
         </Tooltip>
       ) : <Chip className={classes.chip} color='primary' onDelete={clearServiceFilter} label={serviceLookup[serviceFilter[0]].name} />}

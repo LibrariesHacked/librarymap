@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { withRouter } from 'react-router'
 
 import IconButton from '@material-ui/core/IconButton'
 import InputBase from '@material-ui/core/InputBase'
@@ -19,6 +20,7 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import * as geoHelper from './helpers/geo'
+import * as urlHelper from './helpers/url'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -90,6 +92,7 @@ function PostcodeSearch (props) {
     const validatePostcode = (pc) => /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/.test(pc)
     if (validatePostcode(tempPostcode.trim())) {
       const service = await geoHelper.getPostcode(tempPostcode.trim())
+      urlHelper.clearService(props.history)
       dispatchSearch({ type: 'SetPostcodeSearch', searchPostcode: tempPostcode, searchPosition: service.location })
     } else {
       dispatchView({ type: 'ShowNotification', notificationMessage: 'Is that a valid postcode? Please check.' })
@@ -163,4 +166,4 @@ function PostcodeSearch (props) {
   )
 }
 
-export default PostcodeSearch
+export default withRouter(PostcodeSearch)

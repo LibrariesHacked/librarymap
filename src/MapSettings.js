@@ -6,8 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import ListSubheader from '@material-ui/core/ListSubheader'
 import Switch from '@material-ui/core/Switch'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+
+import CancelIcon from '@material-ui/icons/CancelTwoTone'
 
 import { useTheme, makeStyles } from '@material-ui/core/styles'
 
@@ -24,6 +27,14 @@ function MapSettings () {
 
   const closeDialog = () => {
     dispatchView({ type: 'SetMapSettingsDialog', mapSettingsDialogOpen: false })
+  }
+
+  const handleLibrariesChange = () => {
+    dispatchView({ type: 'ToggleMapSetting', mapSetting: 'libraries' })
+  }
+
+  const handleMobileLibraryStopsChange = () => {
+    dispatchView({ type: 'ToggleMapSetting', mapSetting: 'mobileLibraryStops' })
   }
 
   const handleAuthorityBoundaryChange = () => {
@@ -47,6 +58,29 @@ function MapSettings () {
     >
       <DialogTitle>Map settings</DialogTitle>
       <DialogContent>
+        <ListSubheader disableSticky>Display</ListSubheader>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={mapSettings.libraries}
+              onChange={handleLibrariesChange}
+              name='sw_libraries'
+              color='primary'
+            />
+          }
+          label='Libraries'
+        /><br />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={mapSettings.mobileLibraryStops}
+              onChange={handleMobileLibraryStopsChange}
+              name='sw_mobile_library_stops'
+              color='primary'
+            />
+          }
+          label='Mobile library stops'
+        /><br />
         <FormControlLabel
           control={
             <Switch
@@ -60,7 +94,7 @@ function MapSettings () {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog} color='secondary'>Close</Button>
+        <Button onClick={closeDialog} color='secondary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
   )

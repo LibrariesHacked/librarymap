@@ -350,122 +350,127 @@ function LibraryMap () {
             tiles: stopTiles
           }}
         />
-        <Layer
-          id='lyr_stops_circles'
-          type='circle'
-          sourceId='src_stops'
-          sourceLayer='stop'
-          minZoom={5}
-          layout={{}}
-          paint={{
-            'circle-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              5, 2,
-              18, 8
-            ],
-            'circle-color': '#455a64',
-            'circle-stroke-width': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              5, 1,
-              18, 3
-            ],
-            'circle-stroke-color': '#ffffff',
-            'circle-opacity': 0.5
-          }}
-          onClick={clickStop}
-        />
-        <Layer
-          id='lyr_stops_labels'
-          type='symbol'
-          sourceId='src_stops'
-          sourceLayer='stop'
-          minZoom={13}
-          layout={{
-            'text-ignore-placement': false,
-            'text-field': ['concat', 'Mobile: ', ['get', 'name']],
-            'text-font': [
-              'Source Sans Pro Bold'
-            ],
-            'text-line-height': 1,
-            'text-size': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              13, 12,
-              18, 18
-            ],
-            'text-offset': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              13, ['literal', [0, 1.5]],
-              18, ['literal', [0, 2]]
-            ]
-          }}
-          paint={{
-            'text-halo-color': 'hsl(0, 0%, 100%)',
-            'text-halo-width': 1,
-            'text-halo-blur': 1,
-            'text-color': '#6a6f73'
-          }}
-          onClick={clickStop}
-        />
-        <Layer
-          id='lyr_stops_next_visiting'
-          type='symbol'
-          sourceId='src_stops'
-          sourceLayer='stop'
-          minZoom={14}
-          layout={{
-            'text-ignore-placement': false,
-            'text-field': ['to-string', ['get', 'next_visiting']],
-            'text-font': [
-              'Source Sans Pro Bold'
-            ],
-            'text-line-height': 1,
-            'text-size': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              14, 10,
-              18, 16
-            ],
-            'text-offset': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              13, ['literal', [0, -1.5]],
-              18, ['literal', [0, -2]]
-            ]
-          }}
-          paint={{
-            'text-halo-color': 'hsl(0, 0%, 100%)',
-            'text-halo-width': 1,
-            'text-halo-blur': 1,
-            'text-color': '#6a6f73'
-          }}
-          onClick={clickStop}
-        />
+        {mapSettings.mobileLibraryStops
+          ? (
+            <>
+              <Layer
+                id='lyr_stops_circles'
+                type='circle'
+                sourceId='src_stops'
+                sourceLayer='stop'
+                minZoom={5}
+                layout={{}}
+                paint={{
+                  'circle-radius': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    5, 2,
+                    18, 8
+                  ],
+                  'circle-color': '#455a64',
+                  'circle-stroke-width': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    5, 1,
+                    18, 3
+                  ],
+                  'circle-stroke-color': '#ffffff',
+                  'circle-opacity': 0.5
+                }}
+                onClick={clickStop}
+              />
+              <Layer
+                id='lyr_stops_labels'
+                type='symbol'
+                sourceId='src_stops'
+                sourceLayer='stop'
+                minZoom={13}
+                layout={{
+                  'text-ignore-placement': false,
+                  'text-field': ['concat', 'Mobile: ', ['get', 'name']],
+                  'text-font': [
+                    'Source Sans Pro Bold'
+                  ],
+                  'text-line-height': 1,
+                  'text-size': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    13, 12,
+                    18, 18
+                  ],
+                  'text-offset': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    13, ['literal', [0, 1.5]],
+                    18, ['literal', [0, 2]]
+                  ]
+                }}
+                paint={{
+                  'text-halo-color': 'hsl(0, 0%, 100%)',
+                  'text-halo-width': 1,
+                  'text-halo-blur': 1,
+                  'text-color': '#6a6f73'
+                }}
+                onClick={clickStop}
+              />
+              <Layer
+                id='lyr_stops_next_visiting'
+                type='symbol'
+                sourceId='src_stops'
+                sourceLayer='stop'
+                minZoom={14}
+                layout={{
+                  'text-ignore-placement': false,
+                  'text-field': ['to-string', ['get', 'next_visiting']],
+                  'text-font': [
+                    'Source Sans Pro Bold'
+                  ],
+                  'text-line-height': 1,
+                  'text-size': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    14, 10,
+                    18, 16
+                  ],
+                  'text-offset': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    13, ['literal', [0, -1.5]],
+                    18, ['literal', [0, -2]]
+                  ]
+                }}
+                paint={{
+                  'text-halo-color': 'hsl(0, 0%, 100%)',
+                  'text-halo-width': 1,
+                  'text-halo-blur': 1,
+                  'text-color': '#6a6f73'
+                }}
+                onClick={clickStop}
+              />
+            </>
+          ) : null}
         <Source
           id='src_libraries'
           tileJsonSource={{
@@ -473,259 +478,264 @@ function LibraryMap () {
             tiles: libraryTiles
           }}
         />
-        <Layer
-          id='lyr_libraries_closed_name_labels'
-          type='symbol'
-          sourceId='src_libraries'
-          sourceLayer='libraries'
-          minZoom={12}
-          filter={['has', 'Year closed']}
-          layout={{
-            'text-ignore-placement': false,
-            'text-field': ['to-string', ['get', 'Library name']],
-            'text-font': [
-              'Source Sans Pro Bold'
-            ],
-            'text-line-height': 1,
-            'text-size': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              12, 10,
-              18, 14
-            ],
-            'text-offset': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              12, ['literal', [0, 1.5]],
-              18, ['literal', [0, 2]]
-            ]
-          }}
-          paint={{
-            'text-halo-color': 'hsl(0, 0%, 100%)',
-            'text-halo-width': 0,
-            'text-halo-blur': 0,
-            'text-color': '#d32f2f',
-            'text-opacity': 0.9
-          }}
-          onClick={clickLibrary}
-        />
-        <Layer
-          id='lyr_libraries_closed_labels'
-          type='symbol'
-          sourceId='src_libraries'
-          sourceLayer='libraries'
-          minZoom={12}
-          filter={['has', 'Year closed']}
-          layout={{
-            'text-ignore-placement': false,
-            'text-field': ['concat', 'Closed ', ['get', 'Year closed']],
-            'text-font': [
-              'Source Sans Pro Bold'
-            ],
-            'text-line-height': 1,
-            'text-size': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              12, 10,
-              18, 14
-            ],
-            'text-offset': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              12, ['literal', [0, -1.5]],
-              18, ['literal', [0, -2]]
-            ]
-          }}
-          paint={{
-            'text-halo-color': 'hsl(0, 0%, 100%)',
-            'text-halo-width': 0,
-            'text-halo-blur': 1,
-            'text-color': '#d32f2f',
-            'text-opacity': 0.9
-          }}
-          onClick={clickLibrary}
-        />
-        <Layer
-          id='lyr_libraries_closed_circles'
-          type='circle'
-          sourceId='src_libraries'
-          sourceLayer='libraries'
-          minZoom={11}
-          filter={['has', 'Year closed']}
-          paint={{
-            'circle-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              12, 3,
-              18, 8
-            ],
-            'circle-color': '#b71c1c',
-            'circle-stroke-width': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              12, 1,
-              18, 3
-            ],
-            'circle-stroke-color': '#ffffff',
-            'circle-stroke-opacity': 0.9,
-            'circle-opacity': 0.6
-          }}
-          onClick={clickLibrary}
-        />
-        <Layer
-          id='lyr_libraries_open_type_labels'
-          type='symbol'
-          sourceId='src_libraries'
-          sourceLayer='libraries'
-          minZoom={13}
-          filter={['!', ['has', 'Year closed']]}
-          layout={{
-            'text-ignore-placement': false,
-            'text-field': ['match', ['get', 'Library type'], 'LAL', 'Local authority library', 'LAL-', 'Local authority run - unstaffed', 'CL', 'Commissioned library', 'CRL', 'Community run library', 'IL', 'Independent library', 'Unknown library'],
-            'text-font': [
-              'Source Sans Pro Bold'
-            ],
-            'text-line-height': 1,
-            'text-size': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              13, 12,
-              18, 16
-            ],
-            'text-offset': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              13, ['literal', [0, -1.5]],
-              18, ['literal', [0, -2]]
-            ]
-          }}
-          paint={{
-            'text-halo-color': 'hsl(0, 0%, 100%)',
-            'text-halo-width': 1,
-            'text-halo-blur': 1,
-            'text-color': '#6a6f73'
-          }}
-          onClick={clickLibrary}
-        />
-        <Layer
-          id='lyr_libraries_open_name_labels'
-          type='symbol'
-          sourceId='src_libraries'
-          sourceLayer='libraries'
-          minZoom={10}
-          filter={['!', ['has', 'Year closed']]}
-          layout={{
-            'text-ignore-placement': false,
-            'text-field': ['to-string', ['get', 'Library name']],
-            'text-font': [
-              'Source Sans Pro Bold'
-            ],
-            'text-line-height': 1,
-            'text-size': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              10, 14,
-              18, 18
-            ],
-            'text-offset': [
-              'interpolate',
-              [
-                'linear'
-              ],
-              [
-                'zoom'
-              ],
-              10, ['literal', [0, 1.5]],
-              18, ['literal', [0, 2]]
-            ]
-          }}
-          paint={{
-            'text-halo-color': 'hsl(0, 0%, 100%)',
-            'text-halo-width': 1,
-            'text-halo-blur': 1,
-            'text-color': '#6a6f73',
-            'text-opacity': 1
-          }}
-          onClick={clickLibrary}
-        />
-        <Layer
-          id='lyr_libraries_open_circles'
-          type='circle'
-          sourceId='src_libraries'
-          sourceLayer='libraries'
-          minZoom={5}
-          filter={['!', ['has', 'Year closed']]}
-          paint={{
-            'circle-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              5, 3,
-              18, 12
-            ],
-            'circle-color': ['match', ['get', 'Library type'], 'LAL', '#1b5e20', 'LAL-', '#388e3c', 'CL', '#0d47a1', 'CRL', '#e65100', 'ICL', '#bf360c', '#bf360c'],
-            'circle-stroke-width': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              5, 1,
-              18, 4
-            ],
-            'circle-stroke-color': '#ffffff',
-            'circle-stroke-opacity': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              5, 0.8,
-              18, 1
-            ],
-            'circle-opacity': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              5, 0.4,
-              18, 0.9
-            ]
-          }}
-          onClick={clickLibrary}
-        />
+        {mapSettings.libraries
+          ? (
+            <>
+              <Layer
+                id='lyr_libraries_closed_name_labels'
+                type='symbol'
+                sourceId='src_libraries'
+                sourceLayer='libraries'
+                minZoom={12}
+                filter={['has', 'Year closed']}
+                layout={{
+                  'text-ignore-placement': false,
+                  'text-field': ['to-string', ['get', 'Library name']],
+                  'text-font': [
+                    'Source Sans Pro Bold'
+                  ],
+                  'text-line-height': 1,
+                  'text-size': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    12, 10,
+                    18, 14
+                  ],
+                  'text-offset': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    12, ['literal', [0, 1.5]],
+                    18, ['literal', [0, 2]]
+                  ]
+                }}
+                paint={{
+                  'text-halo-color': 'hsl(0, 0%, 100%)',
+                  'text-halo-width': 0,
+                  'text-halo-blur': 0,
+                  'text-color': '#d32f2f',
+                  'text-opacity': 0.9
+                }}
+                onClick={clickLibrary}
+              />
+              <Layer
+                id='lyr_libraries_closed_labels'
+                type='symbol'
+                sourceId='src_libraries'
+                sourceLayer='libraries'
+                minZoom={12}
+                filter={['has', 'Year closed']}
+                layout={{
+                  'text-ignore-placement': false,
+                  'text-field': ['concat', 'Closed ', ['get', 'Year closed']],
+                  'text-font': [
+                    'Source Sans Pro Bold'
+                  ],
+                  'text-line-height': 1,
+                  'text-size': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    12, 10,
+                    18, 14
+                  ],
+                  'text-offset': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    12, ['literal', [0, -1.5]],
+                    18, ['literal', [0, -2]]
+                  ]
+                }}
+                paint={{
+                  'text-halo-color': 'hsl(0, 0%, 100%)',
+                  'text-halo-width': 0,
+                  'text-halo-blur': 1,
+                  'text-color': '#d32f2f',
+                  'text-opacity': 0.9
+                }}
+                onClick={clickLibrary}
+              />
+              <Layer
+                id='lyr_libraries_closed_circles'
+                type='circle'
+                sourceId='src_libraries'
+                sourceLayer='libraries'
+                minZoom={11}
+                filter={['has', 'Year closed']}
+                paint={{
+                  'circle-radius': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    12, 3,
+                    18, 8
+                  ],
+                  'circle-color': '#b71c1c',
+                  'circle-stroke-width': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    12, 1,
+                    18, 3
+                  ],
+                  'circle-stroke-color': '#ffffff',
+                  'circle-stroke-opacity': 0.9,
+                  'circle-opacity': 0.6
+                }}
+                onClick={clickLibrary}
+              />
+              <Layer
+                id='lyr_libraries_open_type_labels'
+                type='symbol'
+                sourceId='src_libraries'
+                sourceLayer='libraries'
+                minZoom={13}
+                filter={['!', ['has', 'Year closed']]}
+                layout={{
+                  'text-ignore-placement': false,
+                  'text-field': ['match', ['get', 'Library type'], 'LAL', 'Local authority library', 'LAL-', 'Local authority run - unstaffed', 'CL', 'Commissioned library', 'CRL', 'Community run library', 'IL', 'Independent library', 'Unknown library'],
+                  'text-font': [
+                    'Source Sans Pro Bold'
+                  ],
+                  'text-line-height': 1,
+                  'text-size': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    13, 12,
+                    18, 16
+                  ],
+                  'text-offset': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    13, ['literal', [0, -1.5]],
+                    18, ['literal', [0, -2]]
+                  ]
+                }}
+                paint={{
+                  'text-halo-color': 'hsl(0, 0%, 100%)',
+                  'text-halo-width': 1,
+                  'text-halo-blur': 1,
+                  'text-color': '#6a6f73'
+                }}
+                onClick={clickLibrary}
+              />
+              <Layer
+                id='lyr_libraries_open_name_labels'
+                type='symbol'
+                sourceId='src_libraries'
+                sourceLayer='libraries'
+                minZoom={10}
+                filter={['!', ['has', 'Year closed']]}
+                layout={{
+                  'text-ignore-placement': false,
+                  'text-field': ['to-string', ['get', 'Library name']],
+                  'text-font': [
+                    'Source Sans Pro Bold'
+                  ],
+                  'text-line-height': 1,
+                  'text-size': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    10, 14,
+                    18, 18
+                  ],
+                  'text-offset': [
+                    'interpolate',
+                    [
+                      'linear'
+                    ],
+                    [
+                      'zoom'
+                    ],
+                    10, ['literal', [0, 1.5]],
+                    18, ['literal', [0, 2]]
+                  ]
+                }}
+                paint={{
+                  'text-halo-color': 'hsl(0, 0%, 100%)',
+                  'text-halo-width': 1,
+                  'text-halo-blur': 1,
+                  'text-color': '#6a6f73',
+                  'text-opacity': 1
+                }}
+                onClick={clickLibrary}
+              />
+              <Layer
+                id='lyr_libraries_open_circles'
+                type='circle'
+                sourceId='src_libraries'
+                sourceLayer='libraries'
+                minZoom={5}
+                filter={['!', ['has', 'Year closed']]}
+                paint={{
+                  'circle-radius': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    5, 3,
+                    18, 12
+                  ],
+                  'circle-color': ['match', ['get', 'Library type'], 'LAL', '#1b5e20', 'LAL-', '#388e3c', 'CL', '#0d47a1', 'CRL', '#e65100', 'ICL', '#bf360c', '#bf360c'],
+                  'circle-stroke-width': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    5, 1,
+                    18, 4
+                  ],
+                  'circle-stroke-color': '#ffffff',
+                  'circle-stroke-opacity': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    5, 0.8,
+                    18, 1
+                  ],
+                  'circle-opacity': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    5, 0.4,
+                    18, 0.9
+                  ]
+                }}
+                onClick={clickLibrary}
+              />
+            </>
+          ) : null}
         {searchPosition && searchPosition.length > 1
           ? (
             <Marker

@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
+import Chip from '@material-ui/core/Chip'
 import Container from '@material-ui/core/Container'
 import Hidden from '@material-ui/core/Hidden'
 import IconButton from '@material-ui/core/IconButton'
@@ -193,7 +194,10 @@ function AppHeader (props) {
           </IconButton>
           <span className={classes.grow} />
           {location.pathname === '/map' ? <ServiceFilter /> : null}
-          <Typography color='secondary' variant='h6' component='h1' className={classes.siteTitle}><Typography component='span' className={classes.siteTitleIcon}>{sites[site].icon}</Typography> {sites[site].title}</Typography>
+          <Chip
+            label={sites[site].title}
+            color='secondary'
+          />
         </Toolbar>
       </Container>
       {appsOpen ? (

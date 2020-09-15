@@ -33,11 +33,10 @@ function Search () {
   return (
     <div>
       <Typography component='h2' variant='h6' color='secondary' className={classes.title}>Find my library</Typography>
-      <Typography component='p' variant='subtitle1' className={classes.subtitle}>Search by postcode to find your nearest library</Typography>
+      <Typography component='p' variant='subtitle1' className={classes.subtitle}>Search by postcode or library service</Typography>
       <div className={classes.search}>
         <PostcodeSearch settings />
       </div>
-      <Typography component='p' variant='subtitle1' className={classes.subtitle}>Or choose a library service</Typography>
       <div className={classes.search}>
         <ServiceFilter />
       </div>

@@ -90,6 +90,9 @@ const searchReducer = (state, action) => {
     case 'SetPostcodeSearch':
       return {
         ...state,
+        serviceFilter: [],
+        currentService: null,
+        currentServiceSystemName: null,
         searchPostcode: action.searchPostcode,
         searchPosition: action.searchPosition,
         searchType: 'postcode'
@@ -102,7 +105,7 @@ const searchReducer = (state, action) => {
         currentServiceSystemName: action.service.systemName,
         searchPostcode: '',
         searchPosition: [],
-        searchType: ''
+        searchType: 'service'
       }
     case 'ClearAll':
       return {
@@ -124,6 +127,8 @@ const initialViewState = {
   mapPosition: [-1.155414, 52.691432],
   mapBounds: null,
   mapSettings: {
+    libraries: true,
+    mobileLibraryStops: true,
     authorityBoundary: false
   },
   mapSettingsDialogOpen: false,
