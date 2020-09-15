@@ -67,7 +67,7 @@ function LibraryMapApplication () {
   return (
     <BrowserRouter>
       <div className={classes.root}>
-        <AppHeader loading={false} site={2} />
+        <AppHeader loading={false} site={3} />
         <Container maxWidth='lg'>
           <main className={classes.content}>
             <Route path='/' exact render={() => <Search />} />

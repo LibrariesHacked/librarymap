@@ -93,6 +93,19 @@ function AppHeader (props) {
 
   const sites = [
     {
+      title: 'Library lab',
+      url: 'https://www.librarylab.uk',
+      icon: <PetsIcon />,
+      links: [
+        {
+          title: 'About library lab',
+          short: 'Lab',
+          icon: <PetsIcon />,
+          to: '/'
+        }
+      ]
+    },
+    {
       title: 'Libraries at home',
       url: 'https://www.librariesathome.co.uk',
       icon: <ImportContactsIcon />,
