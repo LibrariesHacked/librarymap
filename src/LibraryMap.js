@@ -131,7 +131,7 @@ function LibraryMap () {
         {Object.keys(isochrones).map(point => {
           return Object.keys(isochrones[point])
             .filter(transport => {
-              return isochrones[point][transport].display
+              return isochrones[point][transport] && isochrones[point][transport].display
             })
             .map((transport, x) => {
               return (
