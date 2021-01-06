@@ -12,7 +12,6 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 import Toolbar from '@material-ui/core/Toolbar'
 import Tooltip from '@material-ui/core/Tooltip'
-import Typography from '@material-ui/core/Typography'
 
 import BookIcon from '@material-ui/icons/BookTwoTone'
 import CancelIcon from '@material-ui/icons/CancelTwoTone'

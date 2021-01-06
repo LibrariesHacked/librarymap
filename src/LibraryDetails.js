@@ -62,7 +62,7 @@ function LibraryDetails () {
     if (currentLibraryId != null) getLibrary(currentLibraryId)
   }, [currentLibraryId])
 
-  const goToWebsite = () => window.open(library.timetable, '_blank')
+  const goToWebsite = () => window.open(library.url, '_blank')
 
   const viewMapLibrary = () => {
     dispatchView({ type: 'SetMapPosition', mapPosition: [library.longitude, library.latitude], mapZoom: 14 })
