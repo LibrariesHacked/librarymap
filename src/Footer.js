@@ -1,9 +1,9 @@
 import React from 'react'
-import RouteLink from 'react-router-dom/Link'
+import { Link } from 'react-router-dom'
 
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
-import Link from '@material-ui/core/Link'
+import MaterialLink from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 
 import FavoriteIcon from '@material-ui/icons/FavoriteTwoTone'
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(5),
     width: '100%'
+  },
+  bullet: {
+    margin: theme.spacing(2)
   },
   grid: {
     marginTop: theme.spacing(2)
@@ -45,17 +48,19 @@ function Footer () {
       <Divider />
       <Grid container spacing={3} className={classes.grid}>
         <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-          <Typography variant='body1' className={classes.footerText}>A library lab project built by Libraries Hacked.</Typography><br />
           <Typography variant='button'>
-            <Link component={RouteLink} to='/data' title='Maintaining the data used on this site and licensing' className={classes.tapTarget}>Data</Link><br />
-            <Link href='https://github.com/LibrariesHacked/librarymap' target='_blank' title='Project on GitHub' className={classes.tapTarget}>GitHub</Link><br />
-            <Link href='https://www.librarylab.uk' target='_blank' title='About the library lab projects and documentation for each' className={classes.tapTarget}>About Library lab</Link>
-          </Typography>
+            <MaterialLink href='https://www.librarylab.uk/library-map' target='_blank' title='About the library map library lab project' className={classes.tapTarget}>About this project</MaterialLink>
+            <span className={classes.bullet}> &#8226; </span>
+            <MaterialLink component={Link} to='/data' title='Maintaining the data used on this site and licensing' className={classes.tapTarget}>Data</MaterialLink>
+            <span className={classes.bullet}> &#8226; </span>
+            <MaterialLink href='https://github.com/LibrariesHacked/librarymap' target='_blank' title='Project on GitHub' className={classes.tapTarget}>GitHub</MaterialLink>
+          </Typography><br />
+          <Typography variant='body2' className={classes.footerText}>A Library Lab project by Libraries Hacked.</Typography>
         </Grid>
         <Grid className={classes.footerRight} item xs={12} sm={6} md={6} lg={6} xl={6}>
           <Typography variant='body1' className={classes.footerText}>In memory of Paul Rowe <FavoriteIcon color='primary' className={classes.loveIcon} /></Typography><br />
           <Typography variant='button'>
-            <Link href='https://www.mind.org.uk/donate/' title='Donate to Mind' className={classes.tapTarget} target='_blank'>Donate to Mind</Link>
+            <MaterialLink href='https://www.mind.org.uk/donate/' title='Donate to Mind' className={classes.tapTarget} target='_blank'>Donate to Mind</MaterialLink>
           </Typography>
         </Grid>
       </Grid>

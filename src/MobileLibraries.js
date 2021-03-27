@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import IconButton from '@material-ui/core/IconButton'
 import ListSubheader from '@material-ui/core/ListSubheader'
@@ -16,7 +17,9 @@ import ChevronRight from '@material-ui/icons/ChevronRightTwoTone'
 import FirstPage from '@material-ui/icons/FirstPageTwoTone'
 import FilterList from '@material-ui/icons/FilterListTwoTone'
 import LastPage from '@material-ui/icons/LastPageTwoTone'
+import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 import MoreVertIcon from '@material-ui/icons/MoreVertTwoTone'
+import WebIcon from '@material-ui/icons/WebTwoTone'
 
 import * as stopHelper from './models/stop'
 
@@ -29,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    border: '1px solid #E0E0E0'
+    border: '1px solid #ffe0b2'
   }
 }))
 
@@ -49,6 +52,12 @@ function MobileLibraries () {
   var selectStop = (stop) => {
     dispatchSearch({ type: 'SetCurrentStop', currentStopId: stop.id })
     dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
+  }
+
+  const goToStopTimetableWebsite = (library) => window.open(library.url, '_blank')
+
+  const viewLibraryStopOnMap = (stop) => {
+    dispatchView({ type: 'SetMapPosition', mapPosition: [stop.longitude, stop.latitude], mapZoom: 16 })
   }
 
   return (
@@ -75,8 +84,8 @@ function MobileLibraries () {
           filtering: false,
           toolbar: false,
           headerStyle: {
-            backgroundColor: '#fafafa',
-            color: '#737373',
+            backgroundColor: '#fff3e0',
+            color: '#e65100',
             border: '0px'
           }
         }}
@@ -94,9 +103,33 @@ function MobileLibraries () {
                       <MoreVertIcon />
                     </IconButton>
                   </Tooltip>
+                  <Tooltip title='See this stop on the library map'>
+                    <IconButton size='small' color='primary' onClick={() => viewLibraryStopOnMap(rowData)} component={Link} to='/map'>
+                      <LocationOnIcon />
+                    </IconButton>
+                  </Tooltip>
+                  {rowData.url
+                    ? (
+                      <Tooltip title='Go to the library website'>
+                        <IconButton size='small' color='primary' onClick={() => goToStopTimetableWebsite(rowData)}>
+                          <WebIcon />
+                        </IconButton>
+                      </Tooltip>
+                    ) : null}
                 </>
               )
             },
+            cellStyle: {
+              borderBottom: '1px solid #f5f5f5',
+              backgroundColor: '#ffffff'
+            }
+          },
+          {
+            title: 'Community',
+            field: 'community',
+            filtering: false,
+            sorting: false,
+            hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
               backgroundColor: '#ffffff'
@@ -116,17 +149,6 @@ function MobileLibraries () {
             title: 'Service',
             field: 'organisationName',
             filtering: false,
-            hidden: false,
-            cellStyle: {
-              borderBottom: '1px solid #f5f5f5',
-              backgroundColor: '#ffffff'
-            }
-          },
-          {
-            title: 'Community',
-            field: 'community',
-            filtering: false,
-            sorting: false,
             hidden: false,
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',

@@ -14,7 +14,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import CancelIcon from '@material-ui/icons/CancelTwoTone'
 import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
-import LaunchIcon from '@material-ui/icons/LaunchTwoTone'
+import WebIcon from '@material-ui/icons/WebTwoTone'
 import ListSubheader from '@material-ui/core/ListSubheader'
 
 import { useSearchStateValue } from './context/searchState'
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #E0E0E0'
   },
   dialogContentActions: {
-    backgroundColor: '#ffebee',
-    border: '1px solid #ffcdd2',
+    backgroundColor: '#fff3e0',
+    border: '1px solid #ffe0b2',
     borderRadius: 3,
     padding: 4
   },
@@ -65,7 +65,7 @@ function LibraryDetails () {
   const goToWebsite = () => window.open(library.url, '_blank')
 
   const viewMapLibrary = () => {
-    dispatchView({ type: 'SetMapPosition', mapPosition: [library.longitude, library.latitude], mapZoom: 14 })
+    dispatchView({ type: 'SetMapPosition', mapPosition: [library.longitude, library.latitude], mapZoom: 16 })
   }
 
   const close = () => {
@@ -96,7 +96,7 @@ function LibraryDetails () {
               <Typography component='p' variant='body2'>{[library.address1, library.address2, library.address3, library.postcode].filter(l => Boolean(l)).join(', ')}</Typography>
               <ListSubheader disableSticky>Actions</ListSubheader>
               <div className={classes.dialogContentActions}>
-                <Button onClick={() => goToWebsite()} color='primary' startIcon={<LaunchIcon />}>Go to website</Button>
+                <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
                 <Button onClick={viewMapLibrary} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
               </div>
             </DialogContent>

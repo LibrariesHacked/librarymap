@@ -18,23 +18,22 @@ import CancelIcon from '@material-ui/icons/CancelTwoTone'
 import DirectionBusIcon from '@material-ui/icons/DirectionsBusTwoTone'
 import GridOnIcon from '@material-ui/icons/GridOnTwoTone'
 import HeadsetIcon from '@material-ui/icons/HeadsetTwoTone'
-import ImportContactsIcon from '@material-ui/icons/ImportContactsTwoTone'
+import LocalLibraryIcon from '@material-ui/icons/LocalLibraryTwoTone'
 import MapIcon from '@material-ui/icons/MapTwoTone'
 import MovieIcon from '@material-ui/icons/MovieTwoTone'
 import SearchIcon from '@material-ui/icons/SearchTwoTone'
 import PetsIcon from '@material-ui/icons/PetsTwoTone'
+import WarningIcon from '@material-ui/icons/WarningTwoTone'
 
 import { makeStyles } from '@material-ui/core/styles'
 
 import PostcodeSearch from './PostcodeSearch'
-import ServiceFilter from './ServiceFilter'
 
 import { useSearchStateValue } from './context/searchState'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: 'white',
     position: 'relative'
   },
   appBarTransparent: {
@@ -45,27 +44,8 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1
   },
-  siteTitle: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    color: theme.palette.primary.main,
-    backgroundColor: 'rgba(250, 250, 250, 0.8)',
-    border: '1px solid #e5e5e5',
-    borderRadius: 26
-  },
-  siteTitleIcon: {
-    verticalAlign: 'sub'
-  },
-  title: {
-    margin: theme.spacing(2),
-    display: 'inline-block',
-    verticalAlign: 'middle'
-  },
   topIcon: {
     backgroundColor: 'rgba(250, 250, 250, 0.8)',
-    border: '1px solid #e5e5e5',
     '&:hover': {
       backgroundColor: 'rgba(250, 250, 250, 0.8)'
     }
@@ -78,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AppHeader (props) {
   const { site } = props
-  const [{ currentServiceSystemName }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ currentServiceSystemName }] = useSearchStateValue() //eslint-disable-line
 
   const [appsOpen, setAppsOpen] = useState(false)
   const [tabValue, setTabValue] = useState(site)
@@ -108,7 +88,7 @@ function AppHeader (props) {
     {
       title: 'Libraries at home',
       url: 'https://www.librariesathome.co.uk',
-      icon: <ImportContactsIcon />,
+      icon: <LocalLibraryIcon />,
       links: [
         {
           title: 'Find service',
@@ -133,6 +113,12 @@ function AppHeader (props) {
           short: 'Listen',
           icon: <HeadsetIcon />,
           to: '/listen'
+        },
+        {
+          title: 'Check alerts',
+          short: 'Alerts',
+          icon: <WarningIcon />,
+          to: '/alerts'
         }
       ]
     },
@@ -145,13 +131,13 @@ function AppHeader (props) {
           title: 'Find my stop',
           short: 'Stops',
           icon: <GridOnIcon />,
-          to: '/stops'
+          to: '/'
         },
         {
           title: 'Mobile vans',
           short: 'Vans',
           icon: <DirectionBusIcon />,
-          to: '/'
+          to: '/mobiles'
         },
         {
           title: 'Map of stops',
@@ -188,11 +174,10 @@ function AppHeader (props) {
     <>
       <Container maxWidth='lg' className={classes.topTitle}>
         <Toolbar>
-          <IconButton className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen); setTabValue(site) }}>
+          <IconButton aria-label='Toggle site menu' className={classes.topIcon} color='primary' onClick={() => { setAppsOpen(!appsOpen); setTabValue(site) }}>
             {appsOpen ? <CancelIcon /> : <PetsIcon />}
           </IconButton>
           <span className={classes.grow} />
-          {location.pathname === '/map' ? <ServiceFilter /> : null}
           <Chip
             label={sites[site].title}
             color='secondary'
@@ -200,10 +185,9 @@ function AppHeader (props) {
         </Toolbar>
       </Container>
       {appsOpen ? (
-        <AppBar position='static' color='default' elevation={0} className={appBarClass}>
+        <AppBar position='static' color='transparent' elevation={0} className={appBarClass}>
           <Container maxWidth='lg'>
             <Tabs
-              centered
               value={tabValue}
               onChange={(e, v) => { setTabValue(v) }}
               variant='scrollable'
@@ -222,7 +206,7 @@ function AppHeader (props) {
       ) : null}
       <AppBar
         position='static'
-        color='inherit'
+        color='transparent'
         elevation={0}
         className={appBarClass}
       >

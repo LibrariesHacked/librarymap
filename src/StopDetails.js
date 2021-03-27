@@ -22,7 +22,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 import CancelIcon from '@material-ui/icons/CancelTwoTone'
 import EventIcon from '@material-ui/icons/EventTwoTone'
-import LaunchIcon from '@material-ui/icons/LaunchTwoTone'
+import WebIcon from '@material-ui/icons/WebTwoTone'
 import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 import PrintIcon from '@material-ui/icons/PrintTwoTone'
 
@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #E0E0E0'
   },
   dialogContentActions: {
-    backgroundColor: '#ffebee',
-    border: '1px solid #ffcdd2',
+    backgroundColor: '#fff3e0',
+    border: '1px solid #ffe0b2',
     borderRadius: 3,
     padding: 4
   },
@@ -75,14 +75,14 @@ function StopDetails () {
     if (currentStopId != null) getStop(currentStopId)
   }, [currentStopId])
 
-  const getStopCalendar = () => window.open(config.api + '/stops/' + stop.id + '/ics')
+  const getStopCalendar = () => window.open(config.mobilesApi + '/stops/' + stop.id + '/ics')
 
-  const getStopPdf = () => window.open(config.api + '/stops/' + stop.id + '/pdf', '_blank')
+  const getStopPdf = () => window.open(config.mobilesApi + '/stops/' + stop.id + '/pdf', '_blank')
 
   const goToWebsite = () => window.open(stop.timetable, '_blank')
 
   const viewMapStop = () => {
-    dispatchView({ type: 'SetMapPosition', mapPosition: [stop.longitude, stop.latitude], mapZoom: 14 })
+    dispatchView({ type: 'SetMapPosition', mapPosition: [stop.longitude, stop.latitude], mapZoom: 16 })
   }
 
   const close = () => {
@@ -134,7 +134,7 @@ function StopDetails () {
               </TableContainer>
               <br />
               <div className={classes.dialogContentActions}>
-                <Button onClick={() => goToWebsite()} color='primary' startIcon={<LaunchIcon />}>Go to website</Button>
+                <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
                 <Button onClick={getStopCalendar} className={classes.button} color='primary' startIcon={<EventIcon />}>Get calendar</Button>
                 <Button onClick={getStopPdf} className={classes.button} color='primary' startIcon={<PrintIcon />}>Print</Button>
                 <Button onClick={viewMapStop} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>

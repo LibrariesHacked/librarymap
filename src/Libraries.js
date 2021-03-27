@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import Chip from '@material-ui/core/Chip'
 import IconButton from '@material-ui/core/IconButton'
@@ -17,7 +18,9 @@ import ChevronRight from '@material-ui/icons/ChevronRightTwoTone'
 import FirstPage from '@material-ui/icons/FirstPageTwoTone'
 import FilterList from '@material-ui/icons/FilterListTwoTone'
 import LastPage from '@material-ui/icons/LastPageTwoTone'
+import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 import MoreVertIcon from '@material-ui/icons/MoreVertTwoTone'
+import WebIcon from '@material-ui/icons/WebTwoTone'
 
 import * as libraryModel from './models/library'
 import * as hoursHelper from './helpers/hours'
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    border: '1px solid #E0E0E0'
+    border: '1px solid #ffe0b2'
   }
 }))
 
@@ -51,6 +54,12 @@ function Libraries () {
   var selectLibrary = (library) => {
     dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: library.id })
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
+  }
+
+  const goToLibraryWebsite = (library) => window.open(library.url, '_blank')
+
+  const viewLibraryOnMap = (library) => {
+    dispatchView({ type: 'SetMapPosition', mapPosition: [library.longitude, library.latitude], mapZoom: 16 })
   }
 
   return (
@@ -77,8 +86,8 @@ function Libraries () {
           filtering: false,
           toolbar: false,
           headerStyle: {
-            backgroundColor: '#fafafa',
-            color: '#737373',
+            backgroundColor: '#fff3e0',
+            color: '#e65100',
             border: '0px'
           }
         }}
@@ -91,11 +100,24 @@ function Libraries () {
             render: rowData => {
               return (
                 <>
-                  <Tooltip title='See more stop details'>
-                    <IconButton size='small' onClick={() => selectLibrary(rowData)}>
+                  <Tooltip title='See more details on the library'>
+                    <IconButton size='small' color='secondary' onClick={() => selectLibrary(rowData)}>
                       <MoreVertIcon />
                     </IconButton>
                   </Tooltip>
+                  <Tooltip title='See this library on the library map'>
+                    <IconButton size='small' color='primary' onClick={() => viewLibraryOnMap(rowData)} component={Link} to='/map'>
+                      <LocationOnIcon />
+                    </IconButton>
+                  </Tooltip>
+                  {rowData.url
+                    ? (
+                      <Tooltip title='Go to the library website'>
+                        <IconButton size='small' color='primary' onClick={() => goToLibraryWebsite(rowData)}>
+                          <WebIcon />
+                        </IconButton>
+                      </Tooltip>
+                    ) : null}
                 </>
               )
             },
