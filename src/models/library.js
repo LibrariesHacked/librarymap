@@ -61,7 +61,11 @@ export class Library {
 
 export async function getQueryLibraries (query, searchPosition, distance, serviceFilter) {
   let url = config.api + '/libraries?page=' + (query.page + 1) + '&limit=' + query.pageSize
-  if (query.orderBy && query.orderBy.field) url = url + '&sort=' + query.orderBy.field + '&direction=' + query.orderDirection
+  const sortMappings = {
+    name: 'Library name',
+    localAuthority: 'Local authority'
+  }
+  if (query.orderBy && query.orderBy.field) url = url + '&sort=' + sortMappings[query.orderBy.field] + '&direction=' + query.orderDirection
 
   if (searchPosition && searchPosition.length > 1) url = url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
   if (distance && distance !== '') url = url + '&distance=' + distance
