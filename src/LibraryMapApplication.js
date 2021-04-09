@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Container from '@material-ui/core/Container'
 
@@ -64,16 +64,25 @@ function LibraryMapApplication () {
 
   const classes = useStyles()
 
+  const Page404 = ({ location }) => (
+    <div>
+      <h2>Sorry! That page was not found</h2>
+    </div>
+  )
+
   return (
     <BrowserRouter>
       <div className={classes.root}>
         <AppHeader loading={false} site={3} />
         <Container maxWidth='lg'>
           <main className={classes.content}>
-            <Route path='/' exact render={() => <Search />} />
-            <Route path='/map' exact render={() => <LibraryMap />} />
-            <Route path='/data' exact render={() => <MemoMarkdownPage page={Data} />} />
-            <Route path={['/http:', '/https:']} component={props => { window.location.replace(props.location.pathname.substr(1)); return null }} />
+            <Switch>
+              <Route path='/' exact render={() => <Search />} />
+              <Route path='/map' exact render={() => <LibraryMap />} />
+              <Route path='/data' exact render={() => <MemoMarkdownPage page={Data} />} />
+              <Route path={['/http:', '/https:']} component={props => { window.location.replace(props.location.pathname.substr(1)); return null }} />
+              <Route component={Page404} />
+            </Switch>
           </main>
         </Container>
         <Container maxWidth='lg'>

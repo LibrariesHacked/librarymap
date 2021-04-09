@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    border: '1px solid #ffe0b2'
+    border: '2px solid #ffe0b2'
   }
 }))
 
