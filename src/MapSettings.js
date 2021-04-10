@@ -14,6 +14,7 @@ import CancelIcon from '@material-ui/icons/CancelTwoTone'
 
 import { useTheme, makeStyles } from '@material-ui/core/styles'
 
+import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 const useStyles = makeStyles(() => ({
@@ -24,6 +25,7 @@ const useStyles = makeStyles(() => ({
 
 function MapSettings () {
   const [{ mapSettings, mapSettingsDialogOpen }, dispatchView] = useViewStateValue()
+  const [{ displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
 
   const closeDialog = () => {
     dispatchView({ type: 'SetMapSettingsDialog', mapSettingsDialogOpen: false })
@@ -31,6 +33,10 @@ function MapSettings () {
 
   const handleLibrariesChange = () => {
     dispatchView({ type: 'ToggleMapSetting', mapSetting: 'libraries' })
+  }
+
+  const handleClosedLibrariesChange = () => {
+    dispatchSearch({ type: 'SetDisplayClosedLibraries', displayClosedLibraries: !displayClosedLibraries })
   }
 
   const handleMobileLibraryStopsChange = () => {
@@ -69,6 +75,17 @@ function MapSettings () {
             />
           }
           label='Libraries'
+        /><br />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={displayClosedLibraries}
+              onChange={handleClosedLibrariesChange}
+              name='sw_closedlibraries'
+              color='primary'
+            />
+          }
+          label='Closed libraries'
         /><br />
         <FormControlLabel
           control={

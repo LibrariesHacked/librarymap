@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
+import Checkbox from '@material-ui/core/Checkbox'
 import Chip from '@material-ui/core/Chip'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import IconButton from '@material-ui/core/IconButton'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Paper from '@material-ui/core/Paper'
@@ -29,6 +31,9 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 const useStyles = makeStyles((theme) => ({
+  closedChip: {
+    marginLeft: theme.spacing(1)
+  },
   hoursChip: {
     margin: theme.spacing(1)
   },
@@ -39,14 +44,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Libraries () {
-  const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ searchDistance, searchPosition, serviceFilter, displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const tableRef = React.createRef()
 
   useEffect(() => {
     tableRef.current.onQueryChange()
-  }, [searchPosition, searchDistance, serviceFilter]) // eslint-disable-line
+  }, [searchPosition, searchDistance, serviceFilter, displayClosedLibraries]) // eslint-disable-line
 
   const classes = useStyles()
   const theme = useTheme()
@@ -62,9 +67,24 @@ function Libraries () {
     dispatchView({ type: 'SetMapPosition', mapPosition: [library.longitude, library.latitude], mapZoom: 16 })
   }
 
+  const toggleDisplayClosedLibraries = () => {
+    dispatchSearch({ type: 'SetDisplayClosedLibraries', displayClosedLibraries: !displayClosedLibraries })
+  }
+
   return (
     <div>
       <ListSubheader disableSticky>Libraries</ListSubheader>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={displayClosedLibraries}
+            onChange={() => toggleDisplayClosedLibraries()}
+            name='checkedB'
+            color='primary'
+          />
+        }
+        label='Display closed libraries'
+      />
       <MaterialTable
         tableRef={tableRef}
         components={{
@@ -134,6 +154,16 @@ function Libraries () {
             cellStyle: {
               borderBottom: '1px solid #f5f5f5',
               backgroundColor: '#ffffff'
+            },
+            render: rowData => {
+              return (
+                <>
+                  {rowData.name}
+                  {
+                    rowData.yearClosed !== null ? <Chip color='secondary' className={classes.closedChip} size='small' label={'Closed ' + rowData.yearClosed} /> : null
+                  }
+                </>
+              )
             }
           },
           {
@@ -190,7 +220,7 @@ function Libraries () {
         data={query =>
           new Promise((resolve) => {
             async function getLibraries () {
-              const libraryData = await libraryModel.getQueryLibraries(query, searchPosition, searchDistance, serviceFilter)
+              const libraryData = await libraryModel.getQueryLibraries(query, searchPosition, searchDistance, serviceFilter, displayClosedLibraries)
               resolve({
                 data: libraryData.libraries,
                 page: (libraryData.page - 1),

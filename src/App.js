@@ -65,7 +65,8 @@ const initialSearchState = {
   serviceFilterBbox: null,
   serviceFilterBoundary: null,
   currentService: null,
-  currentServiceSystemName: null
+  currentServiceSystemName: null,
+  displayClosedLibraries: false
 }
 
 const searchReducer = (state, action) => {
@@ -96,6 +97,11 @@ const searchReducer = (state, action) => {
         searchPostcode: action.searchPostcode,
         searchPosition: action.searchPosition,
         searchType: 'postcode'
+      }
+    case 'SetDisplayClosedLibraries':
+      return {
+        ...state,
+        displayClosedLibraries: action.displayClosedLibraries
       }
     case 'FilterByService':
       return {

@@ -59,8 +59,8 @@ export class Library {
   }
 }
 
-export async function getQueryLibraries (query, searchPosition, distance, serviceFilter) {
-  let url = config.api + '/libraries?page=' + (query.page + 1) + '&limit=' + query.pageSize
+export async function getQueryLibraries (query, searchPosition, distance, serviceFilter, closed) {
+  let url = config.api + '/libraries?page=' + (query.page + 1) + '&limit=' + query.pageSize + '&closed=' + closed
   const sortMappings = {
     name: 'Library name',
     localAuthority: 'Local authority'

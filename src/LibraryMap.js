@@ -57,7 +57,7 @@ const tripTiles = [config.tripTiles]
 
 function LibraryMap () {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
-  const [{ searchType, searchPosition, currentStopId, currentLibraryId, currentPoint, currentService }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ searchType, searchPosition, currentStopId, currentLibraryId, currentPoint, currentService, displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ mapZoom, mapPosition, mapSettings, mapSettingsDialogOpen, mapBounds, isochronesMenuOpen, isochronesMenuAnchor }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
@@ -478,7 +478,7 @@ function LibraryMap () {
             tiles: libraryTiles
           }}
         />
-        {mapSettings.libraries
+        {displayClosedLibraries
           ? (
             <>
               <Layer
@@ -602,6 +602,11 @@ function LibraryMap () {
                 }}
                 onClick={clickLibrary}
               />
+            </>
+          ) : null}
+        {mapSettings.libraries
+          ? (
+            <>
               <Layer
                 id='lyr_libraries_open_type_labels'
                 type='symbol'
