@@ -30,12 +30,11 @@ import * as hoursHelper from './helpers/hours'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
+import moment from 'moment'
+
 const useStyles = makeStyles((theme) => ({
   closedChip: {
-    marginLeft: theme.spacing(1)
-  },
-  hoursChip: {
-    margin: theme.spacing(1)
+    marginTop: theme.spacing(1)
   },
   table: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -83,7 +82,7 @@ function Libraries () {
             color='primary'
           />
         }
-        label='Display closed libraries'
+        label='Display permanently closed libraries'
       />
       <MaterialTable
         tableRef={tableRef}
@@ -160,7 +159,7 @@ function Libraries () {
                 <>
                   {rowData.name}
                   {
-                    rowData.yearClosed !== null ? <Chip color='secondary' className={classes.closedChip} size='small' label={'Closed ' + rowData.yearClosed} /> : null
+                    rowData.yearClosed !== null ? <><br /><Chip color='secondary' className={classes.closedChip} size='small' label={'Closed ' + rowData.yearClosed} /></> : null
                   }
                 </>
               )
@@ -211,9 +210,18 @@ function Libraries () {
             },
             render: (rowData) => {
               const hours = hoursHelper.getTodayHours(rowData)
-              return hours.map((entry, idx) => {
-                return <Chip key={'chp_' + idx} color='secondary' className={classes.hoursChip} size='small' label={entry} />
+              const hoursUnstaffed = hours.unstaffed.map(hours => {
+                return hours
               })
+              return (
+                <>
+                  {hours.staffed === null && hoursUnstaffed === null ? 'Opening hours unknown' : null}
+                  {hours.staffed !== null && hours.staffed.length > 0 ? hours.staffed.map(h => h.map(a => moment(a, 'hh:mm').format('h:mma')).join(' - ')) : ''}
+                  {hours.staffed && hours.staffed.length === 0 && (hours.unstaffed === null || hours.unstaffed.length === 0) ? 'Closed today' : ''}
+                  {hours.unstaffed && hours.unstaffed.length > 0 ? <br /> : null}
+                  {hours.unstaffed && hours.unstaffed.length > 0 ? 'Unstaffed ' + hoursUnstaffed : null}
+                </>
+              )
             }
           }
         ]}
