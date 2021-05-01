@@ -5,7 +5,7 @@ const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 export function getDayHours (place, day) {
   const staffedHours = (place[day + 'StaffedHours'] !== '' ? place[day + 'StaffedHours'] : null)
   const unstaffedHours = (place[day + 'UnstaffedHours'] !== '' ? place[day + 'UnstaffedHours'] : null)
-  return { staffed: (staffedHours ? staffedHours.split(',').filter(h => h !== '00:00-00:00').map(h => h.split('-')) : null), unstaffed: (unstaffedHours ? unstaffedHours.split(',').filter(h => h !== '00:00-00:00').map(h => h.split('-')) : null) }
+  return { day: day, staffed: (staffedHours ? staffedHours.split(',').filter(h => h !== '00:00-00:00').map(h => h.split('-')) : null), unstaffed: (unstaffedHours ? unstaffedHours.split(',').filter(h => h !== '00:00-00:00').map(h => h.split('-')) : null) }
 }
 
 export function getTodayHours (place) {
@@ -14,7 +14,7 @@ export function getTodayHours (place) {
 }
 
 export function getAllHours (place) {
-  const weeklyHours = {}
+  const weeklyHours = []
   days.forEach(day => {
     weeklyHours.push(getDayHours(place, day))
   })

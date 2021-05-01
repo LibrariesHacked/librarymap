@@ -7,6 +7,14 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import ListSubheader from '@material-ui/core/ListSubheader'
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -15,12 +23,12 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import CancelIcon from '@material-ui/icons/CancelTwoTone'
 import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 import WebIcon from '@material-ui/icons/WebTwoTone'
-import ListSubheader from '@material-ui/core/ListSubheader'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import * as libraryModel from './models/library'
+import * as hoursHelper from './helpers/hours'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -45,6 +53,13 @@ const useStyles = makeStyles((theme) => ({
   },
   progress: {
     margin: theme.spacing(2)
+  },
+  table: {
+  },
+  tablePaper: {
+    padding: theme.spacing(1),
+    border: '1px solid',
+    borderColor: theme.palette.outline.main
   }
 }))
 
@@ -94,6 +109,19 @@ function LibraryDetails () {
             <DialogContent>
               <Typography component='h3' variant='subtitle1'>{library.typeDescription + ' in ' + library.localAuthority + '. '}</Typography>
               <Typography component='p' variant='body2'>{[library.address1, library.address2, library.address3, library.postcode].filter(l => Boolean(l)).join(', ')}</Typography>
+              <TableContainer component={Paper} elevation={0} className={classes.tablePaper}>
+                <Table size='small' className={classes.table}>
+                  <TableBody>
+                    {hoursHelper.getAllHours(library).map((rs, idx) => (
+                      <TableRow key={'tc_rs_' + idx}>
+                        <TableCell>{rs.day}</TableCell>
+                        <TableCell>{rs.staffed}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <br />
               <ListSubheader disableSticky>Actions</ListSubheader>
               <div className={classes.dialogContentActions}>
                 <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
