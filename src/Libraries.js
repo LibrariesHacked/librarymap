@@ -210,9 +210,9 @@ function Libraries () {
             },
             render: (rowData) => {
               const hours = hoursHelper.getTodayHours(rowData)
-              const hoursUnstaffed = hours.unstaffed.map(hours => {
+              const hoursUnstaffed = hours.unstaffed ? hours.unstaffed.map(hours => {
                 return hours
-              })
+              }) : null
               return (
                 <>
                   {hours.staffed === null && hoursUnstaffed === null ? 'Opening hours unknown' : null}
