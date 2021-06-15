@@ -125,8 +125,12 @@ function PostcodeSearch (props) {
     if (geoHelper.validatePostcode(postcode)) {
       clearSearch()
       const service = await geoHelper.getPostcode(postcode.trim())
-      dispatchSearch({ type: 'SetPostcodeSearch', searchPostcode: postcode, searchPosition: service.location })
-      dispatchView({ type: 'SetMapPosition', mapPosition: service.location, mapZoom: 14 })
+      if (service && service.location && service.location.length > 0) {
+        dispatchSearch({ type: 'SetPostcodeSearch', searchPostcode: postcode, searchPosition: service.location })
+        dispatchView({ type: 'SetMapPosition', mapPosition: service.location, mapZoom: 14 })
+      } else {
+        dispatchView({ type: 'ShowNotification', notificationMessage: 'We could not find that postcode', notificationSeverity: 'error' })
+      }
     } else {
       dispatchView({ type: 'ShowNotification', notificationMessage: 'We could not find that postcode', notificationSeverity: 'error' })
     }
