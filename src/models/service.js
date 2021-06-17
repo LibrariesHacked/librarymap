@@ -12,7 +12,7 @@ export class Service {
     this.name = json.utla19nm
     this.nameWales = json.utla19nmw
     this.systemName = getServiceSystemName(json.utla19nm)
-    this.geom = json.geom
+    this.geojson = json.geojson
     this.bbox = json.bbox
 
     return this

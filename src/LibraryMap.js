@@ -118,10 +118,10 @@ function LibraryMap () {
         fitBounds={mapBounds}
         containerStyle={{ top: 0, bottom: 0, right: 0, left: 0, height: '100vh', width: '100vw', position: 'absolute' }}
       >
-        {currentService && currentService.geom
+        {currentService && currentService.geojson
           ? (
             <GeoJSONLayer // Shows the outlines of the distances
-              data={JSON.parse(currentService.geom)}
+              data={JSON.parse(currentService.geojson)}
               linePaint={{
                 'line-opacity': 0.4,
                 'line-width': 2,
