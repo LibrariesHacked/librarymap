@@ -30,8 +30,8 @@ export class Library {
     this.uprnLongitude = json['Unique property reference number longitude']
     this.uprnLongitude = json['Unique property reference number latitude']
     this.statutory = json.Statutory
-    this.type = json['Library type']
-    this.typeDescription = libraryTypes[json['Library type']]
+    this.type = json['Type of library']
+    this.typeDescription = libraryTypes[json['Type of library']]
     this.yearOpened = json['Year opened']
     this.yearClosed = json['Year closed']
     this.mondayStaffedHours = json['Monday staffed hours']

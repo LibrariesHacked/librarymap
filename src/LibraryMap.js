@@ -616,7 +616,7 @@ function LibraryMap () {
                 filter={['!', ['has', 'Year closed']]}
                 layout={{
                   'text-ignore-placement': false,
-                  'text-field': ['match', ['get', 'Library type'], 'LAL', 'Local authority library', 'LAL-', 'Local authority run - unstaffed', 'CL', 'Commissioned library', 'CRL', 'Community run library', 'IL', 'Independent library', 'Unknown library'],
+                  'text-field': ['match', ['get', 'Type of library'], 'LAL', 'Local authority library', 'LAL-', 'Local authority run - unstaffed', 'CL', 'Commissioned library', 'CRL', 'Community run library', 'IL', 'Independent library', 'Unknown library'],
                   'text-font': [
                     'Source Sans Pro Bold'
                   ],
@@ -713,7 +713,7 @@ function LibraryMap () {
                     5, 3,
                     18, 12
                   ],
-                  'circle-color': ['match', ['get', 'Library type'], 'LAL', '#1b5e20', 'LAL-', '#388e3c', 'CL', '#0d47a1', 'CRL', '#e65100', 'ICL', '#bf360c', '#bf360c'],
+                  'circle-color': ['match', ['get', 'Type of library'], 'LAL', '#1b5e20', 'LAL-', '#388e3c', 'CL', '#0d47a1', 'CRL', '#e65100', 'ICL', '#bf360c', '#bf360c'],
                   'circle-stroke-width': [
                     'interpolate',
                     ['linear'],
