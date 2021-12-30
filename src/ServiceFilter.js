@@ -70,9 +70,9 @@ function ServiceFilter (props) {
       >
         {
           services
-            .sort((a, b) => a.name.localeCompare(b.name))
+            .sort((a, b) => a.niceName.localeCompare(b.niceName))
             .map(s => {
-              return <MenuItem key={'mnu_itm_org_' + s.code} onClick={() => chooseService(s)}>{s.name}</MenuItem>
+              return <MenuItem key={'mnu_itm_org_' + s.code} onClick={() => chooseService(s)}>{s.niceName}</MenuItem>
             })
         }
       </Menu>

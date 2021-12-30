@@ -29,9 +29,7 @@ export const getCurrentPostcode = async (lon, lat) => {
         return postcodes[0].postcode
       }
     }
-  } catch (e) {
-    console.log(e)
-  }
+  } catch (e) { }
 }
 
 export const getPostcode = async (postcode) => {
