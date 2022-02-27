@@ -52,13 +52,6 @@ const useStyles = makeStyles((theme) => ({
   },
   progress: {
     margin: theme.spacing(2)
-  },
-  table: {
-  },
-  tablePaper: {
-    padding: theme.spacing(1),
-    border: '1px solid',
-    borderColor: theme.palette.outline.main
   }
 }))
 
@@ -106,9 +99,11 @@ function LibraryDetails () {
           <>
             <DialogTitle id='dlg-title'>{library.name}</DialogTitle>
             <DialogContent>
-              <Typography component='h3' variant='subtitle1'>{library.typeDescription + ' in ' + library.localAuthority + '. '}</Typography>
-              <Typography component='p' variant='body2'>{[library.address1, library.address2, library.address3, library.postcode].filter(l => Boolean(l)).join(', ')}</Typography>
-              <TableContainer component={Paper} elevation={0} className={classes.tablePaper}>
+              <Typography component='p' variant='body2'>
+                {library.localAuthority}<br/>
+                {[library.address1, library.address2, library.address3, library.postcode].filter(l => Boolean(l)).join(', ')}
+              </Typography>
+              <TableContainer component={Paper} elevation={0}>
                 <Table size='small' className={classes.table}>
                   <TableBody>
                     {hoursHelper.getAllHours(library).map((rs, idx) => (
@@ -121,10 +116,9 @@ function LibraryDetails () {
                 </Table>
               </TableContainer>
               <br />
-              <ListSubheader disableSticky>Actions</ListSubheader>
               <div className={classes.dialogContentActions}>
                 <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
-                <Button onClick={viewMapLibrary} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
+                <Button onClick={viewMapLibrary} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>View on map</Button>
               </div>
             </DialogContent>
           </>
