@@ -3,8 +3,9 @@ import moment from 'moment'
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 export function getDayHours (place, day) {
-  const staffedHours = (place[day.toLowerCase() + 'StaffedHours'] !== '' ? place[day + 'StaffedHours'] : null)
-  const unstaffedHours = (place[day.toLowerCase() + 'UnstaffedHours'] !== '' ? place[day + 'UnstaffedHours'] : null)
+  const dayProp = day.toLowerCase()
+  const staffedHours = (place[dayProp + 'StaffedHours'] !== '' ? place[dayProp + 'StaffedHours'] : null)
+  const unstaffedHours = (place[dayProp + 'UnstaffedHours'] !== '' ? place[dayProp + 'UnstaffedHours'] : null)
   return { day: day, staffed: (staffedHours ? staffedHours.split(',').map(h => h.split('-')) : null), unstaffed: (unstaffedHours ? unstaffedHours.split(',').map(h => h.split('-')) : null) }
 }
 

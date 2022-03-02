@@ -7,7 +7,6 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import ListSubheader from '@material-ui/core/ListSubheader'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -20,12 +19,15 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmailTwoTone'
 import CancelIcon from '@material-ui/icons/CancelTwoTone'
 import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
 import WebIcon from '@material-ui/icons/WebTwoTone'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
+
+import moment from 'moment'
 
 import * as libraryModel from './models/library'
 import * as hoursHelper from './helpers/hours'
@@ -41,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#fff3e0',
     border: '1px solid #ffe0b2',
     borderRadius: 3,
-    padding: 4
+    padding: 4,
+    marginTop: theme.spacing(1)
   },
   leftIcon: {
     marginRight: theme.spacing(1)
@@ -53,6 +56,14 @@ const useStyles = makeStyles((theme) => ({
   },
   progress: {
     margin: theme.spacing(2)
+  },
+  table: {
+    marginTop: theme.spacing()
+  },
+  tableRow: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    }
   }
 }))
 
@@ -72,6 +83,8 @@ function LibraryDetails() {
 
   const goToWebsite = () => window.open(library.url, '_blank')
 
+  const emailLibrary = () => window.open('mailto:' + library.emailAddress, '_blank')
+
   const viewMapLibrary = () => {
     dispatchView({ type: 'SetMapPosition', mapPosition: [library.longitude, library.latitude], mapZoom: 16 })
   }
@@ -84,6 +97,9 @@ function LibraryDetails() {
   const theme = useTheme()
   const classes = useStyles()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const staffedHoursAvailable = hoursHelper.getAllHours(library).filter(rs => (rs.staffed !== null && rs.staffed.length > 0)).length > 0
+  const unstaffedHoursAvailable = hoursHelper.getAllHours(library).filter(rs => (rs.unstaffed !== null && rs.unstaffed.length > 0)).length > 0
 
   return (
     <Dialog
@@ -101,32 +117,89 @@ function LibraryDetails() {
             <DialogTitle id='dlg-title'>{library.name}</DialogTitle>
             <DialogContent>
               <Typography component='p' variant='body2'>
-                {library.localAuthority}<br />
                 {[library.address1, library.address2, library.address3, library.postcode].filter(l => Boolean(l)).join(', ')}
               </Typography>
               <TableContainer component={Paper} elevation={0}>
                 <Table size='small' className={classes.table}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Dessert (100g serving)</TableCell>
-                      <TableCell align="right">Calories</TableCell>
-                      <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {hoursHelper.getAllHours(library).map((rs, idx) => (
-                      <TableRow key={'tc_rs_' + idx}>
-                        <TableCell>{rs.day}</TableCell>
-                        <TableCell>{rs.staffed}</TableCell>
-                        <TableCell>{rs.unstaffed}</TableCell>
+                  <TableRow>
+                    <TableCell variant="head">Library service</TableCell>
+                    <TableCell>{library.localAuthority}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell variant="head">Type</TableCell>
+                    <TableCell>{library.typeDescription}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell variant="head">Statutory</TableCell>
+                    <TableCell>{library.statutory}</TableCell>
+                  </TableRow>
+                  {
+                    library.yearOpened && library.yearOpened !== '' ? 
+                    (
+                      <TableRow>
+                        <TableCell variant="head">Year opened</TableCell>
+                        <TableCell>{library.yearOpened}</TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
+                    ) : null
+                  }
+                  {
+                    library.yearClosed && library.yearClosed !== '' ? 
+                    (
+                      <TableRow>
+                        <TableCell variant="head">Year closed</TableCell>
+                        <TableCell>{library.yearClosed}</TableCell>
+                      </TableRow>
+                    ) : null
+                  }
+                  {
+                    library.notes && library.notes !== '' ? 
+                    (
+                      <TableRow>
+                        <TableCell variant="head">Notes</TableCell>
+                        <TableCell>{library.notes}</TableCell>
+                      </TableRow>
+                    ) : null
+                  }
                 </Table>
               </TableContainer>
-              <br />
+              {
+                staffedHoursAvailable || unstaffedHoursAvailable ? (
+                  <>
+                    <TableContainer component={Paper} elevation={0}>
+                      <Table size='small' className={classes.table}>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Staffed</TableCell>
+                            {
+                              unstaffedHoursAvailable ? (
+                                <TableCell>Unstaffed</TableCell>
+                              ) : null
+                            }
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {hoursHelper.getAllHours(library).filter(rs => (rs.staffed !== null && rs.staffed.length > 0) || (rs.unstaffed !== null && rs.unstaffed.length > 0)).map((rs, idx) => (
+                            <TableRow key={'tc_rs_' + idx} className={classes.tableRow}>
+                              <TableCell variant="head">{rs.day}</TableCell>
+                              <TableCell>{rs.staffed !== null && rs.staffed.length > 0 ? rs.staffed.map(h => h.map(a => moment(a, 'hh:mm').format('h:mma')).join(' - ')).join(', ') : ''}</TableCell>
+                              {
+                                unstaffedHoursAvailable ? (
+                                  <TableCell>{rs.unstaffed}</TableCell>
+                                ) : null
+                              }
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                    <br />
+                  </>
+                ) : null
+              }
               <div className={classes.dialogContentActions}>
-                <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
+                {library.url && library.url !== '' ? <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button> : null}
+                {library.url && library.url !== '' ? <Button onClick={() => emailLibrary()} color='primary' startIcon={<AlternateEmailIcon />}>Email library</Button> : null}
                 <Button onClick={viewMapLibrary} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>View on map</Button>
               </div>
             </DialogContent>

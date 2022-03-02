@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tapTarget: {
     lineHeight: 2.2,
-    fontSize: 16
+    fontSize: 18
   }
 }))
 
@@ -55,7 +55,7 @@ function Footer () {
             <span className={classes.bullet}> &#8226; </span>
             <MaterialLink href='https://github.com/LibrariesHacked/librarymap' target='_blank' title='Project on GitHub' className={classes.tapTarget}>GitHub</MaterialLink>
           </Typography><br />
-          <Typography variant='body2' className={classes.footerText}>A Library Lab project by Libraries Hacked.</Typography>
+          <Typography variant='body1' className={classes.footerText}>A Library Lab project by Libraries Hacked.</Typography>
         </Grid>
         <Grid className={classes.footerRight} item xs={12} sm={6} md={6} lg={6} xl={6}>
           <Typography variant='body1' className={classes.footerText}>In memory of Paul Rowe <FavoriteIcon color='primary' className={classes.loveIcon} /></Typography><br />

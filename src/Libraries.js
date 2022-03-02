@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Libraries () {
+function Libraries() {
   const [{ searchDistance, searchPosition, serviceFilter, displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
@@ -215,11 +215,8 @@ function Libraries () {
               }) : null
               return (
                 <>
-                  {hours.staffed === null && hoursUnstaffed === null ? 'Opening hours unknown' : null}
-                  {hours.staffed !== null && hours.staffed.length > 0 ? hours.staffed.map(h => h.map(a => moment(a, 'hh:mm').format('h:mma')).join(' - ')) : ''}
-                  {hours.staffed && hours.staffed.length === 0 && (hours.unstaffed === null || hours.unstaffed.length === 0) ? 'Closed today' : ''}
-                  {hours.unstaffed && hours.unstaffed.length > 0 ? <br /> : null}
-                  {hours.unstaffed && hours.unstaffed.length > 0 ? 'Unstaffed ' + hoursUnstaffed : null}
+                  {hours.staffed === null && hoursUnstaffed === null ? '' : null}
+                  {hours.staffed !== null && hours.staffed.length > 0 ? hours.staffed.map(h => h.map(a => moment(a, 'hh:mm').format('h:mma')).join(' - ')).join(', ') : ''}
                 </>
               )
             }
@@ -227,7 +224,7 @@ function Libraries () {
         ]}
         data={query =>
           new Promise((resolve) => {
-            async function getLibraries () {
+            async function getLibraries() {
               const libraryData = await libraryModel.getQueryLibraries(query, searchPosition, searchDistance, serviceFilter, displayClosedLibraries)
               resolve({
                 data: libraryData.libraries,
