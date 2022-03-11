@@ -131,7 +131,7 @@ const searchReducer = (state, action) => {
 const initialViewState = {
   notificationOpen: false,
   notificationMessage: '',
-  mapZoom: [7],
+  mapZoom: 7,
   mapPosition: [-1.155414, 52.691432],
   mapBounds: null,
   mapSettings: {
@@ -177,9 +177,9 @@ const viewReducer = (state, action) => {
       return { ...state, loadingServices: !state.loadingServices }
     }
     case 'SetPostcodeSearch':
-      return { ...state, loadingPostcode: false, mapPosition: action.mapPosition, mapZoom: [13] }
+      return { ...state, loadingPostcode: false, mapPosition: action.mapPosition, mapZoom: 13 }
     case 'SetMapPosition':
-      return { ...state, mapPosition: action.mapPosition, mapZoom: [action.mapZoom] }
+      return { ...state, mapPosition: action.mapPosition, mapZoom: action.mapZoom }
     case 'SetIsochronesMenu':
       return { ...state, isochronesMenuOpen: action.isochronesMenuOpen, isochronesMenuAnchor: action.isochronesMenuAnchor }
     default:

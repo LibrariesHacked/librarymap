@@ -7,6 +7,8 @@ import * as serviceWorker from './serviceWorker'
 
 import 'typeface-roboto'
 
+import 'maplibre-gl/dist/maplibre-gl.css'
+
 ReactDOM.render(<App />, document.getElementById('root'))
 
 serviceWorker.unregister()
