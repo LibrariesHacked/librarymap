@@ -64,25 +64,31 @@ function LibraryMap() {
   const [{ searchType, searchPosition, currentStopId, currentLibraryId, currentPoint, currentService, displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ mapZoom, mapPosition, mapSettings, mapSettingsDialogOpen, mapBounds, isochronesMenuOpen, isochronesMenuAnchor }, dispatchView] = useViewStateValue() //eslint-disable-line
 
+  const mapRef = {current: null}
+
   const setViewState = (viewState) => {
     dispatchView({ type: 'SetMapPosition', mapZoom: viewState.zoom, mapPosition: [viewState.longitude, viewState.latitude] })
   }
 
-  const clickLibrary = async (map) => {
-    if (map && map.features && map.features.length > 0 && map.features[0].properties) {
-      var id = map.features[0].properties.id
+  const clickLibrary = async (feature, point) => {
+      var id = feature.properties.id
       var library = await libraryModel.getLibraryById(id)
       dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: id, currentPoint: [library.longitude, library.latitude] })
-      dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: map.point.x, top: map.point.y } })
-    }
+      dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: point.x, top: point.y } })
   }
 
-  const clickStop = async (map) => {
-    if (map && map.features && map.features.length > 0 && map.features[0].properties) {
-      var id = map.features[0].properties.id
+  const clickStop = async (feature, point) => {
+      var id = feature.properties.id
       var stop = await stopModel.getStopById(id)
       dispatchSearch({ type: 'SetCurrentStop', currentStopId: id, currentPoint: [stop.longitude, stop.latitude] })
-      dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: map.point.x, top: map.point.y } })
+      dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: true, isochronesMenuAnchor: { left: point.x, top: point.y } })
+  }
+
+  const clickMap = async (event) => {
+    const features = mapRef.current.queryRenderedFeatures(event.point);
+    if (features && features.length > 0 && features[0].properties) {
+      if (features[0].sourceLayer === 'libraries') clickLibrary(features[0], event.point)
+      if (features[0].sourceLayer === 'stop') clickStop(features[0], event.point)
     }
   }
 
@@ -114,6 +120,7 @@ function LibraryMap() {
   return (
     <div className={classes.mapContainer}>
       <Map
+        ref={mapRef}
         mapLib={maplibregl}
         style={{ width: '100vw', height: '100vh' }}
         mapStyle='https://zoomstack.librarydata.uk/light.json'
@@ -122,6 +129,7 @@ function LibraryMap() {
         zoom={mapZoom}
         maxZoom={18}
         onMove={evt => setViewState(evt.viewState)}
+        onClick={clickMap}
       >
         {currentService && currentService.geojson
           ? (
@@ -611,6 +619,7 @@ function LibraryMap() {
                   'text-halo-blur': 1,
                   'text-color': '#6a6f73'
                 }}
+                onClick={clickMap}
               />) : null}
           {mapSettings.libraries
             ? (<Layer
