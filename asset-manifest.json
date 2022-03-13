@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9403d1a5.css",
-    "main.js": "/static/js/main.f0e26daf.js",
+    "main.js": "/static/js/main.b77bd439.js",
     "static/js/310.404b7136.chunk.js": "/static/js/310.404b7136.chunk.js",
     "static/media/roboto-latin-900italic.woff": "/static/media/roboto-latin-900italic.c20d916c1a1b094c1cec.woff",
     "static/media/roboto-latin-300italic.woff": "/static/media/roboto-latin-300italic.bd5b7a13f2c52b531a2a.woff",
@@ -32,6 +32,6 @@
   },
   "entrypoints": [
     "static/css/main.9403d1a5.css",
-    "static/js/main.f0e26daf.js"
+    "static/js/main.b77bd439.js"
   ]
 }
