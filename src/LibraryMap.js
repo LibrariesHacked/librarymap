@@ -8,7 +8,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Tooltip from '@material-ui/core/Tooltip'
 
 import Map, { Source, Layer, Marker, NavigationControl } from 'react-map-gl';
-import maplibregl from 'maplibre-gl'
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import maplibregl from "!maplibre-gl";
 
 import LayersIcon from '@material-ui/icons/LayersTwoTone'
 import DirectionsBike from '@material-ui/icons/DirectionsBikeTwoTone'
