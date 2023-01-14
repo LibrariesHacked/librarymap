@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableHead from '@material-ui/core/TableHead'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
+import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableHead from '@mui/material/TableHead'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
-import AlternateEmailIcon from '@material-ui/icons/AlternateEmailTwoTone'
-import CancelIcon from '@material-ui/icons/CancelTwoTone'
-import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
-import WebIcon from '@material-ui/icons/WebTwoTone'
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmailTwoTone'
+import CancelIcon from '@mui/icons-material/CancelTwoTone'
+import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
+import WebIcon from '@mui/icons-material/WebTwoTone'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -31,41 +31,6 @@ import moment from 'moment'
 
 import * as libraryModel from './models/library'
 import * as hoursHelper from './helpers/hours'
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1)
-  },
-  dialog: {
-    border: '1px solid #E0E0E0'
-  },
-  dialogContentActions: {
-    backgroundColor: '#fff3e0',
-    border: '1px solid #ffe0b2',
-    borderRadius: 3,
-    padding: 4,
-    marginTop: theme.spacing(1)
-  },
-  leftIcon: {
-    marginRight: theme.spacing(1)
-  },
-  list: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  },
-  progress: {
-    margin: theme.spacing(2)
-  },
-  table: {
-    marginTop: theme.spacing()
-  },
-  tableRow: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    }
-  }
-}))
 
 function LibraryDetails() {
   const [{ currentLibraryId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
@@ -95,8 +60,7 @@ function LibraryDetails() {
   }
 
   const theme = useTheme()
-  const classes = useStyles()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   const staffedHoursAvailable = hoursHelper.getAllHours(library).filter(rs => (rs.staffed !== null && rs.staffed.length > 0)).length > 0
   const unstaffedHoursAvailable = hoursHelper.getAllHours(library).filter(rs => (rs.unstaffed !== null && rs.unstaffed.length > 0)).length > 0
@@ -104,13 +68,11 @@ function LibraryDetails() {
   return (
     <Dialog
       fullScreen={fullScreen}
-      disableBackdropClick
       open={libraryDialogOpen}
       onClose={close}
       aria-labelledby='dlg-title'
       BackdropProps={{ invisible: true }}
-      PaperProps={{ elevation: 0, className: classes.dialog }}
-    >
+      PaperProps={{ elevation: 0 }}>
       {Object.keys(library).length > 0
         ? (
           <>
@@ -120,7 +82,7 @@ function LibraryDetails() {
                 {[library.address1, library.address2, library.address3, library.postcode].filter(l => Boolean(l)).join(', ')}
               </Typography>
               <TableContainer component={Paper} elevation={0}>
-                <Table size='small' className={classes.table}>
+                <Table size='small'>
                   <TableRow>
                     <TableCell variant="head">Library service</TableCell>
                     <TableCell>{library.localAuthority}</TableCell>
@@ -166,7 +128,7 @@ function LibraryDetails() {
                 staffedHoursAvailable || unstaffedHoursAvailable ? (
                   <>
                     <TableContainer component={Paper} elevation={0}>
-                      <Table size='small' className={classes.table}>
+                      <Table size='small'>
                         <TableHead>
                           <TableRow>
                             <TableCell></TableCell>
@@ -180,7 +142,7 @@ function LibraryDetails() {
                         </TableHead>
                         <TableBody>
                           {hoursHelper.getAllHours(library).filter(rs => (rs.staffed !== null && rs.staffed.length > 0) || (rs.unstaffed !== null && rs.unstaffed.length > 0)).map((rs, idx) => (
-                            <TableRow key={'tc_rs_' + idx} className={classes.tableRow}>
+                            <TableRow key={'tc_rs_' + idx}>
                               <TableCell variant="head">{rs.day}</TableCell>
                               <TableCell>{rs.staffed !== null && rs.staffed.length > 0 ? rs.staffed.map(h => h.map(a => moment(a, 'hh:mm').format('h:mma')).join(' - ')).join(', ') : ''}</TableCell>
                               {
@@ -197,19 +159,19 @@ function LibraryDetails() {
                   </>
                 ) : null
               }
-              <div className={classes.dialogContentActions}>
+              <div>
                 {library.url && library.url !== '' ? <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button> : null}
                 {library.url && library.url !== '' ? <Button onClick={() => emailLibrary()} color='primary' startIcon={<AlternateEmailIcon />}>Email library</Button> : null}
-                <Button onClick={viewMapLibrary} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>View on map</Button>
+                <Button onClick={viewMapLibrary} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>View on map</Button>
               </div>
             </DialogContent>
           </>
-        ) : <CircularProgress className={classes.progress} color='primary' size={30} />}
+        ) : <CircularProgress color='primary' size={30} />}
       <DialogActions>
         <Button onClick={() => close()} color='secondary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
-  )
+  );
 }
 
 export default LibraryDetails

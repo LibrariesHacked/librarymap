@@ -1,23 +1,21 @@
 import React from 'react'
 
-import Fab from '@material-ui/core/Fab'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Tooltip from '@material-ui/core/Tooltip'
+import Fab from '@mui/material/Fab'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Tooltip from '@mui/material/Tooltip'
 
 import Map, { Source, Layer, Marker, NavigationControl } from 'react-map-gl';
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from "!maplibre-gl";
 
-import LayersIcon from '@material-ui/icons/LayersTwoTone'
-import DirectionsBike from '@material-ui/icons/DirectionsBikeTwoTone'
-import DirectionsWalk from '@material-ui/icons/DirectionsWalkTwoTone'
-import DirectionsCar from '@material-ui/icons/DirectionsCarTwoTone'
-
-import { makeStyles } from '@material-ui/core/styles'
+import LayersIcon from '@mui/icons-material/LayersTwoTone'
+import DirectionsBike from '@mui/icons-material/DirectionsBikeTwoTone'
+import DirectionsWalk from '@mui/icons-material/DirectionsWalkTwoTone'
+import DirectionsCar from '@mui/icons-material/DirectionsCarTwoTone'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
@@ -29,29 +27,6 @@ import MapSettings from './MapSettings'
 import * as isochroneModel from './models/isochrone'
 import * as stopModel from './models/stop'
 import * as libraryModel from './models/library'
-
-const useStyles = makeStyles((theme) => ({
-  listItemRoot: {
-    minWidth: 34
-  },
-  mapContainer: {
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    height: '100vh',
-    width: '100vw',
-    position: 'absolute'
-  },
-  menu: {
-    border: '1px solid #E0E0E0'
-  },
-  settings: {
-    position: 'absolute',
-    bottom: theme.spacing(4),
-    right: theme.spacing(4)
-  }
-}))
 
 const config = require('./helpers/config.json')
 
@@ -111,8 +86,6 @@ function LibraryMap() {
 
   var closeIsochronesMenu = () => dispatchView({ type: 'SetIsochronesMenu', isochronesMenuOpen: false, isochronesMenuAnchor: null })
 
-  const classes = useStyles()
-
   const travelIcons = {
     'cycling-regular': <DirectionsBike fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['cycling-regular'] && isochrones[currentPoint]['cycling-regular'].display ? 'primary' : 'secondary'} />,
     'driving-car': <DirectionsCar fontSize='small' color={isochrones[currentPoint] && isochrones[currentPoint]['driving-car'] && isochrones[currentPoint]['driving-car'].display ? 'primary' : 'secondary'} />,
@@ -120,7 +93,7 @@ function LibraryMap() {
   }
 
   return (
-    <div className={classes.mapContainer}>
+    <div>
       <Map
         ref={mapRef}
         mapLib={maplibregl}
@@ -724,7 +697,6 @@ function LibraryMap() {
       >
         <Fab
           size='small'
-          className={classes.settings}
           color='primary'
           style={{
             color: 'white',
@@ -744,16 +716,12 @@ function LibraryMap() {
         anchorPosition={isochronesMenuAnchor}
         anchorReference='anchorPosition'
         elevation={0}
-        className={classes.menu}
         keepMounted
         open={isochronesMenuOpen}
         onClose={closeIsochronesMenu}
       >
         <MenuItem dense onClick={moreInfoIsochronesMenu}>
-          <ListItemIcon classes={{
-            root: classes.listItemRoot
-          }}
-          >
+          <ListItemIcon>
             <LayersIcon fontSize='small' />
           </ListItemIcon>
           <ListItemText primary='More info' />
@@ -761,10 +729,7 @@ function LibraryMap() {
         {config.travel.map((travel, idx) => {
           return (
             <MenuItem dense key={'mnu_trv_' + idx} onClick={() => toggleIsochrone(travel.name)}>
-              <ListItemIcon classes={{
-                root: classes.listItemRoot
-              }}
-              >
+              <ListItemIcon>
                 {travelIcons[travel.name]}
               </ListItemIcon>
               <ListItemText primary={travel.description} />

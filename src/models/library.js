@@ -59,23 +59,45 @@ export class Library {
   }
 }
 
-export async function getQueryLibraries (query, searchPosition, distance, serviceFilter, closed) {
-  let url = config.api + '/libraries?page=' + (query.page + 1) + '&limit=' + query.pageSize + '&closed=' + closed
+export async function getQueryLibraries (
+  query,
+  searchPosition,
+  distance,
+  serviceFilter,
+  closed
+) {
+  let url =
+    config.api +
+    '/libraries?page=' +
+    (query.page + 1) +
+    '&limit=' +
+    query.pageSize +
+    '&closed=' +
+    closed
   const sortMappings = {
     name: 'Library name',
     localAuthority: 'Local authority'
   }
-  if (query.orderBy && query.orderBy.field) url = url + '&sort=' + sortMappings[query.orderBy.field] + '&direction=' + query.orderDirection
+  if (query.orderBy && query.orderBy.field)
+    url =
+      url +
+      '&sort=' +
+      sortMappings[query.orderBy.field] +
+      '&direction=' +
+      query.orderDirection
 
-  if (searchPosition && searchPosition.length > 1) url = url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
+  if (searchPosition && searchPosition.length > 1)
+    url =
+      url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
   if (distance && distance !== '') url = url + '&distance=' + distance
 
-  if (serviceFilter.length > 0) url = url + '&service_codes=' + serviceFilter.join('|')
+  if (serviceFilter.length > 0)
+    url = url + '&service_codes=' + serviceFilter.join('|')
 
   const response = await axios.get(url)
   if (response && response.data && response.data.length > 0) {
     return {
-      libraries: response.data.map(s => (new Library()).fromJson(s)),
+      libraries: response.data.map(s => new Library().fromJson(s)),
       total: parseInt(response.headers['x-total-count']),
       page: parseInt(response.headers['x-page'])
     }
@@ -87,7 +109,7 @@ export async function getQueryLibraries (query, searchPosition, distance, servic
 export async function getAllLibraries () {
   const response = await axios.get(config.api + '/libraries')
   if (response && response.data && response.data.length > 0) {
-    return response.data.map(s => (new Library()).fromJson(s))
+    return response.data.map(s => new Library().fromJson(s))
   } else {
     return []
   }
@@ -96,7 +118,7 @@ export async function getAllLibraries () {
 export async function getLibraryById (id) {
   const response = await axios.get(config.api + '/libraries/' + id)
   if (response && response.data) {
-    return (new Library()).fromJson(response.data)
+    return new Library().fromJson(response.data)
   } else {
     return {}
   }

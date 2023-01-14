@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import ListSubheader from '@material-ui/core/ListSubheader'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import CircularProgress from '@mui/material/CircularProgress'
+import ListSubheader from '@mui/material/ListSubheader'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
 
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
-import CancelIcon from '@material-ui/icons/CancelTwoTone'
-import EventIcon from '@material-ui/icons/EventTwoTone'
-import WebIcon from '@material-ui/icons/WebTwoTone'
-import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
-import PrintIcon from '@material-ui/icons/PrintTwoTone'
+import CancelIcon from '@mui/icons-material/CancelTwoTone'
+import EventIcon from '@mui/icons-material/EventTwoTone'
+import WebIcon from '@mui/icons-material/WebTwoTone'
+import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
+import PrintIcon from '@mui/icons-material/PrintTwoTone'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -32,34 +32,6 @@ import { useViewStateValue } from './context/viewState'
 import * as stopModel from './models/stop'
 
 const config = require('./helpers/config.json')
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1)
-  },
-  dialog: {
-    border: '1px solid #E0E0E0'
-  },
-  dialogContentActions: {
-    backgroundColor: '#fff3e0',
-    border: '1px solid #ffe0b2',
-    borderRadius: 3,
-    padding: 4
-  },
-  leftIcon: {
-    marginRight: theme.spacing(1)
-  },
-  list: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  },
-  progress: {
-    margin: theme.spacing(2)
-  },
-  tablePaper: {
-  }
-}))
 
 function StopDetails () {
   const [{ currentStopId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
@@ -91,19 +63,16 @@ function StopDetails () {
   }
 
   const theme = useTheme()
-  const classes = useStyles()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <Dialog
       fullScreen={fullScreen}
-      disableBackdropClick
       open={stopDialogOpen}
       onClose={close}
       aria-labelledby='dlg-title'
       BackdropProps={{ invisible: true }}
-      PaperProps={{ elevation: 0, className: classes.dialog }}
-    >
+      PaperProps={{ elevation: 0 }}>
       {Object.keys(stop).length > 0 && stop.routeDays
         ? (
           <>
@@ -112,7 +81,7 @@ function StopDetails () {
               <Typography component='h3' variant='subtitle1'>{'Mobile library stop in ' + stop.community + ' ' + stop.organisationName}</Typography>
               <Typography component='p' variant='body2'>{stop.address}</Typography>
               <ListSubheader>Schedules</ListSubheader>
-              <TableContainer component={Paper} elevation={0} className={classes.tablePaper}>
+              <TableContainer component={Paper} elevation={0}>
                 <Table size='small'>
                   <TableHead>
                     <TableRow>
@@ -133,20 +102,20 @@ function StopDetails () {
                 </Table>
               </TableContainer>
               <br />
-              <div className={classes.dialogContentActions}>
+              <div>
                 <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
-                <Button onClick={getStopCalendar} className={classes.button} color='primary' startIcon={<EventIcon />}>Get calendar</Button>
-                <Button onClick={getStopPdf} className={classes.button} color='primary' startIcon={<PrintIcon />}>Print</Button>
-                <Button onClick={viewMapStop} className={classes.button} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
+                <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Get calendar</Button>
+                <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
+                <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
               </div>
             </DialogContent>
           </>
-        ) : <CircularProgress className={classes.progress} color='primary' size={30} />}
+        ) : <CircularProgress color='primary' size={30} />}
       <DialogActions>
         <Button onClick={() => close()} color='secondary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
-  )
+  );
 }
 
 export default StopDetails

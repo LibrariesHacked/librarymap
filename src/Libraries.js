@@ -1,28 +1,28 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-import Checkbox from '@material-ui/core/Checkbox'
-import Chip from '@material-ui/core/Chip'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import IconButton from '@material-ui/core/IconButton'
-import ListSubheader from '@material-ui/core/ListSubheader'
-import Paper from '@material-ui/core/Paper'
-import Tooltip from '@material-ui/core/Tooltip'
+import Checkbox from '@mui/material/Checkbox'
+import Chip from '@mui/material/Chip'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import IconButton from '@mui/material/IconButton'
+import ListSubheader from '@mui/material/ListSubheader'
+import Paper from '@mui/material/Paper'
+import Tooltip from '@mui/material/Tooltip'
 
 import MaterialTable from '@material-table/core'
 
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
-import ArrowUpward from '@material-ui/icons/ArrowUpwardTwoTone'
-import ChevronLeft from '@material-ui/icons/ChevronLeftTwoTone'
-import ChevronRight from '@material-ui/icons/ChevronRightTwoTone'
-import FirstPage from '@material-ui/icons/FirstPageTwoTone'
-import FilterList from '@material-ui/icons/FilterListTwoTone'
-import LastPage from '@material-ui/icons/LastPageTwoTone'
-import LocationOnIcon from '@material-ui/icons/LocationOnTwoTone'
-import MoreVertIcon from '@material-ui/icons/MoreVertTwoTone'
-import WebIcon from '@material-ui/icons/WebTwoTone'
+import ArrowUpward from '@mui/icons-material/ArrowUpwardTwoTone'
+import ChevronLeft from '@mui/icons-material/ChevronLeftTwoTone'
+import ChevronRight from '@mui/icons-material/ChevronRightTwoTone'
+import FirstPage from '@mui/icons-material/FirstPageTwoTone'
+import FilterList from '@mui/icons-material/FilterListTwoTone'
+import LastPage from '@mui/icons-material/LastPageTwoTone'
+import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
+import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
+import WebIcon from '@mui/icons-material/WebTwoTone'
 
 import * as libraryModel from './models/library'
 import * as hoursHelper from './helpers/hours'
@@ -32,28 +32,17 @@ import { useViewStateValue } from './context/viewState'
 
 import moment from 'moment'
 
-const useStyles = makeStyles((theme) => ({
-  closedChip: {
-    marginTop: theme.spacing(1)
-  },
-  table: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    border: '2px solid #ffe0b2'
-  }
-}))
-
 function Libraries() {
   const [{ searchDistance, searchPosition, serviceFilter, displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
+
+  const theme = useTheme()
 
   const tableRef = React.createRef()
 
   useEffect(() => {
     tableRef.current.onQueryChange()
   }, [searchPosition, searchDistance, serviceFilter, displayClosedLibraries]) // eslint-disable-line
-
-  const classes = useStyles()
-  const theme = useTheme()
 
   var selectLibrary = (library) => {
     dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: library.id })
@@ -87,7 +76,7 @@ function Libraries() {
       <MaterialTable
         tableRef={tableRef}
         components={{
-          Container: props => <Paper {...props} elevation={0} className={classes.table} />
+          Container: props => <Paper {...props} elevation={0} />
         }}
         icons={{
           Filter: FilterList,
@@ -159,7 +148,7 @@ function Libraries() {
                 <>
                   {rowData.name}
                   {
-                    rowData.yearClosed !== null ? <><br /><Chip color='secondary' className={classes.closedChip} size='small' label={'Closed ' + rowData.yearClosed} /></> : null
+                    rowData.yearClosed !== null ? <><br /><Chip color='secondary' size='small' label={'Closed ' + rowData.yearClosed} /></> : null
                   }
                 </>
               )

@@ -34,19 +34,38 @@ export class Stop {
   }
 }
 
-export async function getQueryStops (query, searchPosition, distance, serviceFilter) {
-  let url = config.mobilesApi + '/stops?page=' + (query.page + 1) + '&limit=' + query.pageSize
-  if (query.orderBy && query.orderBy.field) url = url + '&sort=' + query.orderBy.field + '&direction=' + query.orderDirection
+export async function getQueryStops (
+  query,
+  searchPosition,
+  distance,
+  serviceFilter
+) {
+  let url =
+    config.mobilesApi +
+    '/stops?page=' +
+    (query.page + 1) +
+    '&limit=' +
+    query.pageSize
+  if (query.orderBy && query.orderBy.field)
+    url =
+      url +
+      '&sort=' +
+      query.orderBy.field +
+      '&direction=' +
+      query.orderDirection
 
-  if (searchPosition && searchPosition.length > 1) url = url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
+  if (searchPosition && searchPosition.length > 1)
+    url =
+      url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
   if (distance && distance !== '') url = url + '&distance=' + distance
 
-  if (serviceFilter.length > 0) url = url + '&service_codes=' + serviceFilter.join('|')
+  if (serviceFilter.length > 0)
+    url = url + '&service_codes=' + serviceFilter.join('|')
 
   const response = await axios.get(url)
   if (response && response.data && response.data.length > 0) {
     return {
-      stops: response.data.map(s => (new Stop()).fromJson(s)),
+      stops: response.data.map(s => new Stop().fromJson(s)),
       total: parseInt(response.headers['x-total-count']),
       page: parseInt(response.headers['x-page'])
     }
@@ -58,7 +77,7 @@ export async function getQueryStops (query, searchPosition, distance, serviceFil
 export async function getAllStops () {
   const response = await axios.get(config.api + '/stops')
   if (response && response.data && response.data.length > 0) {
-    return response.data.map(s => (new Stop()).fromJson(s))
+    return response.data.map(s => new Stop().fromJson(s))
   } else {
     return []
   }
@@ -67,7 +86,7 @@ export async function getAllStops () {
 export async function getStopById (id) {
   const response = await axios.get(config.mobilesApi + '/stops/' + id)
   if (response && response.data) {
-    return (new Stop()).fromJson(response.data)
+    return new Stop().fromJson(response.data)
   } else {
     return {}
   }

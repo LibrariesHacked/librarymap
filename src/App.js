@@ -1,10 +1,6 @@
 import React from 'react'
 
-import CssBaseline from '@material-ui/core/CssBaseline'
-
-import blueGrey from '@material-ui/core/colors/blueGrey'
-import orange from '@material-ui/core/colors/orange'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 import { ApplicationStateProvider } from './context/applicationState'
 import { SearchStateProvider } from './context/searchState'
@@ -43,7 +39,11 @@ const applicationReducer = (state, action) => {
       }
     case 'SetIsochroneLoading':
       if (!isochrones[action.point]) isochrones[action.point] = {}
-      isochrones[action.point][action.transport] = { geo: null, display: false, loading: true }
+      isochrones[action.point][action.transport] = {
+        geo: null,
+        display: false,
+        loading: true
+      }
       return {
         ...state,
         isochrones: isochrones
@@ -155,7 +155,11 @@ const viewReducer = (state, action) => {
     case 'SetNotification':
       return { ...state, notificationOpen: action.notificationOpen }
     case 'ShowNotification':
-      return { ...state, notificationOpen: true, notificationMessage: action.notificationMessage }
+      return {
+        ...state,
+        notificationOpen: true,
+        notificationMessage: action.notificationMessage
+      }
     case 'SetStopDialog':
       return { ...state, stopDialogOpen: action.stopDialogOpen }
     case 'SetLibraryDialog':
@@ -177,59 +181,45 @@ const viewReducer = (state, action) => {
       return { ...state, loadingServices: !state.loadingServices }
     }
     case 'SetPostcodeSearch':
-      return { ...state, loadingPostcode: false, mapPosition: action.mapPosition, mapZoom: 13 }
+      return {
+        ...state,
+        loadingPostcode: false,
+        mapPosition: action.mapPosition,
+        mapZoom: 13
+      }
     case 'SetMapPosition':
-      return { ...state, mapPosition: action.mapPosition, mapZoom: action.mapZoom }
+      return {
+        ...state,
+        mapPosition: action.mapPosition,
+        mapZoom: action.mapZoom
+      }
     case 'SetIsochronesMenu':
-      return { ...state, isochronesMenuOpen: action.isochronesMenuOpen, isochronesMenuAnchor: action.isochronesMenuAnchor }
+      return {
+        ...state,
+        isochronesMenuOpen: action.isochronesMenuOpen,
+        isochronesMenuAnchor: action.isochronesMenuAnchor
+      }
     default:
       return state
   }
 }
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: orange[900]
-    },
-    secondary: {
-      main: blueGrey[600]
-    },
-    outline: {
-      main: blueGrey[50]
-    }
-  },
-  overrides: {
-    MuiButton: {
-      text: {
-        textTransform: 'none'
-      },
-      root: {
-        textTransform: 'none'
-      }
-    },
-    MuiTypography: {
-      button: {
-        textTransform: 'none'
-      }
-    },
-    MuiTab: {
-      root: {
-        textTransform: 'none'
-      }
-    }
-  }
-})
-
 function App () {
   return (
-    <ApplicationStateProvider initialState={initialApplicationState} reducer={applicationReducer}>
-      <SearchStateProvider initialState={initialSearchState} reducer={searchReducer}>
-        <ViewStateProvider initialState={initialViewState} reducer={viewReducer}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <LibraryMapApplication />
-          </ThemeProvider>
+    <ApplicationStateProvider
+      initialState={initialApplicationState}
+      reducer={applicationReducer}
+    >
+      <SearchStateProvider
+        initialState={initialSearchState}
+        reducer={searchReducer}
+      >
+        <ViewStateProvider
+          initialState={initialViewState}
+          reducer={viewReducer}
+        >
+          <CssBaseline />
+          <LibraryMapApplication />
         </ViewStateProvider>
       </SearchStateProvider>
     </ApplicationStateProvider>
