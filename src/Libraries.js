@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -21,19 +21,33 @@ function Libraries () {
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(5)
 
-  const queryOptions = React.useMemo(
-    () => ({
-      page,
-      pageSize
-    }),
-    [page, pageSize]
-  )
-
-  const { loadingLibraries, libraries, pageInfo } = useLibraryQuery(queryOptions)
+  const { loadingLibraries, libraries, pageInfo, getLibrariesFromQuery } =
+    useLibraryQuery()
 
   const [rowCountState, setRowCountState] = React.useState(
     pageInfo?.totalRowCount || 0
   )
+
+  const fetchLibraries = useCallback(() => {
+    getLibrariesFromQuery({
+      page: page,
+      pageSize: pageSize,
+      searchPosition: searchPosition,
+      searchDistance: searchDistance,
+      serviceFilter: serviceFilter,
+      displayClosedLibraries: displayClosedLibraries
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    page,
+    pageSize,
+    searchPosition,
+    searchDistance,
+    serviceFilter,
+    displayClosedLibraries
+  ])
+
+  useEffect(() => fetchLibraries(), [fetchLibraries])
 
   React.useEffect(() => {
     setRowCountState(prevRowCountState =>
@@ -43,22 +57,7 @@ function Libraries () {
     )
   }, [pageInfo?.totalRowCount, setRowCountState])
 
-  var selectLibrary = library => {
-    dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: library.id })
-    dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
-  }
-
-  const goToLibraryWebsite = library => window.open(library.url, '_blank')
-
-  const viewLibraryOnMap = library => {
-    dispatchView({
-      type: 'SetMapPosition',
-      mapPosition: [library.longitude, library.latitude],
-      mapZoom: 16
-    })
-  }
-
-  const handleToggleDisplayClosedLibraries = () => {
+  const toggleDisplayClosedLibraries = () => {
     dispatchSearch({
       type: 'SetDisplayClosedLibraries',
       displayClosedLibraries: !displayClosedLibraries
@@ -67,8 +66,6 @@ function Libraries () {
 
   const columns = [{ field: 'name', headerName: 'Name' }]
 
-  const rows = [{ id: 1, name: 'Snow' }]
-
   return (
     <>
       <ListSubheader disableSticky>Libraries</ListSubheader>
@@ -76,7 +73,7 @@ function Libraries () {
         control={
           <Checkbox
             checked={displayClosedLibraries}
-            onChange={handleToggleDisplayClosedLibraries}
+            onChange={() => toggleDisplayClosedLibraries()}
             name='checkedB'
             color='primary'
           />

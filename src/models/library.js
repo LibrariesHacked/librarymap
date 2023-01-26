@@ -66,14 +66,10 @@ export async function getQueryLibraries (
   serviceFilter,
   closed
 ) {
-  let url =
-    config.api +
-    '/libraries?page=' +
-    (query.page + 1) +
-    '&limit=' +
-    query.pageSize +
-    '&closed=' +
-    closed
+  let url = `${config.api}/libraries?page=${query.page + 1}&limit=${
+    query.pageSize
+  }&closed=${closed}`
+
   const sortMappings = {
     name: 'Library name',
     localAuthority: 'Local authority'
@@ -98,8 +94,8 @@ export async function getQueryLibraries (
   if (response && response.data && response.data.length > 0) {
     return {
       libraries: response.data.map(s => new Library().fromJson(s)),
-      total: parseInt(response.headers['x-total-count']),
-      page: parseInt(response.headers['x-page'])
+      totalRowCount: parseInt(response.headers['x-total-count']),
+      currentPage: parseInt(response.headers['x-page'])
     }
   } else {
     return { libraries: [], total: 0, page: 1 }

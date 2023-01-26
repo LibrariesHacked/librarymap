@@ -2,23 +2,26 @@ import { useState } from 'react'
 
 import * as libraryModel from '../models/library'
 
-const useLibraryQuery = queryOptions => {
+const useLibraryQuery = () => {
   const [loadingLibraries, setLoadingLibraries] = useState(false)
   const [libraries, setLibraries] = useState([])
   const [pageInfo, setPageInfo] = useState([])
 
-  const getLibrariesFromQuery = async query => {
+  const getLibrariesFromQuery = async queryOptions => {
     setLoadingLibraries(true)
     const response = await libraryModel.getQueryLibraries(
-      query.query,
-      query.searchPosition,
-      query.distance,
-      query.serviceFilter,
-      query.closed
+      { page: queryOptions.page, pageSize: queryOptions.pageSize },
+      queryOptions.searchPosition,
+      queryOptions.searchDistance,
+      queryOptions.serviceFilter,
+      queryOptions.displayClosedLibraries
     )
     setLoadingLibraries(false)
     setLibraries(response.libraries)
-    setPageInfo(response.pageInfo)
+    setPageInfo({
+      totalRowCount: response.totalRowCount,
+      currentPage: response.currentPage
+    })
     return response
   }
 

@@ -9,9 +9,13 @@ import ServiceFilter from './ServiceFilter'
 
 function Search () {
   return (
-    <div>
-      <Typography component='h2' variant='h3' color='secondary'>Find my library</Typography>
-      <Typography component='p' variant='subtitle1'>Search by postcode or library service</Typography>
+    <>
+      <Typography component='h2' variant='h3' color='secondary'>
+        Find my library
+      </Typography>
+      <Typography component='p' variant='subtitle1'>
+        Search by postcode or library service
+      </Typography>
       <div>
         <PostcodeSearch settings />
       </div>
@@ -21,7 +25,7 @@ function Search () {
       <Libraries />
       <br />
       <MobileLibraries />
-    </div>
+    </>
   )
 }
 
