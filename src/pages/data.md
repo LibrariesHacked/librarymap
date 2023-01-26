@@ -2,17 +2,17 @@
 
 This website is designed to display library data published in a standard data format, with the same data columns and types (called a schema).
 
-* Schema for [data on libraries](https://schema.librarydata.uk/libraries)
-* Schema for [data on mobile library stops](https://schema.librarydata.uk/mobile-library-stops)
+- Schema for [data on libraries](https://schema.librarydata.uk/libraries)
+- Schema for [data on mobile library stops](https://schema.librarydata.uk/mobile-library-stops)
 
 ### Initial data sources
 
 The website was created using the following data sources:
 
-* Scottish public libraries from the [Scottish Library & Information Council]([https://scottishlibraries.org/find-a-library/)
-* Wales public libraries held in Wikidata and displayed on [libraries.wales](https://libraries.wales/)
-* Northern Ireland libraries and mobile library stops from [Libraries NI](https://www.librariesni.org.uk/Libraries/Pages/libraries-home.aspx)
-* Various mobile library stops from each individual library service website
+- Scottish public libraries from the [Scottish Library & Information Council]([https://scottishlibraries.org/find-a-library/)
+- Wales public libraries held in Wikidata and displayed on [libraries.wales](https://libraries.wales/)
+- Northern Ireland libraries and mobile library stops from [Libraries NI](https://www.librariesni.org.uk/Libraries/Pages/libraries-home.aspx)
+- Various mobile library stops from each individual library service website
 
 ### Updating data
 

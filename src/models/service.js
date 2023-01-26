@@ -34,5 +34,5 @@ export function getServiceSystemName (name) {
     .reverse()
     .join(' ')
     .replace(/[. ,:-]+/g, '-')
-    .toLowerCase();
+    .toLowerCase()
 }

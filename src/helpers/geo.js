@@ -74,5 +74,5 @@ export const getNearestMobileLibrary = async location => {
 }
 
 export const validatePostcode = postcode => {
-  return /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/.test(postcode.trim());
+  return /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/.test(postcode.trim())
 }
