@@ -64,7 +64,12 @@ function Libraries () {
     })
   }
 
-  const columns = [{ field: 'name', headerName: 'Name' }]
+  const columns = [
+    { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'localAuthority', headerName: 'Service', flex: 1 },
+    { field: 'address1', headerName: 'Address', flex: 1 },
+    { field: 'postcode', headerName: 'Postcode', flex: 1 }
+  ]
 
   return (
     <>
