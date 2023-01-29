@@ -10,7 +10,14 @@ const useLibraryQuery = () => {
   const getLibrariesFromQuery = async queryOptions => {
     setLoadingLibraries(true)
     const response = await libraryModel.getQueryLibraries(
-      { page: queryOptions.page, pageSize: queryOptions.pageSize },
+      {
+        page: queryOptions.page,
+        pageSize: queryOptions.pageSize,
+        orderBy: {
+          field: queryOptions.sortModel[0].field,
+          direction: queryOptions.sortModel[0].sort
+        }
+      },
       queryOptions.searchPosition,
       queryOptions.searchDistance,
       queryOptions.serviceFilter,

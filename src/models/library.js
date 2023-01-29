@@ -80,7 +80,7 @@ export async function getQueryLibraries (
       '&sort=' +
       sortMappings[query.orderBy.field] +
       '&direction=' +
-      query.orderDirection
+      query.orderBy.direction
 
   if (searchPosition && searchPosition.length > 1)
     url =

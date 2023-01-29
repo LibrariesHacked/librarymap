@@ -4,7 +4,11 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import ListSubheader from '@mui/material/ListSubheader'
 
-import { DataGrid } from '@mui/x-data-grid'
+import WebIcon from '@mui/icons-material/WebTwoTone'
+import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
+import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
+
+import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -20,6 +24,27 @@ function Libraries () {
 
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(5)
+  const [sortModel, setSortModel] = useState([{ field: 'name', sort: 'asc' }])
+  const [filterModel, setFilterModel] = useState({
+    items: [
+      {
+        columnField: 'localAuthority',
+        operatorValue: 'contains',
+        value: ''
+      }
+    ]
+  })
+
+  const initialState = {
+    sorting: {
+      sortModel: sortModel
+    },
+    pagination: {
+      page: page,
+      pageSize: pageSize
+    },
+    filter: filterModel
+  }
 
   const { loadingLibraries, libraries, pageInfo, getLibrariesFromQuery } =
     useLibraryQuery()
@@ -32,6 +57,7 @@ function Libraries () {
     getLibrariesFromQuery({
       page: page,
       pageSize: pageSize,
+      sortModel: sortModel,
       searchPosition: searchPosition,
       searchDistance: searchDistance,
       serviceFilter: serviceFilter,
@@ -41,6 +67,7 @@ function Libraries () {
   }, [
     page,
     pageSize,
+    sortModel,
     searchPosition,
     searchDistance,
     serviceFilter,
@@ -57,6 +84,21 @@ function Libraries () {
     )
   }, [pageInfo?.totalRowCount, setRowCountState])
 
+  const selectLibrary = library => {
+    dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: library.id })
+    dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
+  }
+
+  const goToLibraryWebsite = library => window.open(library.url, '_blank')
+
+  const viewLibraryOnMap = library => {
+    dispatchView({
+      type: 'SetMapPosition',
+      mapPosition: [library.longitude, library.latitude],
+      mapZoom: 16
+    })
+  }
+
   const toggleDisplayClosedLibraries = () => {
     dispatchSearch({
       type: 'SetDisplayClosedLibraries',
@@ -65,6 +107,27 @@ function Libraries () {
   }
 
   const columns = [
+    {
+      field: 'actions',
+      type: 'actions',
+      getActions: params => [
+        <GridActionsCellItem
+          icon={<MoreVertIcon />}
+          onClick={() => selectLibrary(params)}
+          label='Show more library information'
+        />,
+        <GridActionsCellItem
+          icon={<LocationOnIcon />}
+          onClick={() => viewLibraryOnMap(params)}
+          label='View library on map'
+        />,
+        <GridActionsCellItem
+          icon={<WebIcon />}
+          onClick={() => goToLibraryWebsite(params)}
+          label='Go to library website'
+        />
+      ]
+    },
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'localAuthority', headerName: 'Service', flex: 1 },
     { field: 'address1', headerName: 'Address', flex: 1 },
@@ -89,17 +152,25 @@ function Libraries () {
         <div style={{ flexGrow: 1 }}>
           <DataGrid
             autoHeight
-            rows={libraries}
-            rowCount={rowCountState}
+            components={{ Toolbar: GridToolbar }}
+            density='compact'
+            disableSelectionOnClick
+            filterMode='server'
             loading={loadingLibraries}
-            rowsPerPageOptions={[5]}
-            pagination
             page={page}
             pageSize={pageSize}
+            pagination
             paginationMode='server'
+            rows={libraries}
+            rowCount={rowCountState}
+            rowsPerPageOptions={[5]}
+            sortingMode='server'
+            sortModel={sortModel}
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+            onSortModelChange={newSortModel => setSortModel(newSortModel)}
             columns={columns}
+            initialState={initialState}
           />
         </div>
       </div>
