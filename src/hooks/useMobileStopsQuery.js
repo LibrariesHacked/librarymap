@@ -7,9 +7,10 @@ const useMobileStopsQuery = () => {
   const [mobileStops, setMobileStops] = useState([])
   const [pageInfo, setPageInfo] = useState([])
 
-  const getLibrariesFromQuery = async queryOptions => {
-    setLoadingLibraries(true)
-    const response = await libraryModel.getQueryLibraries(
+  const getMobileStopsFromQuery = async queryOptions => {
+    setLoadingMobileStops(true)
+
+    const response = await stopModel.getQueryMobileStops(
       {
         page: queryOptions.page,
         pageSize: queryOptions.pageSize,
@@ -23,8 +24,8 @@ const useMobileStopsQuery = () => {
       queryOptions.serviceFilter,
       queryOptions.displayClosedLibraries
     )
-    setLoadingLibraries(false)
-    setLibraries(response.libraries)
+    setLoadingMobileStops(false)
+    setMobileStops(response.stops)
     setPageInfo({
       totalRowCount: response.totalRowCount,
       currentPage: response.currentPage
@@ -32,7 +33,7 @@ const useMobileStopsQuery = () => {
     return response
   }
 
-  return { loadingLibraries, libraries, pageInfo, getLibrariesFromQuery }
+  return { loadingMobileStops, mobileStops, pageInfo, getMobileStopsFromQuery }
 }
 
-export default useLibraryQuery
+export default useMobileStopsQuery
