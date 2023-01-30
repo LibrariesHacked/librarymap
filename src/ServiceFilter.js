@@ -14,7 +14,7 @@ import { useViewStateValue } from './context/viewState'
 
 import * as urlHelper from './helpers/url'
 
-function ServiceFilter (props) {
+function ServiceFilter(props) {
   const [{ services, serviceLookup }] = useApplicationStateValue()
   const [{ serviceFilter }, dispatchSearch] = useSearchStateValue()
   const [{ }, dispatchView] = useViewStateValue()//eslint-disable-line

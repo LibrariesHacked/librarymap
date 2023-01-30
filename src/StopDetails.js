@@ -33,14 +33,14 @@ import * as stopModel from './models/stop'
 
 const config = require('./helpers/config.json')
 
-function StopDetails () {
+function StopDetails() {
   const [{ currentStopId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ stopDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [stop, setStop] = useState({})
 
   useEffect(() => {
-    async function getStop (stopId) {
+    async function getStop(stopId) {
       const stopData = await stopModel.getStopById(stopId)
       setStop(stopData)
     }
@@ -101,18 +101,15 @@ function StopDetails () {
                   </TableBody>
                 </Table>
               </TableContainer>
-              <br />
-              <div>
-                <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
-                <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Get calendar</Button>
-                <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
-                <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
-              </div>
             </DialogContent>
           </>
         ) : <CircularProgress color='primary' size={30} />}
       <DialogActions>
-        <Button onClick={() => close()} color='secondary' endIcon={<CancelIcon />}>Close</Button>
+        <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
+        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Get calendar</Button>
+        <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
+        <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
+        <Button onClick={() => close()} color='primary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
   );

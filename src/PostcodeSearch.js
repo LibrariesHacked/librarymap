@@ -21,7 +21,7 @@ import { useViewStateValue } from './context/viewState'
 import * as geoHelper from './helpers/geo'
 import * as urlHelper from './helpers/url'
 
-function usePrevious (value) {
+function usePrevious(value) {
   const ref = useRef()
   useEffect(() => {
     ref.current = value
@@ -29,7 +29,7 @@ function usePrevious (value) {
   return ref.current
 }
 
-function PostcodeSearch (props) {
+function PostcodeSearch(props) {
   const { settings } = props
   const [{ searchType, searchPostcode, searchPosition }, dispatchSearch] =
     useSearchStateValue() //eslint-disable-line

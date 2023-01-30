@@ -12,10 +12,11 @@ import Map, { Source, Layer, Marker, NavigationControl } from 'react-map-gl'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'
 
-import LayersIcon from '@mui/icons-material/LayersTwoTone'
 import DirectionsBike from '@mui/icons-material/DirectionsBikeTwoTone'
 import DirectionsWalk from '@mui/icons-material/DirectionsWalkTwoTone'
 import DirectionsCar from '@mui/icons-material/DirectionsCarTwoTone'
+import LayersIcon from '@mui/icons-material/LayersTwoTone'
+import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
@@ -36,7 +37,7 @@ const libraryAuthorityTiles = config.libraryAuthorityTiles
 const stopTiles = config.stopTiles
 const tripTiles = config.tripTiles
 
-function LibraryMap () {
+function LibraryMap() {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
   const [
     {
@@ -56,7 +57,6 @@ function LibraryMap () {
       mapPosition,
       mapSettings,
       mapSettingsDialogOpen,
-      mapBounds,
       isochronesMenuOpen,
       isochronesMenuAnchor
     },
@@ -113,7 +113,7 @@ function LibraryMap () {
     }
   }
 
-  var moreInfoIsochronesMenu = () => {
+  const moreInfoIsochronesMenu = () => {
     closeIsochronesMenu()
     if (currentStopId)
       dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
@@ -121,7 +121,7 @@ function LibraryMap () {
       dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
   }
 
-  var toggleIsochrone = async transport => {
+  const toggleIsochrone = async transport => {
     if (isochrones[currentPoint] && isochrones[currentPoint][transport]) {
       dispatchApplication({
         type: 'SetIsochroneDisplay',
@@ -143,7 +143,7 @@ function LibraryMap () {
     }
   }
 
-  var closeIsochronesMenu = () =>
+  const closeIsochronesMenu = () =>
     dispatchView({
       type: 'SetIsochronesMenu',
       isochronesMenuOpen: false,
@@ -156,10 +156,10 @@ function LibraryMap () {
         fontSize='small'
         color={
           isochrones[currentPoint] &&
-          isochrones[currentPoint]['cycling-regular'] &&
-          isochrones[currentPoint]['cycling-regular'].display
+            isochrones[currentPoint]['cycling-regular'] &&
+            isochrones[currentPoint]['cycling-regular'].display
             ? 'primary'
-            : 'secondary'
+            : 'default'
         }
       />
     ),
@@ -168,10 +168,10 @@ function LibraryMap () {
         fontSize='small'
         color={
           isochrones[currentPoint] &&
-          isochrones[currentPoint]['driving-car'] &&
-          isochrones[currentPoint]['driving-car'].display
+            isochrones[currentPoint]['driving-car'] &&
+            isochrones[currentPoint]['driving-car'].display
             ? 'primary'
-            : 'secondary'
+            : 'default'
         }
       />
     ),
@@ -180,21 +180,21 @@ function LibraryMap () {
         fontSize='small'
         color={
           isochrones[currentPoint] &&
-          isochrones[currentPoint]['foot-walking'] &&
-          isochrones[currentPoint]['foot-walking'].display
+            isochrones[currentPoint]['foot-walking'] &&
+            isochrones[currentPoint]['foot-walking'].display
             ? 'primary'
-            : 'secondary'
+            : 'default'
         }
       />
     )
   }
 
   return (
-    <div>
+    <>
       <Map
         ref={mapRef}
         mapLib={maplibregl}
-        style={{ width: '100vw', height: '100vh' }}
+        style={{ width: '100vw', height: '100vh', position: 'absolute', top: 0, left: 0 }}
         mapStyle='https://zoomstack.librarydata.uk/light.json'
         longitude={mapPosition[0]}
         latitude={mapPosition[1]}
@@ -779,10 +779,7 @@ function LibraryMap () {
         <Fab
           size='small'
           color='primary'
-          style={{
-            color: 'white',
-            border: '1px solid #FFFFFF'
-          }}
+          sx={{ position: 'absolute', bottom: 16, right: 16, zIndex: 1, color: 'white' }}
           onClick={() =>
             dispatchView({
               type: 'SetMapSettingsDialog',
@@ -808,7 +805,7 @@ function LibraryMap () {
       >
         <MenuItem dense onClick={moreInfoIsochronesMenu}>
           <ListItemIcon>
-            <LayersIcon fontSize='small' />
+            <MoreVertIcon fontSize='small' />
           </ListItemIcon>
           <ListItemText primary='More info' />
         </MenuItem>
@@ -825,7 +822,7 @@ function LibraryMap () {
           )
         })}
       </Menu>
-    </div>
+    </>
   )
 }
 
