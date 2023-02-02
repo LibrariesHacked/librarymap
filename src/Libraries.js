@@ -156,6 +156,7 @@ function Libraries () {
             density='compact'
             disableSelectionOnClick
             filterMode='server'
+            filterModel={filterModel}
             loading={loadingLibraries}
             page={page}
             pageSize={pageSize}
@@ -166,6 +167,7 @@ function Libraries () {
             rowsPerPageOptions={[5]}
             sortingMode='server'
             sortModel={sortModel}
+            onFilterModelChange={newFilterModel => setFilterModel(newFilterModel)}
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => setSortModel(newSortModel)}

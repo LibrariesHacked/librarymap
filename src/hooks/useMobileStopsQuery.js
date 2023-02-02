@@ -10,7 +10,7 @@ const useMobileStopsQuery = () => {
   const getMobileStopsFromQuery = async queryOptions => {
     setLoadingMobileStops(true)
 
-    const response = await stopModel.getQueryMobileStops(
+    const response = await stopModel.getQueryStops(
       {
         page: queryOptions.page,
         pageSize: queryOptions.pageSize,
