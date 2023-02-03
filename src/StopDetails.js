@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import CircularProgress from '@mui/material/CircularProgress'
 import ListSubheader from '@mui/material/ListSubheader'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
@@ -22,9 +23,9 @@ import { useTheme } from '@mui/material/styles'
 
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
 import EventIcon from '@mui/icons-material/EventTwoTone'
-import WebIcon from '@mui/icons-material/WebTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import PrintIcon from '@mui/icons-material/PrintTwoTone'
+import WebIcon from '@mui/icons-material/WebTwoTone'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -71,44 +72,46 @@ function StopDetails() {
       open={stopDialogOpen}
       onClose={close}
       aria-labelledby='dlg-title'
-      BackdropProps={{ invisible: true }}
-      PaperProps={{ elevation: 0 }}>
+      slotProps={{ backdrop: { invisible: true } }}
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}>
       {Object.keys(stop).length > 0 && stop.routeDays
         ? (
           <>
             <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
             <DialogContent>
-              <Typography component='h3' variant='subtitle1'>{'Mobile library stop in ' + stop.community + ' ' + stop.organisationName}</Typography>
-              <Typography component='p' variant='body2'>{stop.address}</Typography>
-              <ListSubheader>Schedules</ListSubheader>
-              <TableContainer component={Paper} elevation={0}>
-                <Table size='small'>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Frequency</TableCell>
-                      <TableCell align='right'>Next visit</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {stop.routeFrequencies.map((rs, idx) => (
-                      <TableRow key={'tc_rs_' + idx}>
-                        <TableCell component='th' scope='row'>
-                          {rs}
-                        </TableCell>
-                        <TableCell align='right'>{stop.routeSchedule[0].format('dddd Do MMMM h:mma')}</TableCell>
+              <DialogContentText>
+                <Typography component='h3' variant='subtitle1'>{'Mobile library stop in ' + stop.community + ' ' + stop.organisationName}</Typography>
+                <Typography component='p' variant='body2'>{stop.address}</Typography>
+                <ListSubheader>Schedule</ListSubheader>
+                <TableContainer component={Paper} elevation={0} sx={{ border: 1, borderColor: '#ccc' }}>
+                  <Table size='small' sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Frequency</TableCell>
+                        <TableCell align='right'>Next visit</TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                      {stop.routeFrequencies.map((rs, idx) => (
+                        <TableRow key={'tc_rs_' + idx}>
+                          <TableCell component='th' scope='row'>
+                            {rs}
+                          </TableCell>
+                          <TableCell align='right'>{stop.routeSchedule[0].format('dddd Do MMMM h:mma')}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </DialogContentText>
             </DialogContent>
           </>
         ) : <CircularProgress color='primary' size={30} />}
       <DialogActions>
-        <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Go to website</Button>
-        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Get calendar</Button>
+        <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Website</Button>
+        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Calendar</Button>
         <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
-        <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>See on map</Button>
+        <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>View map</Button>
         <Button onClick={() => close()} color='primary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
