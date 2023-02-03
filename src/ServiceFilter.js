@@ -12,9 +12,7 @@ import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-import * as urlHelper from './helpers/url'
-
-function ServiceFilter(props) {
+function ServiceFilter() {
   const [{ services, serviceLookup }] = useApplicationStateValue()
   const [{ serviceFilter }, dispatchSearch] = useSearchStateValue()
   const [{ }, dispatchView] = useViewStateValue()//eslint-disable-line
@@ -26,16 +24,14 @@ function ServiceFilter(props) {
   const closeServiceMenu = () => setServiceMenuAnchor(null)
 
   const chooseService = (service) => {
+    closeServiceMenu()
     const coords = JSON.parse(service.bbox).coordinates[0]
     dispatchSearch({ type: 'FilterByService', service: service })
     dispatchView({ type: 'FitToBounds', bounds: [coords[0], coords[2]] })
-    urlHelper.addService(props.history, service.systemName)
-    closeServiceMenu()
   }
 
   const clearServiceFilter = () => {
     dispatchSearch({ type: 'ClearAll' })
-    urlHelper.clearService(props.history)
   }
 
   return (
@@ -43,7 +39,7 @@ function ServiceFilter(props) {
       {serviceFilter.length === 0 ? (
         <Tooltip title='Choose library service'>
           <Button color='primary' onClick={(e) => openServiceMenu(e.currentTarget)} startIcon={<BusinessIcon />}>
-            Choose service
+            Choose library service
           </Button>
         </Tooltip>
       ) : <Chip color='primary' onDelete={clearServiceFilter} label={serviceLookup[serviceFilter[0]].name} />}
