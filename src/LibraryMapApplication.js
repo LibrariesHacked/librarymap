@@ -7,6 +7,7 @@ import StopDetails from './StopDetails'
 import LibraryDetails from './LibraryDetails'
 
 import Footer from './Footer'
+import Header from './Header'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
 import Search from './Search'
@@ -62,6 +63,7 @@ function LibraryMapApplication() {
   return (
     <BrowserRouter>
       <div>
+        <Header />
         <Container maxWidth='lg'>
           <main>
             <Routes>
