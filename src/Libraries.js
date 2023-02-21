@@ -8,19 +8,21 @@ import WebIcon from '@mui/icons-material/WebTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
 
-import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
+import { amber } from '@mui/material/colors';
+
 import useLibraryQuery from './hooks/useLibraryQuery'
 
-function Libraries () {
+function Libraries() {
   const [
     { searchDistance, searchPosition, serviceFilter, displayClosedLibraries },
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
-  const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(5)
@@ -146,14 +148,21 @@ function Libraries () {
             color='primary'
           />
         }
-        label='Display permanently closed libraries'
+        label='Show permanently closed libraries'
       />
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
+            sx={(theme) => ({
+              backgroundColor: 'white',
+              border: 2,
+              borderColor: '',
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: amber[50],
+              },
+            })}
             autoHeight
-            components={{ Toolbar: GridToolbar }}
-            density='compact'
+            density='standard'
             disableSelectionOnClick
             filterMode='server'
             filterModel={filterModel}

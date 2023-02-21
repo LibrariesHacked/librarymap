@@ -6,7 +6,7 @@ import WebIcon from '@mui/icons-material/WebTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
 
-import { DataGrid, GridActionsCellItem, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -127,7 +127,6 @@ function MobileLibraries() {
         <div style={{ flexGrow: 1 }}>
           <DataGrid
             autoHeight
-            components={{ Toolbar: GridToolbar }}
             density='compact'
             disableSelectionOnClick
             filterMode='server'

@@ -8,6 +8,33 @@ import { ViewStateProvider } from './context/viewState'
 
 import LibraryMapApplication from './LibraryMapApplication'
 
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+
+import {blueGrey, deepOrange, grey } from '@mui/material/colors';
+
+const theme = createTheme({
+  palette: {
+    background: {
+      default: grey.A100
+    },
+    primary: {
+      main: deepOrange[500],
+    },
+    secondary: {
+      main: blueGrey[500],
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
+        },
+      },
+    },
+  },
+});
+
 const initialApplicationState = {
   services: [],
   serviceLookup: {},
@@ -204,25 +231,27 @@ const viewReducer = (state, action) => {
   }
 }
 
-function App () {
+function App() {
   return (
-    <ApplicationStateProvider
-      initialState={initialApplicationState}
-      reducer={applicationReducer}
-    >
-      <SearchStateProvider
-        initialState={initialSearchState}
-        reducer={searchReducer}
+    <ThemeProvider theme={theme}>
+      <ApplicationStateProvider
+        initialState={initialApplicationState}
+        reducer={applicationReducer}
       >
-        <ViewStateProvider
-          initialState={initialViewState}
-          reducer={viewReducer}
+        <SearchStateProvider
+          initialState={initialSearchState}
+          reducer={searchReducer}
         >
-          <CssBaseline />
-          <LibraryMapApplication />
-        </ViewStateProvider>
-      </SearchStateProvider>
-    </ApplicationStateProvider>
+          <ViewStateProvider
+            initialState={initialViewState}
+            reducer={viewReducer}
+          >
+            <CssBaseline />
+            <LibraryMapApplication />
+          </ViewStateProvider>
+        </SearchStateProvider>
+      </ApplicationStateProvider>
+    </ThemeProvider>
   )
 }
 
