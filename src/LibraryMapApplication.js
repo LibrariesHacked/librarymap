@@ -8,9 +8,10 @@ import LibraryDetails from './LibraryDetails'
 
 import Footer from './Footer'
 import Header from './Header'
+import Home from './Home'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
-import Search from './Search'
+
 import { MemoMarkdownPage } from './MarkdownPage'
 
 import Data from './pages/data.md'
@@ -63,11 +64,11 @@ function LibraryMapApplication() {
   return (
     <BrowserRouter>
       <div>
-        <Header />
         <Container maxWidth='lg'>
+          <Header />
           <main>
             <Routes>
-              <Route path='/' exact element={<Search />} />
+              <Route path='/' exact element={<Home />} />
               <Route path='/map' exact element={<LibraryMap />} />
               <Route
                 path='/data'

@@ -25,7 +25,7 @@ function Footer () {
               target='_blank'
               title='About the library map library lab project'
             >
-              About this project
+              About
             </MaterialLink>
             <span> &#8226; </span>
             <MaterialLink
