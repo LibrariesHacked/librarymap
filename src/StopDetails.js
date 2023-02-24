@@ -20,6 +20,7 @@ import Paper from '@mui/material/Paper'
 
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import { lighten } from "@mui/material";
 
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
 import EventIcon from '@mui/icons-material/EventTwoTone'
@@ -72,7 +73,7 @@ function StopDetails() {
       open={stopDialogOpen}
       onClose={close}
       aria-labelledby='dlg-title'
-      slotProps={{ backdrop: { invisible: true } }}
+      slotProps={{ backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.1)' } } }}
       PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}>
       {Object.keys(stop).length > 0 && stop.routeDays
         ? (
@@ -80,10 +81,9 @@ function StopDetails() {
             <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                <Typography component='h3' variant='subtitle1'>{'Mobile library stop in ' + stop.community + ' ' + stop.organisationName}</Typography>
-                <Typography component='p' variant='body2'>{stop.address}</Typography>
-                <ListSubheader>Schedule</ListSubheader>
-                <TableContainer component={Paper} elevation={0} sx={{ border: 1, borderColor: '#ccc' }}>
+                <Typography component='h4' variant='subtitle1'>{stop.address}</Typography>
+                <ListSubheader disableSticky>Schedule</ListSubheader>
+                <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.secondary.main, 0.5) }}>
                   <Table size='small' sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
                     <TableHead>
                       <TableRow>
@@ -111,7 +111,7 @@ function StopDetails() {
         <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Website</Button>
         <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Calendar</Button>
         <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
-        <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>View map</Button>
+        <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>Map</Button>
         <Button onClick={() => close()} color='primary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
