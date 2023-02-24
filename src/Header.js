@@ -33,7 +33,7 @@ function Header() {
                 color='primary'
                 startIcon={<GridOnIcon />}
               >
-                Library lists
+                Lists
               </Button>
             </Tooltip>
             <Tooltip title="View map">

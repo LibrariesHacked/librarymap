@@ -2,11 +2,11 @@ import React, { useEffect, useState, useCallback } from 'react'
 
 import ListSubheader from '@mui/material/ListSubheader'
 
-import WebIcon from '@mui/icons-material/WebTwoTone'
-import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
-import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
+import MoreIcon from '@mui/icons-material/ReadMoreTwoTone'
 
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
+
+import { lighten } from "@mui/material";
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -83,51 +83,49 @@ function MobileLibraries() {
     dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
   }
 
-  const goToStopTimetableWebsite = library => window.open(library.url, '_blank')
-
-  const viewLibraryStopOnMap = stop => {
-    dispatchView({
-      type: 'SetMapPosition',
-      mapPosition: [stop.longitude, stop.latitude],
-      mapZoom: 16
-    })
-  }
-
   const columns = [
+    { field: 'community', headerName: 'Community', flex: 1 },
+    { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'organisationName', headerName: 'Service', flex: 1 },
     {
       field: 'actions',
       type: 'actions',
       getActions: params => [
         <GridActionsCellItem
-          icon={<MoreVertIcon />}
+          icon={<MoreIcon />}
           onClick={() => selectStop(params)}
           label='Show more stop information'
-        />,
-        <GridActionsCellItem
-          icon={<LocationOnIcon />}
-          onClick={() => viewLibraryStopOnMap(params)}
-          label='View stop on map'
-        />,
-        <GridActionsCellItem
-          icon={<WebIcon />}
-          onClick={() => goToStopTimetableWebsite(params)}
-          label='Go to stop website'
         />
       ]
-    },
-    { field: 'community', headerName: 'Community', flex: 1 },
-    { field: 'name', headerName: 'Name', flex: 1 },
-    { field: 'organisationName', headerName: 'Service', flex: 1 }
+    }
   ]
 
   return (
     <>
-      <ListSubheader disableSticky>Mobile library stops</ListSubheader>
+      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Mobile library stops</ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
+            sx={(theme) => ({
+              backgroundColor: 'white',
+              border: 2,
+              borderColor: lighten(theme.palette.secondary.main, 0.5),
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: lighten(theme.palette.secondary.main, 0.8),
+              },
+              '&.Mui-hovered': {
+                backgroundColor: theme.palette.action.hover
+              },
+              '& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus': {
+                outline: "none !important",
+              },
+              '& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-columnHeader:focus':
+              {
+                outline: "none !important",
+              }
+            })}
             autoHeight
-            density='compact'
+            density='standard'
             disableSelectionOnClick
             filterMode='server'
             filterModel={filterModel}

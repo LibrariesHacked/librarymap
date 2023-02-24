@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
 
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import ListSubheader from '@mui/material/ListSubheader'
 
 import MoreVertIcon from '@mui/icons-material/ReadMoreTwoTone'
@@ -11,7 +9,7 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-import { amber } from '@mui/material/colors';
+import { lighten } from "@mui/material";
 
 import useLibraryQuery from './hooks/useLibraryQuery'
 
@@ -89,13 +87,6 @@ function Libraries() {
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
   }
 
-  const toggleDisplayClosedLibraries = () => {
-    dispatchSearch({
-      type: 'SetDisplayClosedLibraries',
-      displayClosedLibraries: !displayClosedLibraries
-    })
-  }
-
   const columns = [
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'localAuthority', headerName: 'Service', flex: 1 },
@@ -116,27 +107,16 @@ function Libraries() {
 
   return (
     <>
-      <ListSubheader disableSticky>Libraries</ListSubheader>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={displayClosedLibraries}
-            onChange={() => toggleDisplayClosedLibraries()}
-            name='checkedB'
-            color='primary'
-          />
-        }
-        label='Show permanently closed libraries'
-      />
+      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Static libraries</ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
             sx={(theme) => ({
               backgroundColor: 'white',
-              border: 3,
-              borderColor: amber[500],
+              border: 2,
+              borderColor: lighten(theme.palette.primary.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: amber[50],
+                backgroundColor: lighten(theme.palette.primary.main, 0.8),
               },
               '&.Mui-hovered': {
                 backgroundColor: theme.palette.action.hover
