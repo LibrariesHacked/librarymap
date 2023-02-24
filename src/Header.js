@@ -11,42 +11,45 @@ import Button from '@mui/material/Button'
 
 import GridOnIcon from '@mui/icons-material/GridOnTwoTone'
 import MapIcon from '@mui/icons-material/MapTwoTone'
+import { Container } from '@mui/system'
 
 function Header() {
   const location = useLocation()
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color='transparent' elevation={0}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Library map
-          </Typography>
-          <Tooltip title="Find library in tables">
-            <Button
-              component={Link}
-              to={'/'}
-              disableRipple={location.pathname === '/'}
-              disableFocusRipple={location.pathname === '/'}
-              color='primary'
-              startIcon={<GridOnIcon />}
-            >
-              Library lists
-            </Button>
-          </Tooltip>
-          <Tooltip title="View map">
-            <Button
-              component={Link}
-              to={'/map'}
-              disableRipple={location.pathname === '/map'}
-              disableFocusRipple={location.pathname === '/map'}
-              color='primary'
-              startIcon={<MapIcon />}
-            >
-              Map
-            </Button>
-          </Tooltip>
-        </Toolbar>
+      <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
+        <Container maxWidth='lg'>
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Library map
+            </Typography>
+            <Tooltip title="Find library in tables">
+              <Button
+                component={Link}
+                to={'/'}
+                disableRipple={location.pathname === '/'}
+                disableFocusRipple={location.pathname === '/'}
+                color='primary'
+                startIcon={<GridOnIcon />}
+              >
+                Library lists
+              </Button>
+            </Tooltip>
+            <Tooltip title="View map">
+              <Button
+                component={Link}
+                to={'/map'}
+                disableRipple={location.pathname === '/map'}
+                disableFocusRipple={location.pathname === '/map'}
+                color='primary'
+                startIcon={<MapIcon />}
+              >
+                Map
+              </Button>
+            </Tooltip>
+          </Toolbar>
+        </Container>
       </AppBar>
     </Box>
   )

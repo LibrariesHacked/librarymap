@@ -10,7 +10,7 @@
     "@mui/lab": "^5.0.0-alpha.114",
     "@mui/material": "^5.11.10",
     "@mui/styles": "^5.11.9",
-    "@mui/x-data-grid": "^5.17.24",
+    "@mui/x-data-grid": "^5.17.25",
     "axios": "^0.24.0",
     "mapbox-gl": "npm:empty-npm-package@^1.0.0",
     "maplibre-gl": "^2.4.0",

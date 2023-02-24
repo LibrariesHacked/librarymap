@@ -71,7 +71,9 @@ export async function getQueryLibraries(
 
   const sortMappings = {
     name: 'Library name',
-    localAuthority: 'Local authority'
+    localAuthority: 'Local authority',
+    address1: 'Address 1',
+    postcode: 'Postcode'
   }
 
   if (query.orderBy && query.orderBy.field) url = `${url}&sort=${sortMappings[query.orderBy.field]}&direction=${query.orderBy.direction}`

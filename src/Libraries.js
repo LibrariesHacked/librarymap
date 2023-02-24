@@ -4,9 +4,7 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import ListSubheader from '@mui/material/ListSubheader'
 
-import WebIcon from '@mui/icons-material/WebTwoTone'
-import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
-import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
+import MoreVertIcon from '@mui/icons-material/ReadMoreTwoTone'
 
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
@@ -91,16 +89,6 @@ function Libraries() {
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
   }
 
-  const goToLibraryWebsite = library => window.open(library.url, '_blank')
-
-  const viewLibraryOnMap = library => {
-    dispatchView({
-      type: 'SetMapPosition',
-      mapPosition: [library.longitude, library.latitude],
-      mapZoom: 16
-    })
-  }
-
   const toggleDisplayClosedLibraries = () => {
     dispatchSearch({
       type: 'SetDisplayClosedLibraries',
@@ -109,6 +97,10 @@ function Libraries() {
   }
 
   const columns = [
+    { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'localAuthority', headerName: 'Service', flex: 1 },
+    { field: 'address1', headerName: 'Address', flex: 1 },
+    { field: 'postcode', headerName: 'Postcode', flex: 1 },
     {
       field: 'actions',
       type: 'actions',
@@ -117,23 +109,9 @@ function Libraries() {
           icon={<MoreVertIcon />}
           onClick={() => selectLibrary(params)}
           label='Show more library information'
-        />,
-        <GridActionsCellItem
-          icon={<LocationOnIcon />}
-          onClick={() => viewLibraryOnMap(params)}
-          label='View library on map'
-        />,
-        <GridActionsCellItem
-          icon={<WebIcon />}
-          onClick={() => goToLibraryWebsite(params)}
-          label='Go to library website'
         />
       ]
-    },
-    { field: 'name', headerName: 'Name', flex: 1 },
-    { field: 'localAuthority', headerName: 'Service', flex: 1 },
-    { field: 'address1', headerName: 'Address', flex: 1 },
-    { field: 'postcode', headerName: 'Postcode', flex: 1 }
+    }
   ]
 
   return (
@@ -155,11 +133,21 @@ function Libraries() {
           <DataGrid
             sx={(theme) => ({
               backgroundColor: 'white',
-              border: 2,
-              borderColor: '',
+              border: 3,
+              borderColor: amber[500],
               '& .MuiDataGrid-columnHeaders': {
                 backgroundColor: amber[50],
               },
+              '&.Mui-hovered': {
+                backgroundColor: theme.palette.action.hover
+              },
+              '& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus': {
+                outline: "none !important",
+              },
+              '& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-columnHeader:focus':
+              {
+                outline: "none !important",
+              }
             })}
             autoHeight
             density='standard'
