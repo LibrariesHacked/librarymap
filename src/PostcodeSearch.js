@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -36,6 +37,8 @@ function PostcodeSearch(props) {
 
   const prevProps = usePrevious({ searchPostcode })
 
+  let navigate = useNavigate();
+
   useEffect(() => {
     if (prevProps && searchPostcode !== prevProps.searchPostcode)
       setTempPostcode(searchPostcode)
@@ -66,7 +69,7 @@ function PostcodeSearch(props) {
   const clearSearch = () => {
     setTempPostcode('')
     dispatchSearch({ type: 'ClearAll' })
-    urlHelper.clearService(props.history)
+    urlHelper.clearService(navigate)
   }
 
   const postcodeSearch = async (postcode = tempPostcode) => {
@@ -114,14 +117,17 @@ function PostcodeSearch(props) {
   return (
     <Box sx={{
       position: 'relative',
-      borderRadius: 2,
-      margin: theme => theme.spacing(1),
-      border: 2,
-      borderColor: (theme) => alpha(theme.palette.secondary.main, 0.5),
-      backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.15),
+      border: 1,
+      borderColor: '#ccc',
+      borderRadius: 1,
+      backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.10),
       '&:hover': {
-        backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+        backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.20),
       },
+      marginLeft: 0,
+      paddingLeft: 0,
+      whitespace: 'nowrap',
+      display: 'inline-flex',
     }}>
       <InputBase
         placeholder='Postcode'
@@ -132,7 +138,8 @@ function PostcodeSearch(props) {
         }}
         inputProps={{ 'aria-label': 'search by postcode' }}
         sx={{
-          paddingLeft: theme => theme.spacing(1)
+          padding: theme => theme.spacing(1),
+          maxWidth: 110,
         }}
       />
       {searchType === 'postcode' ? (
@@ -158,6 +165,14 @@ function PostcodeSearch(props) {
           <Box
             position='relative'
             display='inline-flex'
+            sx={{
+              padding: theme => theme.spacing(1.5),
+              textAlign: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+              verticalAlign: 'middle',
+              boxSizing: 'border-box'
+            }}
           >
             <CircularProgress size={22} />
           </Box>

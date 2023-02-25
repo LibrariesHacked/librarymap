@@ -83,7 +83,7 @@ const applicationReducer = (state, action) => {
 const initialSearchState = {
   searchPostcode: '',
   searchType: '',
-  searchDistance: 1609,
+  searchDistance: 8045,
   searchPosition: [],
   currentStopId: null,
   currentLibraryId: null,

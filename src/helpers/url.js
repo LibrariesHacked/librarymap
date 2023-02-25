@@ -1,11 +1,11 @@
-export function addService (history, systemName) {
+export function addService(navigate, systemName) {
   const currentUrlParams = new URLSearchParams(window.location.search)
   currentUrlParams.set('service', systemName)
-  history.push(window.location.pathname + '?' + currentUrlParams.toString())
+  navigate(window.location.pathname + '?' + currentUrlParams.toString())
 }
 
-export function clearService (history) {
+export function clearService(navigate) {
   const currentUrlParams = new URLSearchParams(window.location.search)
   currentUrlParams.delete('service')
-  history.push(window.location.pathname)
+  navigate(window.location.pathname)
 }

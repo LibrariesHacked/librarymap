@@ -66,6 +66,8 @@ function LibraryMapApplication() {
       <div>
         <Container maxWidth='lg'>
           <Header />
+        </Container>
+        <Container maxWidth='lg' sx={{ paddingTop: '80px' }}>
           <main>
             <Routes>
               <Route path='/' exact element={<Home />} />

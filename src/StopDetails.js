@@ -6,7 +6,6 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import ListSubheader from '@mui/material/ListSubheader'
 import Table from '@mui/material/Table'
@@ -80,30 +79,28 @@ function StopDetails() {
           <>
             <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                <Typography component='h4' variant='subtitle1'>{stop.address}</Typography>
-                <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Schedule</ListSubheader>
-                <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.secondary.main, 0.5) }}>
-                  <Table size='small' sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
-                    <TableHead sx={{ backgroundColor: (theme) => lighten(theme.palette.secondary.main, 0.8) }}>
-                      <TableRow>
-                        <TableCell>Frequency</TableCell>
-                        <TableCell align='right'>Next visit</TableCell>
+              <Typography component='h4' variant='subtitle1'>{stop.address}</Typography>
+              <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Schedule</ListSubheader>
+              <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.secondary.main, 0.5) }}>
+                <Table size='small' sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
+                  <TableHead sx={{ backgroundColor: (theme) => lighten(theme.palette.secondary.main, 0.8) }}>
+                    <TableRow>
+                      <TableCell>Frequency</TableCell>
+                      <TableCell align='right'>Next visit</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {stop.routeFrequencies.map((rs, idx) => (
+                      <TableRow key={'tc_rs_' + idx}>
+                        <TableCell component='th' scope='row'>
+                          {rs}
+                        </TableCell>
+                        <TableCell align='right'>{stop.routeSchedule[0].format('dddd Do MMMM h:mma')}</TableCell>
                       </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {stop.routeFrequencies.map((rs, idx) => (
-                        <TableRow key={'tc_rs_' + idx}>
-                          <TableCell component='th' scope='row'>
-                            {rs}
-                          </TableCell>
-                          <TableCell align='right'>{stop.routeSchedule[0].format('dddd Do MMMM h:mma')}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </DialogContentText>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </DialogContent>
           </>
         ) : <CircularProgress color='primary' size={30} />}

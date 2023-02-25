@@ -5,15 +5,25 @@ import Typography from '@mui/material/Typography'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
+import PostcodeSearch from './PostcodeSearch'
+import ServiceFilter from './ServiceFilter'
 
 function Search() {
   return (
     <>
-      <Box sx={{ textAlign: 'center', paddingTop: '70px' }}>
+      <Box sx={{ textAlign: 'center' }}>
         <img src='/Logo_Rectangle_h96.png' alt='Logo' />
         <Typography component='h1' variant='h2'>
-          Find your nearest library
+          Find a library
         </Typography>
+        <Typography component='p' variant='subtitle'>
+          Find your nearest library by postcode
+        </Typography>
+        <PostcodeSearch />
+        <Typography component='p' variant='subtitle'>
+          or select your local authority
+        </Typography>
+        <ServiceFilter />
       </Box>
       <Libraries />
       <MobileLibraries />

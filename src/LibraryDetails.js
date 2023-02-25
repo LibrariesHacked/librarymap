@@ -32,7 +32,6 @@ import moment from 'moment'
 
 import * as libraryModel from './models/library'
 import * as hoursHelper from './helpers/hours'
-import { DialogContentText } from '@mui/material'
 
 function LibraryDetails() {
   const [{ currentLibraryId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
@@ -94,10 +93,11 @@ function LibraryDetails() {
         <>
           <DialogTitle id='dlg-title'>{library.name}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Library details</ListSubheader>
-              <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.primary.main, 0.5) }}>
-                <Table size='small'>
+
+            <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Library details</ListSubheader>
+            <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.primary.main, 0.5) }}>
+              <Table size='small'>
+                <TableBody>
                   <TableRow>
                     <TableCell variant='head'>Address</TableCell>
                     <TableCell>                {[
@@ -135,58 +135,58 @@ function LibraryDetails() {
                       <TableCell>{library.notes}</TableCell>
                     </TableRow>
                   ) : null}
-                </Table>
-              </TableContainer>
-              {staffedHoursAvailable || unstaffedHoursAvailable ? (
-                <>
-                  <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Opening hours</ListSubheader>
-                  <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.primary.main, 0.5) }}>
-                    <Table size='small'>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell></TableCell>
-                          <TableCell>Staffed</TableCell>
-                          {unstaffedHoursAvailable ? (
-                            <TableCell>Unstaffed</TableCell>
-                          ) : null}
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {hoursHelper
-                          .getAllHours(library)
-                          .filter(
-                            rs =>
-                              (rs.staffed !== null && rs.staffed.length > 0) ||
-                              (rs.unstaffed !== null && rs.unstaffed.length > 0)
-                          )
-                          .map((rs, idx) => (
-                            <TableRow key={'tc_rs_' + idx}>
-                              <TableCell variant='head'>{rs.day}</TableCell>
-                              <TableCell>
-                                {rs.staffed !== null && rs.staffed.length > 0
-                                  ? rs.staffed
-                                    .map(h =>
-                                      h
-                                        .map(a =>
-                                          moment(a, 'hh:mm').format('h:mma')
-                                        )
-                                        .join(' - ')
-                                    )
-                                    .join(', ')
-                                  : ''}
-                              </TableCell>
-                              {unstaffedHoursAvailable ? (
-                                <TableCell>{rs.unstaffed}</TableCell>
-                              ) : null}
-                            </TableRow>
-                          ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  <br />
-                </>
-              ) : null}
-            </DialogContentText>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            {staffedHoursAvailable || unstaffedHoursAvailable ? (
+              <>
+                <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Opening hours</ListSubheader>
+                <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.primary.main, 0.5) }}>
+                  <Table size='small'>
+                    <TableHead sx={{ backgroundColor: (theme) => lighten(theme.palette.primary.main, 0.8) }}>
+                      <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Staffed</TableCell>
+                        {unstaffedHoursAvailable ? (
+                          <TableCell>Unstaffed</TableCell>
+                        ) : null}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {hoursHelper
+                        .getAllHours(library)
+                        .filter(
+                          rs =>
+                            (rs.staffed !== null && rs.staffed.length > 0) ||
+                            (rs.unstaffed !== null && rs.unstaffed.length > 0)
+                        )
+                        .map((rs, idx) => (
+                          <TableRow key={'tc_rs_' + idx}>
+                            <TableCell variant='head'>{rs.day}</TableCell>
+                            <TableCell>
+                              {rs.staffed !== null && rs.staffed.length > 0
+                                ? rs.staffed
+                                  .map(h =>
+                                    h
+                                      .map(a =>
+                                        moment(a, 'hh:mm').format('h:mma')
+                                      )
+                                      .join(' - ')
+                                  )
+                                  .join(', ')
+                                : ''}
+                            </TableCell>
+                            {unstaffedHoursAvailable ? (
+                              <TableCell>{rs.unstaffed}</TableCell>
+                            ) : null}
+                          </TableRow>
+                        ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+                <br />
+              </>
+            ) : null}
           </DialogContent>
         </>
       ) : (

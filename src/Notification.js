@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/CloseTwoTone'
 
 import { useViewStateValue } from './context/viewState'
 
-function Notification () {
+function Notification() {
   const [{ notificationOpen, notificationMessage }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const handleClose = () => {
@@ -16,20 +16,16 @@ function Notification () {
 
   return (
     <Snackbar
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left'
-      }}
       open={notificationOpen}
       autoHideDuration={3000}
       onClose={handleClose}
       ContentProps={{
         'aria-describedby': 'message-id'
       }}
-      message={<span id='message-id'>{notificationMessage}</span>}
+      message={notificationMessage}
       action={[
-        <IconButton key='close' aria-label='close' onClick={handleClose} size="large">
-          <CloseIcon color='inherit' />
+        <IconButton color='inherit' key='close' aria-label='close' onClick={handleClose} size="large">
+          <CloseIcon />
         </IconButton>
       ]}
     />

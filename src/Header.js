@@ -6,7 +6,6 @@ import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
-import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 import GridOnIcon from '@mui/icons-material/GridOnTwoTone'
@@ -24,10 +23,8 @@ function Header() {
       <AppBar sx={{ borderBottom: 1, borderColor: '#ccc', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
         <Container maxWidth='lg'>
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Library map
-            </Typography>
             <PostcodeSearch />
+            <Box sx={{ flexGrow: 1 }} />
             <Tooltip title="Find library in tables">
               <Button
                 component={Link}
