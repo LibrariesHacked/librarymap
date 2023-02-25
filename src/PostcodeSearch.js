@@ -2,18 +2,15 @@ import React, { useState, useEffect, useRef } from 'react'
 
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
-import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
-import ListSubheader from '@mui/material/ListSubheader'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
+
+import { alpha } from '@mui/material/styles';
 
 import ClearIcon from '@mui/icons-material/ClearTwoTone'
 import MyLocationIcon from '@mui/icons-material/MyLocationTwoTone'
 import SearchIcon from '@mui/icons-material/SearchTwoTone'
-import SettingsIcon from '@mui/icons-material/SettingsTwoTone'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -30,14 +27,12 @@ function usePrevious(value) {
 }
 
 function PostcodeSearch(props) {
-  const { settings } = props
   const [{ searchType, searchPostcode, searchPosition }, dispatchSearch] =
     useSearchStateValue() //eslint-disable-line
   const [{ loadingPostcode, loadingLocation }, dispatchView] =
     useViewStateValue() //eslint-disable-line
 
   const [tempPostcode, setTempPostcode] = useState(searchPostcode || '')
-  const [anchor, setAnchor] = useState(null)
 
   const prevProps = usePrevious({ searchPostcode })
 
@@ -66,19 +61,6 @@ function PostcodeSearch(props) {
       setTempPostcode(postcode)
       return postcode
     }
-  }
-
-  const openSettingsMenu = e => setAnchor(e.currentTarget)
-
-  const closeSettingsMenu = () => setAnchor(null)
-
-  const setSearchDistance = searchDistance => {
-    closeSettingsMenu()
-    dispatchSearch({
-      type: 'SetSearchDistance',
-      searchDistance: searchDistance
-    })
-    if (searchType === 'postcode') postcodeSearch(tempPostcode)
   }
 
   const clearSearch = () => {
@@ -130,15 +112,28 @@ function PostcodeSearch(props) {
   }
 
   return (
-    <div>
+    <Box sx={{
+      position: 'relative',
+      borderRadius: 2,
+      margin: theme => theme.spacing(1),
+      border: 2,
+      borderColor: (theme) => alpha(theme.palette.secondary.main, 0.5),
+      backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.15),
+      '&:hover': {
+        backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.2),
+      },
+    }}>
       <InputBase
         placeholder='Postcode'
         value={tempPostcode}
         onChange={e => setTempPostcode(e.target.value.toUpperCase())}
         onKeyDown={e => {
-          if (e.keyCode === 13) postcodeSearch()
+          if (e.key === 'Enter') postcodeSearch()
         }}
         inputProps={{ 'aria-label': 'search by postcode' }}
+        sx={{
+          paddingLeft: theme => theme.spacing(1)
+        }}
       />
       {searchType === 'postcode' ? (
         <Tooltip title='Clear search'>
@@ -168,7 +163,6 @@ function PostcodeSearch(props) {
           </Box>
         )}
       </Tooltip>
-      <Divider orientation='vertical' flexItem />
       <Tooltip title='Use your current location'>
         {!loadingLocation ? (
           <IconButton
@@ -187,35 +181,7 @@ function PostcodeSearch(props) {
           </Box>
         )}
       </Tooltip>
-      {settings ? (
-        <Tooltip title='Change search settings'>
-          <IconButton
-            aria-label='Open search settings menu'
-            color='secondary'
-            onClick={e => {
-              openSettingsMenu(e)
-            }}
-            size="large">
-            <SettingsIcon />
-          </IconButton>
-        </Tooltip>
-      ) : null}
-      <Menu
-        id='mnu-settings'
-        anchorEl={anchor}
-        keepMounted
-        open={Boolean(anchor)}
-        onClose={() => closeSettingsMenu()}
-      >
-        <ListSubheader disableSticky>Search distance</ListSubheader>
-        <MenuItem onClick={() => setSearchDistance(1609)}>1 mile</MenuItem>
-        <MenuItem onClick={() => setSearchDistance(4827)}>3 miles</MenuItem>
-        <MenuItem onClick={() => setSearchDistance(8045)}>5 miles</MenuItem>
-        <MenuItem onClick={() => setSearchDistance(16090)}>10 miles</MenuItem>
-        <MenuItem onClick={() => setSearchDistance(32180)}>20 miles</MenuItem>
-        <MenuItem onClick={() => setSearchDistance(80450)}>50 miles</MenuItem>
-      </Menu>
-    </div>
+    </Box>
   );
 }
 

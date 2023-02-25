@@ -10,7 +10,7 @@ function Search() {
   return (
     <>
       <Box sx={{ textAlign: 'center', paddingTop: '70px' }}>
-        <img src='/Logo_Rectangle_h128.png' alt='Logo' />
+        <img src='/Logo_Rectangle_h96.png' alt='Logo' />
         <Typography component='h1' variant='h2'>
           Find your nearest library
         </Typography>

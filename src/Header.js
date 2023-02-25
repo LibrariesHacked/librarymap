@@ -11,19 +11,23 @@ import Button from '@mui/material/Button'
 
 import GridOnIcon from '@mui/icons-material/GridOnTwoTone'
 import MapIcon from '@mui/icons-material/MapTwoTone'
+
 import { Container } from '@mui/system'
+
+import PostcodeSearch from './PostcodeSearch'
 
 function Header() {
   const location = useLocation()
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
+      <AppBar sx={{ borderBottom: 1, borderColor: '#ccc', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
         <Container maxWidth='lg'>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Library map
             </Typography>
+            <PostcodeSearch />
             <Tooltip title="Find library in tables">
               <Button
                 component={Link}
