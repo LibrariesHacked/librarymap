@@ -37,4 +37,4 @@ See also the list of [contributors](https://github.com/librarieshacked/libraryma
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
