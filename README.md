@@ -1,8 +1,6 @@
 # Library map
 
-UK public libraries map displaying library branches where the data is published to the standard library schema.
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A map of UK public libraries where the data is published to the standard [library locations schema](https://schema.librarydata.uk/libraries).
 
 ## Getting Started
 
@@ -19,7 +17,6 @@ npm install
 ```
 
 ## Deployment
-
 
 ```console
 npm build
