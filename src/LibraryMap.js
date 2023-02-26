@@ -773,7 +773,7 @@ function LibraryMap() {
           ) : null}
         </Source>
         {searchPosition && searchPosition.length > 1 ? (
-          <Marker coordinates={[searchPosition[0], searchPosition[1]]}>
+          <Marker longitude={searchPosition[0]} latitude={searchPosition[1]}>
             <MeAvatar searchType={searchType} />
           </Marker>
         ) : null}

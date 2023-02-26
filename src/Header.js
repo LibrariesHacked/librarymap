@@ -16,25 +16,24 @@ import { Container } from '@mui/system'
 import PostcodeSearch from './PostcodeSearch'
 
 function Header() {
-  const isHomePage = useMatch("/")
-  const isMapPage = useMatch("/map")
+  const homePage = useMatch("/")
+  const mapPage = useMatch("/map")
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar sx={{ borderBottom: 1, borderColor: '#ccc', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
         <Container maxWidth='lg'>
           <Toolbar>
-            {!isHomePage && <PostcodeSearch />}
+            {homePage === null && <PostcodeSearch />}
             <Box sx={{ flexGrow: 1 }} />
             <Tooltip title="Find library in tables">
               <Button
                 component={Link}
                 to={'/'}
-                disableRipple={isHomePage}
-                disableFocusRipple={isHomePage}
+                disableRipple={homePage !== null}
+                disableFocusRipple={homePage !== null}
                 color='primary'
                 startIcon={<GridOnIcon />}
-                selected={isHomePage}
               >
                 Lists
               </Button>
@@ -43,11 +42,10 @@ function Header() {
               <Button
                 component={Link}
                 to={'/map'}
-                disableRipple={isMapPage}
-                disableFocusRipple={isMapPage}
+                disableRipple={mapPage !== null}
+                disableFocusRipple={mapPage !== null}
                 color='primary'
                 startIcon={<MapIcon />}
-                selected={isMapPage}
               >
                 Map
               </Button>
