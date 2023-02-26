@@ -105,11 +105,15 @@ function LibraryMap() {
 
   const clickMap = async event => {
     const features = mapRef.current.queryRenderedFeatures(event.point)
-    if (features && features.length > 0 && features[0].properties) {
-      if (features[0].sourceLayer === 'libraries')
-        clickLibrary(features[0], event.point)
-      if (features[0].sourceLayer === 'stop')
-        clickStop(features[0], event.point)
+    if (features && features.length > 0) {
+      for (const feature of features) {
+        if (feature.sourceLayer === 'libraries') {
+          clickLibrary(feature, event.point)
+        }
+        if (feature.sourceLayer === 'stop') {
+          clickStop(feature, event.point)
+        }
+      }
     }
   }
 
