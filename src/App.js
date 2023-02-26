@@ -10,7 +10,7 @@ import LibraryMapApplication from './LibraryMapApplication'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
-import {blueGrey, deepOrange, grey } from '@mui/material/colors';
+import { blueGrey, deepOrange, grey } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
@@ -141,15 +141,27 @@ const searchReducer = (state, action) => {
         searchType: 'service'
       }
     case 'ClearAll':
-      return {
-        ...state,
-        serviceFilter: [],
-        currentService: null,
-        currentServiceSystemName: null,
-        searchPostcode: '',
-        searchPosition: [],
-        searchType: ''
+
+      if (
+        state.serviceFilter.length > 0 ||
+        state.currentService !== null ||
+        state.currentServiceSystemName !== null ||
+        state.searchPostcode.length > 0 ||
+        state.searchPosition.length > 0 ||
+        state.searchType.length > 0) {
+        return {
+          ...state,
+          serviceFilter: [],
+          currentService: null,
+          currentServiceSystemName: null,
+          searchPostcode: '',
+          searchPosition: [],
+          searchType: ''
+        }
+      } else {
+        return state
       }
+
     default:
       return state
   }

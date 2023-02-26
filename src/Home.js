@@ -16,12 +16,12 @@ function Search() {
         <Typography component='h1' variant='h2'>
           Find a library
         </Typography>
-        <Typography component='p' variant='subtitle'>
-          Find your nearest library by postcode
+        <Typography component='p' variant='h5' sx={{ padding: theme => theme.spacing() }}>
+          Find your nearest libraries by postcode
         </Typography>
         <PostcodeSearch />
-        <Typography component='p' variant='subtitle'>
-          or select your local authority
+        <Typography component='p' variant='h5' sx={{ padding: theme => theme.spacing() }}>
+          or, select your library service
         </Typography>
         <ServiceFilter />
       </Box>

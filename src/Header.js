@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -16,23 +16,25 @@ import { Container } from '@mui/system'
 import PostcodeSearch from './PostcodeSearch'
 
 function Header() {
-  const location = useLocation()
+  const isHomePage = useMatch("/")
+  const isMapPage = useMatch("/map")
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar sx={{ borderBottom: 1, borderColor: '#ccc', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
         <Container maxWidth='lg'>
           <Toolbar>
-            <PostcodeSearch />
+            {!isHomePage && <PostcodeSearch />}
             <Box sx={{ flexGrow: 1 }} />
             <Tooltip title="Find library in tables">
               <Button
                 component={Link}
                 to={'/'}
-                disableRipple={location.pathname === '/'}
-                disableFocusRipple={location.pathname === '/'}
+                disableRipple={isHomePage}
+                disableFocusRipple={isHomePage}
                 color='primary'
                 startIcon={<GridOnIcon />}
+                selected={isHomePage}
               >
                 Lists
               </Button>
@@ -41,10 +43,11 @@ function Header() {
               <Button
                 component={Link}
                 to={'/map'}
-                disableRipple={location.pathname === '/map'}
-                disableFocusRipple={location.pathname === '/map'}
+                disableRipple={isMapPage}
+                disableFocusRipple={isMapPage}
                 color='primary'
                 startIcon={<MapIcon />}
+                selected={isMapPage}
               >
                 Map
               </Button>
