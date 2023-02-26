@@ -1,29 +1,23 @@
 import React from 'react'
 
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import ListSubheader from '@material-ui/core/ListSubheader'
-import Switch from '@material-ui/core/Switch'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import ListSubheader from '@mui/material/ListSubheader'
+import Switch from '@mui/material/Switch'
 
-import CancelIcon from '@material-ui/icons/CancelTwoTone'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 
-import { useTheme, makeStyles } from '@material-ui/core/styles'
+import CancelIcon from '@mui/icons-material/CancelTwoTone'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-const useStyles = makeStyles(() => ({
-  dialog: {
-    border: '1px solid #E0E0E0'
-  }
-}))
-
-function MapSettings () {
+function MapSettings() {
   const [{ mapSettings, mapSettingsDialogOpen }, dispatchView] = useViewStateValue()
   const [{ displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
 
@@ -47,21 +41,18 @@ function MapSettings () {
     dispatchView({ type: 'ToggleMapSetting', mapSetting: 'authorityBoundary' })
   }
 
-  const classes = useStyles()
   const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
     <Dialog
       fullScreen={fullScreen}
-      disableBackdropClick
       open={mapSettingsDialogOpen}
       onClose={closeDialog}
       BackdropProps={{
         invisible: true
       }}
-      PaperProps={{ elevation: 0, className: classes.dialog }}
-    >
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}>
       <DialogTitle>Map settings</DialogTitle>
       <DialogContent>
         <ListSubheader disableSticky>Display</ListSubheader>
@@ -111,10 +102,10 @@ function MapSettings () {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog} color='secondary' endIcon={<CancelIcon />}>Close</Button>
+        <Button onClick={closeDialog} color='primary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
-  )
+  );
 }
 
 export default MapSettings

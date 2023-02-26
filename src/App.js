@@ -1,16 +1,39 @@
 import React from 'react'
 
-import CssBaseline from '@material-ui/core/CssBaseline'
-
-import blueGrey from '@material-ui/core/colors/blueGrey'
-import orange from '@material-ui/core/colors/orange'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 import { ApplicationStateProvider } from './context/applicationState'
 import { SearchStateProvider } from './context/searchState'
 import { ViewStateProvider } from './context/viewState'
 
 import LibraryMapApplication from './LibraryMapApplication'
+
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+
+import { blueGrey, deepOrange, grey } from '@mui/material/colors';
+
+const theme = createTheme({
+  palette: {
+    background: {
+      default: grey.A100
+    },
+    primary: {
+      main: deepOrange[500],
+    },
+    secondary: {
+      main: blueGrey[500],
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
+        },
+      },
+    },
+  },
+});
 
 const initialApplicationState = {
   services: [],
@@ -43,7 +66,11 @@ const applicationReducer = (state, action) => {
       }
     case 'SetIsochroneLoading':
       if (!isochrones[action.point]) isochrones[action.point] = {}
-      isochrones[action.point][action.transport] = { geo: null, display: false, loading: true }
+      isochrones[action.point][action.transport] = {
+        geo: null,
+        display: false,
+        loading: true
+      }
       return {
         ...state,
         isochrones: isochrones
@@ -56,7 +83,7 @@ const applicationReducer = (state, action) => {
 const initialSearchState = {
   searchPostcode: '',
   searchType: '',
-  searchDistance: 1609,
+  searchDistance: 8045,
   searchPosition: [],
   currentStopId: null,
   currentLibraryId: null,
@@ -114,15 +141,27 @@ const searchReducer = (state, action) => {
         searchType: 'service'
       }
     case 'ClearAll':
-      return {
-        ...state,
-        serviceFilter: [],
-        currentService: null,
-        currentServiceSystemName: null,
-        searchPostcode: '',
-        searchPosition: [],
-        searchType: ''
+
+      if (
+        state.serviceFilter.length > 0 ||
+        state.currentService !== null ||
+        state.currentServiceSystemName !== null ||
+        state.searchPostcode.length > 0 ||
+        state.searchPosition.length > 0 ||
+        state.searchType.length > 0) {
+        return {
+          ...state,
+          serviceFilter: [],
+          currentService: null,
+          currentServiceSystemName: null,
+          searchPostcode: '',
+          searchPosition: [],
+          searchType: ''
+        }
+      } else {
+        return state
       }
+
     default:
       return state
   }
@@ -155,7 +194,11 @@ const viewReducer = (state, action) => {
     case 'SetNotification':
       return { ...state, notificationOpen: action.notificationOpen }
     case 'ShowNotification':
-      return { ...state, notificationOpen: true, notificationMessage: action.notificationMessage }
+      return {
+        ...state,
+        notificationOpen: true,
+        notificationMessage: action.notificationMessage
+      }
     case 'SetStopDialog':
       return { ...state, stopDialogOpen: action.stopDialogOpen }
     case 'SetLibraryDialog':
@@ -177,62 +220,50 @@ const viewReducer = (state, action) => {
       return { ...state, loadingServices: !state.loadingServices }
     }
     case 'SetPostcodeSearch':
-      return { ...state, loadingPostcode: false, mapPosition: action.mapPosition, mapZoom: 13 }
+      return {
+        ...state,
+        loadingPostcode: false,
+        mapPosition: action.mapPosition,
+        mapZoom: 13
+      }
     case 'SetMapPosition':
-      return { ...state, mapPosition: action.mapPosition, mapZoom: action.mapZoom }
+      return {
+        ...state,
+        mapPosition: action.mapPosition,
+        mapZoom: action.mapZoom
+      }
     case 'SetIsochronesMenu':
-      return { ...state, isochronesMenuOpen: action.isochronesMenuOpen, isochronesMenuAnchor: action.isochronesMenuAnchor }
+      return {
+        ...state,
+        isochronesMenuOpen: action.isochronesMenuOpen,
+        isochronesMenuAnchor: action.isochronesMenuAnchor
+      }
     default:
       return state
   }
 }
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: orange[900]
-    },
-    secondary: {
-      main: blueGrey[600]
-    },
-    outline: {
-      main: blueGrey[50]
-    }
-  },
-  overrides: {
-    MuiButton: {
-      text: {
-        textTransform: 'none'
-      },
-      root: {
-        textTransform: 'none'
-      }
-    },
-    MuiTypography: {
-      button: {
-        textTransform: 'none'
-      }
-    },
-    MuiTab: {
-      root: {
-        textTransform: 'none'
-      }
-    }
-  }
-})
-
-function App () {
+function App() {
   return (
-    <ApplicationStateProvider initialState={initialApplicationState} reducer={applicationReducer}>
-      <SearchStateProvider initialState={initialSearchState} reducer={searchReducer}>
-        <ViewStateProvider initialState={initialViewState} reducer={viewReducer}>
-          <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <ApplicationStateProvider
+        initialState={initialApplicationState}
+        reducer={applicationReducer}
+      >
+        <SearchStateProvider
+          initialState={initialSearchState}
+          reducer={searchReducer}
+        >
+          <ViewStateProvider
+            initialState={initialViewState}
+            reducer={viewReducer}
+          >
             <CssBaseline />
             <LibraryMapApplication />
-          </ThemeProvider>
-        </ViewStateProvider>
-      </SearchStateProvider>
-    </ApplicationStateProvider>
+          </ViewStateProvider>
+        </SearchStateProvider>
+      </ApplicationStateProvider>
+    </ThemeProvider>
   )
 }
 

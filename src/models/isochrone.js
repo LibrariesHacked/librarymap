@@ -17,7 +17,17 @@ export class Isochrone {
 
 export async function getIsochrone (point, transport) {
   const settings = config.travel.filter(n => n.name === transport)[0]
-  const url = config.isochroneApi + transport + '?longitude=' + point[0] + '&latitude=' + point[1] + '&interval=' + settings.interval + '&duration=' + settings.duration
+  const url =
+    config.isochroneApi +
+    transport +
+    '?longitude=' +
+    point[0] +
+    '&latitude=' +
+    point[1] +
+    '&interval=' +
+    settings.interval +
+    '&duration=' +
+    settings.duration
 
   const response = await axios.get(url)
   if (response && response.data) {

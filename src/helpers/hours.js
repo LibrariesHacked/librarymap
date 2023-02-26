@@ -1,12 +1,34 @@
 import moment from 'moment'
 
-const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const days = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday'
+]
 
 export function getDayHours (place, day) {
   const dayProp = day.toLowerCase()
-  const staffedHours = (place[dayProp + 'StaffedHours'] !== '' ? place[dayProp + 'StaffedHours'] : null)
-  const unstaffedHours = (place[dayProp + 'UnstaffedHours'] !== '' ? place[dayProp + 'UnstaffedHours'] : null)
-  return { day: day, staffed: (staffedHours ? staffedHours.split(',').map(h => h.split('-')) : null), unstaffed: (unstaffedHours ? unstaffedHours.split(',').map(h => h.split('-')) : null) }
+  const staffedHours =
+    place[dayProp + 'StaffedHours'] !== ''
+      ? place[dayProp + 'StaffedHours']
+      : null
+  const unstaffedHours =
+    place[dayProp + 'UnstaffedHours'] !== ''
+      ? place[dayProp + 'UnstaffedHours']
+      : null
+  return {
+    day: day,
+    staffed: staffedHours
+      ? staffedHours.split(',').map(h => h.split('-'))
+      : null,
+    unstaffed: unstaffedHours
+      ? unstaffedHours.split(',').map(h => h.split('-'))
+      : null
+  }
 }
 
 export function getTodayHours (place) {

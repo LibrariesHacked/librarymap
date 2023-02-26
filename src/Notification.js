@@ -1,13 +1,13 @@
 import React from 'react'
 
-import IconButton from '@material-ui/core/IconButton'
-import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@mui/material/IconButton'
+import Snackbar from '@mui/material/Snackbar'
 
-import CloseIcon from '@material-ui/icons/CloseTwoTone'
+import CloseIcon from '@mui/icons-material/CloseTwoTone'
 
 import { useViewStateValue } from './context/viewState'
 
-function Notification () {
+function Notification() {
   const [{ notificationOpen, notificationMessage }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const handleClose = () => {
@@ -16,28 +16,20 @@ function Notification () {
 
   return (
     <Snackbar
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left'
-      }}
       open={notificationOpen}
       autoHideDuration={3000}
       onClose={handleClose}
       ContentProps={{
         'aria-describedby': 'message-id'
       }}
-      message={<span id='message-id'>{notificationMessage}</span>}
+      message={notificationMessage}
       action={[
-        <IconButton
-          key='close'
-          aria-label='close'
-          onClick={handleClose}
-        >
-          <CloseIcon color='inherit' />
+        <IconButton color='inherit' key='close' aria-label='close' onClick={handleClose} size="large">
+          <CloseIcon />
         </IconButton>
       ]}
     />
-  )
+  );
 }
 
 export default Notification

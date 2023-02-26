@@ -4,11 +4,11 @@ import moment from 'moment'
 const config = require('../helpers/config.json')
 
 export class Stop {
-  constructor (obj) {
+  constructor(obj) {
     Object.assign(this, obj)
   }
 
-  fromJson (json) {
+  fromJson(json) {
     this.id = json.id
     this.routeIds = json.route_ids
     this.routeNames = json.route_names
@@ -34,40 +34,48 @@ export class Stop {
   }
 }
 
-export async function getQueryStops (query, searchPosition, distance, serviceFilter) {
-  let url = config.mobilesApi + '/stops?page=' + (query.page + 1) + '&limit=' + query.pageSize
-  if (query.orderBy && query.orderBy.field) url = url + '&sort=' + query.orderBy.field + '&direction=' + query.orderDirection
+export async function getQueryStops(
+  query,
+  searchPosition,
+  distance,
+  serviceFilter
+) {
 
-  if (searchPosition && searchPosition.length > 1) url = url + '&longitude=' + searchPosition[0] + '&latitude=' + searchPosition[1]
-  if (distance && distance !== '') url = url + '&distance=' + distance
+  let url = `${config.mobilesApi}/stops?page=${query.page + 1}&limit=${query.pageSize}`
 
-  if (serviceFilter.length > 0) url = url + '&service_codes=' + serviceFilter.join('|')
+  if (query.orderBy && query.orderBy.field) url = `${url}&sort=${query.orderBy.field}&direction=${query.orderDirection}`
+
+  if (searchPosition && searchPosition.length > 1) url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}`
+
+  if (distance && distance !== '') url = `${url}&distance=${distance}`
+
+  if (serviceFilter.length > 0) url = `${url}&service_codes=${serviceFilter.join('|')}`
 
   const response = await axios.get(url)
   if (response && response.data && response.data.length > 0) {
     return {
-      stops: response.data.map(s => (new Stop()).fromJson(s)),
-      total: parseInt(response.headers['x-total-count']),
-      page: parseInt(response.headers['x-page'])
+      stops: response.data.map(s => new Stop().fromJson(s)),
+      totalRowCount: parseInt(response.headers['x-total-count']),
+      currentPage: parseInt(response.headers['x-page'])
     }
   } else {
-    return { stops: [], total: 0, page: 1 }
+    return { stops: [], totalRowCount: 0, currentPage: 1 }
   }
 }
 
-export async function getAllStops () {
-  const response = await axios.get(config.api + '/stops')
+export async function getAllStops() {
+  const response = await axios.get(`${config.mobilesApi}/stops`)
   if (response && response.data && response.data.length > 0) {
-    return response.data.map(s => (new Stop()).fromJson(s))
+    return response.data.map(s => new Stop().fromJson(s))
   } else {
     return []
   }
 }
 
-export async function getStopById (id) {
-  const response = await axios.get(config.mobilesApi + '/stops/' + id)
+export async function getStopById(id) {
+  const response = await axios.get(`${config.mobilesApi}/stops/${id}`)
   if (response && response.data) {
-    return (new Stop()).fromJson(response.data)
+    return new Stop().fromJson(response.data)
   } else {
     return {}
   }

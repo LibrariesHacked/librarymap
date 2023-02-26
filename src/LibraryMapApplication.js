@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import Container from '@material-ui/core/Container'
+import Container from '@mui/material/Container'
 
 import StopDetails from './StopDetails'
 import LibraryDetails from './LibraryDetails'
 
-import { makeStyles } from '@material-ui/core/styles'
-
-import AppHeader from './AppHeader'
 import Footer from './Footer'
+import Header from './Header'
+import Home from './Home'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
-import Search from './Search'
+
 import { MemoMarkdownPage } from './MarkdownPage'
 
 import Data from './pages/data.md'
@@ -23,24 +22,14 @@ import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-const useStyles = makeStyles((theme) => ({
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(2)
-  },
-  root: {
-    flexGrow: 1
-  }
-}))
-
-function LibraryMapApplication () {
+function LibraryMapApplication() {
   const [{ }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
   const [{ }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
     // Initial data setup
-    async function getServices () {
+    async function getServices() {
       const services = await serviceModel.getServices()
       const serviceLookup = {}
       const serviceSystemNameLookup = {}
@@ -48,7 +37,11 @@ function LibraryMapApplication () {
         serviceLookup[service.code] = service
         serviceSystemNameLookup[service.systemName] = service
       })
-      dispatchApplication({ type: 'AddServices', services: services, serviceLookup: serviceLookup })
+      dispatchApplication({
+        type: 'AddServices',
+        services: services,
+        serviceLookup: serviceLookup
+      })
       // Process any service query parameters
       const currentUrlParams = new URLSearchParams(window.location.search)
       const serviceName = currentUrlParams.get('service')
@@ -62,8 +55,6 @@ function LibraryMapApplication () {
     getServices()
   }, []) //eslint-disable-line
 
-  const classes = useStyles()
-
   const Page404 = ({ location }) => (
     <div>
       <h2>Sorry! That page was not found</h2>
@@ -72,17 +63,22 @@ function LibraryMapApplication () {
 
   return (
     <BrowserRouter>
-      <div className={classes.root}>
-        <AppHeader loading={false} site={3} />
+      <div>
         <Container maxWidth='lg'>
-          <main className={classes.content}>
-            <Switch>
-              <Route path='/' exact render={() => <Search />} />
-              <Route path='/map' exact render={() => <LibraryMap />} />
-              <Route path='/data' exact render={() => <MemoMarkdownPage page={Data} />} />
-              <Route path={['/http:', '/https:']} component={props => { window.location.replace(props.location.pathname.substr(1)); return null }} />
-              <Route component={Page404} />
-            </Switch>
+          <Header />
+        </Container>
+        <Container maxWidth='lg' sx={{ paddingTop: '80px' }}>
+          <main>
+            <Routes>
+              <Route path='/' exact element={<Home />} />
+              <Route path='/map' exact element={<LibraryMap />} />
+              <Route
+                path='/data'
+                exact
+                element={<MemoMarkdownPage page={Data} />}
+              />
+              <Route element={Page404} />
+            </Routes>
           </main>
         </Container>
         <Container maxWidth='lg'>
