@@ -17,12 +17,10 @@ function Search() {
           Find my library
         </Typography>
         <Typography component='p' variant='subtitle' sx={{ padding: theme => theme.spacing() }}>
-          Find your nearest libraries by postcode
+          Search by postcode, or select your library service
         </Typography>
         <PostcodeSearch />
-        <Typography component='p' variant='subtitle' sx={{ padding: theme => theme.spacing() }}>
-          or, select your library service
-        </Typography>
+        <Box sx={{ padding: theme => theme.spacing() }} />
         <ServiceFilter />
       </Box>
       <Libraries />
