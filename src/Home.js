@@ -14,7 +14,7 @@ function Search() {
       <Box sx={{ textAlign: 'center' }}>
         <img src='/Logo_Rectangle_h96.png' alt='Logo' />
         <Typography component='h1' variant='h2'>
-          Find a library
+          Find my library
         </Typography>
         <Typography component='p' variant='subtitle' sx={{ padding: theme => theme.spacing() }}>
           Find your nearest libraries by postcode
