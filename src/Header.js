@@ -15,9 +15,9 @@ import { Container } from '@mui/system'
 
 import PostcodeSearch from './PostcodeSearch'
 
-function Header() {
-  const homePage = useMatch("/")
-  const mapPage = useMatch("/map")
+function Header () {
+  const homePage = useMatch('/')
+  const mapPage = useMatch('/map')
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -26,10 +26,10 @@ function Header() {
           <Toolbar>
             {homePage === null && <PostcodeSearch />}
             <Box sx={{ flexGrow: 1 }} />
-            <Tooltip title="Find library in tables">
+            <Tooltip title='Find library in tables'>
               <Button
                 component={Link}
-                to={'/'}
+                to='/'
                 disableRipple={homePage !== null}
                 disableFocusRipple={homePage !== null}
                 color='primary'
@@ -38,10 +38,10 @@ function Header() {
                 Lists
               </Button>
             </Tooltip>
-            <Tooltip title="View map">
+            <Tooltip title='View map'>
               <Button
                 component={Link}
-                to={'/map'}
+                to='/map'
                 disableRipple={mapPage !== null}
                 disableFocusRipple={mapPage !== null}
                 color='primary'

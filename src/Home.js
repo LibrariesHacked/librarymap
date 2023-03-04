@@ -8,7 +8,7 @@ import MobileLibraries from './MobileLibraries'
 import PostcodeSearch from './PostcodeSearch'
 import ServiceFilter from './ServiceFilter'
 
-function Search() {
+function Search () {
   return (
     <>
       <Box sx={{ textAlign: 'center' }}>

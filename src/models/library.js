@@ -11,11 +11,11 @@ const libraryTypes = {
 }
 
 export class Library {
-  constructor(obj) {
+  constructor (obj) {
     Object.assign(this, obj)
   }
 
-  fromJson(json) {
+  fromJson (json) {
     this.id = json.id
     this.localAuthority = json['Local authority']
     this.localAuthorityCode = json['Local authority code']
@@ -59,7 +59,7 @@ export class Library {
   }
 }
 
-export async function getQueryLibraries(
+export async function getQueryLibraries (
   query,
   searchPosition,
   distance,
@@ -97,7 +97,7 @@ export async function getQueryLibraries(
   }
 }
 
-export async function getAllLibraries() {
+export async function getAllLibraries () {
   const response = await axios.get(config.api + '/libraries')
   if (response && response.data && response.data.length > 0) {
     return response.data.map(s => new Library().fromJson(s))
@@ -106,7 +106,7 @@ export async function getAllLibraries() {
   }
 }
 
-export async function getLibraryById(id) {
+export async function getLibraryById (id) {
   const response = await axios.get(config.api + '/libraries/' + id)
   if (response && response.data) {
     return new Library().fromJson(response.data)

@@ -10,7 +10,7 @@ import FavoriteIcon from '@mui/icons-material/FavoriteTwoTone'
 
 import { Carbonbadge } from 'react-carbonbadge'
 
-function Footer() {
+function Footer () {
   return (
     <div>
       <Grid container spacing={2} sx={{ paddingTop: theme => theme.spacing(4), paddingBottom: theme => theme.spacing(4) }}>
@@ -41,7 +41,7 @@ function Footer() {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={6} lg={6} xl={4}>
-          <Carbonbadge darkMode={true} />
+          <Carbonbadge />
         </Grid>
         <Grid item xs={12} sm={3} md={3} lg={3} xl={4}>
           <Typography variant='body1'>

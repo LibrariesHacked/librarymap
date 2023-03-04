@@ -9,11 +9,11 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-import { lighten } from "@mui/material";
+import { lighten } from '@mui/material'
 
 import useLibraryQuery from './hooks/useLibraryQuery'
 
-function Libraries() {
+function Libraries () {
   const [
     { searchDistance, searchPosition, serviceFilter, displayClosedLibraries },
     dispatchSearch
@@ -61,7 +61,7 @@ function Libraries() {
       serviceFilter: serviceFilter,
       displayClosedLibraries: displayClosedLibraries
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [
     page,
     pageSize,
@@ -89,7 +89,6 @@ function Libraries() {
 
   const columns = [
     { field: 'name', headerName: 'Name', flex: 1 },
-    { field: 'localAuthority', headerName: 'Service', flex: 1 },
     { field: 'address1', headerName: 'Address', flex: 1 },
     { field: 'postcode', headerName: 'Postcode', flex: 1 },
     {
@@ -101,7 +100,8 @@ function Libraries() {
           onClick={() => selectLibrary(params)}
           label='Show more library information'
         />
-      ]
+      ],
+      width: 50
     }
   ]
 
@@ -116,17 +116,17 @@ function Libraries() {
               border: 2,
               borderColor: lighten(theme.palette.primary.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.primary.main, 0.8),
+                backgroundColor: lighten(theme.palette.primary.main, 0.8)
               },
               '&.Mui-hovered': {
                 backgroundColor: theme.palette.action.hover
               },
               '& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus': {
-                outline: "none !important",
+                outline: 'none !important'
               },
               '& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-columnHeader:focus':
               {
-                outline: "none !important",
+                outline: 'none !important'
               }
             })}
             autoHeight

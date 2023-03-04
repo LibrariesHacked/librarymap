@@ -46,12 +46,12 @@ const options = {
   }
 }
 
-export function MarkdownPage(props) {
+export function MarkdownPage (props) {
   const { page } = props
   const [pageText, setPageText] = useState('')
 
   useEffect(() => {
-    async function fetchPage() {
+    async function fetchPage () {
       const pageData = await window.fetch(page)
       const pageText = await pageData.text()
       setPageText(pageText)

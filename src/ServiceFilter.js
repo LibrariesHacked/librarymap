@@ -12,7 +12,7 @@ import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-function ServiceFilter() {
+function ServiceFilter () {
   const [{ services, serviceLookup }] = useApplicationStateValue()
   const [{ serviceFilter }, dispatchSearch] = useSearchStateValue()
   const [{ }, dispatchView] = useViewStateValue()//eslint-disable-line
@@ -36,13 +36,15 @@ function ServiceFilter() {
 
   return (
     <>
-      {serviceFilter.length === 0 ? (
-        <Tooltip title='Choose library service'>
-          <Button color='primary' onClick={(e) => openServiceMenu(e.currentTarget)} startIcon={<BusinessIcon />}>
-            Choose library service
-          </Button>
-        </Tooltip>
-      ) : <Chip color='primary' onDelete={clearServiceFilter} label={serviceLookup[serviceFilter[0]].name} />}
+      {serviceFilter.length === 0
+        ? (
+          <Tooltip title='Choose library service'>
+            <Button color='primary' onClick={(e) => openServiceMenu(e.currentTarget)} startIcon={<BusinessIcon />}>
+              Choose library service
+            </Button>
+          </Tooltip>
+          )
+        : <Chip color='primary' onDelete={clearServiceFilter} label={serviceLookup[serviceFilter[0]].name} />}
       <Menu
         id='menu-library-service'
         anchorEl={serviceMenuAnchor}

@@ -6,14 +6,14 @@ import MoreIcon from '@mui/icons-material/ReadMoreTwoTone'
 
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
-import { lighten } from "@mui/material";
+import { lighten } from '@mui/material'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import useMobileStopsQuery from './hooks/useMobileStopsQuery'
 
-function MobileLibraries() {
+function MobileLibraries () {
   const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] =
     useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
@@ -58,7 +58,7 @@ function MobileLibraries() {
       searchDistance: searchDistance,
       serviceFilter: serviceFilter
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [
     page,
     pageSize,
@@ -86,7 +86,6 @@ function MobileLibraries() {
   const columns = [
     { field: 'community', headerName: 'Community', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 1 },
-    { field: 'organisationName', headerName: 'Service', flex: 1 },
     {
       field: 'actions',
       type: 'actions',
@@ -96,7 +95,8 @@ function MobileLibraries() {
           onClick={() => selectStop(params)}
           label='Show more stop information'
         />
-      ]
+      ],
+      width: 50
     }
   ]
 
@@ -111,17 +111,17 @@ function MobileLibraries() {
               border: 2,
               borderColor: lighten(theme.palette.secondary.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.secondary.main, 0.8),
+                backgroundColor: lighten(theme.palette.secondary.main, 0.8)
               },
               '&.Mui-hovered': {
                 backgroundColor: theme.palette.action.hover
               },
               '& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus': {
-                outline: "none !important",
+                outline: 'none !important'
               },
               '& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-columnHeader:focus':
               {
-                outline: "none !important",
+                outline: 'none !important'
               }
             })}
             autoHeight

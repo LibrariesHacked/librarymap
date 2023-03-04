@@ -10,7 +10,7 @@ import LibraryMapApplication from './LibraryMapApplication'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
-import { blueGrey, deepOrange, grey } from '@mui/material/colors';
+import { blueGrey, deepOrange, grey } from '@mui/material/colors'
 
 const theme = createTheme({
   palette: {
@@ -18,22 +18,22 @@ const theme = createTheme({
       default: grey.A100
     },
     primary: {
-      main: deepOrange[500],
+      main: deepOrange[500]
     },
     secondary: {
-      main: blueGrey[500],
-    },
+      main: blueGrey[500]
+    }
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: 'none'
-        },
-      },
-    },
-  },
-});
+        }
+      }
+    }
+  }
+})
 
 const initialApplicationState = {
   services: [],
@@ -243,7 +243,7 @@ const viewReducer = (state, action) => {
   }
 }
 
-function App() {
+function App () {
   return (
     <ThemeProvider theme={theme}>
       <ApplicationStateProvider
