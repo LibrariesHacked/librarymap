@@ -14,7 +14,7 @@ function Footer () {
   return (
     <div>
       <Grid container spacing={2} sx={{ paddingTop: theme => theme.spacing(4), paddingBottom: theme => theme.spacing(4) }}>
-        <Grid item xs={12} sm={3} md={3} lg={3} xl={4}>
+        <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
           <Typography variant='body1'>
             A Library Lab project by Libraries Hacked.
           </Typography>
@@ -40,10 +40,10 @@ function Footer () {
             </MaterialLink>
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6} md={6} lg={6} xl={4}>
+        <Grid item xs={12} sm={6} md={6} lg={4} xl={4}>
           <Carbonbadge />
         </Grid>
-        <Grid item xs={12} sm={3} md={3} lg={3} xl={4}>
+        <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
           <Typography variant='body1'>
             In memory of Paul Rowe <FavoriteIcon color='primary' />
           </Typography>

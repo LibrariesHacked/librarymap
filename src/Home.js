@@ -5,10 +5,9 @@ import Typography from '@mui/material/Typography'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
-import PostcodeSearch from './PostcodeSearch'
-import ServiceFilter from './ServiceFilter'
+import Search from './Search'
 
-function Search () {
+function Home () {
   return (
     <>
       <Box sx={{ textAlign: 'center' }}>
@@ -16,12 +15,14 @@ function Search () {
         <Typography component='h1' variant='h2'>
           Find my library
         </Typography>
-        <Typography component='p' variant='subtitle' sx={{ padding: theme => theme.spacing() }}>
+        <Typography
+          component='p'
+          variant='subtitle'
+          sx={{ padding: theme => theme.spacing() }}
+        >
           Search by postcode, or select your library service
         </Typography>
-        <PostcodeSearch />
-        <Box sx={{ padding: theme => theme.spacing() }} />
-        <ServiceFilter />
+        <Search />
       </Box>
       <Libraries />
       <MobileLibraries />
@@ -29,4 +30,4 @@ function Search () {
   )
 }
 
-export default Search
+export default Home

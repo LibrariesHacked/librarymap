@@ -15,15 +15,15 @@ import { useViewStateValue } from './context/viewState'
 function ServiceFilter () {
   const [{ services, serviceLookup }] = useApplicationStateValue()
   const [{ serviceFilter }, dispatchSearch] = useSearchStateValue()
-  const [{ }, dispatchView] = useViewStateValue()//eslint-disable-line
+  const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [serviceMenuAnchor, setServiceMenuAnchor] = useState(null)
 
-  const openServiceMenu = (element) => setServiceMenuAnchor(element)
+  const openServiceMenu = element => setServiceMenuAnchor(element)
 
   const closeServiceMenu = () => setServiceMenuAnchor(null)
 
-  const chooseService = (service) => {
+  const chooseService = service => {
     closeServiceMenu()
     const coords = JSON.parse(service.bbox).coordinates[0]
     dispatchSearch({ type: 'FilterByService', service: service })
@@ -36,15 +36,24 @@ function ServiceFilter () {
 
   return (
     <>
-      {serviceFilter.length === 0
-        ? (
-          <Tooltip title='Choose library service'>
-            <Button color='primary' onClick={(e) => openServiceMenu(e.currentTarget)} startIcon={<BusinessIcon />}>
-              Choose library service
-            </Button>
-          </Tooltip>
-          )
-        : <Chip color='primary' onDelete={clearServiceFilter} label={serviceLookup[serviceFilter[0]].name} />}
+      {serviceFilter.length === 0 ? (
+        <Tooltip title='Choose library service'>
+          <Button
+            size='large'
+            color='primary'
+            onClick={e => openServiceMenu(e.currentTarget)}
+            startIcon={<BusinessIcon />}
+          >
+            Choose library service
+          </Button>
+        </Tooltip>
+      ) : (
+        <Chip
+          color='primary'
+          onDelete={clearServiceFilter}
+          label={serviceLookup[serviceFilter[0]].name}
+        />
+      )}
       <Menu
         id='menu-library-service'
         anchorEl={serviceMenuAnchor}
@@ -52,13 +61,18 @@ function ServiceFilter () {
         open={Boolean(serviceMenuAnchor)}
         onClose={() => closeServiceMenu()}
       >
-        {
-          services
-            .sort((a, b) => a.niceName.localeCompare(b.niceName))
-            .map(s => {
-              return <MenuItem key={'mnu_itm_org_' + s.code} onClick={() => chooseService(s)}>{s.niceName}</MenuItem>
-            })
-        }
+        {services
+          .sort((a, b) => a.niceName.localeCompare(b.niceName))
+          .map(s => {
+            return (
+              <MenuItem
+                key={'mnu_itm_org_' + s.code}
+                onClick={() => chooseService(s)}
+              >
+                {s.niceName}
+              </MenuItem>
+            )
+          })}
       </Menu>
     </>
   )
