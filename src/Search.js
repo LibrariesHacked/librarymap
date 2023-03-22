@@ -1,12 +1,15 @@
 import React from 'react'
 
+import Box from '@mui/material/Box'
+
 import PostcodeSearch from './PostcodeSearch'
 import ServiceFilter from './ServiceFilter'
 
-function Search() {
+function Search () {
   return (
     <>
-      <PostcodeSearch settings />
+      <PostcodeSearch />
+      <Box sx={{ padding: theme => theme.spacing() }} />
       <ServiceFilter />
     </>
   )

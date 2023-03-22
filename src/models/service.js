@@ -8,9 +8,9 @@ export class Service {
   }
 
   fromJson (json) {
-    this.code = json['code']
-    this.name = json['name']
-    this.niceName = json['nice_name']
+    this.code = json.code
+    this.name = json.name
+    this.niceName = json.nice_name
     this.systemName = getServiceSystemName(json.name)
     this.geojson = json.geojson
     this.bbox = json.bbox

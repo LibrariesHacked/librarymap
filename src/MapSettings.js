@@ -17,7 +17,7 @@ import CancelIcon from '@mui/icons-material/CancelTwoTone'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-function MapSettings() {
+function MapSettings () {
   const [{ mapSettings, mapSettingsDialogOpen }, dispatchView] = useViewStateValue()
   const [{ displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
 
@@ -52,7 +52,8 @@ function MapSettings() {
       BackdropProps={{
         invisible: true
       }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}>
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
+    >
       <DialogTitle>Map settings</DialogTitle>
       <DialogContent>
         <ListSubheader disableSticky>Display</ListSubheader>
@@ -102,10 +103,10 @@ function MapSettings() {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog} color='primary' endIcon={<CancelIcon />}>Close</Button>
+        <Button onClick={closeDialog} color='secondary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }
 
 export default MapSettings

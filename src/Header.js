@@ -15,33 +15,42 @@ import { Container } from '@mui/system'
 
 import PostcodeSearch from './PostcodeSearch'
 
-function Header() {
-  const homePage = useMatch("/")
-  const mapPage = useMatch("/map")
+function Header () {
+  const homePage = useMatch('/')
+  const mapPage = useMatch('/map')
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ borderBottom: 1, borderColor: '#ccc', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
+      <AppBar
+        sx={{
+          borderBottom: 1,
+          borderColor: '#ccc',
+          zIndex: theme => theme.zIndex.drawer + 1,
+          backgroundColor: 'rgba(250, 250, 250, 0.9)'
+        }}
+        color='transparent'
+        elevation={0}
+      >
         <Container maxWidth='lg'>
           <Toolbar>
             {homePage === null && <PostcodeSearch />}
             <Box sx={{ flexGrow: 1 }} />
-            <Tooltip title="Find library in tables">
+            <Tooltip title='Find library in tables'>
               <Button
                 component={Link}
-                to={'/'}
+                to='/'
                 disableRipple={homePage !== null}
                 disableFocusRipple={homePage !== null}
                 color='primary'
                 startIcon={<GridOnIcon />}
               >
-                Lists
+                List
               </Button>
             </Tooltip>
-            <Tooltip title="View map">
+            <Tooltip title='View map'>
               <Button
                 component={Link}
-                to={'/map'}
+                to='/map'
                 disableRipple={mapPage !== null}
                 disableFocusRipple={mapPage !== null}
                 color='primary'

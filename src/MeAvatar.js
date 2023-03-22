@@ -5,8 +5,7 @@ import Tooltip from '@mui/material/Tooltip'
 
 import Face from '@mui/icons-material/FaceTwoTone'
 
-function MeAvatar() {
-
+function MeAvatar () {
   return (
     <Tooltip title='Me'>
       <Avatar>

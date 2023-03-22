@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import Tooltip from '@mui/material/Tooltip'
 
-import { alpha } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles'
 
 import ClearIcon from '@mui/icons-material/ClearTwoTone'
 import MyLocationIcon from '@mui/icons-material/MyLocationTwoTone'
@@ -19,7 +19,7 @@ import { useViewStateValue } from './context/viewState'
 import * as geoHelper from './helpers/geo'
 import * as urlHelper from './helpers/url'
 
-function usePrevious(value) {
+const usePrevious = value => {
   const ref = useRef()
   useEffect(() => {
     ref.current = value
@@ -27,7 +27,26 @@ function usePrevious(value) {
   return ref.current
 }
 
-function PostcodeSearch(props) {
+const SearchBox = ({ children }) => {
+  return (
+    <Box
+      position='relative'
+      display='inline-flex'
+      sx={{
+        padding: theme => theme.spacing(1.5),
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        verticalAlign: 'middle',
+        boxSizing: 'border-box'
+      }}
+    >
+      {children}
+    </Box>
+  )
+}
+
+function PostcodeSearch () {
   const [{ searchType, searchPostcode, searchPosition }, dispatchSearch] =
     useSearchStateValue() //eslint-disable-line
   const [{ loadingPostcode, loadingLocation }, dispatchView] =
@@ -37,11 +56,12 @@ function PostcodeSearch(props) {
 
   const prevProps = usePrevious({ searchPostcode })
 
-  let navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (prevProps && searchPostcode !== prevProps.searchPostcode)
+    if (prevProps && searchPostcode !== prevProps.searchPostcode) {
       setTempPostcode(searchPostcode)
+    }
   }, [searchPostcode, prevProps])
 
   const getLocation = async () => {
@@ -53,6 +73,7 @@ function PostcodeSearch(props) {
           : await geoHelper.getCurrentPosition()
       dispatchSearch({ type: 'SetLocation', searchPosition: pos })
       const postcode = await getLocationPostcode(pos)
+      dispatchView({ type: 'SetLocationLoaded' })
       dispatchView({ type: 'ToggleLoadingLocation' })
       if (postcode && postcode !== '') postcodeSearch(postcode)
     }
@@ -115,20 +136,21 @@ function PostcodeSearch(props) {
   }
 
   return (
-    <Box sx={{
-      position: 'relative',
-      border: 1,
-      borderColor: '#ccc',
-      borderRadius: 1,
-      backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.10),
-      '&:hover': {
-        backgroundColor: (theme) => alpha(theme.palette.secondary.main, 0.20),
-      },
-      marginLeft: 0,
-      paddingLeft: 0,
-      whitespace: 'nowrap',
-      display: 'inline-flex',
-    }}>
+    <Box
+      sx={{
+        position: 'relative',
+        borderRadius: 1,
+        backgroundColor: theme => alpha(theme.palette.primary.main, 1),
+        '&:hover': {
+          backgroundColor: theme => alpha(theme.palette.primary.main, 0.9)
+        },
+        marginLeft: 0,
+        paddingLeft: 0,
+        whitespace: 'nowrap',
+        display: 'inline-flex',
+        color: 'white'
+      }}
+    >
       <InputBase
         placeholder='Postcode'
         value={tempPostcode}
@@ -138,66 +160,59 @@ function PostcodeSearch(props) {
         }}
         inputProps={{ 'aria-label': 'search by postcode' }}
         sx={{
-          padding: theme => theme.spacing(1),
+          paddingLeft: theme => theme.spacing(1),
           maxWidth: 110,
+          color: 'white'
         }}
       />
       {searchType === 'postcode' ? (
         <Tooltip title='Clear search'>
           <IconButton
+            color='inherit'
             aria-label='Clear search'
             onClick={() => clearSearch()}
-            size="large">
+            size='large'
+            disabled={loadingPostcode || loadingLocation}
+          >
             <ClearIcon />
           </IconButton>
         </Tooltip>
-      ) : null}
-      <Tooltip title='Search by postcode'>
-        {!loadingPostcode ? (
+      ) : !loadingPostcode ? (
+        <Tooltip title='Search by postcode'>
           <IconButton
             aria-label='Search'
-            color='primary'
+            color='inherit'
             onClick={() => postcodeSearch()}
-            size="large">
+            size='large'
+            disabled={loadingPostcode || loadingLocation}
+          >
             <SearchIcon />
           </IconButton>
-        ) : (
-          <Box
-            position='relative'
-            display='inline-flex'
-            sx={{
-              padding: theme => theme.spacing(1.5),
-              textAlign: 'center',
-              alignItems: 'center',
-              justifyContent: 'center',
-              verticalAlign: 'middle',
-              boxSizing: 'border-box'
-            }}
-          >
-            <CircularProgress size={22} />
-          </Box>
-        )}
-      </Tooltip>
+        </Tooltip>
+      ) : (
+        <SearchBox>
+          <CircularProgress color='inherit' size={22} />
+        </SearchBox>
+      )}
       <Tooltip title='Use your current location'>
         {!loadingLocation ? (
           <IconButton
             aria-label='Search by current location'
-            color='primary'
+            color='inherit'
             onClick={() => getLocation()}
-            size="large">
+            size='large'
+            disabled={loadingPostcode || loadingLocation}
+          >
             <MyLocationIcon />
           </IconButton>
         ) : (
-          <Box
-            position='relative'
-            display='inline-flex'
-          >
-            <CircularProgress size={22} />
-          </Box>
+          <SearchBox>
+            <CircularProgress color='inherit' size={22} />
+          </SearchBox>
         )}
       </Tooltip>
     </Box>
-  );
+  )
 }
 
 export default PostcodeSearch

@@ -22,14 +22,14 @@ import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-function LibraryMapApplication() {
+function LibraryMapApplication () {
   const [{ }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
   const [{ }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
     // Initial data setup
-    async function getServices() {
+    async function getServices () {
       const services = await serviceModel.getServices()
       const serviceLookup = {}
       const serviceSystemNameLookup = {}

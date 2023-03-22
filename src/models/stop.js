@@ -4,11 +4,11 @@ import moment from 'moment'
 const config = require('../helpers/config.json')
 
 export class Stop {
-  constructor(obj) {
+  constructor (obj) {
     Object.assign(this, obj)
   }
 
-  fromJson(json) {
+  fromJson (json) {
     this.id = json.id
     this.routeIds = json.route_ids
     this.routeNames = json.route_names
@@ -34,13 +34,12 @@ export class Stop {
   }
 }
 
-export async function getQueryStops(
+export async function getQueryStops (
   query,
   searchPosition,
   distance,
   serviceFilter
 ) {
-
   let url = `${config.mobilesApi}/stops?page=${query.page + 1}&limit=${query.pageSize}`
 
   if (query.orderBy && query.orderBy.field) url = `${url}&sort=${query.orderBy.field}&direction=${query.orderDirection}`
@@ -63,7 +62,7 @@ export async function getQueryStops(
   }
 }
 
-export async function getAllStops() {
+export async function getAllStops () {
   const response = await axios.get(`${config.mobilesApi}/stops`)
   if (response && response.data && response.data.length > 0) {
     return response.data.map(s => new Stop().fromJson(s))
@@ -72,7 +71,7 @@ export async function getAllStops() {
   }
 }
 
-export async function getStopById(id) {
+export async function getStopById (id) {
   const response = await axios.get(`${config.mobilesApi}/stops/${id}`)
   if (response && response.data) {
     return new Stop().fromJson(response.data)

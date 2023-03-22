@@ -22,7 +22,7 @@ import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
-import EventIcon from '@mui/icons-material/AddAlertTwoTone'
+import EventIcon from '@mui/icons-material/CalendarTodayTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import PrintIcon from '@mui/icons-material/PrintTwoTone'
 import WebIcon from '@mui/icons-material/WebTwoTone'
@@ -34,14 +34,14 @@ import * as stopModel from './models/stop'
 
 const config = require('./helpers/config.json')
 
-function StopDetails() {
+function StopDetails () {
   const [{ currentStopId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ stopDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [stop, setStop] = useState({})
 
   useEffect(() => {
-    async function getStop(stopId) {
+    async function getStop (stopId) {
       const stopData = await stopModel.getStopById(stopId)
       setStop(stopData)
     }
@@ -73,7 +73,8 @@ function StopDetails() {
       onClose={close}
       aria-labelledby='dlg-title'
       slotProps={{ backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } } }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}>
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
+    >
       {Object.keys(stop).length > 0 && stop.routeDays
         ? (
           <>
@@ -82,7 +83,7 @@ function StopDetails() {
               <Typography component='h4' variant='subtitle1'>{stop.address}</Typography>
               <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Schedule</ListSubheader>
               <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.secondary.main, 0.5) }}>
-                <Table size='small' sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: "none" } }}>
+                <Table size='small' sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: 'none' } }}>
                   <TableHead sx={{ backgroundColor: (theme) => lighten(theme.palette.secondary.main, 0.8) }}>
                     <TableRow>
                       <TableCell>Frequency</TableCell>
@@ -103,16 +104,17 @@ function StopDetails() {
               </TableContainer>
             </DialogContent>
           </>
-        ) : <CircularProgress color='primary' size={30} />}
+          )
+        : <CircularProgress color='primary' size={30} />}
       <DialogActions>
-        <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Website</Button>
-        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Add to calendar</Button>
+        <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Web</Button>
+        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Save</Button>
         <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
         <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>Map</Button>
         <Button onClick={() => close()} color='secondary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }
 
 export default StopDetails
