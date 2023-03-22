@@ -22,7 +22,7 @@ import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
-import EventIcon from '@mui/icons-material/AddAlertTwoTone'
+import EventIcon from '@mui/icons-material/CalendarTodayTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import PrintIcon from '@mui/icons-material/PrintTwoTone'
 import WebIcon from '@mui/icons-material/WebTwoTone'
@@ -108,7 +108,7 @@ function StopDetails () {
         : <CircularProgress color='primary' size={30} />}
       <DialogActions>
         <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Web</Button>
-        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Add calendar</Button>
+        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Save</Button>
         <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
         <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>Map</Button>
         <Button onClick={() => close()} color='secondary' endIcon={<CancelIcon />}>Close</Button>

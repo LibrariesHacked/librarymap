@@ -103,7 +103,7 @@ function MapSettings () {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog} color='primary' endIcon={<CancelIcon />}>Close</Button>
+        <Button onClick={closeDialog} color='secondary' endIcon={<CancelIcon />}>Close</Button>
       </DialogActions>
     </Dialog>
   )

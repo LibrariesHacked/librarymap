@@ -21,7 +21,16 @@ function Header () {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ borderBottom: 1, borderColor: '#ccc', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(250, 250, 250, 0.9)' }} color='transparent' elevation={0}>
+      <AppBar
+        sx={{
+          borderBottom: 1,
+          borderColor: '#ccc',
+          zIndex: theme => theme.zIndex.drawer + 1,
+          backgroundColor: 'rgba(250, 250, 250, 0.9)'
+        }}
+        color='transparent'
+        elevation={0}
+      >
         <Container maxWidth='lg'>
           <Toolbar>
             {homePage === null && <PostcodeSearch />}
@@ -35,7 +44,7 @@ function Header () {
                 color='primary'
                 startIcon={<GridOnIcon />}
               >
-                Lists
+                List
               </Button>
             </Tooltip>
             <Tooltip title='View map'>

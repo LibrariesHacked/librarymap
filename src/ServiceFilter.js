@@ -44,7 +44,7 @@ function ServiceFilter () {
             onClick={e => openServiceMenu(e.currentTarget)}
             startIcon={<BusinessIcon />}
           >
-            Choose library service
+            Select library service
           </Button>
         </Tooltip>
       ) : (
