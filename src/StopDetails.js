@@ -48,18 +48,28 @@ function StopDetails () {
     if (currentStopId != null) getStop(currentStopId)
   }, [currentStopId])
 
-  const getStopCalendar = () => window.open(config.mobilesApi + '/stops/' + stop.id + '/ics')
+  const getStopCalendar = () =>
+    window.open(config.mobilesApi + '/stops/' + stop.id + '/ics')
 
-  const getStopPdf = () => window.open(config.mobilesApi + '/stops/' + stop.id + '/pdf', '_blank')
+  const getStopPdf = () =>
+    window.open(config.mobilesApi + '/stops/' + stop.id + '/pdf', '_blank')
 
   const goToWebsite = () => window.open(stop.timetable, '_blank')
 
   const viewMapStop = () => {
-    dispatchView({ type: 'SetMapPosition', mapPosition: [stop.longitude, stop.latitude], mapZoom: 16 })
+    dispatchView({
+      type: 'SetMapPosition',
+      mapPosition: [stop.longitude, stop.latitude],
+      mapZoom: 16
+    })
   }
 
   const close = () => {
-    dispatchSearch({ type: 'SetCurrentStop', currentStopId: null, currentPoint: null })
+    dispatchSearch({
+      type: 'SetCurrentStop',
+      currentStopId: null,
+      currentPoint: null
+    })
     dispatchView({ type: 'SetStopDialog', stopDialogOpen: false })
   }
 
@@ -72,46 +82,99 @@ function StopDetails () {
       open={stopDialogOpen}
       onClose={close}
       aria-labelledby='dlg-title'
-      slotProps={{ backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } } }}
+      slotProps={{
+        backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } }
+      }}
       PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
     >
-      {Object.keys(stop).length > 0 && stop.routeDays
-        ? (
-          <>
-            <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
-            <DialogContent>
-              <Typography component='h4' variant='subtitle1'>{stop.address}</Typography>
-              <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Schedule</ListSubheader>
-              <TableContainer component={Paper} elevation={0} sx={{ border: 2, borderColor: (theme) => lighten(theme.palette.secondary.main, 0.5) }}>
-                <Table size='small' sx={{ [`& .${tableCellClasses.root}`]: { borderBottom: 'none' } }}>
-                  <TableHead sx={{ backgroundColor: (theme) => lighten(theme.palette.secondary.main, 0.8) }}>
-                    <TableRow>
-                      <TableCell>Frequency</TableCell>
-                      <TableCell align='right'>Next visit</TableCell>
+      {Object.keys(stop).length > 0 && stop.routeDays ? (
+        <>
+          <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
+          <DialogContent>
+            <Typography component='h4' variant='subtitle1'>
+              {stop.address}
+            </Typography>
+            <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+              Schedule
+            </ListSubheader>
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{
+                border: 2,
+                borderColor: theme => lighten(theme.palette.secondary.main, 0.5)
+              }}
+            >
+              <Table
+                size='small'
+                sx={{
+                  [`& .${tableCellClasses.root}`]: { borderBottom: 'none' }
+                }}
+              >
+                <TableHead
+                  sx={{
+                    backgroundColor: theme =>
+                      lighten(theme.palette.secondary.main, 0.8)
+                  }}
+                >
+                  <TableRow>
+                    <TableCell>Frequency</TableCell>
+                    <TableCell align='right'>Next visit</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {stop.routeFrequencyDescriptions.map((rs, idx) => (
+                    <TableRow key={'tc_rs_' + idx}>
+                      <TableCell component='th' scope='row'>
+                        {rs}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {stop.routeFrequencies.map((rs, idx) => (
-                      <TableRow key={'tc_rs_' + idx}>
-                        <TableCell component='th' scope='row'>
-                          {rs}
-                        </TableCell>
-                        <TableCell align='right'>{stop.routeSchedule[0].format('dddd Do MMMM h:mma')}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </DialogContent>
-          </>
-          )
-        : <CircularProgress color='primary' size={30} />}
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </DialogContent>
+        </>
+      ) : (
+        <CircularProgress color='primary' size={30} />
+      )}
       <DialogActions>
-        <Button onClick={() => goToWebsite()} color='primary' startIcon={<WebIcon />}>Web</Button>
-        <Button onClick={getStopCalendar} color='primary' startIcon={<EventIcon />}>Save</Button>
-        <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>Print</Button>
-        <Button onClick={viewMapStop} color='primary' startIcon={<LocationOnIcon />} component={Link} to='/map'>Map</Button>
-        <Button onClick={() => close()} color='secondary' endIcon={<CancelIcon />}>Close</Button>
+        <Button
+          onClick={() => goToWebsite()}
+          color='primary'
+          startIcon={<WebIcon />}
+        >
+          Web
+        </Button>
+        <Button
+          onClick={getStopCalendar}
+          color='primary'
+          startIcon={<EventIcon />}
+        >
+          Save
+        </Button>
+        <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>
+          Print
+        </Button>
+        <Button
+          onClick={viewMapStop}
+          color='primary'
+          startIcon={<LocationOnIcon />}
+          component={Link}
+          to='/map'
+        >
+          Map
+        </Button>
+        <Button
+          onClick={() => close()}
+          color='secondary'
+          endIcon={<CancelIcon />}
+        >
+          Close
+        </Button>
       </DialogActions>
     </Dialog>
   )
