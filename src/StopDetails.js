@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Dialog from '@mui/material/Dialog'
@@ -102,7 +103,9 @@ function StopDetails () {
               elevation={0}
               sx={{
                 border: 2,
-                borderColor: theme => lighten(theme.palette.secondary.main, 0.5)
+                borderColor: theme =>
+                  lighten(theme.palette.secondary.main, 0.5),
+                marginBottom: theme => theme.spacing(1)
               }}
             >
               <Table
@@ -126,7 +129,7 @@ function StopDetails () {
                   {stop.routeFrequencyDescriptions.map((rs, idx) => (
                     <TableRow key={'tc_rs_' + idx}>
                       <TableCell component='th' scope='row'>
-                        {rs}
+                        {`${stop.routeDays[0]}, ${rs}`}
                       </TableCell>
                       <TableCell align='right'>
                         {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
@@ -136,6 +139,13 @@ function StopDetails () {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Alert severity='error'>
+              Mobile stop details incorrect? See{' '}
+              <Link to='/data' target='_blank'>
+                Data
+              </Link>{' '}
+              for info.
+            </Alert>
           </DialogContent>
         </>
       ) : (

@@ -2,7 +2,6 @@ import React from 'react'
 
 import { Link, useMatch } from 'react-router-dom'
 
-import Chip from '@mui/material/Chip'
 import Grid from '@mui/material/Grid'
 import MaterialLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
@@ -24,13 +23,6 @@ function Footer () {
         }}
       >
         <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
-          <Chip
-            label='Prototype'
-            color='secondary'
-            variant='outlined'
-            size='small'
-            sx={{ marginBottom: theme => theme.spacing(2) }}
-          />
           <Typography variant='body1'>
             A Library Lab project by Libraries Hacked
           </Typography>

@@ -20,6 +20,7 @@ const initialViewState = {
   loadingLocation: false,
   loadingPostcode: false,
   loadingServices: false,
+  loadingLibraryOrMobileLibrary: false,
   isochronesMenuOpen: false,
   isochronesMenuAnchor: null
 }
@@ -61,6 +62,12 @@ const viewReducer = (state, action) => {
     }
     case 'SetLocationAccessed': {
       return { ...state, locationAccessed: action.locationAccessed }
+    }
+    case 'ToggleLoadingLibraryOrMobileLibrary': {
+      return {
+        ...state,
+        loadingLibraryOrMobileLibrary: !state.loadingLibraryOrMobileLibrary
+      }
     }
     case 'SetPostcodeSearch':
       return {

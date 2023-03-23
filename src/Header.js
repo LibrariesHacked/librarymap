@@ -4,6 +4,7 @@ import { Link, useMatch } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
 import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
@@ -33,7 +34,16 @@ function Header () {
       >
         <Container maxWidth='lg'>
           <Toolbar>
-            {homePage === null && <PostcodeSearch />}
+            {mapPage === null && (
+              <Chip
+                label='Prototype'
+                color='secondary'
+                variant='outlined'
+                size='small'
+                sx={{ marginBottom: theme => theme.spacing(2) }}
+              />
+            )}
+            {mapPage !== null && <PostcodeSearch />}
             <Box sx={{ flexGrow: 1 }} />
             <Tooltip title='Find library in tables'>
               <Button
