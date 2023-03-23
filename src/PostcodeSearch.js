@@ -195,21 +195,23 @@ function PostcodeSearch () {
         </SearchBox>
       )}
       <Tooltip title='Use your current location'>
-        {!loadingLocation ? (
-          <IconButton
-            aria-label='Search by current location'
-            color='inherit'
-            onClick={() => getLocation()}
-            size='large'
-            disabled={loadingPostcode || loadingLocation}
-          >
-            <MyLocationIcon />
-          </IconButton>
-        ) : (
-          <SearchBox>
-            <CircularProgress color='inherit' size={22} />
-          </SearchBox>
-        )}
+        <>
+          {!loadingLocation ? (
+            <IconButton
+              aria-label='Search by current location'
+              color='inherit'
+              onClick={() => getLocation()}
+              size='large'
+              disabled={loadingPostcode || loadingLocation}
+            >
+              <MyLocationIcon />
+            </IconButton>
+          ) : (
+            <SearchBox>
+              <CircularProgress color='inherit' size={22} />
+            </SearchBox>
+          )}
+        </>
       </Tooltip>
     </Box>
   )

@@ -33,6 +33,7 @@ import moment from 'moment'
 
 import * as libraryModel from './models/library'
 import * as hoursHelper from './helpers/hours'
+import config from './helpers/config'
 
 function LibraryDetails () {
   const [{ currentLibraryId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
@@ -154,7 +155,7 @@ function LibraryDetails () {
                 </TableBody>
               </Table>
             </TableContainer>
-            {staffedHoursAvailable || unstaffedHoursAvailable ? (
+            {(staffedHoursAvailable || unstaffedHoursAvailable) && (config.displayOpeningHours) ? (
               <>
                 <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
                   Opening hours
