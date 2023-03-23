@@ -9,6 +9,7 @@
   "servicesApi": "https://api-geography.librarydata.uk/rest/libraryauthorities",
   "stopTiles": "https://api.mobilelibraries.org/api/stops/{z}/{x}/{y}.mvt",
   "tripTiles": "https://api.mobilelibraries.org/api/trips/{z}/{x}/{y}.mvt",
+  "displayOpeningHours": false,
   "travel": [
     {
       "description": "Walking time",
