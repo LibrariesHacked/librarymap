@@ -1,6 +1,8 @@
 import axios from 'axios'
 import moment from 'moment'
 
+import { getText } from '../helpers/rrule'
+
 const config = require('../helpers/config.json')
 
 export class Stop {
@@ -26,6 +28,9 @@ export class Stop {
     this.routeEnd = moment(json.route_end)
     this.routeDays = json.route_days
     this.routeFrequencies = json.route_frequencies
+    this.routeFrequencyDescriptions = json.route_frequencies.map(f =>
+      getText(f)
+    )
     this.routeSchedule = json.route_schedule.map(s => moment(s))
     this.timetable = json.timetable
     this.longitude = json.longitude
@@ -40,15 +45,20 @@ export async function getQueryStops (
   distance,
   serviceFilter
 ) {
-  let url = `${config.mobilesApi}/stops?page=${query.page + 1}&limit=${query.pageSize}`
+  let url = `${config.mobilesApi}/stops?page=${query.page + 1}&limit=${
+    query.pageSize
+  }`
 
-  if (query.orderBy && query.orderBy.field) url = `${url}&sort=${query.orderBy.field}&direction=${query.orderDirection}`
+  if (query.orderBy && query.orderBy.field)
+    url = `${url}&sort=${query.orderBy.field}&direction=${query.orderDirection}`
 
-  if (searchPosition && searchPosition.length > 1) url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}`
+  if (searchPosition && searchPosition.length > 1)
+    url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}`
 
   if (distance && distance !== '') url = `${url}&distance=${distance}`
 
-  if (serviceFilter.length > 0) url = `${url}&service_codes=${serviceFilter.join('|')}`
+  if (serviceFilter.length > 0)
+    url = `${url}&service_codes=${serviceFilter.join('|')}`
 
   const response = await axios.get(url)
   if (response && response.data && response.data.length > 0) {

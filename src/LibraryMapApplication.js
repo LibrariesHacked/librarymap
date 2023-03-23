@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 
 import StopDetails from './StopDetails'
@@ -15,6 +17,8 @@ import Notification from './Notification'
 import { MemoMarkdownPage } from './MarkdownPage'
 
 import Data from './pages/data.md'
+import Accessibility from './pages/accessibility.md'
+import Privacy from './pages/privacy.md'
 
 import * as serviceModel from './models/service'
 
@@ -23,9 +27,9 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 function LibraryMapApplication () {
-  const [{ }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
-  const [{ }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
-  const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{}, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+  const [{}, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{ loadingLibraryOrMobileLibrary }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
     // Initial data setup
@@ -77,6 +81,16 @@ function LibraryMapApplication () {
                 exact
                 element={<MemoMarkdownPage page={Data} />}
               />
+              <Route
+                path='/accessibility'
+                exact
+                element={<MemoMarkdownPage page={Accessibility} />}
+              />
+              <Route
+                path='/privacy'
+                exact
+                element={<MemoMarkdownPage page={Privacy} />}
+              />
               <Route element={Page404} />
             </Routes>
           </main>
@@ -88,6 +102,9 @@ function LibraryMapApplication () {
       </div>
       <StopDetails />
       <LibraryDetails />
+      <Backdrop open={loadingLibraryOrMobileLibrary} invisible>
+        <CircularProgress color='inherit' />
+      </Backdrop>
     </BrowserRouter>
   )
 }
