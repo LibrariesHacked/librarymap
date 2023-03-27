@@ -74,7 +74,7 @@ function Libraries () {
 
   useEffect(() => fetchLibraries(), [fetchLibraries])
 
-  React.useEffect(() => {
+  useEffect(() => {
     setRowCountState(prevRowCountState =>
       pageInfo?.totalRowCount !== undefined
         ? pageInfo?.totalRowCount

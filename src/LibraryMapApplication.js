@@ -53,7 +53,7 @@ function LibraryMapApplication () {
         const service = serviceSystemNameLookup[serviceName]
         const coords = JSON.parse(service.bbox).coordinates[0]
         dispatchSearch({ type: 'FilterByService', service: service })
-        dispatchView({ type: 'FitToBounds', bounds: [coords[0], coords[2]] })
+        dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
       }
     }
     getServices()

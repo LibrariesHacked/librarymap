@@ -56,8 +56,8 @@ function LibraryDetails () {
 
   const viewMapLibrary = () => {
     dispatchView({
-      type: 'SetMapPosition',
-      mapPosition: [library.longitude, library.latitude],
+      type: 'FlyTo',
+      mapFlyToPosition: [library.longitude, library.latitude],
       mapZoom: 16
     })
   }

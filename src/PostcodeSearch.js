@@ -114,8 +114,8 @@ function PostcodeSearch () {
           searchPosition: service.location
         })
         dispatchView({
-          type: 'SetMapPosition',
-          mapPosition: service.location,
+          type: 'FlyTo',
+          mapFlyToPosition: service.location,
           mapZoom: 14
         })
       } else {

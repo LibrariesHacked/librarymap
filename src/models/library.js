@@ -7,6 +7,7 @@ const libraryTypes = {
   'LAL-': 'Local authority run - unstaffed',
   CL: 'Commissioned library',
   CRL: 'Community run library',
+  ICL: 'Independent library',
   IL: 'Independent library'
 }
 

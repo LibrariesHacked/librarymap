@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Fab from '@mui/material/Fab'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -7,7 +7,13 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
 
-import Map, { Source, Layer, Marker, NavigationControl } from 'react-map-gl'
+import Map, {
+  Source,
+  Layer,
+  Marker,
+  NavigationControl,
+  AttributionControl
+} from 'react-map-gl'
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'
@@ -57,6 +63,8 @@ function LibraryMap () {
       mapPosition,
       mapSettings,
       mapSettingsDialogOpen,
+      mapFlyToPosition,
+      mapBounds,
       isochronesMenuOpen,
       isochronesMenuAnchor,
       loadingLibraryOrMobileLibrary
@@ -64,7 +72,24 @@ function LibraryMap () {
     dispatchView
   ] = useViewStateValue() //eslint-disable-line
 
-  const mapRef = { current: null }
+  const [map, setMap] = useState(null)
+
+  useEffect(() => {
+    if (mapBounds && map) {
+      map.fitBounds(mapBounds, {
+        padding: 50
+      })
+    }
+  }, [mapBounds, map])
+
+  useEffect(() => {
+    if (mapFlyToPosition && map) {
+      map.flyTo({
+        center: mapFlyToPosition,
+        zoom: 15
+      })
+    }
+  }, [mapFlyToPosition, map])
 
   const setViewState = viewState => {
     dispatchView({
@@ -109,9 +134,8 @@ function LibraryMap () {
     dispatchView({
       type: 'ToggleLoadingLibraryOrMobileLibrary'
     })
-    const features = mapRef.current.queryRenderedFeatures(event.point)
+    const features = map.queryRenderedFeatures(event.point)
     if (features && features.length > 0) {
-      
       for (const feature of features) {
         if (feature.sourceLayer === 'libraries') {
           await clickLibrary(feature, event.point)
@@ -209,7 +233,7 @@ function LibraryMap () {
   return (
     <>
       <Map
-        ref={mapRef}
+        ref={setMap}
         mapLib={maplibregl}
         style={{
           width: '100vw',
@@ -226,6 +250,7 @@ function LibraryMap () {
         onMove={evt => setViewState(evt.viewState)}
         onClick={clickMap}
       >
+        <AttributionControl customAttribution='Contains OS data © Crown copyright and database right 2023' />
         {currentService && currentService.geojson ? (
           <Source type='geojson' data={JSON.parse(currentService.geojson)}>
             <Layer
@@ -253,10 +278,10 @@ function LibraryMap () {
                     type='geojson'
                     data={isochrones[point][transport].geo}
                   >
-                    <Layer // Shows the shaded polygons
+                    <Layer // Shaded isochrone lines
                       type='fill'
                       paint={{
-                        'fill-opacity': 0.1,
+                        'fill-opacity': 0.15,
                         'fill-antialias': true,
                         'fill-color': config.travel.filter(
                           t => t.name === transport
@@ -273,7 +298,7 @@ function LibraryMap () {
                         )[0].colour
                       }}
                     />
-                    <Layer // Shows the distances labels
+                    <Layer // Distances labels
                       type='symbol'
                       layout={{
                         'text-field': [
@@ -282,14 +307,14 @@ function LibraryMap () {
                           ' min'
                         ],
                         'text-font': ['Source Sans Pro Bold'],
-                        'symbol-placement': 'line',
+                        'symbol-placement': 'line-center',
                         'text-allow-overlap': false,
                         'text-padding': 2,
-                        'text-max-angle': 90,
+                        'text-max-angle': 85,
                         'text-size': {
                           base: 1.2,
                           stops: [
-                            [8, 12],
+                            [8, 15],
                             [22, 30]
                           ]
                         },
@@ -304,10 +329,14 @@ function LibraryMap () {
                         )[0].colour
                       }}
                     />
-                    <Layer // Shows the population labels
+                    <Layer // Population labels
                       type='symbol'
                       layout={{
-                        'text-field': ['concat', ['get', 'total_pop']],
+                        'text-field': [
+                          'number-format',
+                          ['get', 'total_pop'],
+                          { locale: 'en' }
+                        ],
                         'text-font': ['Source Sans Pro Bold'],
                         'symbol-placement': 'line',
                         'text-allow-overlap': false,
@@ -318,8 +347,8 @@ function LibraryMap () {
                         'text-size': {
                           base: 1.2,
                           stops: [
-                            [10, 8],
-                            [22, 14]
+                            [10, 16],
+                            [22, 22]
                           ]
                         },
                         'text-letter-spacing': 0.1
@@ -339,27 +368,27 @@ function LibraryMap () {
             })
         })}
         <Source type='vector' tiles={[libraryBuildingsTiles]}>
-          <Layer
+          <Layer // Buildings lines
             type='line'
             source-layer='library_buildings'
-            minzoom={14}
+            minzoom={16}
             layout={{
               'line-join': 'round',
               'line-cap': 'square'
             }}
             paint={{
               'line-color': '#455a64',
-              'line-opacity': 0.8,
+              'line-opacity': 0.6,
               'line-width': ['interpolate', ['linear'], ['zoom'], 14, 2, 18, 3]
             }}
           />
-          <Layer
+          <Layer // Buildings fill
             type='fill'
             source-layer='library_buildings'
-            minzoom={14}
+            minzoom={16}
             paint={{
               'fill-color': '#455a64',
-              'fill-opacity': 0.3
+              'fill-opacity': 0.1
             }}
           />
         </Source>
@@ -527,7 +556,7 @@ function LibraryMap () {
         </Source>
         <Source type='vector' tiles={[libraryTiles]}>
           {displayClosedLibraries ? (
-            <Layer
+            <Layer // Closed library names
               type='symbol'
               source-layer='libraries'
               minzoom={12}
@@ -566,7 +595,7 @@ function LibraryMap () {
             />
           ) : null}
           {displayClosedLibraries ? (
-            <Layer
+            <Layer // Closed library year closed
               type='symbol'
               source-layer='libraries'
               minzoom={12}
@@ -605,7 +634,7 @@ function LibraryMap () {
             />
           ) : null}
           {displayClosedLibraries ? (
-            <Layer
+            <Layer // Closed library circles
               type='circle'
               source-layer='libraries'
               minzoom={11}
@@ -637,7 +666,7 @@ function LibraryMap () {
             />
           ) : null}
           {mapSettings.libraries ? (
-            <Layer
+            <Layer // Library type label
               type='symbol'
               source-layer='libraries'
               minzoom={13}
@@ -655,6 +684,8 @@ function LibraryMap () {
                   'Commissioned library',
                   'CRL',
                   'Community run library',
+                  'ICL',
+                  'Independent library',
                   'IL',
                   'Independent library',
                   'Unknown library'
@@ -690,7 +721,7 @@ function LibraryMap () {
             />
           ) : null}
           {mapSettings.libraries ? (
-            <Layer
+            <Layer // Library name
               type='symbol'
               source-layer='libraries'
               minzoom={10}
@@ -729,10 +760,11 @@ function LibraryMap () {
             />
           ) : null}
           {mapSettings.libraries ? (
-            <Layer
+            <Layer // Library circles
               type='circle'
               source-layer='libraries'
               minzoom={5}
+              maxzoom={16}
               filter={['!', ['has', 'Year closed']]}
               paint={{
                 'circle-radius': [
@@ -800,11 +832,10 @@ function LibraryMap () {
       </Map>
       <Tooltip title='Map settings'>
         <Fab
-          size='small'
           color='primary'
           sx={{
             position: 'absolute',
-            bottom: 16,
+            bottom: 28,
             right: 16,
             zIndex: 1,
             color: 'white'

@@ -59,8 +59,8 @@ function StopDetails () {
 
   const viewMapStop = () => {
     dispatchView({
-      type: 'SetMapPosition',
-      mapPosition: [stop.longitude, stop.latitude],
+      type: 'FlyTo',
+      mapFlyToPosition: [stop.longitude, stop.latitude],
       mapZoom: 16
     })
   }
