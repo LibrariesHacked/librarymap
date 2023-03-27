@@ -7,6 +7,7 @@ const initialViewState = {
   notificationMessage: '',
   mapZoom: 7,
   mapPosition: [-1.155414, 52.691432],
+  mapFlyToPosition: null,
   mapBounds: null,
   mapSettings: {
     libraries: true,
@@ -49,7 +50,10 @@ const viewReducer = (state, action) => {
       return { ...state, mapSettings: settings }
     }
     case 'FitToBounds': {
-      return { ...state, mapBounds: action.bounds }
+      return { ...state, mapBounds: action.mapBounds }
+    }
+    case 'FlyTo': {
+      return { ...state, mapFlyToPosition: action.mapFlyToPosition }
     }
     case 'ToggleLoadingPostcode': {
       return { ...state, loadingPostcode: !state.loadingPostcode }

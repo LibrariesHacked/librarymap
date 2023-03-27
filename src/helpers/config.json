@@ -28,8 +28,8 @@
     {
       "description": "Driving time",
       "name": "driving-car",
-      "duration": 300,
-      "interval": 60,
+      "duration": 600,
+      "interval": 120,
       "colour": "#b71c1c"
     }
   ]
