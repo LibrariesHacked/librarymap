@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
@@ -40,6 +40,8 @@ function LibraryDetails () {
   const [{ libraryDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [library, setLibrary] = useState({})
+
+  const mapPage = useMatch('/map')
 
   useEffect(() => {
     async function getLibrary (libraryId) {
@@ -155,7 +157,8 @@ function LibraryDetails () {
                 </TableBody>
               </Table>
             </TableContainer>
-            {(staffedHoursAvailable || unstaffedHoursAvailable) && (config.displayOpeningHours) ? (
+            {(staffedHoursAvailable || unstaffedHoursAvailable) &&
+            config.displayOpeningHours ? (
               <>
                 <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
                   Opening hours
@@ -232,12 +235,12 @@ function LibraryDetails () {
         <CircularProgress color='primary' size={30} />
       )}
       <DialogActions>
-        {library.url && library.url !== '' ? (
+        {library.url && library.url !== '' && config.displayWebLinks ? (
           <Button onClick={() => goToWebsite()} startIcon={<WebIcon />}>
             Web
           </Button>
         ) : null}
-        {library.url && library.url !== '' ? (
+        {library.url && library.url !== '' && config.displayEmails ? (
           <Button
             onClick={() => emailLibrary()}
             startIcon={<AlternateEmailIcon />}
@@ -246,14 +249,17 @@ function LibraryDetails () {
           </Button>
         ) : null}
 
-        <Button
-          onClick={viewMapLibrary}
-          startIcon={<LocationOnIcon />}
-          component={Link}
-          to='/map'
-        >
-          Map
-        </Button>
+        {!mapPage && (
+          <Button
+            onClick={viewMapLibrary}
+            startIcon={<LocationOnIcon />}
+            component={Link}
+            to='/map'
+          >
+            Map
+          </Button>
+        )}
+
         <Button
           onClick={() => close()}
           endIcon={<CancelIcon />}
