@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.11",
-    "@mui/material": "^5.11.14",
+    "@mui/material": "^5.11.15",
     "@mui/x-data-grid": "^5.17.26",
     "axios": "^1.3.4",
     "mapbox-gl": "npm:empty-npm-package@^1.0.0",
@@ -18,7 +18,7 @@
     "react-carbonbadge": "^2.0.0",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.0.21",
-    "react-router-dom": "^6.9.0",
+    "react-router-dom": "^6.10.0",
     "rrule": "^2.7.2"
   },
   "scripts": {

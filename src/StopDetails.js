@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
@@ -40,6 +40,8 @@ function StopDetails () {
   const [{ stopDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [stop, setStop] = useState({})
+
+  const mapPage = useMatch('/map')
 
   useEffect(() => {
     async function getStop (stopId) {
@@ -152,13 +154,15 @@ function StopDetails () {
         <CircularProgress color='primary' size={30} />
       )}
       <DialogActions>
-        <Button
-          onClick={() => goToWebsite()}
-          color='primary'
-          startIcon={<WebIcon />}
-        >
-          Web
-        </Button>
+        {config.displayWebLinks && (
+          <Button
+            onClick={() => goToWebsite()}
+            color='primary'
+            startIcon={<WebIcon />}
+          >
+            Web
+          </Button>
+        )}
         <Button
           onClick={getStopCalendar}
           color='primary'
@@ -169,15 +173,17 @@ function StopDetails () {
         <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>
           Print
         </Button>
-        <Button
-          onClick={viewMapStop}
-          color='primary'
-          startIcon={<LocationOnIcon />}
-          component={Link}
-          to='/map'
-        >
-          Map
-        </Button>
+        {!mapPage && (
+          <Button
+            onClick={viewMapStop}
+            color='primary'
+            startIcon={<LocationOnIcon />}
+            component={Link}
+            to='/map'
+          >
+            Map
+          </Button>
+        )}
         <Button
           onClick={() => close()}
           color='secondary'
