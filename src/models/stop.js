@@ -50,7 +50,7 @@ export async function getQueryStops (
   }`
 
   if (query.orderBy && query.orderBy.field)
-    url = `${url}&sort=${query.orderBy.field}&direction=${query.orderDirection}`
+    url = `${url}&sort=${query.orderBy.field}&direction=${query.orderBy.direction}`
 
   if (searchPosition && searchPosition.length > 1)
     url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}`

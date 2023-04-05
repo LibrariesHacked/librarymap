@@ -18,9 +18,11 @@ function MobileLibraries () {
     useSearchStateValue() //eslint-disable-line
   const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
 
+  const initialSortModel = [{ field: 'name', sort: 'asc' }]
+
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(5)
-  const [sortModel, setSortModel] = useState([{ field: 'name', sort: 'asc' }])
+  const [sortModel, setSortModel] = useState(initialSortModel)
   const [filterModel, setFilterModel] = useState({
     items: [
       {
@@ -142,7 +144,13 @@ function MobileLibraries () {
             onFilterModelChange={newFilterModel => setFilterModel(newFilterModel)}
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
-            onSortModelChange={newSortModel => setSortModel(newSortModel)}
+            onSortModelChange={newSortModel => {
+              if (newSortModel.length === 0) {
+                setSortModel(initialSortModel)
+              } else {
+                setSortModel(newSortModel)
+              }
+            }}
             columns={columns}
             initialState={initialState}
           />

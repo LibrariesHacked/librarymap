@@ -18,11 +18,13 @@ function Libraries () {
     { searchDistance, searchPosition, serviceFilter, displayClosedLibraries },
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
-  const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+
+  const initialSortModel = [{ field: 'name', sort: 'asc' }]
 
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(5)
-  const [sortModel, setSortModel] = useState([{ field: 'name', sort: 'asc' }])
+  const [sortModel, setSortModel] = useState(initialSortModel)
   const [filterModel, setFilterModel] = useState({
     items: [
       {
@@ -107,11 +109,13 @@ function Libraries () {
 
   return (
     <>
-      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Static libraries</ListSubheader>
+      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+        Static libraries
+      </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
-            sx={(theme) => ({
+            sx={theme => ({
               backgroundColor: 'white',
               border: 2,
               borderColor: lighten(theme.palette.primary.main, 0.5),
@@ -125,9 +129,9 @@ function Libraries () {
                 outline: 'none !important'
               },
               '& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-columnHeader:focus':
-              {
-                outline: 'none !important'
-              }
+                {
+                  outline: 'none !important'
+                }
             })}
             autoHeight
             density='standard'
@@ -144,10 +148,18 @@ function Libraries () {
             rowsPerPageOptions={[5]}
             sortingMode='server'
             sortModel={sortModel}
-            onFilterModelChange={newFilterModel => setFilterModel(newFilterModel)}
+            onFilterModelChange={newFilterModel =>
+              setFilterModel(newFilterModel)
+            }
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
-            onSortModelChange={newSortModel => setSortModel(newSortModel)}
+            onSortModelChange={newSortModel => {
+              if (newSortModel.length === 0) {
+                setSortModel(initialSortModel)
+              } else {
+                setSortModel(newSortModel)
+              }
+            }}
             columns={columns}
             initialState={initialState}
           />
