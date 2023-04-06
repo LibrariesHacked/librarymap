@@ -56,6 +56,7 @@ export class Library {
     this.emailAddress = json['Email address']
     this.longitude = json.Longitude
     this.latitude = json.Latitude
+    this.distance = json.distance
     return this
   }
 }
@@ -74,7 +75,8 @@ export async function getQueryLibraries (
     name: 'Library name',
     localAuthority: 'Local authority',
     address1: 'Address 1',
-    postcode: 'Postcode'
+    postcode: 'Postcode',
+    distance: 'Distance'
   }
 
   if (query.orderBy && query.orderBy.field) url = `${url}&sort=${sortMappings[query.orderBy.field]}&direction=${query.orderBy.direction}`

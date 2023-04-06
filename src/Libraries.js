@@ -12,6 +12,7 @@ import { useViewStateValue } from './context/viewState'
 import { lighten } from '@mui/material'
 
 import useLibraryQuery from './hooks/useLibraryQuery'
+import usePrevious from './hooks/usePrevious'
 
 function Libraries () {
   const [
@@ -19,6 +20,8 @@ function Libraries () {
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+
+  const prevPosition = usePrevious(searchPosition)
 
   const initialSortModel = [{ field: 'name', sort: 'asc' }]
 
@@ -54,6 +57,9 @@ function Libraries () {
   )
 
   const fetchLibraries = useCallback(() => {
+    if (prevPosition && prevPosition.length === 0 && searchPosition.length > 0) {
+      setSortModel([{ field: 'distance', sort: 'asc' }])
+    }
     getLibrariesFromQuery({
       page: page,
       pageSize: pageSize,
@@ -74,7 +80,9 @@ function Libraries () {
     displayClosedLibraries
   ])
 
-  useEffect(() => fetchLibraries(), [fetchLibraries])
+  useEffect(() => {
+    fetchLibraries()
+  }, [fetchLibraries])
 
   useEffect(() => {
     setRowCountState(prevRowCountState =>
@@ -93,6 +101,19 @@ function Libraries () {
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'address1', headerName: 'Address', flex: 1 },
     { field: 'postcode', headerName: 'Postcode', flex: 1 },
+    {
+      field: 'distance',
+      headerName: 'Distance',
+      flex: 1,
+      valueFormatter: params => {
+        if (params.value == null) {
+          return ''
+        }
+
+        const valueFormatted = Math.round(Number(params.value / 1608))
+        return `${valueFormatted} mi`
+      }
+    },
     {
       field: 'actions',
       type: 'actions',
@@ -134,6 +155,7 @@ function Libraries () {
                 }
             })}
             autoHeight
+            columnVisibilityModel={{ distance: searchPosition.length > 0 }}
             density='standard'
             disableSelectionOnClick
             filterMode='server'
