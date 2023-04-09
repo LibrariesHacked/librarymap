@@ -22,7 +22,7 @@ function Home () {
           variant='subtitle'
           sx={{ padding: theme => theme.spacing() }}
         >
-          Search by postcode, or select a UK library service
+          Search by postcode, or select library service
         </Typography>
         <Search />
       </Box>

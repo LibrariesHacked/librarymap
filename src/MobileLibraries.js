@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 import ListSubheader from '@mui/material/ListSubheader'
 
 import MoreIcon from '@mui/icons-material/ReadMoreTwoTone'
@@ -18,6 +21,8 @@ function MobileLibraries () {
   const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] =
     useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+
+  const theme = useTheme()
 
   const prevPosition = usePrevious(searchPosition)
 
@@ -87,6 +92,7 @@ function MobileLibraries () {
   const columns = [
     { field: 'community', headerName: 'Community', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'organisationName', headerName: 'Library service', flex: 1 },
     {
       field: 'distance',
       headerName: 'Distance',
@@ -141,7 +147,12 @@ function MobileLibraries () {
                 }
             })}
             autoHeight
-            columnVisibilityModel={{ distance: searchPosition.length > 0 }}
+            columnVisibilityModel={{
+              community: true,
+              name: useMediaQuery(theme.breakpoints.up('sm')),
+              organisationName: useMediaQuery(theme.breakpoints.up('sm')),
+              distance: searchPosition.length > 0
+            }}
             density='standard'
             disableSelectionOnClick
             filterMode='server'

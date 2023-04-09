@@ -76,7 +76,7 @@ export async function getQueryLibraries (
     localAuthority: 'Local authority',
     address1: 'Address 1',
     postcode: 'Postcode',
-    distance: 'Distance'
+    distance: 'distance'
   }
 
   if (query.orderBy && query.orderBy.field) url = `${url}&sort=${sortMappings[query.orderBy.field]}&direction=${query.orderBy.direction}`

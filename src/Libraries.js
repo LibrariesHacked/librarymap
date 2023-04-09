@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 import ListSubheader from '@mui/material/ListSubheader'
 
 import MoreVertIcon from '@mui/icons-material/ReadMoreTwoTone'
@@ -20,6 +23,8 @@ function Libraries () {
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+
+  const theme = useTheme()
 
   const prevPosition = usePrevious(searchPosition)
 
@@ -57,7 +62,11 @@ function Libraries () {
   )
 
   const fetchLibraries = useCallback(() => {
-    if (prevPosition && prevPosition.length === 0 && searchPosition.length > 0) {
+    if (
+      prevPosition &&
+      prevPosition.length === 0 &&
+      searchPosition.length > 0
+    ) {
       setSortModel([{ field: 'distance', sort: 'asc' }])
     }
     getLibrariesFromQuery({
@@ -100,6 +109,7 @@ function Libraries () {
   const columns = [
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'address1', headerName: 'Address', flex: 1 },
+    { field: 'localAuthority', headerName: 'Library service', flex: 1 },
     { field: 'postcode', headerName: 'Postcode', flex: 1 },
     {
       field: 'distance',
@@ -155,7 +165,13 @@ function Libraries () {
                 }
             })}
             autoHeight
-            columnVisibilityModel={{ distance: searchPosition.length > 0 }}
+            columnVisibilityModel={{
+              name: true,
+              address1: useMediaQuery(theme.breakpoints.up('sm')),
+              localAuthority: useMediaQuery(theme.breakpoints.up('md')),
+              postcode: useMediaQuery(theme.breakpoints.up('sm')),
+              distance: searchPosition.length > 0
+            }}
             density='standard'
             disableSelectionOnClick
             filterMode='server'

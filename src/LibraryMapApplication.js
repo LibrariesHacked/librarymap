@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { grey } from '@mui/material/colors'
+
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
+import Divider from '@mui/material/Divider'
 
 import StopDetails from './StopDetails'
 import LibraryDetails from './LibraryDetails'
@@ -71,7 +74,7 @@ function LibraryMapApplication () {
         <Container maxWidth='lg'>
           <Header />
         </Container>
-        <Container maxWidth='lg' sx={{ paddingTop: '80px' }}>
+        <Container maxWidth='lg' sx={{ backgroundColor: grey.A100, paddingTop: '80px', paddingBottom: theme => theme.spacing(2) }}>
           <main>
             <Routes>
               <Route path='/' exact element={<Home />} />
@@ -95,7 +98,8 @@ function LibraryMapApplication () {
             </Routes>
           </main>
         </Container>
-        <Container maxWidth='lg'>
+        <Divider />
+        <Container maxWidth='lg' sx={{ marginTop: theme => theme.spacing(2) }}>
           <Footer />
         </Container>
         <Notification />

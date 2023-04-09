@@ -13,18 +13,18 @@ import { Carbonbadge } from 'react-carbonbadge'
 function Footer () {
   const mapPage = useMatch('/map')
   return (
-    <div>
+    <>
       <Grid
         container
         spacing={2}
         sx={{
-          paddingTop: theme => theme.spacing(4),
+          paddingTop: theme => theme.spacing(2),
           paddingBottom: theme => theme.spacing(4)
         }}
       >
         <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
           <Typography variant='body1'>
-            A Library Lab project by Libraries Hacked
+            A Library Lab project
           </Typography>
           <Typography variant='h6'>
             <MaterialLink
@@ -42,7 +42,10 @@ function Footer () {
               component={Link}
               to='/accessibility'
               title='About the Accessibility of this site'
-              sx={{ marginLeft: theme => theme.spacing(), marginRight: theme => theme.spacing() }}
+              sx={{
+                marginLeft: theme => theme.spacing(),
+                marginRight: theme => theme.spacing()
+              }}
             >
               Accessibility
             </MaterialLink>
@@ -85,7 +88,7 @@ function Footer () {
           </Typography>
         </Grid>
       </Grid>
-    </div>
+    </>
   )
 }
 
