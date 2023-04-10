@@ -186,8 +186,8 @@ function Libraries () {
             autoHeight
             columnVisibilityModel={{
               name: true,
-              address1: useMediaQuery(theme.breakpoints.up('sm')),
-              localAuthority: useMediaQuery(theme.breakpoints.up('md')),
+              address1: useMediaQuery(theme.breakpoints.up('md')),
+              localAuthority: useMediaQuery(theme.breakpoints.up('lg')),
               postcode: useMediaQuery(theme.breakpoints.up('sm')),
               distance: searchPosition.length > 0
             }}

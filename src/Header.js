@@ -32,7 +32,7 @@ function Header () {
         color='transparent'
         elevation={0}
       >
-        <Container maxWidth='lg'>
+        <Container>
           <Toolbar>
             {mapPage === null && (
               <Chip

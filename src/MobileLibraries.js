@@ -181,7 +181,7 @@ function MobileLibraries () {
             columnVisibilityModel={{
               community: true,
               name: useMediaQuery(theme.breakpoints.up('sm')),
-              organisationName: useMediaQuery(theme.breakpoints.up('sm')),
+              organisationName: useMediaQuery(theme.breakpoints.up('md')),
               distance: searchPosition.length > 0
             }}
             density='standard'

@@ -22,7 +22,7 @@ function Footer () {
           paddingBottom: theme => theme.spacing(4)
         }}
       >
-        <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
+        <Grid item xs={12} sm={12} md={5} lg={4} xl={4}>
           <Typography variant='body1'>
             A Library Lab project
           </Typography>
@@ -61,15 +61,15 @@ function Footer () {
         <Grid
           item
           xs={12}
-          sm={6}
-          md={6}
+          sm={12}
+          md={4}
           lg={4}
           xl={4}
           sx={{ display: mapPage ? 'none' : 'block' }}
         >
           <Carbonbadge />
         </Grid>
-        <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
+        <Grid item xs={12} sm={12} md={3} lg={4} xl={4}>
           <Typography variant='body1'>
             In memory of Paul Rowe <FavoriteIcon color='primary' />
           </Typography>
