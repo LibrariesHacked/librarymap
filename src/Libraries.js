@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 import ListSubheader from '@mui/material/ListSubheader'
 
 import MoreVertIcon from '@mui/icons-material/ReadMoreTwoTone'
@@ -12,13 +15,26 @@ import { useViewStateValue } from './context/viewState'
 import { lighten } from '@mui/material'
 
 import useLibraryQuery from './hooks/useLibraryQuery'
+import usePrevious from './hooks/usePrevious'
 
 function Libraries () {
   const [
-    { searchDistance, searchPosition, serviceFilter, displayClosedLibraries },
+    {
+      currentService,
+      displayClosedLibraries,
+      librarySearchDistance,
+      searchPosition,
+      searchPostcode,
+      searchType,
+      serviceFilter
+    },
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+
+  const theme = useTheme()
+
+  const prevPosition = usePrevious(searchPosition)
 
   const initialSortModel = [{ field: 'name', sort: 'asc' }]
 
@@ -54,12 +70,19 @@ function Libraries () {
   )
 
   const fetchLibraries = useCallback(() => {
+    if (
+      prevPosition &&
+      prevPosition.length === 0 &&
+      searchPosition.length > 0
+    ) {
+      setSortModel([{ field: 'distance', sort: 'asc' }])
+    }
     getLibrariesFromQuery({
       page: page,
       pageSize: pageSize,
       sortModel: sortModel,
       searchPosition: searchPosition,
-      searchDistance: searchDistance,
+      searchDistance: librarySearchDistance,
       serviceFilter: serviceFilter,
       displayClosedLibraries: displayClosedLibraries
     })
@@ -69,12 +92,14 @@ function Libraries () {
     pageSize,
     sortModel,
     searchPosition,
-    searchDistance,
+    librarySearchDistance,
     serviceFilter,
     displayClosedLibraries
   ])
 
-  useEffect(() => fetchLibraries(), [fetchLibraries])
+  useEffect(() => {
+    fetchLibraries()
+  }, [fetchLibraries])
 
   useEffect(() => {
     setRowCountState(prevRowCountState =>
@@ -89,10 +114,35 @@ function Libraries () {
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
   }
 
+  const librariesHeader = () => {
+    switch (searchType) {
+      case 'postcode':
+        return `Libraries near ${searchPostcode}`
+      case 'service':
+        return `Libraries in ${currentService.name}`
+      default:
+        return 'Libraries'
+    }
+  }
+
   const columns = [
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'address1', headerName: 'Address', flex: 1 },
+    { field: 'localAuthority', headerName: 'Library service', flex: 1 },
     { field: 'postcode', headerName: 'Postcode', flex: 1 },
+    {
+      field: 'distance',
+      headerName: 'Distance',
+      flex: 1,
+      valueFormatter: params => {
+        if (params.value == null) {
+          return ''
+        }
+
+        const valueFormatted = Math.round(Number(params.value / 1608))
+        return `${valueFormatted} mi`
+      }
+    },
     {
       field: 'actions',
       type: 'actions',
@@ -110,7 +160,7 @@ function Libraries () {
   return (
     <>
       <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-        Static libraries
+        {librariesHeader()}
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
@@ -134,6 +184,13 @@ function Libraries () {
                 }
             })}
             autoHeight
+            columnVisibilityModel={{
+              name: true,
+              address1: useMediaQuery(theme.breakpoints.up('md')),
+              localAuthority: useMediaQuery(theme.breakpoints.up('lg')),
+              postcode: useMediaQuery(theme.breakpoints.up('sm')),
+              distance: searchPosition.length > 0
+            }}
             density='standard'
             disableSelectionOnClick
             filterMode='server'

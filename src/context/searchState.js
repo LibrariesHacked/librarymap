@@ -5,7 +5,8 @@ export const SearchStateContext = createContext()
 const initialSearchState = {
   searchPostcode: '',
   searchType: '',
-  searchDistance: 8045,
+  librarySearchDistance: 15248,
+  mobileSearchDistance: 3218,
   searchPosition: [],
   currentStopId: null,
   currentLibraryId: null,
@@ -32,10 +33,15 @@ const searchReducer = (state, action) => {
         currentLibraryId: action.currentLibraryId,
         currentPoint: action.currentPoint
       }
-    case 'SetSearchDistance':
+    case 'SetLibrarySearchDistance':
       return {
         ...state,
-        searchDistance: action.searchDistance
+        librarySearchDistance: action.librarySearchDistance
+      }
+    case 'SetMobileSearchDistance':
+      return {
+        ...state,
+        mobileSearchDistance: action.mobileSearchDistance
       }
     case 'SetPostcodeSearch':
       return {

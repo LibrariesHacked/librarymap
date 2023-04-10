@@ -13,22 +13,21 @@ import { Carbonbadge } from 'react-carbonbadge'
 function Footer () {
   const mapPage = useMatch('/map')
   return (
-    <div>
+    <>
       <Grid
         container
         spacing={2}
         sx={{
-          paddingTop: theme => theme.spacing(4),
+          paddingTop: theme => theme.spacing(2),
           paddingBottom: theme => theme.spacing(4)
         }}
       >
-        <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
+        <Grid item xs={12} sm={12} md={5} lg={4} xl={4}>
           <Typography variant='body1'>
-            A Library Lab project by Libraries Hacked
+            A Library Lab project
           </Typography>
           <Typography variant='h6'>
             <MaterialLink
-              variant='inherit'
               component={Link}
               to='/data'
               title='Maintaining the data used on this site and licensing'
@@ -38,17 +37,18 @@ function Footer () {
             </MaterialLink>
             <span> &#8226; </span>
             <MaterialLink
-              variant='inherit'
               component={Link}
               to='/accessibility'
               title='About the Accessibility of this site'
-              sx={{ marginLeft: theme => theme.spacing(), marginRight: theme => theme.spacing() }}
+              sx={{
+                marginLeft: theme => theme.spacing(),
+                marginRight: theme => theme.spacing()
+              }}
             >
               Accessibility
             </MaterialLink>
             <span> &#8226; </span>
             <MaterialLink
-              variant='inherit'
               component={Link}
               to='/privacy'
               title='About your privacy on this site'
@@ -61,15 +61,15 @@ function Footer () {
         <Grid
           item
           xs={12}
-          sm={6}
-          md={6}
+          sm={12}
+          md={4}
           lg={4}
           xl={4}
           sx={{ display: mapPage ? 'none' : 'block' }}
         >
           <Carbonbadge />
         </Grid>
-        <Grid item xs={12} sm={3} md={3} lg={4} xl={4}>
+        <Grid item xs={12} sm={12} md={3} lg={4} xl={4}>
           <Typography variant='body1'>
             In memory of Paul Rowe <FavoriteIcon color='primary' />
           </Typography>
@@ -85,7 +85,7 @@ function Footer () {
           </Typography>
         </Grid>
       </Grid>
-    </div>
+    </>
   )
 }
 

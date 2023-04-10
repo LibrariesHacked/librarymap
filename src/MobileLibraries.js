@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react'
 
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+
 import ListSubheader from '@mui/material/ListSubheader'
 
 import MoreIcon from '@mui/icons-material/ReadMoreTwoTone'
@@ -12,11 +15,25 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import useMobileStopsQuery from './hooks/useMobileStopsQuery'
+import usePrevious from './hooks/usePrevious'
 
 function MobileLibraries () {
-  const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] =
-    useSearchStateValue() //eslint-disable-line
-  const [{ }, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [
+    {
+      currentService,
+      mobileSearchDistance,
+      searchPosition,
+      searchPostcode,
+      searchType,
+      serviceFilter
+    },
+    dispatchSearch
+  ] = useSearchStateValue() //eslint-disable-line
+  const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+
+  const theme = useTheme()
+
+  const prevPosition = usePrevious(searchPosition)
 
   const initialSortModel = [{ field: 'name', sort: 'asc' }]
 
@@ -52,12 +69,19 @@ function MobileLibraries () {
   )
 
   const fetchLibraries = useCallback(() => {
+    if (
+      prevPosition &&
+      prevPosition.length === 0 &&
+      searchPosition.length > 0
+    ) {
+      setSortModel([{ field: 'distance', sort: 'asc' }])
+    }
     getMobileStopsFromQuery({
       page: page,
       pageSize: pageSize,
       sortModel: sortModel,
       searchPosition: searchPosition,
-      searchDistance: searchDistance,
+      searchDistance: mobileSearchDistance,
       serviceFilter: serviceFilter
     })
     // eslint-disable-next-line
@@ -66,7 +90,7 @@ function MobileLibraries () {
     pageSize,
     sortModel,
     searchPosition,
-    searchDistance,
+    mobileSearchDistance,
     serviceFilter
   ])
 
@@ -85,9 +109,34 @@ function MobileLibraries () {
     dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
   }
 
+  const mobilesHeader = () => {
+    switch (searchType) {
+      case 'postcode':
+        return `Mobile stops near ${searchPostcode}`
+      case 'service':
+        return `Mobile stops in ${currentService.name}`
+      default:
+        return 'Mobile stops'
+    }
+  }
+
   const columns = [
     { field: 'community', headerName: 'Community', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'organisationName', headerName: 'Library service', flex: 1 },
+    {
+      field: 'distance',
+      headerName: 'Distance',
+      flex: 1,
+      valueFormatter: params => {
+        if (params.value == null) {
+          return ''
+        }
+
+        const valueFormatted = Math.round(Number(params.value / 1608))
+        return `${valueFormatted} mi`
+      }
+    },
     {
       field: 'actions',
       type: 'actions',
@@ -104,11 +153,13 @@ function MobileLibraries () {
 
   return (
     <>
-      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>Mobile library stops</ListSubheader>
+      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+        {mobilesHeader()}
+      </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>
           <DataGrid
-            sx={(theme) => ({
+            sx={theme => ({
               backgroundColor: 'white',
               border: 2,
               borderColor: lighten(theme.palette.secondary.main, 0.5),
@@ -122,11 +173,17 @@ function MobileLibraries () {
                 outline: 'none !important'
               },
               '& .MuiDataGrid-columnHeader:focus-within, & .MuiDataGrid-columnHeader:focus':
-              {
-                outline: 'none !important'
-              }
+                {
+                  outline: 'none !important'
+                }
             })}
             autoHeight
+            columnVisibilityModel={{
+              community: true,
+              name: useMediaQuery(theme.breakpoints.up('sm')),
+              organisationName: useMediaQuery(theme.breakpoints.up('md')),
+              distance: searchPosition.length > 0
+            }}
             density='standard'
             disableSelectionOnClick
             filterMode='server'
@@ -141,7 +198,9 @@ function MobileLibraries () {
             rowsPerPageOptions={[5]}
             sortingMode='server'
             sortModel={sortModel}
-            onFilterModelChange={newFilterModel => setFilterModel(newFilterModel)}
+            onFilterModelChange={newFilterModel =>
+              setFilterModel(newFilterModel)
+            }
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {

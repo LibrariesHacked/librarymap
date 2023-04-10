@@ -35,6 +35,7 @@ export class Stop {
     this.timetable = json.timetable
     this.longitude = json.longitude
     this.latitude = json.latitude
+    this.distance = json.distance
     return this
   }
 }
