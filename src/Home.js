@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import Alert from '@mui/material/Alert'
+import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
@@ -28,12 +28,22 @@ function Home () {
       </Box>
       <Libraries />
       <MobileLibraries />
-      <Alert severity='error' sx={{ marginTop: theme => theme.spacing() }}>
-        Information out of date or incorrect? See{' '}
-        <Link to='/data' target='_blank'>
-          Data
-        </Link>{' '}
-        for how to maintain.
+      <Alert
+        variant='filled'
+        severity='warning'
+        sx={{ marginTop: theme => theme.spacing() }}
+        action={
+          <Button
+            href='/data'
+            variant='contained'
+            color='warning'
+            disableElevation
+          >
+            Data
+          </Button>
+        }
+      >
+        Information incorrect? See the data page for how to maintain.
       </Alert>
     </>
   )

@@ -19,7 +19,15 @@ import usePrevious from './hooks/usePrevious'
 
 function Libraries () {
   const [
-    { searchDistance, searchPosition, serviceFilter, displayClosedLibraries },
+    {
+      currentService,
+      displayClosedLibraries,
+      librarySearchDistance,
+      searchPosition,
+      searchPostcode,
+      searchType,
+      serviceFilter
+    },
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
@@ -74,7 +82,7 @@ function Libraries () {
       pageSize: pageSize,
       sortModel: sortModel,
       searchPosition: searchPosition,
-      searchDistance: searchDistance,
+      searchDistance: librarySearchDistance,
       serviceFilter: serviceFilter,
       displayClosedLibraries: displayClosedLibraries
     })
@@ -84,7 +92,7 @@ function Libraries () {
     pageSize,
     sortModel,
     searchPosition,
-    searchDistance,
+    librarySearchDistance,
     serviceFilter,
     displayClosedLibraries
   ])
@@ -104,6 +112,17 @@ function Libraries () {
   const selectLibrary = library => {
     dispatchSearch({ type: 'SetCurrentLibrary', currentLibraryId: library.id })
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
+  }
+
+  const librariesHeader = () => {
+    switch (searchType) {
+      case 'postcode':
+        return `Libraries near ${searchPostcode}`
+      case 'service':
+        return `Libraries in ${currentService.name}`
+      default:
+        return 'Libraries'
+    }
   }
 
   const columns = [
@@ -141,7 +160,7 @@ function Libraries () {
   return (
     <>
       <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-        Static libraries
+        {librariesHeader()}
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>

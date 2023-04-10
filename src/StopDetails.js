@@ -141,12 +141,21 @@ function StopDetails () {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Alert severity='error'>
-              Mobile stop details incorrect? See{' '}
-              <Link to='/data' target='_blank'>
-                Data
-              </Link>{' '}
-              for info.
+            <Alert
+              variant='filled'
+              severity='warning'
+              action={
+                <Button
+                  href='/data'
+                  variant='contained'
+                  color='warning'
+                  disableElevation
+                >
+                  Data
+                </Button>
+              }
+            >
+              Mobile details incorrect? See the data page for info.
             </Alert>
           </DialogContent>
         </>

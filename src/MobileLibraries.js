@@ -18,8 +18,17 @@ import useMobileStopsQuery from './hooks/useMobileStopsQuery'
 import usePrevious from './hooks/usePrevious'
 
 function MobileLibraries () {
-  const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] =
-    useSearchStateValue() //eslint-disable-line
+  const [
+    {
+      currentService,
+      mobileSearchDistance,
+      searchPosition,
+      searchPostcode,
+      searchType,
+      serviceFilter
+    },
+    dispatchSearch
+  ] = useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const theme = useTheme()
@@ -60,7 +69,11 @@ function MobileLibraries () {
   )
 
   const fetchLibraries = useCallback(() => {
-    if (prevPosition && prevPosition.length === 0 && searchPosition.length > 0) {
+    if (
+      prevPosition &&
+      prevPosition.length === 0 &&
+      searchPosition.length > 0
+    ) {
       setSortModel([{ field: 'distance', sort: 'asc' }])
     }
     getMobileStopsFromQuery({
@@ -68,11 +81,18 @@ function MobileLibraries () {
       pageSize: pageSize,
       sortModel: sortModel,
       searchPosition: searchPosition,
-      searchDistance: searchDistance,
+      searchDistance: mobileSearchDistance,
       serviceFilter: serviceFilter
     })
     // eslint-disable-next-line
-  }, [page, pageSize, sortModel, searchPosition, searchDistance, serviceFilter])
+  }, [
+    page,
+    pageSize,
+    sortModel,
+    searchPosition,
+    mobileSearchDistance,
+    serviceFilter
+  ])
 
   useEffect(() => fetchLibraries(), [fetchLibraries])
 
@@ -87,6 +107,17 @@ function MobileLibraries () {
   const selectStop = stop => {
     dispatchSearch({ type: 'SetCurrentStop', currentStopId: stop.id })
     dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
+  }
+
+  const mobilesHeader = () => {
+    switch (searchType) {
+      case 'postcode':
+        return `Mobile stops near ${searchPostcode}`
+      case 'service':
+        return `Mobile stops in ${currentService.name}`
+      default:
+        return 'Mobile stops'
+    }
   }
 
   const columns = [
@@ -123,7 +154,7 @@ function MobileLibraries () {
   return (
     <>
       <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-        Mobile library stops
+        {mobilesHeader()}
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>

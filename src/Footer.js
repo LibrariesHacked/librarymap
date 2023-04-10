@@ -28,7 +28,6 @@ function Footer () {
           </Typography>
           <Typography variant='h6'>
             <MaterialLink
-              variant='inherit'
               component={Link}
               to='/data'
               title='Maintaining the data used on this site and licensing'
@@ -38,7 +37,6 @@ function Footer () {
             </MaterialLink>
             <span> &#8226; </span>
             <MaterialLink
-              variant='inherit'
               component={Link}
               to='/accessibility'
               title='About the Accessibility of this site'
@@ -51,7 +49,6 @@ function Footer () {
             </MaterialLink>
             <span> &#8226; </span>
             <MaterialLink
-              variant='inherit'
               component={Link}
               to='/privacy'
               title='About your privacy on this site'

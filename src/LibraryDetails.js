@@ -222,12 +222,21 @@ function LibraryDetails () {
                 </TableContainer>
               </>
             ) : null}
-            <Alert severity='error'>
-              Library details incorrect? See{' '}
-              <Link to='/data' target='_blank'>
-                Data
-              </Link>{' '}
-              for info.
+            <Alert
+              variant='filled'
+              severity='warning'
+              action={
+                <Button
+                  href='/data'
+                  variant='contained'
+                  color='warning'
+                  disableElevation
+                >
+                  Data
+                </Button>
+              }
+            >
+              Library details incorrect? See the data page for info.
             </Alert>
           </DialogContent>
         </>
