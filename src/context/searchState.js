@@ -5,7 +5,7 @@ export const SearchStateContext = createContext()
 const initialSearchState = {
   searchPostcode: '',
   searchType: '',
-  librarySearchDistance: 15248,
+  librarySearchDistance: 12872,
   mobileSearchDistance: 3218,
   searchPosition: [],
   currentStopId: null,
