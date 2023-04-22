@@ -23,6 +23,7 @@ import { lighten } from '@mui/material'
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmailTwoTone'
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
+import DataIcon from '@mui/icons-material/DatasetTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import WebIcon from '@mui/icons-material/WebTwoTone'
 
@@ -231,8 +232,9 @@ function LibraryDetails () {
                   variant='contained'
                   color='warning'
                   disableElevation
+                  startIcon={<DataIcon />}
                 >
-                  Data
+                  Edit data
                 </Button>
               }
             >

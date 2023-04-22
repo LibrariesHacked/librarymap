@@ -23,6 +23,7 @@ import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
+import DataIcon from '@mui/icons-material/DatasetTwoTone'
 import EventIcon from '@mui/icons-material/CalendarTodayTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import PrintIcon from '@mui/icons-material/PrintTwoTone'
@@ -150,8 +151,9 @@ function StopDetails () {
                   variant='contained'
                   color='warning'
                   disableElevation
+                  startIcon={<DataIcon />}
                 >
-                  Data
+                  Edit data
                 </Button>
               }
             >

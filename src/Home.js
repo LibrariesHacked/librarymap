@@ -5,6 +5,8 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import DataIcon from '@mui/icons-material/DatasetTwoTone'
+
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
 import Search from './Search'
@@ -38,8 +40,9 @@ function Home () {
             variant='contained'
             color='warning'
             disableElevation
+            startIcon={<DataIcon />}
           >
-            Data
+            Edit data
           </Button>
         }
       >
