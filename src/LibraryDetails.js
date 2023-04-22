@@ -23,7 +23,7 @@ import { lighten } from '@mui/material'
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmailTwoTone'
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
-import DataIcon from '@mui/icons-material/DatasetTwoTone'
+import DataIcon from '@mui/icons-material/InfoOutlined'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import WebIcon from '@mui/icons-material/WebTwoTone'
 
@@ -238,7 +238,8 @@ function LibraryDetails () {
                 </Button>
               }
             >
-              Library details incorrect? See the data page for info.
+              Are these library details incorrect? See the data page for more
+              info.
             </Alert>
           </DialogContent>
         </>

@@ -23,9 +23,7 @@ function Footer () {
         }}
       >
         <Grid item xs={12} sm={12} md={5} lg={4} xl={4}>
-          <Typography variant='body1'>
-            A Library Lab project
-          </Typography>
+          <Typography variant='body1'>A Library Lab project</Typography>
           <Typography variant='h6'>
             <MaterialLink
               component={Link}
@@ -71,7 +69,8 @@ function Footer () {
         </Grid>
         <Grid item xs={12} sm={12} md={3} lg={4} xl={4}>
           <Typography variant='body1'>
-            In memory of Paul Rowe <FavoriteIcon color='primary' />
+            In memory of Paul Rowe{' '}
+            <FavoriteIcon color='secondary' sx={{ verticalAlign: 'middle' }} />
           </Typography>
           <Typography variant='h6'>
             <MaterialLink

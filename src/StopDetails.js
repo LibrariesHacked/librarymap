@@ -23,7 +23,7 @@ import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
 import CancelIcon from '@mui/icons-material/CancelTwoTone'
-import DataIcon from '@mui/icons-material/DatasetTwoTone'
+import DataIcon from '@mui/icons-material/InfoOutlined'
 import EventIcon from '@mui/icons-material/CalendarTodayTwoTone'
 import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
 import PrintIcon from '@mui/icons-material/PrintTwoTone'
@@ -157,7 +157,8 @@ function StopDetails () {
                 </Button>
               }
             >
-              Mobile details incorrect? See the data page for info.
+              Are these mobile details incorrect? See the data page for more
+              info.
             </Alert>
           </DialogContent>
         </>

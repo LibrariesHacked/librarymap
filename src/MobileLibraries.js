@@ -72,9 +72,13 @@ function MobileLibraries () {
     if (
       prevPosition &&
       prevPosition.length === 0 &&
-      searchPosition.length > 0
+      searchPosition.length > 0 &&
+      sortModel[0].field !== 'distance'
     ) {
+      // In this case we need to switch to sorting by distance
+      // We can cancel the previous update as it will be out of date
       setSortModel([{ field: 'distance', sort: 'asc' }])
+      return
     }
     getMobileStopsFromQuery({
       page: page,
