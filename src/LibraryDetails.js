@@ -21,10 +21,11 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmailTwoTone'
-import CancelIcon from '@mui/icons-material/CancelTwoTone'
-import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
-import WebIcon from '@mui/icons-material/WebTwoTone'
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmailRounded'
+import CancelIcon from '@mui/icons-material/CancelRounded'
+import DataIcon from '@mui/icons-material/EditLocationAltRounded'
+import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
+import WebIcon from '@mui/icons-material/WebRounded'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -231,12 +232,13 @@ function LibraryDetails () {
                   variant='contained'
                   color='warning'
                   disableElevation
+                  startIcon={<DataIcon />}
                 >
-                  Data
+                  Edit data
                 </Button>
               }
             >
-              Library details incorrect? See the data page for info.
+              Are these library details incorrect? See the data page.
             </Alert>
           </DialogContent>
         </>

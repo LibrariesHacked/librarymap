@@ -9,8 +9,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 
-import GridOnIcon from '@mui/icons-material/GridOnTwoTone'
-import MapIcon from '@mui/icons-material/MapTwoTone'
+import ListIcon from '@mui/icons-material/ViewListRounded'
+import MapIcon from '@mui/icons-material/MapRounded'
 
 import { Container } from '@mui/system'
 
@@ -36,11 +36,8 @@ function Header () {
           <Toolbar>
             {mapPage === null && (
               <Chip
-                label='Prototype'
-                color='secondary'
-                variant='outlined'
-                size='small'
-                sx={{ marginBottom: theme => theme.spacing(2) }}
+                label='In development'
+                color='primary'
               />
             )}
             {mapPage !== null && <PostcodeSearch />}
@@ -52,7 +49,7 @@ function Header () {
                 disableRipple={homePage !== null}
                 disableFocusRipple={homePage !== null}
                 color='primary'
-                startIcon={<GridOnIcon />}
+                startIcon={<ListIcon />}
               >
                 List
               </Button>

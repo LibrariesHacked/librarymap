@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 import ListSubheader from '@mui/material/ListSubheader'
 
-import MoreIcon from '@mui/icons-material/ReadMoreTwoTone'
+import MoreIcon from '@mui/icons-material/ReadMoreRounded'
 
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
@@ -72,9 +72,18 @@ function MobileLibraries () {
     if (
       prevPosition &&
       prevPosition.length === 0 &&
-      searchPosition.length > 0
+      searchPosition.length > 0 &&
+      sortModel[0].field !== 'distance'
     ) {
+      // In this case we need to switch to sorting by distance
+      // We can cancel the previous update as it will be out of date
       setSortModel([{ field: 'distance', sort: 'asc' }])
+      return
+    }
+    if (sortModel[0].field === 'distance' && searchPosition.length === 0) {
+      // In this case we need to switch to sorting by name
+      setSortModel(initialSortModel)
+      return
     }
     getMobileStopsFromQuery({
       page: page,
