@@ -18,11 +18,11 @@ import Map, {
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'
 
-import DirectionsBike from '@mui/icons-material/DirectionsBikeTwoTone'
-import DirectionsWalk from '@mui/icons-material/DirectionsWalkTwoTone'
-import DirectionsCar from '@mui/icons-material/DirectionsCarTwoTone'
-import LayersIcon from '@mui/icons-material/LayersTwoTone'
-import MoreVertIcon from '@mui/icons-material/MoreVertTwoTone'
+import DirectionsBike from '@mui/icons-material/DirectionsBikeRounded'
+import DirectionsWalk from '@mui/icons-material/DirectionsWalkRounded'
+import DirectionsCar from '@mui/icons-material/DirectionsCarRounded'
+import LayersIcon from '@mui/icons-material/LayersRounded'
+import MoreVertIcon from '@mui/icons-material/MoreVertRounded'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'

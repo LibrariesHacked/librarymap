@@ -22,12 +22,12 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
-import CancelIcon from '@mui/icons-material/CancelTwoTone'
-import DataIcon from '@mui/icons-material/InfoOutlined'
-import EventIcon from '@mui/icons-material/CalendarTodayTwoTone'
-import LocationOnIcon from '@mui/icons-material/LocationOnTwoTone'
-import PrintIcon from '@mui/icons-material/PrintTwoTone'
-import WebIcon from '@mui/icons-material/WebTwoTone'
+import CancelIcon from '@mui/icons-material/CancelRounded'
+import DataIcon from '@mui/icons-material/EditLocationAltRounded'
+import EventIcon from '@mui/icons-material/CalendarTodayRounded'
+import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
+import PrintIcon from '@mui/icons-material/PrintRounded'
+import WebIcon from '@mui/icons-material/WebRounded'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -157,8 +157,7 @@ function StopDetails () {
                 </Button>
               }
             >
-              Are these mobile details incorrect? See the data page for more
-              info.
+              Are these mobile details incorrect? See the data page.
             </Alert>
           </DialogContent>
         </>

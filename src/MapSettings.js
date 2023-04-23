@@ -12,7 +12,7 @@ import Switch from '@mui/material/Switch'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 
-import CancelIcon from '@mui/icons-material/CancelTwoTone'
+import CancelIcon from '@mui/icons-material/CancelRounded'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'

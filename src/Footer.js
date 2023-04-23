@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid'
 import MaterialLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
-import FavoriteIcon from '@mui/icons-material/FavoriteTwoTone'
+import FavoriteIcon from '@mui/icons-material/FavoriteRounded'
 
 import { Carbonbadge } from 'react-carbonbadge'
 

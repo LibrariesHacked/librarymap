@@ -6,7 +6,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
 
-import BusinessIcon from '@mui/icons-material/BusinessTwoTone'
+import BusinessIcon from '@mui/icons-material/BusinessRounded'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
