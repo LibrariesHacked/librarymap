@@ -50,16 +50,13 @@ export async function getQueryStops (
     query.pageSize
   }`
 
-  if (query.orderBy && query.orderBy.field)
-    url = `${url}&sort=${query.orderBy.field}&direction=${query.orderBy.direction}`
+  if (query.orderBy && query.orderBy.field) { url = `${url}&sort=${query.orderBy.field}&direction=${query.orderBy.direction}` }
 
-  if (searchPosition && searchPosition.length > 1)
-    url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}`
+  if (searchPosition && searchPosition.length > 1) { url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}` }
 
   if (distance && distance !== '') url = `${url}&distance=${distance}`
 
-  if (serviceFilter.length > 0)
-    url = `${url}&service_codes=${serviceFilter.join('|')}`
+  if (serviceFilter.length > 0) { url = `${url}&service_codes=${serviceFilter.join('|')}` }
 
   const response = await axios.get(url)
   if (response && response.data && response.data.length > 0) {

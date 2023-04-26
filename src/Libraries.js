@@ -157,6 +157,7 @@ function Libraries () {
       type: 'actions',
       getActions: params => [
         <GridActionsCellItem
+          key={`act_${params.id}`}
           icon={<MoreVertIcon />}
           onClick={() => selectLibrary(params)}
           label='Show more library information'
@@ -215,8 +216,7 @@ function Libraries () {
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
-              setFilterModel(newFilterModel)
-            }
+              setFilterModel(newFilterModel)}
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {
