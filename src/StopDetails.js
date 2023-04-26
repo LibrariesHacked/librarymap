@@ -91,79 +91,81 @@ function StopDetails () {
       }}
       PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
     >
-      {Object.keys(stop).length > 0 && stop.routeDays ? (
-        <>
-          <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
-          <DialogContent>
-            <Typography component='h4' variant='subtitle1'>
-              {stop.address}
-            </Typography>
-            <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-              Schedule
-            </ListSubheader>
-            <TableContainer
-              component={Paper}
-              elevation={0}
-              sx={{
-                border: 2,
-                borderColor: theme =>
-                  lighten(theme.palette.secondary.main, 0.5),
-                marginBottom: theme => theme.spacing(1)
-              }}
-            >
-              <Table
-                size='small'
+      {Object.keys(stop).length > 0 && stop.routeDays
+        ? (
+          <>
+            <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
+            <DialogContent>
+              <Typography component='h4' variant='subtitle1'>
+                {stop.address}
+              </Typography>
+              <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+                Schedule
+              </ListSubheader>
+              <TableContainer
+                component={Paper}
+                elevation={0}
                 sx={{
-                  [`& .${tableCellClasses.root}`]: { borderBottom: 'none' }
+                  border: 2,
+                  borderColor: theme =>
+                    lighten(theme.palette.secondary.main, 0.5),
+                  marginBottom: theme => theme.spacing(1)
                 }}
               >
-                <TableHead
+                <Table
+                  size='small'
                   sx={{
-                    backgroundColor: theme =>
-                      lighten(theme.palette.secondary.main, 0.8)
+                    [`& .${tableCellClasses.root}`]: { borderBottom: 'none' }
                   }}
                 >
-                  <TableRow>
-                    <TableCell>Frequency</TableCell>
-                    <TableCell align='right'>Next visit</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {stop.routeFrequencyDescriptions.map((rs, idx) => (
-                    <TableRow key={'tc_rs_' + idx}>
-                      <TableCell component='th' scope='row'>
-                        {`${stop.routeDays[0]}, ${rs}`}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
-                      </TableCell>
+                  <TableHead
+                    sx={{
+                      backgroundColor: theme =>
+                        lighten(theme.palette.secondary.main, 0.8)
+                    }}
+                  >
+                    <TableRow>
+                      <TableCell>Frequency</TableCell>
+                      <TableCell align='right'>Next visit</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Alert
-              variant='filled'
-              severity='warning'
-              action={
-                <Button
-                  href='/data'
-                  variant='contained'
-                  color='warning'
-                  disableElevation
-                  startIcon={<DataIcon />}
-                >
-                  Edit data
-                </Button>
+                  </TableHead>
+                  <TableBody>
+                    {stop.routeFrequencyDescriptions.map((rs, idx) => (
+                      <TableRow key={'tc_rs_' + idx}>
+                        <TableCell component='th' scope='row'>
+                          {`${stop.routeDays[0]}, ${rs}`}
+                        </TableCell>
+                        <TableCell align='right'>
+                          {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <Alert
+                variant='filled'
+                severity='warning'
+                action={
+                  <Button
+                    href='/data'
+                    variant='contained'
+                    color='warning'
+                    disableElevation
+                    startIcon={<DataIcon />}
+                  >
+                    Edit data
+                  </Button>
               }
-            >
-              Are these mobile details incorrect? See the data page.
-            </Alert>
-          </DialogContent>
-        </>
-      ) : (
-        <CircularProgress color='primary' size={30} />
-      )}
+              >
+                Are these mobile details incorrect? See the data page.
+              </Alert>
+            </DialogContent>
+          </>
+          )
+        : (
+          <CircularProgress color='primary' size={30} />
+          )}
       <DialogActions>
         {config.displayWebLinks && (
           <Button

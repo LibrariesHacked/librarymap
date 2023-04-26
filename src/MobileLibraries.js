@@ -151,6 +151,7 @@ function MobileLibraries () {
       type: 'actions',
       getActions: params => [
         <GridActionsCellItem
+          key={`act_${params.id}`}
           icon={<MoreIcon />}
           onClick={() => selectStop(params)}
           label='Show more stop information'
@@ -208,8 +209,7 @@ function MobileLibraries () {
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
-              setFilterModel(newFilterModel)
-            }
+              setFilterModel(newFilterModel)}
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {
