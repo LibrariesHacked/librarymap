@@ -163,7 +163,7 @@ function MobileLibraries () {
 
   return (
     <>
-      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+      <ListSubheader disableSticky sx={{ textAlign: 'center', marginTop: theme => theme.spacing(3) }}>
         {mobilesHeader()}
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>

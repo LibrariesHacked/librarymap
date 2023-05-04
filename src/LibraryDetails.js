@@ -237,7 +237,6 @@ function LibraryDetails () {
                   )
                 : null}
               <Alert
-                variant='filled'
                 severity='warning'
                 action={
                   <Button
@@ -246,12 +245,13 @@ function LibraryDetails () {
                     color='warning'
                     disableElevation
                     startIcon={<DataIcon />}
+                    size='small'
                   >
-                    Edit data
+                    Edit
                   </Button>
               }
               >
-                Are these library details incorrect? See the data page.
+                Are these details incorrect? See the data page.
               </Alert>
             </DialogContent>
           </>

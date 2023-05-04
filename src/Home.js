@@ -31,7 +31,6 @@ function Home () {
       <Libraries />
       <MobileLibraries />
       <Alert
-        variant='filled'
         severity='warning'
         sx={{ marginTop: theme => theme.spacing() }}
         action={
@@ -41,8 +40,9 @@ function Home () {
             color='warning'
             disableElevation
             startIcon={<DataIcon />}
+            size='small'
           >
-            Edit data
+            Edit
           </Button>
         }
       >

@@ -24,7 +24,7 @@ import { lighten } from '@mui/material'
 
 import CancelIcon from '@mui/icons-material/CancelRounded'
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
-import EventIcon from '@mui/icons-material/CalendarTodayRounded'
+import SaveIcon from '@mui/icons-material/SaveAltRounded'
 import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 import PrintIcon from '@mui/icons-material/PrintRounded'
 import WebIcon from '@mui/icons-material/WebRounded'
@@ -144,21 +144,21 @@ function StopDetails () {
                 </Table>
               </TableContainer>
               <Alert
-                variant='filled'
                 severity='warning'
                 action={
                   <Button
                     href='/data'
-                    variant='contained'
                     color='warning'
+                    variant='contained'
                     disableElevation
-                    startIcon={<DataIcon />}
+                    startIcon={<DataIcon />} 
+                    size='small'
                   >
-                    Edit data
+                    Edit
                   </Button>
               }
               >
-                Are these mobile details incorrect? See the data page.
+                Are these details incorrect? See the data page.
               </Alert>
             </DialogContent>
           </>
@@ -179,7 +179,7 @@ function StopDetails () {
         <Button
           onClick={getStopCalendar}
           color='primary'
-          startIcon={<EventIcon />}
+          startIcon={<SaveIcon />}
         >
           Save
         </Button>

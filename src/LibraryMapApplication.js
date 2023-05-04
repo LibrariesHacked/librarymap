@@ -6,21 +6,20 @@ import grey from '@mui/material/colors/grey'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
-import Divider from '@mui/material/Divider'
-
-import StopDetails from './StopDetails'
-import LibraryDetails from './LibraryDetails'
 
 import Footer from './Footer'
 import Header from './Header'
 import Home from './Home'
+import LibraryDetails from './LibraryDetails'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
+import Service from './Service'
+import StopDetails from './StopDetails'
 
 import { MemoMarkdownPage } from './MarkdownPage'
 
-import Data from './pages/data.md'
 import Accessibility from './pages/accessibility.md'
+import Data from './pages/data.md'
 import Privacy from './pages/privacy.md'
 
 import * as serviceModel from './models/service'
@@ -74,35 +73,31 @@ function LibraryMapApplication () {
       <Container maxWidth='false' sx={{ backgroundColor: grey.A100 }}>
         <Container
           sx={{
-            paddingTop: '80px',
             paddingBottom: theme => theme.spacing(2)
           }}
         >
           <main>
             <Routes>
-              <Route path='/' exact element={<Home />} />
-              <Route path='/map' exact element={<LibraryMap />} />
+              <Route path='/' element={<Home />} />
+              <Route path='/map' element={<LibraryMap />} />
               <Route
                 path='/data'
-                exact
                 element={<MemoMarkdownPage page={Data} />}
               />
               <Route
                 path='/accessibility'
-                exact
                 element={<MemoMarkdownPage page={Accessibility} />}
               />
               <Route
                 path='/privacy'
-                exact
                 element={<MemoMarkdownPage page={Privacy} />}
               />
+              <Route path='/service/:service' element={<Service />} />
               <Route element={Page404} />
             </Routes>
           </main>
         </Container>
       </Container>
-      <Divider />
       <Container sx={{ marginTop: theme => theme.spacing(2) }}>
         <Footer />
       </Container>
