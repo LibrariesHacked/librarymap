@@ -36,7 +36,7 @@ function Home () {
         action={
           <Button
             href='/data'
-            variant='contained'
+            variant='text'
             color='warning'
             disableElevation
             startIcon={<DataIcon />}

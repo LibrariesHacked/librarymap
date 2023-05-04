@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Link, useMatch, useLocation } from 'react-router-dom'
 
+import { alpha } from '@mui/material'
 import grey from '@mui/material/colors/grey'
 
 import AppBar from '@mui/material/AppBar'
@@ -15,8 +16,6 @@ import MapIcon from '@mui/icons-material/MapRounded'
 
 import { Container } from '@mui/system'
 
-import PostcodeSearch from './PostcodeSearch'
-
 function Header () {
   const location = useLocation()
   const mapPage = useMatch('/map')
@@ -27,20 +26,34 @@ function Header () {
       <AppBar
         sx={{
           zIndex: theme => theme.zIndex.drawer + 1,
-          backgroundColor: grey.A100
+          backgroundColor: mapPage ? alpha(grey.A100, 0.8) : grey.A100
         }}
         elevation={0}
         position='relative'
+        color='transparent'
       >
         <Container>
           <Toolbar>
-            {mapPage !== null && <PostcodeSearch />}
             {!servicePage && (
               <>
                 <Box sx={{ flexGrow: 1 }} />
                 <Tabs value={location.pathname}>
-                  <Tab icon={<ListIcon />} iconPosition='start' label='List' value='/' component={Link} to='/' />
-                  <Tab icon={<MapIcon />} iconPosition='start' label='Map' value='/map' component={Link} to='/map' />
+                  <Tab
+                    icon={<ListIcon />}
+                    iconPosition='start'
+                    label={'List'}
+                    value='/'
+                    component={Link}
+                    to='/'
+                  />
+                  <Tab
+                    icon={<MapIcon />}
+                    iconPosition='start'
+                    label={'Map'}
+                    value='/map'
+                    component={Link}
+                    to='/map'
+                  />
                 </Tabs>
               </>
             )}

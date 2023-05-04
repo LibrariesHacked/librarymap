@@ -91,81 +91,79 @@ function StopDetails () {
       }}
       PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
     >
-      {Object.keys(stop).length > 0 && stop.routeDays
-        ? (
-          <>
-            <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
-            <DialogContent>
-              <Typography component='h4' variant='subtitle1'>
-                {stop.address}
-              </Typography>
-              <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-                Schedule
-              </ListSubheader>
-              <TableContainer
-                component={Paper}
-                elevation={0}
+      {Object.keys(stop).length > 0 && stop.routeDays ? (
+        <>
+          <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
+          <DialogContent>
+            <Typography component='h4' variant='subtitle1'>
+              {stop.address}
+            </Typography>
+            <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+              Schedule
+            </ListSubheader>
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{
+                border: 2,
+                borderColor: theme =>
+                  lighten(theme.palette.secondary.main, 0.5),
+                marginBottom: theme => theme.spacing(1)
+              }}
+            >
+              <Table
+                size='small'
                 sx={{
-                  border: 2,
-                  borderColor: theme =>
-                    lighten(theme.palette.secondary.main, 0.5),
-                  marginBottom: theme => theme.spacing(1)
+                  [`& .${tableCellClasses.root}`]: { borderBottom: 'none' }
                 }}
               >
-                <Table
-                  size='small'
+                <TableHead
                   sx={{
-                    [`& .${tableCellClasses.root}`]: { borderBottom: 'none' }
+                    backgroundColor: theme =>
+                      lighten(theme.palette.secondary.main, 0.8)
                   }}
                 >
-                  <TableHead
-                    sx={{
-                      backgroundColor: theme =>
-                        lighten(theme.palette.secondary.main, 0.8)
-                    }}
-                  >
-                    <TableRow>
-                      <TableCell>Frequency</TableCell>
-                      <TableCell align='right'>Next visit</TableCell>
+                  <TableRow>
+                    <TableCell>Frequency</TableCell>
+                    <TableCell align='right'>Next visit</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {stop.routeFrequencyDescriptions.map((rs, idx) => (
+                    <TableRow key={'tc_rs_' + idx}>
+                      <TableCell component='th' scope='row'>
+                        {`${stop.routeDays[0]}, ${rs}`}
+                      </TableCell>
+                      <TableCell align='right'>
+                        {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {stop.routeFrequencyDescriptions.map((rs, idx) => (
-                      <TableRow key={'tc_rs_' + idx}>
-                        <TableCell component='th' scope='row'>
-                          {`${stop.routeDays[0]}, ${rs}`}
-                        </TableCell>
-                        <TableCell align='right'>
-                          {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <Alert
-                severity='warning'
-                action={
-                  <Button
-                    href='/data'
-                    color='warning'
-                    variant='contained'
-                    disableElevation
-                    startIcon={<DataIcon />} 
-                    size='small'
-                  >
-                    Edit
-                  </Button>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Alert
+              severity='warning'
+              action={
+                <Button
+                  href='/data'
+                  color='warning'
+                  variant='text'
+                  disableElevation
+                  startIcon={<DataIcon />}
+                  size='small'
+                >
+                  Edit
+                </Button>
               }
-              >
-                Are these details incorrect? See the data page.
-              </Alert>
-            </DialogContent>
-          </>
-          )
-        : (
-          <CircularProgress color='primary' size={30} />
-          )}
+            >
+              Are these details incorrect? See the data page.
+            </Alert>
+          </DialogContent>
+        </>
+      ) : (
+        <CircularProgress color='primary' size={30} />
+      )}
       <DialogActions>
         {config.displayWebLinks && (
           <Button
