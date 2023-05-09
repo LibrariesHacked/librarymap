@@ -37,26 +37,21 @@ function LibraryMapApplication () {
     // Initial data setup
     async function getServices () {
       const services = await serviceModel.getServices()
+      const servicesExtended = await serviceModel.getServicesExtended()
       const serviceLookup = {}
-      const serviceSystemNameLookup = {}
       services.forEach(service => {
         serviceLookup[service.code] = service
-        serviceSystemNameLookup[service.systemName] = service
+        servicesExtended.forEach(serviceExtended => {
+          if (serviceExtended.code === service.code) {
+            service.extended = serviceExtended
+          }
+        })
       })
       dispatchApplication({
         type: 'AddServices',
         services: services,
         serviceLookup: serviceLookup
       })
-      // Process any service query parameters
-      const currentUrlParams = new URLSearchParams(window.location.search)
-      const serviceName = currentUrlParams.get('service')
-      if (serviceName && serviceSystemNameLookup[serviceName]) {
-        const service = serviceSystemNameLookup[serviceName]
-        const coords = JSON.parse(service.bbox).coordinates[0]
-        dispatchSearch({ type: 'FilterByService', service: service })
-        dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
-      }
     }
     getServices()
   }, []) //eslint-disable-line
@@ -80,10 +75,7 @@ function LibraryMapApplication () {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/map' element={<LibraryMap />} />
-              <Route
-                path='/data'
-                element={<MemoMarkdownPage page={Data} />}
-              />
+              <Route path='/data' element={<MemoMarkdownPage page={Data} />} />
               <Route
                 path='/accessibility'
                 element={<MemoMarkdownPage page={Accessibility} />}
@@ -92,7 +84,7 @@ function LibraryMapApplication () {
                 path='/privacy'
                 element={<MemoMarkdownPage page={Privacy} />}
               />
-              <Route path='/service/:service' element={<Service />} />
+              <Route path='/service/:service_system_name' element={<Service />} />
               <Route element={Page404} />
             </Routes>
           </main>
