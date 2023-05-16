@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 import ListSubheader from '@mui/material/ListSubheader'
 
-import MoreVertIcon from '@mui/icons-material/ReadMoreRounded'
+import InfoIcon from '@mui/icons-material/InfoOutlined'
 
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
@@ -157,8 +157,8 @@ function Libraries () {
       type: 'actions',
       getActions: params => [
         <GridActionsCellItem
-          key={`act_${params.id}`}
-          icon={<MoreVertIcon />}
+          key={`act_info_${params.id}`}
+          icon={<InfoIcon />}
           onClick={() => selectLibrary(params)}
           label='Show more library information'
         />
@@ -216,7 +216,8 @@ function Libraries () {
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
-              setFilterModel(newFilterModel)}
+              setFilterModel(newFilterModel)
+            }
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {

@@ -45,8 +45,10 @@ const libraryAuthorityTiles = config.libraryAuthorityTiles
 const stopTiles = config.stopTiles
 const tripTiles = config.tripTiles
 
-function LibraryMap () {
+function LibraryMap (props) {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+
+  const { containerStyle } = props
   const [
     {
       searchType,
@@ -240,13 +242,7 @@ function LibraryMap () {
       <Map
         ref={setMap}
         mapLib={maplibregl}
-        style={{
-          width: '100vw',
-          height: '100vh',
-          position: 'absolute',
-          top: 0,
-          left: 0
-        }}
+        style={containerStyle}
         mapStyle='https://zoomstack.librarydata.uk/light.json'
         longitude={mapPosition[0]}
         latitude={mapPosition[1]}

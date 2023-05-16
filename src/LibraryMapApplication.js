@@ -74,7 +74,20 @@ function LibraryMapApplication () {
           <main>
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/map' element={<LibraryMap />} />
+              <Route
+                path='/map'
+                element={
+                  <LibraryMap
+                    containerStyle={{
+                      width: '100vw',
+                      height: '100vh',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0
+                    }}
+                  />
+                }
+              />
               <Route path='/data' element={<MemoMarkdownPage page={Data} />} />
               <Route
                 path='/accessibility'
@@ -84,7 +97,10 @@ function LibraryMapApplication () {
                 path='/privacy'
                 element={<MemoMarkdownPage page={Privacy} />}
               />
-              <Route path='/service/:service_system_name' element={<Service />} />
+              <Route
+                path='/service/:service_system_name'
+                element={<Service />}
+              />
               <Route element={Page404} />
             </Routes>
           </main>

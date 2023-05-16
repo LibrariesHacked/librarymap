@@ -5,7 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 import ListSubheader from '@mui/material/ListSubheader'
 
-import MoreIcon from '@mui/icons-material/ReadMoreRounded'
+import InfoIcon from '@mui/icons-material/InfoOutlined'
 
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
@@ -152,7 +152,7 @@ function MobileLibraries () {
       getActions: params => [
         <GridActionsCellItem
           key={`act_${params.id}`}
-          icon={<MoreIcon />}
+          icon={<InfoIcon />}
           onClick={() => selectStop(params)}
           label='Show more stop information'
         />
