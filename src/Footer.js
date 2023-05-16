@@ -23,34 +23,27 @@ function Footer () {
         }}
       >
         <Grid item xs={12} sm={12} md={5} lg={4} xl={4}>
-          <Typography variant='body1'>A Library Lab project</Typography>
           <Typography variant='h6'>
-            <MaterialLink
-              component={Link}
-              to='/data'
-              title='Maintaining the data used on this site and licensing'
-              sx={{ marginRight: theme => theme.spacing() }}
-            >
-              Data
-            </MaterialLink>
-            <span> &#8226; </span>
             <MaterialLink
               component={Link}
               to='/accessibility'
               title='About the Accessibility of this site'
-              sx={{
-                marginLeft: theme => theme.spacing(),
-                marginRight: theme => theme.spacing()
-              }}
             >
               Accessibility
             </MaterialLink>
-            <span> &#8226; </span>
+            <br />
+            <MaterialLink
+              component={Link}
+              to='/data'
+              title='Maintaining the data used on this site and licensing'
+            >
+              Data
+            </MaterialLink>
+            <br />
             <MaterialLink
               component={Link}
               to='/privacy'
               title='About your privacy on this site'
-              sx={{ marginLeft: theme => theme.spacing() }}
             >
               Privacy
             </MaterialLink>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import Box from '@mui/material/Box'
 import Fab from '@mui/material/Fab'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
@@ -30,6 +31,7 @@ import { useViewStateValue } from './context/viewState'
 
 import MeAvatar from './MeAvatar'
 import MapSettings from './MapSettings'
+import PostcodeSearch from './PostcodeSearch'
 
 import * as isochroneModel from './models/isochrone'
 import * as stopModel from './models/stop'
@@ -43,8 +45,10 @@ const libraryAuthorityTiles = config.libraryAuthorityTiles
 const stopTiles = config.stopTiles
 const tripTiles = config.tripTiles
 
-function LibraryMap () {
+function LibraryMap (props) {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+
+  const { containerStyle } = props
   const [
     {
       searchType,
@@ -232,16 +236,13 @@ function LibraryMap () {
 
   return (
     <>
+      <Box sx={{ position: 'absolute', marginTop: theme => theme.spacing(2) }}>
+        <PostcodeSearch />
+      </Box>
       <Map
         ref={setMap}
         mapLib={maplibregl}
-        style={{
-          width: '100vw',
-          height: '100vh',
-          position: 'absolute',
-          top: 0,
-          left: 0
-        }}
+        style={containerStyle}
         mapStyle='https://zoomstack.librarydata.uk/light.json'
         longitude={mapPosition[0]}
         latitude={mapPosition[1]}
@@ -251,20 +252,18 @@ function LibraryMap () {
         onClick={clickMap}
       >
         <AttributionControl customAttribution='Contains OS data © Crown copyright and database right 2023' />
-        {currentService && currentService.geojson
-          ? (
-            <Source type='geojson' data={JSON.parse(currentService.geojson)}>
-              <Layer
-                type='line'
-                paint={{
-                  'line-opacity': 0.4,
-                  'line-width': 2,
-                  'line-color': '#455a64'
-                }}
-              />
-            </Source>
-            )
-          : null}
+        {currentService && currentService.geojson ? (
+          <Source type='geojson' data={JSON.parse(currentService.geojson)}>
+            <Layer
+              type='line'
+              paint={{
+                'line-opacity': 0.4,
+                'line-width': 2,
+                'line-color': '#455a64'
+              }}
+            />
+          </Source>
+        ) : null}
         {Object.keys(isochrones).map(point => {
           return Object.keys(isochrones[point])
             .filter(transport => {
@@ -395,37 +394,33 @@ function LibraryMap () {
           />
         </Source>
         <Source type='vector' tiles={[libraryAuthorityTiles]}>
-          {mapSettings.authorityBoundary
-            ? (
-              <Layer
-                type='line'
-                source-layer='library_authority_boundaries'
-                minzoom={6}
-                layout={{
-                  'line-join': 'round',
-                  'line-cap': 'square'
-                }}
-                paint={{
-                  'line-color': '#a7a39b',
-                  'line-opacity': 1,
-                  'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4]
-                }}
-              />
-              )
-            : null}
-          {mapSettings.authorityBoundary
-            ? (
-              <Layer
-                type='fill'
-                source-layer='library_authority_boundaries'
-                minzoom={6}
-                paint={{
-                  'fill-color': '#ccc',
-                  'fill-opacity': 0.1
-                }}
-              />
-              )
-            : null}
+          {mapSettings.authorityBoundary ? (
+            <Layer
+              type='line'
+              source-layer='library_authority_boundaries'
+              minzoom={6}
+              layout={{
+                'line-join': 'round',
+                'line-cap': 'square'
+              }}
+              paint={{
+                'line-color': '#a7a39b',
+                'line-opacity': 1,
+                'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4]
+              }}
+            />
+          ) : null}
+          {mapSettings.authorityBoundary ? (
+            <Layer
+              type='fill'
+              source-layer='library_authority_boundaries'
+              minzoom={6}
+              paint={{
+                'fill-color': '#ccc',
+                'fill-opacity': 0.1
+              }}
+            />
+          ) : null}
         </Source>
         <Source type='vector' tiles={[tripTiles]}>
           <Layer
@@ -454,117 +449,111 @@ function LibraryMap () {
           />
         </Source>
         <Source type='vector' tiles={[stopTiles]}>
-          {mapSettings.mobileLibraryStops
-            ? (
-              <Layer
-                type='circle'
-                source-layer='stop'
-                minzoom={5}
-                layout={{}}
-                paint={{
-                  'circle-radius': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    5,
-                    2,
-                    18,
-                    8
-                  ],
-                  'circle-color': '#455a64',
-                  'circle-stroke-width': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    5,
-                    1,
-                    18,
-                    3
-                  ],
-                  'circle-stroke-color': '#ffffff',
-                  'circle-opacity': 0.5
-                }}
-              />
-              )
-            : null}
-          {mapSettings.mobileLibraryStops
-            ? (
-              <Layer
-                type='symbol'
-                source-layer='stop'
-                minzoom={13}
-                layout={{
-                  'text-ignore-placement': false,
-                  'text-field': ['concat', 'Mobile: ', ['get', 'name']],
-                  'text-font': ['Source Sans Pro Bold'],
-                  'text-line-height': 1,
-                  'text-size': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    13,
-                    12,
-                    18,
-                    18
-                  ],
-                  'text-offset': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    13,
-                    ['literal', [0, 1.5]],
-                    18,
-                    ['literal', [0, 2]]
-                  ]
-                }}
-                paint={{
-                  'text-halo-color': 'hsl(0, 0%, 100%)',
-                  'text-halo-width': 1,
-                  'text-halo-blur': 1,
-                  'text-color': '#6a6f73'
-                }}
-              />
-              )
-            : null}
-          {mapSettings.mobileLibraryStops
-            ? (
-              <Layer
-                type='symbol'
-                source-layer='stop'
-                minzoom={14}
-                layout={{
-                  'text-ignore-placement': false,
-                  'text-field': ['to-string', ['get', 'next_visiting']],
-                  'text-font': ['Source Sans Pro Bold'],
-                  'text-line-height': 1,
-                  'text-size': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    14,
-                    10,
-                    18,
-                    16
-                  ],
-                  'text-offset': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    13,
-                    ['literal', [0, -1.5]],
-                    18,
-                    ['literal', [0, -2]]
-                  ]
-                }}
-                paint={{
-                  'text-halo-color': 'hsl(0, 0%, 100%)',
-                  'text-halo-width': 1,
-                  'text-halo-blur': 1,
-                  'text-color': '#6a6f73'
-                }}
-              />
-              )
-            : null}
+          {mapSettings.mobileLibraryStops ? (
+            <Layer
+              type='circle'
+              source-layer='stop'
+              minzoom={5}
+              layout={{}}
+              paint={{
+                'circle-radius': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  5,
+                  2,
+                  18,
+                  8
+                ],
+                'circle-color': '#455a64',
+                'circle-stroke-width': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  5,
+                  1,
+                  18,
+                  3
+                ],
+                'circle-stroke-color': '#ffffff',
+                'circle-opacity': 0.5
+              }}
+            />
+          ) : null}
+          {mapSettings.mobileLibraryStops ? (
+            <Layer
+              type='symbol'
+              source-layer='stop'
+              minzoom={13}
+              layout={{
+                'text-ignore-placement': false,
+                'text-field': ['concat', 'Mobile: ', ['get', 'name']],
+                'text-font': ['Source Sans Pro Bold'],
+                'text-line-height': 1,
+                'text-size': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  13,
+                  12,
+                  18,
+                  18
+                ],
+                'text-offset': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  13,
+                  ['literal', [0, 1.5]],
+                  18,
+                  ['literal', [0, 2]]
+                ]
+              }}
+              paint={{
+                'text-halo-color': 'hsl(0, 0%, 100%)',
+                'text-halo-width': 1,
+                'text-halo-blur': 1,
+                'text-color': '#6a6f73'
+              }}
+            />
+          ) : null}
+          {mapSettings.mobileLibraryStops ? (
+            <Layer
+              type='symbol'
+              source-layer='stop'
+              minzoom={14}
+              layout={{
+                'text-ignore-placement': false,
+                'text-field': ['to-string', ['get', 'next_visiting']],
+                'text-font': ['Source Sans Pro Bold'],
+                'text-line-height': 1,
+                'text-size': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  14,
+                  10,
+                  18,
+                  16
+                ],
+                'text-offset': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  13,
+                  ['literal', [0, -1.5]],
+                  18,
+                  ['literal', [0, -2]]
+                ]
+              }}
+              paint={{
+                'text-halo-color': 'hsl(0, 0%, 100%)',
+                'text-halo-width': 1,
+                'text-halo-blur': 1,
+                'text-color': '#6a6f73'
+              }}
+            />
+          ) : null}
         </Source>
         <Source type='vector' tiles={[libraryTiles]}>
           {displayClosedLibraries ? (
@@ -835,13 +824,11 @@ function LibraryMap () {
             />
           ) : null}
         </Source>
-        {searchPosition && searchPosition.length > 1
-          ? (
-            <Marker longitude={searchPosition[0]} latitude={searchPosition[1]}>
-              <MeAvatar searchType={searchType} />
-            </Marker>
-            )
-          : null}
+        {searchPosition && searchPosition.length > 1 ? (
+          <Marker longitude={searchPosition[0]} latitude={searchPosition[1]}>
+            <MeAvatar searchType={searchType} />
+          </Marker>
+        ) : null}
         <NavigationControl position='bottom-left' />
       </Map>
       <Tooltip title='Map settings'>
@@ -858,7 +845,8 @@ function LibraryMap () {
             dispatchView({
               type: 'SetMapSettingsDialog',
               mapSettingsDialogOpen: true
-            })}
+            })
+          }
         >
           <LayersIcon />
         </Fab>

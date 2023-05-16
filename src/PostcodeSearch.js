@@ -148,7 +148,8 @@ function PostcodeSearch () {
           paddingLeft: 0,
           whitespace: 'nowrap',
           display: 'inline-flex',
-          color: 'white'
+          color: 'white',
+          zIndex: 1000
         }}
       >
         <InputBase

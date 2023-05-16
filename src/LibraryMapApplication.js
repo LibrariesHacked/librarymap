@@ -6,21 +6,20 @@ import grey from '@mui/material/colors/grey'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
-import Divider from '@mui/material/Divider'
-
-import StopDetails from './StopDetails'
-import LibraryDetails from './LibraryDetails'
 
 import Footer from './Footer'
 import Header from './Header'
 import Home from './Home'
+import LibraryDetails from './LibraryDetails'
 import LibraryMap from './LibraryMap'
 import Notification from './Notification'
+import Service from './Service'
+import StopDetails from './StopDetails'
 
 import { MemoMarkdownPage } from './MarkdownPage'
 
-import Data from './pages/data.md'
 import Accessibility from './pages/accessibility.md'
+import Data from './pages/data.md'
 import Privacy from './pages/privacy.md'
 
 import * as serviceModel from './models/service'
@@ -38,26 +37,21 @@ function LibraryMapApplication () {
     // Initial data setup
     async function getServices () {
       const services = await serviceModel.getServices()
+      const servicesExtended = await serviceModel.getServicesExtended()
       const serviceLookup = {}
-      const serviceSystemNameLookup = {}
       services.forEach(service => {
         serviceLookup[service.code] = service
-        serviceSystemNameLookup[service.systemName] = service
+        servicesExtended.forEach(serviceExtended => {
+          if (serviceExtended.code === service.code) {
+            service.extended = serviceExtended
+          }
+        })
       })
       dispatchApplication({
         type: 'AddServices',
         services: services,
         serviceLookup: serviceLookup
       })
-      // Process any service query parameters
-      const currentUrlParams = new URLSearchParams(window.location.search)
-      const serviceName = currentUrlParams.get('service')
-      if (serviceName && serviceSystemNameLookup[serviceName]) {
-        const service = serviceSystemNameLookup[serviceName]
-        const coords = JSON.parse(service.bbox).coordinates[0]
-        dispatchSearch({ type: 'FilterByService', service: service })
-        dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
-      }
     }
     getServices()
   }, []) //eslint-disable-line
@@ -74,35 +68,44 @@ function LibraryMapApplication () {
       <Container maxWidth='false' sx={{ backgroundColor: grey.A100 }}>
         <Container
           sx={{
-            paddingTop: '80px',
             paddingBottom: theme => theme.spacing(2)
           }}
         >
           <main>
             <Routes>
-              <Route path='/' exact element={<Home />} />
-              <Route path='/map' exact element={<LibraryMap />} />
+              <Route path='/' element={<Home />} />
               <Route
-                path='/data'
-                exact
-                element={<MemoMarkdownPage page={Data} />}
+                path='/map'
+                element={
+                  <LibraryMap
+                    containerStyle={{
+                      width: '100vw',
+                      height: '100vh',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0
+                    }}
+                  />
+                }
               />
+              <Route path='/data' element={<MemoMarkdownPage page={Data} />} />
               <Route
                 path='/accessibility'
-                exact
                 element={<MemoMarkdownPage page={Accessibility} />}
               />
               <Route
                 path='/privacy'
-                exact
                 element={<MemoMarkdownPage page={Privacy} />}
+              />
+              <Route
+                path='/service/:service_system_name'
+                element={<Service />}
               />
               <Route element={Page404} />
             </Routes>
           </main>
         </Container>
       </Container>
-      <Divider />
       <Container sx={{ marginTop: theme => theme.spacing(2) }}>
         <Footer />
       </Container>

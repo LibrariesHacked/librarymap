@@ -31,18 +31,18 @@ function Home () {
       <Libraries />
       <MobileLibraries />
       <Alert
-        variant='filled'
         severity='warning'
         sx={{ marginTop: theme => theme.spacing() }}
         action={
           <Button
             href='/data'
-            variant='contained'
+            variant='text'
             color='warning'
             disableElevation
             startIcon={<DataIcon />}
+            size='small'
           >
-            Edit data
+            Edit
           </Button>
         }
       >
