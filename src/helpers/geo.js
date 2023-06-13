@@ -19,26 +19,32 @@ export const getCurrentPosition = async () => {
   return [position.coords.longitude, position.coords.latitude]
 }
 
-export const getCurrentPostcode = async (lon, lat) => {
-  const uri = `https://api.postcodes.io/postcodes?lon=${lon}&lat=${lat}`
+export const getCurrentPostcode = async (location) => {
   try {
-    const res = await axios.get(uri)
-    if (res.status === 200) {
-      const postcodes = res.data.result
-      if (postcodes.length > 0) {
-        return postcodes[0].postcode
+    const response = await axios.get(
+      `${config.postcodeApi}?lng=${location[0]}&lat=${location[1]}`
+    )
+    if (response.status === 200) {
+      return {
+        location: [response.data.longitude, response.data.latitude],
+        library_service_name: response.data.library_service_name,
+        library_service: response.data.library_service,
+        postcode: response.data.postcode
       }
     }
   } catch (e) {}
 }
 
 export const getPostcode = async postcode => {
-  const response = await axios.get(config.postcodeApi + postcode)
-  return {
-    location: [response.data.longitude, response.data.latitude],
-    library_service_name: response.data.library_service_name,
-    library_service: response.data.library_service
-  }
+  try {
+    const response = await axios.get(`${config.postcodeApi}/${postcode}`)
+    return {
+      location: [response.data.longitude, response.data.latitude],
+      library_service_name: response.data.library_service_name,
+      library_service: response.data.library_service,
+      postcode: response.data.postcode
+    }
+  } catch (e) {}
 }
 
 export const getServiceDataFromPostcode = async (postcode, services) => {

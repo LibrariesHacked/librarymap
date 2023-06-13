@@ -560,7 +560,7 @@ function LibraryMap (props) {
             <Layer // Closed library names
               type='symbol'
               source-layer='libraries'
-              minzoom={12}
+              minzoom={11}
               filter={['has', 'Year closed']}
               layout={{
                 'text-ignore-placement': false,
@@ -765,7 +765,7 @@ function LibraryMap (props) {
               type='circle'
               source-layer='libraries'
               minzoom={5}
-              maxzoom={16}
+              maxzoom={18}
               filter={['!', ['has', 'Year closed']]}
               paint={{
                 'circle-radius': [
