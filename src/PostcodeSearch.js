@@ -149,16 +149,16 @@ function PostcodeSearch () {
       <Box
         sx={{
           position: 'relative',
-          borderRadius: 1,
-          backgroundColor: theme => alpha(theme.palette.primary.main, 1),
+          backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
           '&:hover': {
-            backgroundColor: theme => alpha(theme.palette.primary.main, 0.9)
+            backgroundColor: theme => alpha(theme.palette.primary.main, 0.1)
           },
           marginLeft: 0,
           paddingLeft: 0,
           whitespace: 'nowrap',
           display: 'inline-flex',
-          color: 'white',
+          color: theme => theme.palette.primary.main,
+          borderBottom: theme => `2px solid ${theme.palette.primary.main}`,
           zIndex: 1000
         }}
       >
@@ -173,7 +173,8 @@ function PostcodeSearch () {
           sx={{
             paddingLeft: theme => theme.spacing(1),
             maxWidth: 110,
-            color: 'white'
+            color: theme => theme.palette.secondary.main,
+            fontWeight: 500
           }}
         />
         {!loadingPostcode ? (
