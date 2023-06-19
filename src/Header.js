@@ -44,7 +44,7 @@ function Header () {
                   <Tab
                     icon={<ListIcon />}
                     iconPosition='start'
-                    label={'List'}
+                    label='List'
                     value='/'
                     component={Link}
                     to='/'
@@ -52,7 +52,7 @@ function Header () {
                   <Tab
                     icon={<MapIcon />}
                     iconPosition='start'
-                    label={'Map'}
+                    label='Map'
                     value='/map'
                     component={Link}
                     to='/map'

@@ -4,6 +4,8 @@ import ReactMarkdown from 'markdown-to-jsx'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
+import SiteBreadcrumbs from './SiteBreadcrumbs'
+
 const options = {
   overrides: {
     h1: {
@@ -60,9 +62,12 @@ export function MarkdownPage (props) {
   }, [page])
 
   return (
-    <ReactMarkdown options={options} {...props}>
-      {pageText}
-    </ReactMarkdown>
+    <>
+      <SiteBreadcrumbs currentPageName={props.pageName} currentPageIcon={props.pageIcon} />
+      <ReactMarkdown options={options} {...props}>
+        {pageText}
+      </ReactMarkdown>
+    </>
   )
 }
 

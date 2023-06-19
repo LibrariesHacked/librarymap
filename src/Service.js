@@ -16,18 +16,18 @@ function Service () {
   const [{ services }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
   const [{ currentService }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
 
-  let { service_system_name } = useParams()
+  const { serviceSystemName } = useParams()
 
   useEffect(() => {
     services.forEach(service => {
-      if (service.systemName === service_system_name) {
+      if (service.systemName === serviceSystemName) {
         dispatchSearch({
           type: 'FilterByService',
           service: service
         })
       }
     })
-  }, [services, dispatchSearch, service_system_name])
+  }, [services, dispatchSearch, serviceSystemName])
 
   return (
     <>

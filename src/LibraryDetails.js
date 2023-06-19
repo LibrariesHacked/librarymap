@@ -87,16 +87,7 @@ function LibraryDetails () {
       .filter(rs => rs.unstaffed !== null && rs.unstaffed.length > 0).length > 0
 
   return (
-    <Dialog
-      fullScreen={fullScreen}
-      open={libraryDialogOpen}
-      onClose={close}
-      aria-labelledby='dlg-title'
-      slotProps={{
-        backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } }
-      }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
-    >
+    <>
       {Object.keys(library).length > 0 ? (
         <>
           <DialogTitle id='dlg-title'>{library.name}</DialogTitle>
@@ -245,41 +236,7 @@ function LibraryDetails () {
       ) : (
         <CircularProgress color='primary' size={30} />
       )}
-      <DialogActions>
-        {library.url && library.url !== '' && config.displayWebLinks ? (
-          <Button onClick={() => goToWebsite()} startIcon={<WebIcon />}>
-            Web
-          </Button>
-        ) : null}
-        {library.url && library.url !== '' && config.displayEmails ? (
-          <Button
-            onClick={() => emailLibrary()}
-            startIcon={<AlternateEmailIcon />}
-          >
-            Email
-          </Button>
-        ) : null}
-
-        {!mapPage && (
-          <Button
-            onClick={viewMapLibrary}
-            startIcon={<LocationOnIcon />}
-            component={Link}
-            to='/map'
-          >
-            Map
-          </Button>
-        )}
-
-        <Button
-          onClick={() => close()}
-          endIcon={<CancelIcon />}
-          color='secondary'
-        >
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
+    </>
   )
 }
 

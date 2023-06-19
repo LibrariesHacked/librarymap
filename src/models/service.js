@@ -31,7 +31,7 @@ export class ServiceExtended {
     this.ulibrary_name = json['uLibrary name']
     this.libraries_url = json['Libraries URL']
     this.ebook_url = json['Ebook URL']
-    this.code = json['Code']
+    this.code = json.Code
     this.catalogue_url = json['Catalogue URL']
     this.audiobook_url = json['Audiobook URL']
     this.home_service_url = json['Home service URL']
@@ -39,7 +39,7 @@ export class ServiceExtended {
     this.overdrive_name = json['Overdrive name']
     this.childrens_service_url = json['Childrens service URL']
     this.twitter_handle = json['Twitter handle']
-    this.name = json['Name']
+    this.name = json.Name
     this.facebook_page_name = json['Facebook page name']
     this.online_catalogue_system = json['Online catalogue system']
     this.library_management_system_supplier =
@@ -49,7 +49,7 @@ export class ServiceExtended {
     this.audiobook_info_url = json['Audiobook info URL']
     this.adult_fine = json['Adult fine']
     this.library_management_system = json['Library management system']
-    this.email = json['Email']
+    this.email = json.Email
     this.audiobook_supplier = json['Audiobook supplier']
     this.ulibrary_offer = json['uLibrary offer']
     this.fine_interval = json['Fine interval']
@@ -84,10 +84,5 @@ export async function getServicesExtended () {
 }
 
 export function getServiceSystemName (name) {
-  return name
-    .split(', ')
-    .reverse()
-    .join(' ')
-    .replace(/[. ,:-]+/g, '-')
-    .toLowerCase()
+  return name.replace(/[. ,:-]+/g, '-').toLowerCase()
 }

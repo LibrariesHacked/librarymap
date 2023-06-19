@@ -6,31 +6,28 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
-
-import { alpha } from '@mui/material/styles'
+import HomeIcon from '@mui/icons-material/HomeRounded'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
 import Search from './Search'
+import SiteBreadcrumbs from './SiteBreadcrumbs'
 
 function Home () {
   return (
     <>
+      <SiteBreadcrumbs currentPageName='Home' currentPageIcon={HomeIcon} />
       <Box sx={{ textAlign: 'center' }}>
         <img src='/Logo_Rectangle_h96.png' alt='Logo' />
-        <Typography component='h1' variant='h3' gutterBottom>
+        <Typography component='h1' variant='h3'>
           Find my library
         </Typography>
         <Typography
           component='p'
           variant='h5'
           sx={{
-            padding: theme => theme.spacing(1),
-            backgroundColor: theme => alpha(theme.palette.secondary.main, 0.05),
             color: theme => theme.palette.secondary.main,
-            fontWeight: 500,
-            borderRadius: '5px',
-            margin: theme => theme.spacing(2, 0)
+            margin: theme => theme.spacing(1, 0, 4, 0)
           }}
         >
           Search by postcode or library service

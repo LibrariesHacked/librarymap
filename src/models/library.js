@@ -68,8 +68,9 @@ export async function getQueryLibraries (
   serviceFilter,
   closed
 ) {
-  let url = `${config.api}/libraries?page=${query.page + 1}&limit=${query.pageSize
-    }&closed=${closed}`
+  let url = `${config.api}/libraries?page=${query.page + 1}&limit=${
+    query.pageSize
+  }&closed=${closed}`
 
   const sortMappings = {
     name: 'Library name',
@@ -79,13 +80,17 @@ export async function getQueryLibraries (
     distance: 'distance'
   }
 
-  if (query.orderBy && query.orderBy.field) url = `${url}&sort=${sortMappings[query.orderBy.field]}&direction=${query.orderBy.direction}`
+  if (query.orderBy && query.orderBy.field) {
+    url = `${url}&sort=${sortMappings[query.orderBy.field]}&direction=${
+      query.orderBy.direction
+    }`
+  }
 
-  if (searchPosition && searchPosition.length > 1) url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}`
+  if (searchPosition && searchPosition.length > 1) { url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}` }
 
   if (distance && distance !== '') url = `${url}&distance=${distance}`
 
-  if (serviceFilter.length > 0) url = `${url}&service_codes=${serviceFilter.join('|')}`
+  if (serviceFilter.length > 0) { url = `${url}&service_codes=${serviceFilter.join('|')}` }
 
   const response = await axios.get(url)
 
@@ -111,6 +116,24 @@ export async function getAllLibraries () {
 
 export async function getLibraryById (id) {
   const response = await axios.get(config.api + '/libraries/' + id)
+  if (response && response.data) {
+    return new Library().fromJson(response.data)
+  } else {
+    return {}
+  }
+}
+
+export function getLibrarySystemName (name) {
+  return name.replace(/[. ,:-]+/g, '-').toLowerCase()
+}
+
+export async function getLibraryBySystemName (
+  serviceSystemName,
+  librarySystemName
+) {
+  const response = await axios.get(
+    `${config.api}/libraries/${serviceSystemName}/${librarySystemName}`
+  )
   if (response && response.data) {
     return new Library().fromJson(response.data)
   } else {
