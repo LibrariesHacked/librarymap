@@ -18,19 +18,19 @@ function Home () {
     <>
       <SiteBreadcrumbs currentPageName='Home' currentPageIcon={HomeIcon} />
       <Box sx={{ textAlign: 'center' }}>
-        <img src='/Logo_Rectangle_h96.png' alt='Logo' />
-        <Typography component='h1' variant='h3'>
-          Find my library
+        <img src='/android-icon-96x96.png' alt='Logo' />
+        <Typography component='h1' variant='h2'>
+          Library map
         </Typography>
         <Typography
           component='p'
           variant='h5'
           sx={{
             color: theme => theme.palette.secondary.main,
-            margin: theme => theme.spacing(1, 0, 4, 0)
+            margin: theme => theme.spacing(0, 0, 4, 0)
           }}
         >
-          Search by postcode or library service
+          Find your nearest public library by postcode or library service
         </Typography>
         <Search />
       </Box>
@@ -48,11 +48,11 @@ function Home () {
             startIcon={<DataIcon />}
             size='small'
           >
-            Edit
+            Update
           </Button>
         }
       >
-        Are these listings incorrect? See the data page.
+        Are these listings incorrect? You can help by updating them.
       </Alert>
     </>
   )

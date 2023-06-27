@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useMatch } from 'react-router-dom'
+import { useMatch } from 'react-router-dom'
 
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
 import ListSubheader from '@mui/material/ListSubheader'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -21,11 +17,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmailRounded'
-import CancelIcon from '@mui/icons-material/CancelRounded'
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
-import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
-import WebIcon from '@mui/icons-material/WebRounded'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -65,18 +57,6 @@ function LibraryDetails () {
     })
   }
 
-  const close = () => {
-    dispatchSearch({
-      type: 'SetCurrentLibrary',
-      currentLibraryId: null,
-      currentPoint: null
-    })
-    dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: false })
-  }
-
-  const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
-
   const staffedHoursAvailable =
     hoursHelper
       .getAllHours(library)
@@ -90,148 +70,145 @@ function LibraryDetails () {
     <>
       {Object.keys(library).length > 0 ? (
         <>
-          <DialogTitle id='dlg-title'>{library.name}</DialogTitle>
-          <DialogContent>
-            <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-              Library details
-            </ListSubheader>
-            <TableContainer
-              component={Paper}
-              elevation={0}
-              sx={{
-                border: 2,
-                borderColor: theme => lighten(theme.palette.primary.main, 0.5),
-                marginBottom: theme => theme.spacing(1)
-              }}
-            >
-              <Table size='small'>
-                <TableBody>
+          <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+            Library details
+          </ListSubheader>
+          <TableContainer
+            component={Paper}
+            elevation={0}
+            sx={{
+              border: 2,
+              borderColor: theme => lighten(theme.palette.primary.main, 0.5),
+              marginBottom: theme => theme.spacing(1)
+            }}
+          >
+            <Table size='small'>
+              <TableBody>
+                <TableRow>
+                  <TableCell variant='head'>Address</TableCell>
+                  <TableCell>
+                    {' '}
+                    {[
+                      library.address1,
+                      library.address2,
+                      library.address3,
+                      library.postcode
+                    ]
+                      .filter(l => Boolean(l))
+                      .join(', ')}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell variant='head'>Service</TableCell>
+                  <TableCell>{library.localAuthority}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell variant='head'>Type</TableCell>
+                  <TableCell>{library.typeDescription}</TableCell>
+                </TableRow>
+                {library.yearOpened && library.yearOpened !== '' ? (
                   <TableRow>
-                    <TableCell variant='head'>Address</TableCell>
-                    <TableCell>
-                      {' '}
-                      {[
-                        library.address1,
-                        library.address2,
-                        library.address3,
-                        library.postcode
-                      ]
-                        .filter(l => Boolean(l))
-                        .join(', ')}
-                    </TableCell>
+                    <TableCell variant='head'>Year opened</TableCell>
+                    <TableCell>{library.yearOpened}</TableCell>
                   </TableRow>
+                ) : null}
+                {library.yearClosed && library.yearClosed !== '' ? (
                   <TableRow>
-                    <TableCell variant='head'>Service</TableCell>
-                    <TableCell>{library.localAuthority}</TableCell>
+                    <TableCell variant='head'>Year closed</TableCell>
+                    <TableCell>{library.yearClosed}</TableCell>
                   </TableRow>
+                ) : null}
+                {library.notes && library.notes !== '' ? (
                   <TableRow>
-                    <TableCell variant='head'>Type</TableCell>
-                    <TableCell>{library.typeDescription}</TableCell>
+                    <TableCell variant='head'>Notes</TableCell>
+                    <TableCell>{library.notes}</TableCell>
                   </TableRow>
-                  {library.yearOpened && library.yearOpened !== '' ? (
+                ) : null}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          {(staffedHoursAvailable || unstaffedHoursAvailable) &&
+          config.displayOpeningHours ? (
+            <>
+              <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+                Opening hours
+              </ListSubheader>
+              <TableContainer
+                component={Paper}
+                elevation={0}
+                sx={{
+                  border: 2,
+                  borderColor: theme =>
+                    lighten(theme.palette.primary.main, 0.5),
+                  marginBottom: theme => theme.spacing(1)
+                }}
+              >
+                <Table size='small'>
+                  <TableHead
+                    sx={{
+                      backgroundColor: theme =>
+                        lighten(theme.palette.primary.main, 0.8)
+                    }}
+                  >
                     <TableRow>
-                      <TableCell variant='head'>Year opened</TableCell>
-                      <TableCell>{library.yearOpened}</TableCell>
+                      <TableCell />
+                      <TableCell>Staffed</TableCell>
+                      {unstaffedHoursAvailable ? (
+                        <TableCell>Unstaffed</TableCell>
+                      ) : null}
                     </TableRow>
-                  ) : null}
-                  {library.yearClosed && library.yearClosed !== '' ? (
-                    <TableRow>
-                      <TableCell variant='head'>Year closed</TableCell>
-                      <TableCell>{library.yearClosed}</TableCell>
-                    </TableRow>
-                  ) : null}
-                  {library.notes && library.notes !== '' ? (
-                    <TableRow>
-                      <TableCell variant='head'>Notes</TableCell>
-                      <TableCell>{library.notes}</TableCell>
-                    </TableRow>
-                  ) : null}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            {(staffedHoursAvailable || unstaffedHoursAvailable) &&
-            config.displayOpeningHours ? (
-              <>
-                <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-                  Opening hours
-                </ListSubheader>
-                <TableContainer
-                  component={Paper}
-                  elevation={0}
-                  sx={{
-                    border: 2,
-                    borderColor: theme =>
-                      lighten(theme.palette.primary.main, 0.5),
-                    marginBottom: theme => theme.spacing(1)
-                  }}
-                >
-                  <Table size='small'>
-                    <TableHead
-                      sx={{
-                        backgroundColor: theme =>
-                          lighten(theme.palette.primary.main, 0.8)
-                      }}
-                    >
-                      <TableRow>
-                        <TableCell />
-                        <TableCell>Staffed</TableCell>
-                        {unstaffedHoursAvailable ? (
-                          <TableCell>Unstaffed</TableCell>
-                        ) : null}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {hoursHelper
-                        .getAllHours(library)
-                        .filter(
-                          rs =>
-                            (rs.staffed !== null && rs.staffed.length > 0) ||
-                            (rs.unstaffed !== null && rs.unstaffed.length > 0)
-                        )
-                        .map((rs, idx) => (
-                          <TableRow key={'tc_rs_' + idx}>
-                            <TableCell variant='head'>{rs.day}</TableCell>
-                            <TableCell>
-                              {rs.staffed !== null && rs.staffed.length > 0
-                                ? rs.staffed
-                                    .map(h =>
-                                      h
-                                        .map(a =>
-                                          moment(a, 'hh:mm').format('h:mma')
-                                        )
-                                        .join(' - ')
-                                    )
-                                    .join(', ')
-                                : ''}
-                            </TableCell>
-                            {unstaffedHoursAvailable ? (
-                              <TableCell>{rs.unstaffed}</TableCell>
-                            ) : null}
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
-            ) : null}
-            <Alert
-              severity='warning'
-              action={
-                <Button
-                  href='/data'
-                  variant='text'
-                  color='warning'
-                  disableElevation
-                  startIcon={<DataIcon />}
-                  size='small'
-                >
-                  Edit
-                </Button>
-              }
-            >
-              Are these details incorrect? See the data page.
-            </Alert>
-          </DialogContent>
+                  </TableHead>
+                  <TableBody>
+                    {hoursHelper
+                      .getAllHours(library)
+                      .filter(
+                        rs =>
+                          (rs.staffed !== null && rs.staffed.length > 0) ||
+                          (rs.unstaffed !== null && rs.unstaffed.length > 0)
+                      )
+                      .map((rs, idx) => (
+                        <TableRow key={'tc_rs_' + idx}>
+                          <TableCell variant='head'>{rs.day}</TableCell>
+                          <TableCell>
+                            {rs.staffed !== null && rs.staffed.length > 0
+                              ? rs.staffed
+                                  .map(h =>
+                                    h
+                                      .map(a =>
+                                        moment(a, 'hh:mm').format('h:mma')
+                                      )
+                                      .join(' - ')
+                                  )
+                                  .join(', ')
+                              : ''}
+                          </TableCell>
+                          {unstaffedHoursAvailable ? (
+                            <TableCell>{rs.unstaffed}</TableCell>
+                          ) : null}
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
+          ) : null}
+          <Alert
+            severity='warning'
+            action={
+              <Button
+                href='/data'
+                variant='text'
+                color='warning'
+                disableElevation
+                startIcon={<DataIcon />}
+                size='small'
+              >
+                Update
+              </Button>
+            }
+          >
+            Are these details incorrect? You can help by updating them.
+          </Alert>
         </>
       ) : (
         <CircularProgress color='primary' size={30} />
