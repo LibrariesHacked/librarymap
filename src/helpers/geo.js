@@ -19,32 +19,39 @@ export const getCurrentPosition = async () => {
   return [position.coords.longitude, position.coords.latitude]
 }
 
-export const getCurrentPostcode = async (location) => {
+export const getCurrentPostcode = async location => {
   try {
     const response = await axios.get(
       `${config.postcodeApi}?lng=${location[0]}&lat=${location[1]}`
     )
-    if (response.status === 200) {
+    if (response.status === 200 && response.data) {
       return {
         location: [response.data.longitude, response.data.latitude],
         library_service_name: response.data.library_service_name,
         library_service: response.data.library_service,
         postcode: response.data.postcode
       }
+    } else {
+      return null
     }
-  } catch (e) {}
+  } catch {}
 }
 
 export const getPostcode = async postcode => {
   try {
     const response = await axios.get(`${config.postcodeApi}/${postcode}`)
-    return {
-      location: [response.data.longitude, response.data.latitude],
-      library_service_name: response.data.library_service_name,
-      library_service: response.data.library_service,
-      postcode: response.data.postcode
+
+    if (response.status === 200 && response.data) {
+      return {
+        location: [response.data.longitude, response.data.latitude],
+        library_service_name: response.data.library_service_name,
+        library_service: response.data.library_service,
+        postcode: response.data.postcode
+      }
+    } else {
+      return null
     }
-  } catch (e) {}
+  } catch {}
 }
 
 export const getServiceDataFromPostcode = async (postcode, services) => {
