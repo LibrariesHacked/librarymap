@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { useMatch } from 'react-router-dom'
+import React from 'react'
 
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
@@ -13,49 +12,28 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
+import grey from '@mui/material/colors/grey'
+
 import { lighten } from '@mui/material'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
 
-import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import moment from 'moment'
 
-import * as libraryModel from './models/library'
 import * as hoursHelper from './helpers/hours'
 import config from './helpers/config'
 
-function LibraryDetails () {
-  const [{ currentLibraryId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+function LibraryDetails (props) {
   const [{ libraryDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
 
-  const [library, setLibrary] = useState({})
-
-  const mapPage = useMatch('/map')
-
-  useEffect(() => {
-    async function getLibrary (libraryId) {
-      const libraryData = await libraryModel.getLibraryById(libraryId)
-      setLibrary(libraryData)
-    }
-    if (currentLibraryId != null) getLibrary(currentLibraryId)
-  }, [currentLibraryId])
+  const { library } = props
 
   const goToWebsite = () => window.open(library.url, '_blank')
 
   const emailLibrary = () =>
     window.open('mailto:' + library.emailAddress, '_blank')
-
-  const viewMapLibrary = () => {
-    dispatchView({
-      type: 'FlyTo',
-      mapFlyToPosition: [library.longitude, library.latitude],
-      mapZoom: 16
-    })
-  }
 
   const staffedHoursAvailable =
     hoursHelper
@@ -87,7 +65,6 @@ function LibraryDetails () {
                 <TableRow>
                   <TableCell variant='head'>Address</TableCell>
                   <TableCell>
-                    {' '}
                     {[
                       library.address1,
                       library.address2,
@@ -122,6 +99,36 @@ function LibraryDetails () {
                   <TableRow>
                     <TableCell variant='head'>Notes</TableCell>
                     <TableCell>{library.notes}</TableCell>
+                  </TableRow>
+                ) : null}
+                {library.url && library.url !== '' ? (
+                  <TableRow>
+                    <TableCell variant='head'>Website</TableCell>
+                    <TableCell>
+                      <Button
+                        variant='text'
+                        color='primary'
+                        disableElevation
+                        onClick={goToWebsite}
+                      >
+                        {library.url}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ) : null}
+                {library.emailAddress && library.emailAddress !== '' ? (
+                  <TableRow>
+                    <TableCell variant='head'>Email</TableCell>
+                    <TableCell>
+                      <Button
+                        variant='text'
+                        color='primary'
+                        disableElevation
+                        onClick={emailLibrary}
+                      >
+                        {library.emailAddress}
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ) : null}
               </TableBody>
@@ -194,15 +201,9 @@ function LibraryDetails () {
           ) : null}
           <Alert
             severity='warning'
+            sx={{ border: 1, borderColor: grey[300] }}
             action={
-              <Button
-                href='/data'
-                variant='text'
-                color='warning'
-                disableElevation
-                startIcon={<DataIcon />}
-                size='small'
-              >
+              <Button href='/data' color='warning' startIcon={<DataIcon />}>
                 Update
               </Button>
             }

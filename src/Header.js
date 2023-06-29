@@ -2,7 +2,8 @@ import React from 'react'
 
 import { Link, useMatch, useLocation } from 'react-router-dom'
 
-import { Typography, alpha } from '@mui/material'
+import { alpha } from '@mui/material'
+
 import grey from '@mui/material/colors/grey'
 
 import AppBar from '@mui/material/AppBar'
@@ -10,6 +11,7 @@ import Box from '@mui/material/Box'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 
 import ListIcon from '@mui/icons-material/ViewListRounded'
 import MapIcon from '@mui/icons-material/MapRounded'
@@ -20,6 +22,7 @@ function Header () {
   const location = useLocation()
   const mapPage = useMatch('/map')
   const servicePage = useMatch('/service/:service')
+  const libraryPage = useMatch('/service/:service/:library')
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -34,18 +37,18 @@ function Header () {
       >
         <Container>
           <Toolbar>
-            {!servicePage && (
+            {!servicePage && !libraryPage && (
               <>
                 <Typography sx={{ textDecoration: 'underline' }}>
                   In development
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                <Tabs value={location.pathname}>
+                <Tabs value={location.pathname === '/map' ? 'map' : 'list'}>
                   <Tab
                     icon={<ListIcon />}
                     iconPosition='start'
                     label='List'
-                    value='/'
+                    value='list'
                     component={Link}
                     to='/'
                   />
@@ -53,7 +56,7 @@ function Header () {
                     icon={<MapIcon />}
                     iconPosition='start'
                     label='Map'
-                    value='/map'
+                    value='map'
                     component={Link}
                     to='/map'
                   />

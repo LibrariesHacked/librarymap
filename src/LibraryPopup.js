@@ -10,6 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 
 import CancelIcon from '@mui/icons-material/CancelRounded'
+import MapIcon from '@mui/icons-material/LocationOnRounded'
 
 import LibraryDetails from './LibraryDetails'
 
@@ -41,6 +42,14 @@ function LibraryPopup () {
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: false })
   }
 
+  const viewMapLibrary = () => {
+    dispatchView({
+      type: 'FlyTo',
+      mapFlyToPosition: [library.longitude, library.latitude],
+      mapZoom: 16
+    })
+  }
+
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
@@ -60,6 +69,13 @@ function LibraryPopup () {
         <LibraryDetails library={library} />
       </DialogContent>
       <DialogActions>
+        <Button
+          onClick={() => viewMapLibrary()}
+          endIcon={<MapIcon />}
+          color='primary'
+        >
+          View on map
+        </Button>
         <Button
           onClick={() => close()}
           endIcon={<CancelIcon />}

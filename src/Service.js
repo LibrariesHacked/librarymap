@@ -5,9 +5,12 @@ import { useParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import BusinessIcon from '@mui/icons-material/BusinessRounded'
+
 import LibraryMap from './LibraryMap'
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
+import SiteBreadcrumbs from './SiteBreadcrumbs'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
@@ -31,6 +34,10 @@ function Service () {
 
   return (
     <>
+      <SiteBreadcrumbs
+        currentPageName={currentService?.name}
+        currentPageIcon={BusinessIcon}
+      />
       <Box sx={{ textAlign: 'center' }}>
         <Typography component='h1' variant='h3'>
           {`${currentService?.name} Libraries`}

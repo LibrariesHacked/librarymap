@@ -12,17 +12,18 @@ const options = {
       component: Typography,
       props: {
         gutterBottom: true,
-        variant: 'h4',
-        color: 'secondary'
+        variant: 'h3',
+        color: 'primary',
+        textAlign: 'center'
       }
     },
     h2: {
       component: Typography,
-      props: { gutterBottom: true, variant: 'h5', color: 'textPrimary' }
+      props: { gutterBottom: true, variant: 'h4', color: 'textSecondary' }
     },
     h3: {
       component: Typography,
-      props: { gutterBottom: true, variant: 'h6', color: 'textPrimary' }
+      props: { gutterBottom: true, variant: 'h5', color: 'textSecondary' }
     },
     h4: {
       component: Typography,
@@ -30,7 +31,7 @@ const options = {
         gutterBottom: true,
         variant: 'h6',
         paragraph: true,
-        color: 'textPrimary'
+        color: 'textSecondary'
       }
     },
     p: {
@@ -49,7 +50,7 @@ const options = {
 }
 
 export function MarkdownPage (props) {
-  const { page } = props
+  const { page, pageName, pageIcon } = props
   const [pageText, setPageText] = useState('')
 
   useEffect(() => {
@@ -63,10 +64,8 @@ export function MarkdownPage (props) {
 
   return (
     <>
-      <SiteBreadcrumbs currentPageName={props.pageName} currentPageIcon={props.pageIcon} />
-      <ReactMarkdown options={options} {...props}>
-        {pageText}
-      </ReactMarkdown>
+      <SiteBreadcrumbs currentPageName={pageName} currentPageIcon={pageIcon} />
+      <ReactMarkdown options={options}>{pageText}</ReactMarkdown>
     </>
   )
 }

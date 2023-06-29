@@ -40,7 +40,7 @@ function SiteBreadcrumbs (props) {
             color='text.primary'
             to='/'
           >
-            <HomeIcon sx={{ mr: 0.5 }} fontSize='inherit' />
+            <HomeIcon sx={{ mr: 0.5 }} />
             Home
           </Typography>
         )}
@@ -51,12 +51,12 @@ function SiteBreadcrumbs (props) {
             color='text.primary'
             to={`/service/${libraryPage.params.serviceSystemName}`}
           >
-            <BusinessIcon sx={{ mr: 0.5 }} fontSize='inherit' />
+            <BusinessIcon sx={{ mr: 0.5 }} />
             {serviceName}
           </Typography>
         )}
         <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-          <Icon sx={{ mr: 0.5 }} fontSize='inherit' />
+          <Icon sx={{ mr: 0.5 }} />
           {currentPageName}
         </Typography>
       </Breadcrumbs>

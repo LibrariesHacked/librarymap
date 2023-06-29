@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography'
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
 import HomeIcon from '@mui/icons-material/HomeRounded'
 
+import grey from '@mui/material/colors/grey'
+
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
 import Search from './Search'
@@ -35,25 +37,22 @@ function Home () {
         <Search />
       </Box>
       <Libraries />
-      <MobileLibraries />
       <Alert
         severity='warning'
-        sx={{ marginTop: theme => theme.spacing() }}
+        sx={{
+          marginTop: theme => theme.spacing(2),
+          border: 1,
+          borderColor: grey[300]
+        }}
         action={
-          <Button
-            href='/data'
-            variant='text'
-            color='warning'
-            disableElevation
-            startIcon={<DataIcon />}
-            size='small'
-          >
+          <Button href='/data' startIcon={<DataIcon />}>
             Update
           </Button>
         }
       >
         Are these listings incorrect? You can help by updating them.
       </Alert>
+      <MobileLibraries />
     </>
   )
 }
