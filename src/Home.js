@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
+import HelpIcon from '@mui/icons-material/HelpRounded'
 
 import grey from '@mui/material/colors/grey'
 
@@ -36,13 +37,14 @@ function Home () {
       <Libraries />
       <Alert
         severity='warning'
+        icon={<HelpIcon fontSize="inherit" />}
         sx={{
           marginTop: theme => theme.spacing(2),
           border: 1,
           borderColor: grey[300]
         }}
         action={
-          <Button href='/data' startIcon={<DataIcon />}>
+          <Button href='/data' startIcon={<DataIcon />} color='warning'>
             Update
           </Button>
         }

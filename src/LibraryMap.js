@@ -6,7 +6,7 @@ import Map, {
   Marker,
   NavigationControl,
   AttributionControl
-} from 'react-map-gl'
+} from 'react-map-gl/maplibre'
 
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useMatch } from 'react-router-dom'
 
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
@@ -22,10 +21,12 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
+import grey from '@mui/material/colors/grey'
+
 import CancelIcon from '@mui/icons-material/CancelRounded'
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
+import HelpIcon from '@mui/icons-material/HelpRounded'
 import SaveIcon from '@mui/icons-material/SaveAltRounded'
-import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 import PrintIcon from '@mui/icons-material/PrintRounded'
 import WebIcon from '@mui/icons-material/WebRounded'
 
@@ -42,8 +43,6 @@ function StopDetails () {
 
   const [stop, setStop] = useState({})
 
-  const mapPage = useMatch('/map')
-
   useEffect(() => {
     async function getStop (stopId) {
       const stopData = await stopModel.getStopById(stopId)
@@ -59,14 +58,6 @@ function StopDetails () {
     window.open(config.mobilesApi + '/stops/' + stop.id + '/pdf', '_blank')
 
   const goToWebsite = () => window.open(stop.timetable, '_blank')
-
-  const viewMapStop = () => {
-    dispatchView({
-      type: 'FlyTo',
-      mapFlyToPosition: [stop.longitude, stop.latitude],
-      mapZoom: 16
-    })
-  }
 
   const close = () => {
     dispatchSearch({
@@ -144,15 +135,10 @@ function StopDetails () {
             </TableContainer>
             <Alert
               severity='warning'
+              icon={<HelpIcon fontSize='inherit' />}
+              sx={{ border: 1, borderColor: grey[300] }}
               action={
-                <Button
-                  href='/data'
-                  color='warning'
-                  variant='text'
-                  disableElevation
-                  startIcon={<DataIcon />}
-                  size='small'
-                >
+                <Button href='/data' color='warning' startIcon={<DataIcon />}>
                   Update
                 </Button>
               }
@@ -184,17 +170,6 @@ function StopDetails () {
         <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>
           Print
         </Button>
-        {!mapPage && (
-          <Button
-            onClick={viewMapStop}
-            color='primary'
-            startIcon={<LocationOnIcon />}
-            component={Link}
-            to='/map'
-          >
-            Map
-          </Button>
-        )}
         <Button
           onClick={() => close()}
           color='secondary'

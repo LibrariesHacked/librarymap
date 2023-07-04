@@ -17,12 +17,15 @@ import grey from '@mui/material/colors/grey'
 import { lighten } from '@mui/material'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
+import HelpIcon from '@mui/icons-material/HelpRounded'
 
 import { useViewStateValue } from './context/viewState'
 
 import moment from 'moment'
 
 import * as hoursHelper from './helpers/hours'
+import * as urlHelper from './helpers/url'
+
 import config from './helpers/config'
 
 function LibraryDetails (props) {
@@ -33,7 +36,7 @@ function LibraryDetails (props) {
   const goToWebsite = () => window.open(library.url, '_blank')
 
   const emailLibrary = () =>
-    window.open('mailto:' + library.emailAddress, '_blank')
+    window.open('mailto:' + library.emailAddress.replace('mailto:', ''), '_blank')
 
   const staffedHoursAvailable =
     hoursHelper
@@ -111,7 +114,7 @@ function LibraryDetails (props) {
                         disableElevation
                         onClick={goToWebsite}
                       >
-                        {library.url}
+                        {urlHelper.getDomainFromUrl(library.url)}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -201,6 +204,7 @@ function LibraryDetails (props) {
           ) : null}
           <Alert
             severity='warning'
+            icon={<HelpIcon fontSize="inherit" />}
             sx={{ border: 1, borderColor: grey[300] }}
             action={
               <Button href='/data' color='warning' startIcon={<DataIcon />}>

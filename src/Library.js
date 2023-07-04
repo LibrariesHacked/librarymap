@@ -14,11 +14,13 @@ import LibraryMap from './LibraryMap'
 import SiteBreadcrumbs from './SiteBreadcrumbs'
 
 import { useApplicationStateValue } from './context/applicationState'
+import { useViewStateValue } from './context/viewState'
 
 import * as libraryModel from './models/library'
 
 function Library () {
   const [{ services }] = useApplicationStateValue()
+  const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const [library, setLibrary] = useState({})
 
@@ -31,6 +33,11 @@ function Library () {
         librarySystemName
       )
       setLibrary(libraryData)
+      dispatchView({
+        type: 'FlyTo',
+        mapFlyToPosition: [libraryData.longitude, libraryData.latitude],
+        mapZoom: 17
+      })
     }
     services.forEach(service => {
       if (service.systemName === serviceSystemName) {
@@ -38,7 +45,7 @@ function Library () {
         getLibrary(serviceSystemName, librarySystemName)
       }
     })
-  }, [services, serviceSystemName, librarySystemName])
+  }, [services, serviceSystemName, librarySystemName, dispatchView])
 
   return (
     <>

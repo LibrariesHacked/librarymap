@@ -9,3 +9,8 @@ export function clearService (navigate) {
   currentUrlParams.delete('service')
   navigate(window.location.pathname)
 }
+
+export function getDomainFromUrl (url) {
+  const urlObj = new URL(url)
+  return urlObj.hostname
+}

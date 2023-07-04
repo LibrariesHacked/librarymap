@@ -10,7 +10,6 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 
 import CancelIcon from '@mui/icons-material/CancelRounded'
-import MapIcon from '@mui/icons-material/LocationOnRounded'
 
 import LibraryDetails from './LibraryDetails'
 
@@ -26,7 +25,7 @@ function LibraryPopup () {
   const [{ services }] = useApplicationStateValue()
 
   const [library, setLibrary] = useState({})
-  const [service, setService] = useState({})
+  const [service, setService] = useState({}) //eslint-disable-line
 
   useEffect(() => {
     async function getLibrary (libraryId) {
@@ -71,13 +70,6 @@ function LibraryPopup () {
         <LibraryDetails library={library} />
       </DialogContent>
       <DialogActions>
-        <Button
-          href={`/service/${service.systemName}/${library.systemName}`}
-          endIcon={<MapIcon />}
-          color='primary'
-        >
-          Go to library page
-        </Button>
         <Button
           onClick={() => close()}
           endIcon={<CancelIcon />}
