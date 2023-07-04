@@ -6,19 +6,16 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
-import HomeIcon from '@mui/icons-material/HomeRounded'
 
 import grey from '@mui/material/colors/grey'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
 import Search from './Search'
-import SiteBreadcrumbs from './SiteBreadcrumbs'
 
 function Home () {
   return (
     <>
-      <SiteBreadcrumbs currentPageName='Home' currentPageIcon={HomeIcon} />
       <Box sx={{ textAlign: 'center' }}>
         <img src='/android-icon-96x96.png' alt='Logo' />
         <Typography component='h1' variant='h2'>

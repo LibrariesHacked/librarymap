@@ -57,6 +57,7 @@ export class Library {
     this.longitude = json.Longitude
     this.latitude = json.Latitude
     this.distance = json.distance
+    this.systemName = getLibrarySystemName(json['Library name'])
     return this
   }
 }

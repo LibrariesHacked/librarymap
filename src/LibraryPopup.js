@@ -16,22 +16,32 @@ import LibraryDetails from './LibraryDetails'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
+import { useApplicationStateValue } from './context/applicationState'
 
 import * as libraryModel from './models/library'
 
 function LibraryPopup () {
   const [{ currentLibraryId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ libraryDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{ services }] = useApplicationStateValue()
 
   const [library, setLibrary] = useState({})
+  const [service, setService] = useState({})
 
   useEffect(() => {
     async function getLibrary (libraryId) {
       const libraryData = await libraryModel.getLibraryById(libraryId)
       setLibrary(libraryData)
+      services.every(service => {
+        if (service.code === libraryData.localAuthorityCode) {
+          setService(service)
+          return false
+        }
+        return true
+      })
     }
     if (currentLibraryId != null) getLibrary(currentLibraryId)
-  }, [currentLibraryId])
+  }, [currentLibraryId, services])
 
   const close = () => {
     dispatchSearch({
@@ -40,14 +50,6 @@ function LibraryPopup () {
       currentPoint: null
     })
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: false })
-  }
-
-  const viewMapLibrary = () => {
-    dispatchView({
-      type: 'FlyTo',
-      mapFlyToPosition: [library.longitude, library.latitude],
-      mapZoom: 16
-    })
   }
 
   const theme = useTheme()
@@ -70,11 +72,11 @@ function LibraryPopup () {
       </DialogContent>
       <DialogActions>
         <Button
-          onClick={() => viewMapLibrary()}
+          href={`/service/${service.systemName}/${library.systemName}`}
           endIcon={<MapIcon />}
           color='primary'
         >
-          View on map
+          Go to library page
         </Button>
         <Button
           onClick={() => close()}

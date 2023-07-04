@@ -216,7 +216,8 @@ function Libraries () {
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
-              setFilterModel(newFilterModel)}
+              setFilterModel(newFilterModel)
+            }
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {
@@ -226,6 +227,7 @@ function Libraries () {
                 setSortModel(newSortModel)
               }
             }}
+            onRowClick={params => selectLibrary(params.row)}
             columns={columns}
             initialState={initialState}
           />
