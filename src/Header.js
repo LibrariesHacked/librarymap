@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Link, useMatch, useLocation } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 
 import { alpha } from '@mui/material'
 
@@ -19,8 +19,8 @@ import MapIcon from '@mui/icons-material/MapRounded'
 import { Container } from '@mui/system'
 
 function Header () {
-  const location = useLocation()
   const mapPage = useMatch('/map')
+  const homePage = useMatch('/')
   const servicePage = useMatch('/service/:service')
   const libraryPage = useMatch('/service/:service/:library')
 
@@ -43,7 +43,7 @@ function Header () {
                   In development
                 </Typography>
                 <Box sx={{ flexGrow: 1 }} />
-                <Tabs value={location.pathname === '/map' ? 'map' : 'list'}>
+                <Tabs value={mapPage ? 'map' : homePage ? 'list' : false}>
                   <Tab
                     icon={<ListIcon />}
                     iconPosition='start'
