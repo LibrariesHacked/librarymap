@@ -27,6 +27,7 @@
     "eject": "react-scripts eject",
     "predeploy": "react-scripts build",
     "deploy": "gh-pages -d build",
+    "sitemap": "node ./src/sitemap.js",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
@@ -55,6 +56,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "gh-pages": "^3.2.3",
     "react-scripts": "^5.0.1",
+    "sitemap": "^7.1.1",
     "standard": "^16.0.4"
   }
 }

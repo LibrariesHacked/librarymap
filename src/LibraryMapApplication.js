@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 
 import grey from '@mui/material/colors/grey'
 
@@ -68,7 +68,7 @@ function LibraryMapApplication () {
   )
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Header />
       <Container maxWidth='false' sx={{ backgroundColor: grey.A100 }}>
         <Container
@@ -129,7 +129,7 @@ function LibraryMapApplication () {
       <Backdrop open={loadingLibraryOrMobileLibrary} invisible>
         <CircularProgress color='inherit' />
       </Backdrop>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
