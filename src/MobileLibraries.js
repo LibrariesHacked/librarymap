@@ -219,6 +219,7 @@ function MobileLibraries () {
                 setSortModel(newSortModel)
               }
             }}
+            onRowClick={params => selectStop(params.row)}
             columns={columns}
             initialState={initialState}
           />

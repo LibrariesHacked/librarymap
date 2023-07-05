@@ -47,10 +47,10 @@ const applicationReducer = (state, action) => {
   }
 }
 
-export const ApplicationStateProvider = ({
-  children
-}) => (
-  <ApplicationStateContext.Provider value={useReducer(applicationReducer, initialApplicationState)}>
+export const ApplicationStateProvider = ({ children }) => (
+  <ApplicationStateContext.Provider
+    value={useReducer(applicationReducer, initialApplicationState)}
+  >
     {children}
   </ApplicationStateContext.Provider>
 )

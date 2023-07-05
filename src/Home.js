@@ -6,8 +6,9 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
+import HelpIcon from '@mui/icons-material/HelpRounded'
 
-import { alpha } from '@mui/material/styles'
+import grey from '@mui/material/colors/grey'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
@@ -17,46 +18,40 @@ function Home () {
   return (
     <>
       <Box sx={{ textAlign: 'center' }}>
-        <img src='/Logo_Rectangle_h96.png' alt='Logo' />
-        <Typography component='h1' variant='h3' gutterBottom>
-          Find my library
+        <img src='/android-icon-96x96.png' alt='Logo' />
+        <Typography component='h1' variant='h2'>
+          Library map
         </Typography>
         <Typography
           component='p'
           variant='h5'
           sx={{
-            padding: theme => theme.spacing(1),
-            backgroundColor: theme => alpha(theme.palette.secondary.main, 0.05),
             color: theme => theme.palette.secondary.main,
-            fontWeight: 500,
-            borderRadius: '5px',
-            margin: theme => theme.spacing(2, 0)
+            margin: theme => theme.spacing(0, 0, 4, 0)
           }}
         >
-          Search by postcode or library service
+          Find your nearest public library by postcode or library service
         </Typography>
         <Search />
       </Box>
       <Libraries />
-      <MobileLibraries />
       <Alert
         severity='warning'
-        sx={{ marginTop: theme => theme.spacing() }}
+        icon={<HelpIcon fontSize="inherit" />}
+        sx={{
+          marginTop: theme => theme.spacing(2),
+          border: 1,
+          borderColor: grey[300]
+        }}
         action={
-          <Button
-            href='/data'
-            variant='text'
-            color='warning'
-            disableElevation
-            startIcon={<DataIcon />}
-            size='small'
-          >
-            Edit
+          <Button href='/data' startIcon={<DataIcon />} color='warning'>
+            Update
           </Button>
         }
       >
-        Are these listings incorrect? See the data page.
+        Are these listings incorrect? You can help by updating them.
       </Alert>
+      <MobileLibraries />
     </>
   )
 }

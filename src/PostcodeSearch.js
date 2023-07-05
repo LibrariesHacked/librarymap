@@ -158,8 +158,7 @@ function PostcodeSearch () {
           whitespace: 'nowrap',
           display: 'inline-flex',
           color: theme => theme.palette.primary.main,
-          borderBottom: theme => `2px solid ${theme.palette.primary.main}`,
-          zIndex: 1000
+          borderBottom: theme => `2px solid ${theme.palette.primary.main}`
         }}
       >
         <InputBase

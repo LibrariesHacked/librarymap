@@ -227,6 +227,7 @@ function Libraries () {
                 setSortModel(newSortModel)
               }
             }}
+            onRowClick={params => selectLibrary(params.row)}
             columns={columns}
             initialState={initialState}
           />

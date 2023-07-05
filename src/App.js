@@ -2,13 +2,13 @@ import React from 'react'
 
 import CssBaseline from '@mui/material/CssBaseline'
 
+import { ThemeProvider } from '@mui/material/styles'
+
 import { ApplicationStateProvider } from './context/applicationState'
 import { SearchStateProvider } from './context/searchState'
 import { ViewStateProvider } from './context/viewState'
 
 import LibraryMapApplication from './LibraryMapApplication'
-
-import { ThemeProvider } from '@mui/material/styles'
 
 import theme from './theme'
 

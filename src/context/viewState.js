@@ -53,7 +53,11 @@ const viewReducer = (state, action) => {
       return { ...state, mapBounds: action.mapBounds }
     }
     case 'FlyTo': {
-      return { ...state, mapFlyToPosition: action.mapFlyToPosition }
+      return {
+        ...state,
+        mapFlyToPosition: action.mapFlyToPosition,
+        mapZoom: action.mapZoom
+      }
     }
     case 'ToggleLoadingPostcode': {
       return { ...state, loadingPostcode: !state.loadingPostcode }

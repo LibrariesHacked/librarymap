@@ -7,11 +7,16 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 
+import AccessibilityIcon from '@mui/icons-material/Accessibility'
+import PrivacyIcon from '@mui/icons-material/PrivacyTip'
+import DataIcon from '@mui/icons-material/Info'
+
 import Footer from './Footer'
 import Header from './Header'
 import Home from './Home'
-import LibraryDetails from './LibraryDetails'
-import LibraryMap from './LibraryMap'
+import Library from './Library'
+import LibraryPopup from './LibraryPopup'
+import MapPage from './MapPage'
 import Notification from './Notification'
 import Service from './Service'
 import StopDetails from './StopDetails'
@@ -74,32 +79,41 @@ function LibraryMapApplication () {
           <main>
             <Routes>
               <Route path='/' element={<Home />} />
+              <Route path='/map' element={<MapPage />} />
               <Route
-                path='/map'
+                path='/data'
                 element={
-                  <LibraryMap
-                    containerStyle={{
-                      width: '100vw',
-                      height: '100vh',
-                      position: 'absolute',
-                      top: 0,
-                      left: 0
-                    }}
+                  <MemoMarkdownPage
+                    page={Data}
+                    pageName='Data'
+                    pageIcon={DataIcon}
                   />
                 }
               />
-              <Route path='/data' element={<MemoMarkdownPage page={Data} />} />
               <Route
                 path='/accessibility'
-                element={<MemoMarkdownPage page={Accessibility} />}
+                element={
+                  <MemoMarkdownPage
+                    page={Accessibility}
+                    pageName='Accessibility'
+                    pageIcon={AccessibilityIcon}
+                  />
+                }
               />
               <Route
                 path='/privacy'
-                element={<MemoMarkdownPage page={Privacy} />}
+                element={
+                  <MemoMarkdownPage
+                    page={Privacy}
+                    pageName='Privacy policy'
+                    pageIcon={PrivacyIcon}
+                  />
+                }
               />
+              <Route path='/service/:serviceSystemName' element={<Service />} />
               <Route
-                path='/service/:service_system_name'
-                element={<Service />}
+                path='/service/:serviceSystemName/:librarySystemName'
+                element={<Library />}
               />
               <Route element={Page404} />
             </Routes>
@@ -111,7 +125,7 @@ function LibraryMapApplication () {
       </Container>
       <Notification />
       <StopDetails />
-      <LibraryDetails />
+      <LibraryPopup />
       <Backdrop open={loadingLibraryOrMobileLibrary} invisible>
         <CircularProgress color='inherit' />
       </Backdrop>
