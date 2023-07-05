@@ -14,10 +14,12 @@ import SiteBreadcrumbs from './SiteBreadcrumbs'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
+import { useViewStateValue } from './context/viewState'
 
 function Service () {
   const [{ services }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
   const [{ currentService }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const { serviceSystemName } = useParams()
 
@@ -28,9 +30,13 @@ function Service () {
           type: 'FilterByService',
           service: service
         })
+
+        // Position map to service
+        const coords = JSON.parse(service.bbox).coordinates[0]
+        dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
       }
     })
-  }, [services, dispatchSearch, serviceSystemName])
+  }, [services, dispatchSearch, serviceSystemName, dispatchView])
 
   return (
     <>
