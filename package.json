@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.13.7",
     "@mui/material": "^5.13.7",
     "@mui/x-data-grid": "^5.17.26",
+    "@turf/turf": "^6.5.0",
     "axios": "^1.4.0",
     "maplibre-gl": "^2.4.0",
     "markdown-to-jsx": "^7.2.1",
