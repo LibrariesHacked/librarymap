@@ -12,7 +12,8 @@ const initialViewState = {
   mapSettings: {
     libraries: true,
     mobileLibraryStops: true,
-    authorityBoundary: false
+    authorityBoundary: false,
+    builtUpAreas: false
   },
   mapSettingsDialogOpen: false,
   libraryDialogOpen: false,

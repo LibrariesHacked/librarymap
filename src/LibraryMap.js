@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { useTheme } from '@mui/material/styles'
+
 import Map, {
   Source,
   Layer,
@@ -21,6 +23,7 @@ import MeAvatar from './MeAvatar'
 
 const config = require('./helpers/config.json')
 
+const builtUpAreaTiles = config.builtUpAreaTiles
 const libraryTiles = config.libraryTiles
 const libraryBuildingsTiles = config.libraryBuildingsTiles
 const libraryAuthorityTiles = config.libraryAuthorityTiles
@@ -29,7 +32,9 @@ const tripTiles = config.tripTiles
 
 function LibraryMap (props) {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
-
+  
+  const theme = useTheme();
+  
   const { containerStyle, clickMap } = props
   const [
     { searchType, searchPosition, currentService, displayClosedLibraries },
@@ -111,6 +116,28 @@ function LibraryMap (props) {
             paint={{
               'fill-opacity': 0.1,
               'fill-color': '#455a64'
+            }}
+          />
+        </Source>
+      ) : null}
+      {mapSettings.builtUpAreas ? ( // eslint-disable-line
+        <Source type='vector' tiles={[builtUpAreaTiles]}>
+          <Layer
+            type='fill'
+            source-layer='built_up_areas'
+            minzoom={5}
+            paint={{
+              'fill-color': theme.palette.primary.main,
+              'fill-opacity': 0.2
+            }}
+          />
+          <Layer
+            type='line'
+            source-layer='built_up_areas'
+            minzoom={5}
+            paint={{
+              'line-color': theme.palette.primary.main,
+              'line-width': 2
             }}
           />
         </Source>
