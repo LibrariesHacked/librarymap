@@ -8,6 +8,8 @@ import Map, {
   AttributionControl
 } from 'react-map-gl/maplibre'
 
+import * as turf from '@turf/turf'
+
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'
 
@@ -39,6 +41,21 @@ function LibraryMap (props) {
   ] = useViewStateValue() //eslint-disable-line
 
   const [map, setMap] = useState(null)
+
+  let currentServiceMask = null
+  if (currentService && currentService.geojson) {
+    const poly = turf.polygon(JSON.parse(currentService.geojson).coordinates[0])
+    const worldMask = turf.polygon([
+      [
+        [-180, -90],
+        [180, -90],
+        [180, 90],
+        [-180, 90],
+        [-180, -90]
+      ]
+    ])
+    currentServiceMask = turf.mask(poly, worldMask)
+  }
 
   useEffect(() => {
     if (mapBounds && map) {
@@ -79,14 +96,21 @@ function LibraryMap (props) {
       onClick={evt => clickMap(map, evt)}
     >
       <AttributionControl customAttribution='Contains OS data © Crown copyright and database right 2023' />
-      {currentService && currentService.geojson ? ( // eslint-disable-line
-        <Source type='geojson' data={JSON.parse(currentService.geojson)}>
+      {currentService && currentService.geojson && currentServiceMask ? ( // eslint-disable-line
+        <Source type='geojson' data={currentServiceMask}>
           <Layer
             type='line'
             paint={{
               'line-opacity': 0.4,
-              'line-width': 2,
+              'line-width': 3,
               'line-color': '#455a64'
+            }}
+          />
+          <Layer
+            type='fill'
+            paint={{
+              'fill-opacity': 0.1,
+              'fill-color': '#455a64'
             }}
           />
         </Source>
