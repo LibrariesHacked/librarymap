@@ -16,7 +16,8 @@ const initialSearchState = {
   serviceFilterBoundary: null,
   currentService: null,
   currentServiceSystemName: null,
-  displayClosedLibraries: false
+  displayClosedLibraries: false,
+  currentBuiltUpArea: null
 }
 
 const searchReducer = (state, action) => {
@@ -32,6 +33,11 @@ const searchReducer = (state, action) => {
         ...state,
         currentLibraryId: action.currentLibraryId,
         currentPoint: action.currentPoint
+      }
+    case 'SetCurrentBuiltUpArea':
+      return {
+        ...state,
+        currentBuiltUpArea: action.currentBuiltUpArea
       }
     case 'SetLibrarySearchDistance':
       return {

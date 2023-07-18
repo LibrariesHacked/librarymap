@@ -36,7 +36,10 @@ function LibraryDetails (props) {
   const goToWebsite = () => window.open(library.url, '_blank')
 
   const emailLibrary = () =>
-    window.open('mailto:' + library.emailAddress.replace('mailto:', ''), '_blank')
+    window.open(
+      'mailto:' + library.emailAddress.replace('mailto:', ''),
+      '_blank'
+    )
 
   const staffedHoursAvailable =
     hoursHelper
@@ -204,7 +207,7 @@ function LibraryDetails (props) {
           ) : null}
           <Alert
             severity='warning'
-            icon={<HelpIcon fontSize="inherit" />}
+            icon={<HelpIcon fontSize='inherit' />}
             sx={{ border: 1, borderColor: grey[300] }}
             action={
               <Button href='/data' color='warning' startIcon={<DataIcon />}>

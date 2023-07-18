@@ -76,6 +76,17 @@ function MapPage (props) {
     })
   }
 
+  const clickBuiltUpArea = (feature, point) => {
+    dispatchView({
+      type: 'SetBuiltUpAreaDialog',
+      builtUpAreaDialogOpen: true
+    })
+    dispatchSearch({
+      type: 'SetCurrentBuiltUpArea',
+      currentBuiltUpArea: feature.properties
+    })
+  }
+
   const clickMap = async (map, event) => {
     if (loadingLibraryOrMobileLibrary) return
     dispatchView({
@@ -90,6 +101,10 @@ function MapPage (props) {
         }
         if (feature.sourceLayer === 'stop') {
           await clickStop(feature, event.point)
+          break
+        }
+        if (feature.sourceLayer === 'built_up_areas') {
+          clickBuiltUpArea(feature, event.point)
           break
         }
       }
