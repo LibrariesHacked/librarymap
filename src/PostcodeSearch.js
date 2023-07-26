@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -17,7 +16,6 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import * as geoHelper from './helpers/geo'
-import * as urlHelper from './helpers/url'
 
 const usePrevious = value => {
   const ref = useRef()
@@ -55,8 +53,6 @@ function PostcodeSearch () {
   const [tempPostcode, setTempPostcode] = useState(searchPostcode || '')
 
   const prevProps = usePrevious({ searchPostcode })
-
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (prevProps && searchPostcode !== prevProps.searchPostcode) {
@@ -100,7 +96,6 @@ function PostcodeSearch () {
   const clearSearch = () => {
     setTempPostcode('')
     dispatchSearch({ type: 'ClearAll' })
-    urlHelper.clearService(navigate)
   }
 
   const postcodeSearch = async (postcode = tempPostcode) => {
