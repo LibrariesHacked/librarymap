@@ -8,11 +8,13 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
 
+import { alpha } from '@mui/material'
+import grey from '@mui/material/colors/grey'
+
 import DirectionsBike from '@mui/icons-material/DirectionsBikeRounded'
 import DirectionsWalk from '@mui/icons-material/DirectionsWalkRounded'
 import DirectionsCar from '@mui/icons-material/DirectionsCarRounded'
 import LayersIcon from '@mui/icons-material/LayersRounded'
-import MapIcon from '@mui/icons-material/MapRounded'
 import MoreVertIcon from '@mui/icons-material/MoreVertRounded'
 
 import { useApplicationStateValue } from './context/applicationState'
@@ -22,7 +24,6 @@ import { useViewStateValue } from './context/viewState'
 import LibraryMap from './LibraryMap'
 import MapSettings from './MapSettings'
 import PostcodeSearch from './PostcodeSearch'
-import SiteBreadcrumbs from './SiteBreadcrumbs'
 
 import * as isochroneModel from './models/isochrone'
 import * as stopModel from './models/stop'
@@ -76,6 +77,17 @@ function MapPage (props) {
     })
   }
 
+  const clickBuiltUpArea = (feature, point) => {
+    dispatchView({
+      type: 'SetBuiltUpAreaDialog',
+      builtUpAreaDialogOpen: true
+    })
+    dispatchSearch({
+      type: 'SetCurrentBuiltUpArea',
+      currentBuiltUpArea: feature.properties
+    })
+  }
+
   const clickMap = async (map, event) => {
     if (loadingLibraryOrMobileLibrary) return
     dispatchView({
@@ -90,6 +102,10 @@ function MapPage (props) {
         }
         if (feature.sourceLayer === 'stop') {
           await clickStop(feature, event.point)
+          break
+        }
+        if (feature.sourceLayer === 'built_up_areas') {
+          clickBuiltUpArea(feature, event.point)
           break
         }
       }
@@ -183,10 +199,13 @@ function MapPage (props) {
         sx={{
           position: 'absolute',
           marginTop: theme => theme.spacing(2),
-          zIndex: 1000
+          zIndex: 1000,
+          backgroundColor: alpha('#fff', 0.8),
+          borderRadius: '4px',
+          border: '1px solid',
+          borderColor: grey[300]
         }}
       >
-        <SiteBreadcrumbs currentPageName='Map' currentPageIcon={MapIcon} />
         <PostcodeSearch />
       </Box>
       <LibraryMap

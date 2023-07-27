@@ -18,7 +18,8 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 function MapSettings () {
-  const [{ mapSettings, mapSettingsDialogOpen }, dispatchView] = useViewStateValue()
+  const [{ mapSettings, mapSettingsDialogOpen }, dispatchView] =
+    useViewStateValue()
   const [{ displayClosedLibraries }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
 
   const closeDialog = () => {
@@ -30,7 +31,10 @@ function MapSettings () {
   }
 
   const handleClosedLibrariesChange = () => {
-    dispatchSearch({ type: 'SetDisplayClosedLibraries', displayClosedLibraries: !displayClosedLibraries })
+    dispatchSearch({
+      type: 'SetDisplayClosedLibraries',
+      displayClosedLibraries: !displayClosedLibraries
+    })
   }
 
   const handleMobileLibraryStopsChange = () => {
@@ -39,6 +43,10 @@ function MapSettings () {
 
   const handleAuthorityBoundaryChange = () => {
     dispatchView({ type: 'ToggleMapSetting', mapSetting: 'authorityBoundary' })
+  }
+
+  const handleBuiltUpAreasChange = () => {
+    dispatchView({ type: 'ToggleMapSetting', mapSetting: 'builtUpAreas' })
   }
 
   const theme = useTheme()
@@ -67,7 +75,8 @@ function MapSettings () {
             />
           }
           label='Libraries'
-        /><br />
+        />
+        <br />
         <FormControlLabel
           control={
             <Switch
@@ -78,7 +87,8 @@ function MapSettings () {
             />
           }
           label='Closed libraries'
-        /><br />
+        />
+        <br />
         <FormControlLabel
           control={
             <Switch
@@ -89,7 +99,8 @@ function MapSettings () {
             />
           }
           label='Mobile library stops'
-        /><br />
+        />
+        <br />
         <FormControlLabel
           control={
             <Switch
@@ -101,9 +112,27 @@ function MapSettings () {
           }
           label='Library service boundaries'
         />
+        <br />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={mapSettings.builtUpAreas}
+              onChange={handleBuiltUpAreasChange}
+              name='sw_built_up_areas'
+              color='primary'
+            />
+          }
+          label='Built up areas'
+        />
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog} color='secondary' endIcon={<CancelIcon />}>Close</Button>
+        <Button
+          onClick={closeDialog}
+          color='secondary'
+          endIcon={<CancelIcon />}
+        >
+          Close
+        </Button>
       </DialogActions>
     </Dialog>
   )

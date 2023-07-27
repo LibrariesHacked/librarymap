@@ -11,6 +11,7 @@ import AccessibilityIcon from '@mui/icons-material/Accessibility'
 import PrivacyIcon from '@mui/icons-material/PrivacyTip'
 import DataIcon from '@mui/icons-material/Info'
 
+import BuiltUpAreaPopup from './BuiltUpAreaPopup'
 import Footer from './Footer'
 import Header from './Header'
 import Home from './Home'
@@ -30,12 +31,10 @@ import Privacy from './pages/privacy.md'
 import * as serviceModel from './models/service'
 
 import { useApplicationStateValue } from './context/applicationState'
-import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 function LibraryMapApplication () {
   const [{}, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
-  const [{}, dispatchSearch] = useSearchStateValue() //eslint-disable-line
   const [{ loadingLibraryOrMobileLibrary }, dispatchView] = useViewStateValue() //eslint-disable-line
 
   useEffect(() => {
@@ -126,6 +125,7 @@ function LibraryMapApplication () {
       <Notification />
       <StopDetails />
       <LibraryPopup />
+      <BuiltUpAreaPopup />
       <Backdrop open={loadingLibraryOrMobileLibrary} invisible>
         <CircularProgress color='inherit' />
       </Backdrop>

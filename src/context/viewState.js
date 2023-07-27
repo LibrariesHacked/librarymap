@@ -12,11 +12,13 @@ const initialViewState = {
   mapSettings: {
     libraries: true,
     mobileLibraryStops: true,
-    authorityBoundary: false
+    authorityBoundary: false,
+    builtUpAreas: false
   },
   mapSettingsDialogOpen: false,
   libraryDialogOpen: false,
   stopDialogOpen: false,
+  builtUpAreaDialogOpen: false,
   locationAccessed: false,
   loadingLocation: false,
   loadingPostcode: false,
@@ -42,6 +44,11 @@ const viewReducer = (state, action) => {
       return { ...state, stopDialogOpen: action.stopDialogOpen }
     case 'SetLibraryDialog':
       return { ...state, libraryDialogOpen: action.libraryDialogOpen }
+    case 'SetBuiltUpAreaDialog':
+      return {
+        ...state,
+        builtUpAreaDialogOpen: action.builtUpAreaDialogOpen
+      }
     case 'SetMapSettingsDialog':
       return { ...state, mapSettingsDialogOpen: action.mapSettingsDialogOpen }
     case 'ToggleMapSetting': {

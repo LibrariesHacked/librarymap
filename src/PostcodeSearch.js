@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+
+import { useMatch } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -17,7 +18,6 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import * as geoHelper from './helpers/geo'
-import * as urlHelper from './helpers/url'
 
 const usePrevious = value => {
   const ref = useRef()
@@ -56,7 +56,7 @@ function PostcodeSearch () {
 
   const prevProps = usePrevious({ searchPostcode })
 
-  const navigate = useNavigate()
+  const mapPage = useMatch('/map')
 
   useEffect(() => {
     if (prevProps && searchPostcode !== prevProps.searchPostcode) {
@@ -100,7 +100,6 @@ function PostcodeSearch () {
   const clearSearch = () => {
     setTempPostcode('')
     dispatchSearch({ type: 'ClearAll' })
-    urlHelper.clearService(navigate)
   }
 
   const postcodeSearch = async (postcode = tempPostcode) => {
@@ -149,9 +148,11 @@ function PostcodeSearch () {
       <Box
         sx={{
           position: 'relative',
-          backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
+          backgroundColor: theme =>
+            alpha(mapPage ? '#fff' : theme.palette.primary.main, 0.05),
           '&:hover': {
-            backgroundColor: theme => alpha(theme.palette.primary.main, 0.1)
+            backgroundColor: theme =>
+              alpha(mapPage ? '#fff' : theme.palette.primary.main, 0.1)
           },
           marginLeft: 0,
           paddingLeft: 0,

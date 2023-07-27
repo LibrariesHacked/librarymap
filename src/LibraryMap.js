@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { useTheme } from '@mui/material/styles'
+
 import Map, {
   Source,
   Layer,
@@ -21,6 +23,7 @@ import MeAvatar from './MeAvatar'
 
 const config = require('./helpers/config.json')
 
+const builtUpAreaTiles = config.builtUpAreaTiles
 const libraryTiles = config.libraryTiles
 const libraryBuildingsTiles = config.libraryBuildingsTiles
 const libraryAuthorityTiles = config.libraryAuthorityTiles
@@ -29,6 +32,8 @@ const tripTiles = config.tripTiles
 
 function LibraryMap (props) {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+
+  const theme = useTheme()
 
   const { containerStyle, clickMap } = props
   const [
@@ -102,7 +107,7 @@ function LibraryMap (props) {
             type='line'
             paint={{
               'line-opacity': 0.4,
-              'line-width': 3,
+              'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4],
               'line-color': '#455a64'
             }}
           />
@@ -111,6 +116,53 @@ function LibraryMap (props) {
             paint={{
               'fill-opacity': 0.1,
               'fill-color': '#455a64'
+            }}
+          />
+        </Source>
+      ) : null}
+      {mapSettings.builtUpAreas ? ( // eslint-disable-line
+        <Source type='vector' tiles={[builtUpAreaTiles]}>
+          <Layer
+            type='fill'
+            source-layer='built_up_areas'
+            minzoom={5}
+            paint={{
+              'fill-color': theme.palette.primary.main,
+              'fill-opacity': 0.2
+            }}
+          />
+          <Layer
+            type='line'
+            source-layer='built_up_areas'
+            minzoom={10}
+            paint={{
+              'line-color': theme.palette.primary.main,
+              'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 18, 4],
+              'line-opacity': 0.4
+            }}
+          />
+          <Layer
+            type='symbol'
+            source-layer='built_up_areas'
+            minzoom={12}
+            layout={{
+              'text-field': ['get', 'name'],
+              'text-font': ['Source Sans Pro Bold'],
+              'text-allow-overlap': false,
+              'text-size': {
+                base: 1.2,
+                stops: [
+                  [6, 14],
+                  [22, 24]
+                ]
+              }
+            }}
+            paint={{
+              'text-color': theme.palette.primary.main,
+              'text-halo-color': 'rgba(255, 255, 255, 0.9)',
+              'text-halo-width': 1,
+              'text-halo-blur': 1,
+              'text-opacity': 0.9
             }}
           />
         </Source>
@@ -141,7 +193,15 @@ function LibraryMap (props) {
                     type='line'
                     paint={{
                       'line-opacity': 0.4,
-                      'line-width': 2,
+                      'line-width': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        6,
+                        1,
+                        18,
+                        4
+                      ],
                       'line-color': config.travel.filter(
                         t => t.name === transport
                       )[0].colour
