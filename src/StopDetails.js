@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -138,7 +140,13 @@ function StopDetails () {
               icon={<HelpIcon fontSize='inherit' />}
               sx={{ border: 1, borderColor: grey[300] }}
               action={
-                <Button href='/data' color='warning' startIcon={<DataIcon />}>
+                <Button
+                  to='/data'
+                  color='warning'
+                  startIcon={<DataIcon />}
+                  component={Link}
+                  onClick={() => close()}
+                >
                   Update
                 </Button>
               }

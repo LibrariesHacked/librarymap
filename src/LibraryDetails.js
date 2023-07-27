@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -20,6 +22,7 @@ import DataIcon from '@mui/icons-material/EditLocationAltRounded'
 import HelpIcon from '@mui/icons-material/HelpRounded'
 
 import { useViewStateValue } from './context/viewState'
+import { useSearchStateValue } from './context/searchState'
 
 import moment from 'moment'
 
@@ -29,7 +32,8 @@ import * as urlHelper from './helpers/url'
 import config from './helpers/config'
 
 function LibraryDetails (props) {
-  const [{ libraryDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{}, dispatchSearch] = useSearchStateValue() //eslint-disable-line
+  const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const { library } = props
 
@@ -49,6 +53,15 @@ function LibraryDetails (props) {
     hoursHelper
       .getAllHours(library)
       .filter(rs => rs.unstaffed !== null && rs.unstaffed.length > 0).length > 0
+
+  const close = () => {
+    dispatchSearch({
+      type: 'SetCurrentLibrary',
+      currentLibraryId: null,
+      currentPoint: null
+    })
+    dispatchView({ type: 'SetLibraryDialog', stopLibraryDialogOpen: false })
+  }
 
   return (
     <>
@@ -210,7 +223,13 @@ function LibraryDetails (props) {
             icon={<HelpIcon fontSize='inherit' />}
             sx={{ border: 1, borderColor: grey[300] }}
             action={
-              <Button href='/data' color='warning' startIcon={<DataIcon />}>
+              <Button
+                to='/data'
+                color='warning'
+                startIcon={<DataIcon />}
+                component={Link}
+                onClick={() => close()}
+              >
                 Update
               </Button>
             }
