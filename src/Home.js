@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -37,14 +39,14 @@ function Home () {
       <Libraries />
       <Alert
         severity='warning'
-        icon={<HelpIcon fontSize="inherit" />}
+        icon={<HelpIcon fontSize='inherit' />}
         sx={{
           marginTop: theme => theme.spacing(2),
           border: 1,
           borderColor: grey[300]
         }}
         action={
-          <Button href='/data' startIcon={<DataIcon />} color='warning'>
+          <Button to='/data' startIcon={<DataIcon />} color='warning' component={Link}>
             Update
           </Button>
         }
