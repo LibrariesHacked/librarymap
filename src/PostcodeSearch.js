@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import { useMatch } from 'react-router-dom'
+
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
@@ -53,6 +55,8 @@ function PostcodeSearch () {
   const [tempPostcode, setTempPostcode] = useState(searchPostcode || '')
 
   const prevProps = usePrevious({ searchPostcode })
+
+  const mapPage = useMatch('/map')
 
   useEffect(() => {
     if (prevProps && searchPostcode !== prevProps.searchPostcode) {
@@ -144,9 +148,11 @@ function PostcodeSearch () {
       <Box
         sx={{
           position: 'relative',
-          backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
+          backgroundColor: theme =>
+            alpha(mapPage ? '#fff' : theme.palette.primary.main, 0.05),
           '&:hover': {
-            backgroundColor: theme => alpha(theme.palette.primary.main, 0.1)
+            backgroundColor: theme =>
+              alpha(mapPage ? '#fff' : theme.palette.primary.main, 0.1)
           },
           marginLeft: 0,
           paddingLeft: 0,
