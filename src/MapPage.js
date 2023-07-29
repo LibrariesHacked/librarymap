@@ -9,7 +9,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
 
 import { alpha } from '@mui/material'
-import grey from '@mui/material/colors/grey'
 
 import DirectionsBike from '@mui/icons-material/DirectionsBikeRounded'
 import DirectionsWalk from '@mui/icons-material/DirectionsWalkRounded'
@@ -201,9 +200,7 @@ function MapPage (props) {
           marginTop: theme => theme.spacing(2),
           zIndex: 1000,
           backgroundColor: alpha('#fff', 0.8),
-          borderRadius: '4px',
-          border: '1px solid',
-          borderColor: grey[300]
+          borderRadius: theme => theme.shape.borderRadius
         }}
       >
         <PostcodeSearch />
