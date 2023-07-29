@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import { useMatch } from 'react-router-dom'
-
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
@@ -27,7 +25,7 @@ const usePrevious = value => {
   return ref.current
 }
 
-const SearchBox = ({ children }) => {
+const SearchIconBox = ({ children }) => {
   return (
     <Box
       position='relative'
@@ -55,8 +53,6 @@ function PostcodeSearch () {
   const [tempPostcode, setTempPostcode] = useState(searchPostcode || '')
 
   const prevProps = usePrevious({ searchPostcode })
-
-  const mapPage = useMatch('/map')
 
   useEffect(() => {
     if (prevProps && searchPostcode !== prevProps.searchPostcode) {
@@ -148,18 +144,14 @@ function PostcodeSearch () {
       <Box
         sx={{
           position: 'relative',
-          backgroundColor: theme =>
-            alpha(mapPage ? '#fff' : theme.palette.primary.main, 0.05),
-          '&:hover': {
-            backgroundColor: theme =>
-              alpha(mapPage ? '#fff' : theme.palette.primary.main, 0.1)
-          },
+          backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
           marginLeft: 0,
           paddingLeft: 0,
           whitespace: 'nowrap',
           display: 'inline-flex',
           color: theme => theme.palette.primary.main,
-          borderBottom: theme => `2px solid ${theme.palette.primary.main}`
+          borderRadius: theme => theme.shape.borderRadius,
+          border: theme => `2px solid ${theme.palette.primary.main}`
         }}
       >
         <InputBase
@@ -171,10 +163,10 @@ function PostcodeSearch () {
           }}
           inputProps={{ 'aria-label': 'search by postcode' }}
           sx={{
-            paddingLeft: theme => theme.spacing(1),
+            paddingLeft: theme => theme.spacing(2),
             maxWidth: 110,
             color: theme => theme.palette.secondary.main,
-            fontWeight: 500
+            fontWeight: 600
           }}
         />
         {!loadingPostcode ? (
@@ -190,9 +182,9 @@ function PostcodeSearch () {
             </IconButton>
           </Tooltip>
         ) : (
-          <SearchBox>
-            <CircularProgress color='inherit' size={22} />
-          </SearchBox>
+          <SearchIconBox>
+            <CircularProgress color='secondary' size={22} />
+          </SearchIconBox>
         )}
         <Tooltip title='Use your current location'>
           <>
@@ -207,26 +199,26 @@ function PostcodeSearch () {
                 <MyLocationIcon />
               </IconButton>
             ) : (
-              <SearchBox>
-                <CircularProgress color='inherit' size={22} />
-              </SearchBox>
+              <SearchIconBox>
+                <CircularProgress color='secondary' size={22} />
+              </SearchIconBox>
             )}
           </>
         </Tooltip>
+        {searchType === 'postcode' ? (
+          <Tooltip title='Clear search'>
+            <IconButton
+              color='secondary'
+              aria-label='Clear search'
+              onClick={() => clearSearch()}
+              size='large'
+              disabled={loadingPostcode || loadingLocation}
+            >
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+        ) : null}
       </Box>
-      {searchType === 'postcode' ? (
-        <Tooltip title='Clear search'>
-          <IconButton
-            color='inherit'
-            aria-label='Clear search'
-            onClick={() => clearSearch()}
-            size='large'
-            disabled={loadingPostcode || loadingLocation}
-          >
-            <ClearIcon />
-          </IconButton>
-        </Tooltip>
-      ) : null}
     </>
   )
 }
