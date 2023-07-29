@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import Tooltip from '@mui/material/Tooltip'
 
-import { alpha } from '@mui/material/styles'
+import { alpha, lighten } from '@mui/material/styles'
 
 import ClearIcon from '@mui/icons-material/ClearRounded'
 import MyLocationIcon from '@mui/icons-material/MyLocationRounded'
@@ -150,8 +150,9 @@ function PostcodeSearch () {
           whitespace: 'nowrap',
           display: 'inline-flex',
           color: theme => theme.palette.primary.main,
-          borderRadius: theme => theme.shape.borderRadius,
-          border: theme => `2px solid ${theme.palette.primary.main}`
+          borderRadius: '6px',
+          border: theme =>
+            `2px solid ${lighten(theme.palette.primary.main, 0.5)}`
         }}
       >
         <InputBase

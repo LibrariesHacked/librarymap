@@ -19,8 +19,8 @@ import Search from './Search'
 function Home () {
   return (
     <>
-      <Box sx={{ textAlign: 'center' }}>
-        <img src='/android-icon-96x96.png' alt='Logo' />
+      <Box sx={{ textAlign: 'center', paddingTop: theme => theme.spacing(2) }}>
+        <img src='/android-icon-72x72.png' alt='Logo' />
         <Typography component='h1' variant='h2'>
           Library map
         </Typography>
@@ -32,7 +32,7 @@ function Home () {
             margin: theme => theme.spacing(0, 0, 4, 0)
           }}
         >
-          Find your nearest public library by postcode or library service
+          Find your library by postcode or service
         </Typography>
         <Search />
       </Box>
@@ -46,7 +46,12 @@ function Home () {
           borderColor: grey[300]
         }}
         action={
-          <Button to='/data' startIcon={<DataIcon />} color='warning' component={Link}>
+          <Button
+            to='/data'
+            startIcon={<DataIcon />}
+            color='warning'
+            component={Link}
+          >
             Update
           </Button>
         }

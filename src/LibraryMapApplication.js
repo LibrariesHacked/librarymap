@@ -69,7 +69,10 @@ function LibraryMapApplication () {
   return (
     <HashRouter>
       <Header />
-      <Container maxWidth='false' sx={{ backgroundColor: grey.A100 }}>
+      <Container
+        maxWidth='false'
+        sx={{ backgroundColor: grey.A100 }}
+      >
         <Container
           sx={{
             paddingBottom: theme => theme.spacing(2)
@@ -119,9 +122,7 @@ function LibraryMapApplication () {
           </main>
         </Container>
       </Container>
-      <Container sx={{ marginTop: theme => theme.spacing(2) }}>
-        <Footer />
-      </Container>
+      <Footer />
       <Notification />
       <StopDetails />
       <LibraryPopup />
