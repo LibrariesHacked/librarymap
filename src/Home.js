@@ -15,7 +15,7 @@ import grey from '@mui/material/colors/grey'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
-import PostcodeInfo from './PostcodeInfo'
+import PostcodeDetails from './PostcodeDetails'
 import Search from './Search'
 
 function Home () {
@@ -46,7 +46,7 @@ function Home () {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={6}>
-          <PostcodeInfo />
+          <PostcodeDetails />
         </Grid>
         <Grid item></Grid>
       </Grid>

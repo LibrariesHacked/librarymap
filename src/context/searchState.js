@@ -5,6 +5,8 @@ export const SearchStateContext = createContext()
 const initialSearchState = {
   searchPostcode: '',
   searchType: '',
+  nearestLibrary: null,
+  nearestService: null,
   librarySearchDistance: 12872,
   mobileSearchDistance: 3218,
   searchPosition: [],
@@ -73,6 +75,16 @@ const searchReducer = (state, action) => {
         searchPostcode: '',
         searchPosition: [],
         searchType: 'service'
+      }
+    case 'SetNearestLibrary':
+      return {
+        ...state,
+        nearestLibrary: action.nearestLibrary
+      }
+    case 'SetNearestService':
+      return {
+        ...state,
+        nearestService: action.nearestService
       }
     case 'ClearAll':
       if (

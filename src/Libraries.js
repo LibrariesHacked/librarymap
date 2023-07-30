@@ -69,7 +69,7 @@ function Libraries () {
     pageInfo?.totalRowCount || 0
   )
 
-  const fetchLibraries = useCallback(() => {
+  const fetchLibraries = useCallback(async () => {
     if (
       sortModel[0].field !== 'distance' &&
       prevPosition &&
@@ -86,7 +86,7 @@ function Libraries () {
       setSortModel(initialSortModel)
       return
     }
-    getLibrariesFromQuery({
+    const libraryData = await getLibrariesFromQuery({
       page: page,
       pageSize: pageSize,
       sortModel: sortModel,
@@ -95,6 +95,17 @@ function Libraries () {
       serviceFilter: serviceFilter,
       displayClosedLibraries: displayClosedLibraries
     })
+    if (
+      searchPostcode.length > 0 &&
+      libraryData.libraries &&
+      libraryData.libraries.length > 0
+    ) {
+      dispatchSearch({
+        type: 'SetNearestLibrary',
+        nearestLibrary: libraryData.libraries[0]
+      })
+    }
+
     // eslint-disable-next-line
   }, [
     page,
