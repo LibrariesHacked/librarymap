@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
@@ -14,12 +15,19 @@ import grey from '@mui/material/colors/grey'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
+import PostcodeInfo from './PostcodeInfo'
 import Search from './Search'
 
 function Home () {
   return (
     <>
-      <Box sx={{ textAlign: 'center', paddingTop: theme => theme.spacing(2) }}>
+      <Box
+        sx={{
+          textAlign: 'center',
+          paddingTop: theme => theme.spacing(2),
+          paddingBottom: theme => theme.spacing(2)
+        }}
+      >
         <img src='/android-icon-72x72.png' alt='Logo' />
         <Typography component='h1' variant='h2'>
           Library map
@@ -36,6 +44,13 @@ function Home () {
         </Typography>
         <Search />
       </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={6}>
+          <PostcodeInfo />
+        </Grid>
+        <Grid item></Grid>
+      </Grid>
+
       <Libraries />
       <Alert
         severity='warning'
