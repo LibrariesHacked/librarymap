@@ -86,7 +86,7 @@ function Libraries () {
       setSortModel(initialSortModel)
       return
     }
-    const libraryData = await getLibrariesFromQuery({
+    getLibrariesFromQuery({
       page: page,
       pageSize: pageSize,
       sortModel: sortModel,
@@ -95,16 +95,6 @@ function Libraries () {
       serviceFilter: serviceFilter,
       displayClosedLibraries: displayClosedLibraries
     })
-    if (
-      searchPostcode.length > 0 &&
-      libraryData.libraries &&
-      libraryData.libraries.length > 0
-    ) {
-      dispatchSearch({
-        type: 'SetNearestLibrary',
-        nearestLibrary: libraryData.libraries[0]
-      })
-    }
 
     // eslint-disable-next-line
   }, [

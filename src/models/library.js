@@ -91,7 +91,7 @@ export async function getQueryLibraries (
 
   if (distance && distance !== '') url = `${url}&distance=${distance}`
 
-  if (serviceFilter.length > 0) { url = `${url}&service_codes=${serviceFilter.join('|')}` }
+  if (serviceFilter && serviceFilter.length > 0) { url = `${url}&service_codes=${serviceFilter.join('|')}` }
 
   const response = await axios.get(url)
 
