@@ -31,19 +31,24 @@ const stopTiles = config.stopTiles
 const tripTiles = config.tripTiles
 
 function LibraryMap (props) {
-  const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
+  const [{ isochrones }] = useApplicationStateValue()
 
   const theme = useTheme()
 
   const { containerStyle, clickMap } = props
   const [
-    { searchType, searchPosition, currentService, displayClosedLibraries },
-    dispatchSearch //eslint-disable-line
+    {
+      searchType,
+      searchPosition,
+      currentService,
+      displayClosedLibraries,
+      nearestLibraryLine
+    }
   ] = useSearchStateValue()
   const [
     { mapZoom, mapPosition, mapSettings, mapFlyToPosition, mapBounds },
     dispatchView
-  ] = useViewStateValue() //eslint-disable-line
+  ] = useViewStateValue()
 
   const [map, setMap] = useState(null)
 
@@ -120,6 +125,18 @@ function LibraryMap (props) {
           />
         </Source>
       ) : null}
+      {nearestLibraryLine && (
+        <Source type='geojson' data={nearestLibraryLine}>
+          <Layer
+            type='line'
+            paint={{
+              'line-opacity': 0.4,
+              'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4],
+              'line-color': '#455a64'
+            }}
+          />
+        </Source>
+      )}
       {mapSettings.builtUpAreas ? ( // eslint-disable-line
         <Source type='vector' tiles={[builtUpAreaTiles]}>
           <Layer

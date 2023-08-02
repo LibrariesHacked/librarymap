@@ -200,7 +200,7 @@ function MapPage (props) {
           marginTop: theme => theme.spacing(2),
           zIndex: 1000,
           backgroundColor: alpha('#fff', 0.8),
-          borderRadius: theme => theme.shape.borderRadius
+          borderRadius: '6px'
         }}
       >
         <PostcodeSearch />

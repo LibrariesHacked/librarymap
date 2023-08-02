@@ -90,3 +90,14 @@ export const getNearestMobileLibrary = async location => {
 export const validatePostcode = postcode => {
   return /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/.test(postcode.trim())
 }
+
+export const getLineGeoJsonFromPoints = (points, properties) => {
+  return {
+    type: 'Feature',
+    properties: properties,
+    geometry: {
+      type: 'LineString',
+      coordinates: points
+    }
+  }
+}

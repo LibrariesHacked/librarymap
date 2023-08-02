@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 
-import grey from '@mui/material/colors/grey'
-
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
@@ -69,7 +67,7 @@ function LibraryMapApplication () {
   return (
     <HashRouter>
       <Header />
-      <Container maxWidth='false' sx={{ backgroundColor: grey.A100 }}>
+      <Container maxWidth='false'>
         <Container
           sx={{
             paddingBottom: theme => theme.spacing(2)
@@ -119,9 +117,7 @@ function LibraryMapApplication () {
           </main>
         </Container>
       </Container>
-      <Container sx={{ marginTop: theme => theme.spacing(2) }}>
-        <Footer />
-      </Container>
+      <Footer />
       <Notification />
       <StopDetails />
       <LibraryPopup />

@@ -69,7 +69,7 @@ function Libraries () {
     pageInfo?.totalRowCount || 0
   )
 
-  const fetchLibraries = useCallback(() => {
+  const fetchLibraries = useCallback(async () => {
     if (
       sortModel[0].field !== 'distance' &&
       prevPosition &&
@@ -95,6 +95,7 @@ function Libraries () {
       serviceFilter: serviceFilter,
       displayClosedLibraries: displayClosedLibraries
     })
+
     // eslint-disable-next-line
   }, [
     page,

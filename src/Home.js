@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
@@ -14,13 +15,20 @@ import grey from '@mui/material/colors/grey'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
+import PostcodeDetails from './PostcodeDetails'
 import Search from './Search'
 
 function Home () {
   return (
     <>
-      <Box sx={{ textAlign: 'center' }}>
-        <img src='/android-icon-96x96.png' alt='Logo' />
+      <Box
+        sx={{
+          textAlign: 'center',
+          paddingTop: theme => theme.spacing(2),
+          paddingBottom: theme => theme.spacing(2)
+        }}
+      >
+        <img src='/android-icon-72x72.png' alt='Logo' />
         <Typography component='h1' variant='h2'>
           Library map
         </Typography>
@@ -32,10 +40,17 @@ function Home () {
             margin: theme => theme.spacing(0, 0, 4, 0)
           }}
         >
-          Find your nearest public library by postcode or library service
+          Find your library by postcode or service
         </Typography>
         <Search />
       </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={6}>
+          <PostcodeDetails />
+        </Grid>
+        <Grid item></Grid>
+      </Grid>
+
       <Libraries />
       <Alert
         severity='warning'
@@ -46,7 +61,12 @@ function Home () {
           borderColor: grey[300]
         }}
         action={
-          <Button to='/data' startIcon={<DataIcon />} color='warning' component={Link}>
+          <Button
+            to='/data'
+            startIcon={<DataIcon />}
+            color='warning'
+            component={Link}
+          >
             Update
           </Button>
         }

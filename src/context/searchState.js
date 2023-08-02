@@ -5,6 +5,11 @@ export const SearchStateContext = createContext()
 const initialSearchState = {
   searchPostcode: '',
   searchType: '',
+  nearestLibrary: null,
+  nearestLibraryLine: null,
+  nearestMobileLibrary: null,
+  nearestMobileLibraryLine: null,
+  postcodeServiceCode: null,
   librarySearchDistance: 12872,
   mobileSearchDistance: 3218,
   searchPosition: [],
@@ -74,6 +79,23 @@ const searchReducer = (state, action) => {
         searchPosition: [],
         searchType: 'service'
       }
+    case 'SetNearestLibrary':
+      return {
+        ...state,
+        nearestLibrary: action.nearestLibrary,
+        nearestLibraryLine: action.nearestLibraryLine
+      }
+    case 'SetNearestMobileLibrary':
+      return {
+        ...state,
+        nearestMobileLibrary: action.nearestMobileLibrary,
+        nearestMobileLibraryLine: action.nearestMobileLibraryLine
+      }
+    case 'SetPostcodeServiceCode':
+      return {
+        ...state,
+        postcodeServiceCode: action.postcodeServiceCode
+      }
     case 'ClearAll':
       if (
         state.serviceFilter.length > 0 ||
@@ -90,7 +112,12 @@ const searchReducer = (state, action) => {
           currentServiceSystemName: null,
           searchPostcode: '',
           searchPosition: [],
-          searchType: ''
+          searchType: '',
+          nearestLibrary: null,
+          nearestLibraryLine: null,
+          nearestMobileLibrary: null,
+          nearestMobileLibraryLine: null,
+          postcodeServiceCode: null
         }
       } else {
         return state

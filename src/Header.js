@@ -29,7 +29,7 @@ function Header () {
       <AppBar
         sx={{
           zIndex: theme => theme.zIndex.drawer + 1,
-          backgroundColor: mapPage ? alpha(grey.A100, 0.8) : grey.A100
+          backgroundColor: mapPage ? alpha(grey.A100, 0.9) : grey.A100
         }}
         elevation={0}
         position='relative'

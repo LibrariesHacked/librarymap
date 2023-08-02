@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
 import Tooltip from '@mui/material/Tooltip'
 
-import { alpha } from '@mui/material/styles'
+import { alpha, lighten } from '@mui/material/styles'
 
 import ClearIcon from '@mui/icons-material/ClearRounded'
 import MyLocationIcon from '@mui/icons-material/MyLocationRounded'
@@ -14,6 +14,8 @@ import SearchIcon from '@mui/icons-material/SearchRounded'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
+
+import useLibraryQuery from './hooks/useLibraryQuery'
 
 import * as geoHelper from './helpers/geo'
 
@@ -46,9 +48,11 @@ const SearchIconBox = ({ children }) => {
 
 function PostcodeSearch () {
   const [{ searchType, searchPostcode, searchPosition }, dispatchSearch] =
-    useSearchStateValue() //eslint-disable-line
+    useSearchStateValue()
   const [{ loadingPostcode, loadingLocation }, dispatchView] =
-    useViewStateValue() //eslint-disable-line
+    useViewStateValue()
+
+  const { getLibrariesFromQuery } = useLibraryQuery()
 
   const [tempPostcode, setTempPostcode] = useState(searchPostcode || '')
 
@@ -60,6 +64,42 @@ function PostcodeSearch () {
     }
   }, [searchPostcode, prevProps])
 
+  const getNearestLibrary = async position => {
+    const nearestLibrary = await getLibrariesFromQuery({
+      page: 0,
+      pageSize: 1,
+      sortModel: [{ field: 'distance', sort: 'asc' }],
+      searchPosition: position,
+      searchDistance: 16090,
+      displayClosedLibraries: false,
+      serviceFilter: []
+    })
+
+    if (nearestLibrary.libraries.length > 0) {
+      dispatchSearch({
+        type: 'SetNearestLibrary',
+        nearestLibrary: nearestLibrary.libraries[0],
+        nearestLibraryLine: geoHelper.getLineGeoJsonFromPoints(
+          [
+            position,
+            [
+              nearestLibrary.libraries[0].longitude,
+              nearestLibrary.libraries[0].latitude
+            ]
+          ],
+          { distance: nearestLibrary.libraries[0].distance }
+        )
+      })
+    }
+  }
+
+  const setPostcodeService = postcodeData => {
+    dispatchSearch({
+      type: 'SetPostcodeServiceCode',
+      postcodeServiceCode: postcodeData.library_service
+    })
+  }
+
   const getLocation = async () => {
     if (!loadingLocation) {
       dispatchView({ type: 'ToggleLoadingLocation' })
@@ -68,7 +108,9 @@ function PostcodeSearch () {
           ? searchPosition
           : await geoHelper.getCurrentPosition()
       dispatchSearch({ type: 'SetLocation', searchPosition: pos })
+
       const postcodeData = await getLocationPostcode(pos)
+
       dispatchView({ type: 'SetLocationLoaded' })
       dispatchView({ type: 'ToggleLoadingLocation' })
 
@@ -77,11 +119,15 @@ function PostcodeSearch () {
         searchPostcode: postcodeData.postcode,
         searchPosition: postcodeData.location
       })
+
       dispatchView({
         type: 'FlyTo',
         mapFlyToPosition: postcodeData.location,
         mapZoom: 14
       })
+
+      setPostcodeService(postcodeData)
+      getNearestLibrary(pos)
     }
   }
 
@@ -122,6 +168,8 @@ function PostcodeSearch () {
           mapFlyToPosition: service.location,
           mapZoom: 14
         })
+        setPostcodeService(service)
+        getNearestLibrary(service.location)
       } else {
         dispatchView({
           type: 'ShowNotification',
@@ -150,8 +198,9 @@ function PostcodeSearch () {
           whitespace: 'nowrap',
           display: 'inline-flex',
           color: theme => theme.palette.primary.main,
-          borderRadius: theme => theme.shape.borderRadius,
-          border: theme => `2px solid ${theme.palette.primary.main}`
+          borderRadius: '6px',
+          border: theme =>
+            `2px solid ${lighten(theme.palette.primary.main, 0.5)}`
         }}
       >
         <InputBase
