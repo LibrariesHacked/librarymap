@@ -14,7 +14,7 @@ import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-function PostcodeDetails () {
+function PostcodeInfo () {
   const [{ serviceLookup }] = useApplicationStateValue()
   const [
     {
@@ -87,4 +87,4 @@ function PostcodeDetails () {
   )
 }
 
-export default PostcodeDetails
+export default PostcodeInfo
