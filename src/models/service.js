@@ -25,20 +25,20 @@ export class ServiceExtended {
   }
 
   fromJson (json) {
-    this.fees_and_charges_url = json['Fees and charges URL']
-    this.events_url = json['Events URL']
-    this.service_url = json['Service URL']
-    this.ulibrary_name = json['uLibrary name']
-    this.libraries_url = json['Libraries URL']
-    this.ebook_url = json['Ebook URL']
+    this.feesChargesUrl = json['Fees and charges URL']
+    this.eventsUrl = json['Events URL']
+    this.serviceUrl = json['Service URL']
+    this.uLibraryName = json['uLibrary name']
+    this.librariesUrl = json['Libraries URL']
+    this.ebookUrl = json['Ebook URL']
     this.code = json.Code
-    this.catalogue_url = json['Catalogue URL']
-    this.audiobook_url = json['Audiobook URL']
-    this.home_service_url = json['Home service URL']
-    this.green_library = json['Green library']
+    this.catalogueUrl = json['Catalogue URL']
+    this.audiobookUrl = json['Audiobook URL']
+    this.homeServiceUrl = json['Home service URL']
+    this.greenLibrary = json['Green library']
     this.overdrive_name = json['Overdrive name']
-    this.childrens_service_url = json['Childrens service URL']
-    this.twitter_handle = json['Twitter handle']
+    this.childrenServiceUrl = json['Childrens service URL']
+    this.twitterHandle = json['Twitter handle']
     this.name = json.Name
     this.facebook_page_name = json['Facebook page name']
     this.online_catalogue_system = json['Online catalogue system']

@@ -24,19 +24,19 @@ function ServiceInfo () {
   }
 
   return (
-    <Box
-      sx={{
-        backgroundColor: grey[200],
-        padding: theme => theme.spacing(1),
-        borderRadius: '6px'
-      }}
-    >
+    <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
-        <>
+        <Box
+          sx={{
+            backgroundColor: grey[200],
+            padding: theme => theme.spacing(1),
+            borderRadius: '6px'
+          }}
+        >
           <ListSubheader disableSticky disableGutters>
             {postcodeService?.name}
           </ListSubheader>
-
+          {`${searchPostcode} is within ${postcodeService?.niceName} libraries.`}
           <Box sx={{ paddingTop: theme => theme.spacing(2) }}>
             <Button
               variant='text'
@@ -47,9 +47,9 @@ function ServiceInfo () {
               Join
             </Button>
           </Box>
-        </>
+        </Box>
       )}
-    </Box>
+    </>
   )
 }
 

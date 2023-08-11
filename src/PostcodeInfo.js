@@ -7,28 +7,20 @@ import Button from '@mui/material/Button'
 import ListSubheader from '@mui/material/ListSubheader'
 import Typography from '@mui/material/Typography'
 
+import grey from '@mui/material/colors/grey'
+
 import InfoIcon from '@mui/icons-material/InfoOutlined'
 import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 
-import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 function PostcodeInfo () {
-  const [{ serviceLookup }] = useApplicationStateValue()
   const [
-    {
-      searchType,
-      searchPostcode,
-      searchPosition,
-      nearestLibrary,
-      postcodeServiceCode
-    },
+    { searchType, searchPostcode, searchPosition, nearestLibrary },
     dispatchSearch
   ] = useSearchStateValue()
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
-
-  const postcodeService = serviceLookup[postcodeServiceCode]
 
   const viewLibrary = () => {
     dispatchSearch({
@@ -49,13 +41,17 @@ function PostcodeInfo () {
   return (
     <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
-        <>
-          <ListSubheader
-            disableSticky
-            disableGutters
-          >{`Search results`}</ListSubheader>
+        <Box
+          sx={{
+            backgroundColor: grey[200],
+            padding: theme => theme.spacing(1),
+            borderRadius: '6px'
+          }}
+        >
+          <ListSubheader disableSticky disableGutters>
+            Search results
+          </ListSubheader>
           <Typography variant='body' color='text.secondary'>
-            {`${searchPostcode} is within ${postcodeService?.name}. `}
             {`Your closest library is ${
               nearestLibrary?.name
             }, about ${Math.round(
@@ -68,7 +64,7 @@ function PostcodeInfo () {
               startIcon={<LocationOnIcon />}
               onClick={viewMap}
               component={Link}
-              to={'/map'}
+              to='/map'
             >
               View on map
             </Button>
@@ -81,7 +77,7 @@ function PostcodeInfo () {
               Library details
             </Button>
           </Box>
-        </>
+        </Box>
       )}
     </>
   )
