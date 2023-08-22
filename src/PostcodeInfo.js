@@ -2,33 +2,26 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
-import ListSubheader from '@mui/material/ListSubheader'
 import Typography from '@mui/material/Typography'
 
 import InfoIcon from '@mui/icons-material/InfoOutlined'
 import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 
-import { useApplicationStateValue } from './context/applicationState'
+import { lighten } from '@mui/material'
+
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-function PostcodeDetails () {
-  const [{ serviceLookup }] = useApplicationStateValue()
+function PostcodeInfo () {
   const [
-    {
-      searchType,
-      searchPostcode,
-      searchPosition,
-      nearestLibrary,
-      postcodeServiceCode
-    },
+    { searchType, searchPostcode, searchPosition, nearestLibrary },
     dispatchSearch
   ] = useSearchStateValue()
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
-
-  const postcodeService = serviceLookup[postcodeServiceCode]
 
   const viewLibrary = () => {
     dispatchSearch({
@@ -49,26 +42,34 @@ function PostcodeDetails () {
   return (
     <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
-        <>
-          <ListSubheader
-            disableSticky
-            disableGutters
-          >{`Search results`}</ListSubheader>
-          <Typography variant='body' color='text.secondary'>
-            {`${searchPostcode} is within ${postcodeService?.name}. `}
-            {`Your closest library is ${
-              nearestLibrary?.name
-            }, about ${Math.round(
-              nearestLibrary?.distance / 1609
-            )} mile(s) away.`}
-          </Typography>
-          <Box sx={{ paddingTop: theme => theme.spacing(2) }}>
+        <Card
+          elevation={0}
+          sx={{
+            border: 2,
+            borderColor: theme => lighten(theme.palette.primary.main, 0.5)
+          }}
+        >
+          <CardContent>
+            <Typography variant='subtitle1' color='text.secondary'>
+              {`Your closest library is ${Math.round(
+                nearestLibrary?.distance / 1609
+              )} mile(s) away`}
+            </Typography>
+            <Typography variant='h6' color='text.secondary'>
+              {`${nearestLibrary?.name}`}
+            </Typography>
+          </CardContent>
+          <CardActions
+            sx={{
+              backgroundColor: theme => lighten(theme.palette.primary.main, 0.9)
+            }}
+          >
             <Button
               variant='text'
               startIcon={<LocationOnIcon />}
               onClick={viewMap}
               component={Link}
-              to={'/map'}
+              to='/map'
             >
               View on map
             </Button>
@@ -80,11 +81,11 @@ function PostcodeDetails () {
             >
               Library details
             </Button>
-          </Box>
-        </>
+          </CardActions>
+        </Card>
       )}
     </>
   )
 }
 
-export default PostcodeDetails
+export default PostcodeInfo
