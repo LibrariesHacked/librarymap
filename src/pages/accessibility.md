@@ -18,4 +18,4 @@ This website is in development and being used as a prototype to demonstrate a UK
 
 The map pages uses maps to explore static and mobile library stops. Although maps are difficult to make accessible, we are looking at making sure the information presented by the map is also available in other formats. The main home page provides a search which provides access to the same library information.
 
-If you do experience any problems using this website, please raise these and [send us an email](mailto:info@librarieshacked.org).
+If you do experience any problems using this website, please raise these by [sending us an email](mailto:info@librarieshacked.org).

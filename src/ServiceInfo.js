@@ -2,12 +2,15 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import ListSubheader from '@mui/material/ListSubheader'
-import AccountIcon from '@mui/icons-material/AccountCircleRounded'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
 
-import grey from '@mui/material/colors/grey'
+import WebsiteIcon from '@mui/icons-material/LaunchRounded'
+
+import { lighten } from '@mui/material'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
@@ -19,35 +22,44 @@ function ServiceInfo () {
 
   const postcodeService = serviceLookup[postcodeServiceCode]
 
-  const handleJoinLibraryService = () => {
-    window.open(postcodeService?.url, '_blank')
+  const handleGoToLibraryServiceWebsite = () => {
+    window.open(postcodeService?.extended?.serviceUrl, '_blank')
   }
 
   return (
     <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
-        <Box
+        <Card
+          elevation={0}
           sx={{
-            backgroundColor: grey[200],
-            padding: theme => theme.spacing(1),
-            borderRadius: '6px'
+            border: 2,
+            borderColor: theme => lighten(theme.palette.secondary.main, 0.5)
           }}
         >
-          <ListSubheader disableSticky disableGutters>
-            {postcodeService?.name}
-          </ListSubheader>
-          {`${searchPostcode} is within ${postcodeService?.niceName} libraries.`}
-          <Box sx={{ paddingTop: theme => theme.spacing(2) }}>
+          <CardContent>
+            <Typography
+              variant='subtitle1'
+              component='span'
+              color='text.secondary'
+            >
+              {`Your library service is `}
+            </Typography>
+            <Typography variant='h6' component='span' color='text.secondary'>
+              {postcodeService?.niceName}
+            </Typography>
+          </CardContent>
+          <CardActions sx={{ backgroundColor: theme => lighten(theme.palette.secondary.main, 0.9) }}>
             <Button
               variant='text'
-              startIcon={<AccountIcon />}
-              onClick={handleJoinLibraryService}
+              color='secondary'
+              startIcon={<WebsiteIcon />}
+              onClick={handleGoToLibraryServiceWebsite}
               component={Link}
             >
-              Join
+              Service website
             </Button>
-          </Box>
-        </Box>
+          </CardActions>
+        </Card>
       )}
     </>
   )

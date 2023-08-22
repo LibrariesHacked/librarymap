@@ -163,7 +163,10 @@ function MobileLibraries () {
 
   return (
     <>
-      <ListSubheader disableSticky sx={{ textAlign: 'center', marginTop: theme => theme.spacing(3) }}>
+      <ListSubheader
+        disableSticky
+        sx={{ textAlign: 'center', marginTop: theme => theme.spacing(3) }}
+      >
         {mobilesHeader()}
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
@@ -174,7 +177,8 @@ function MobileLibraries () {
               border: 2,
               borderColor: lighten(theme.palette.secondary.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.secondary.main, 0.8)
+                backgroundColor: lighten(theme.palette.secondary.main, 0.9),
+                color: theme.palette.secondary.main
               },
               '&.Mui-hovered': {
                 backgroundColor: theme.palette.action.hover
@@ -209,7 +213,8 @@ function MobileLibraries () {
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
-              setFilterModel(newFilterModel)}
+              setFilterModel(newFilterModel)
+            }
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {

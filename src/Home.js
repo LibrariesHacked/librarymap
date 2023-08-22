@@ -11,8 +11,6 @@ import Typography from '@mui/material/Typography'
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
 import HelpIcon from '@mui/icons-material/HelpRounded'
 
-import grey from '@mui/material/colors/grey'
-
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
 import PostcodeInfo from './PostcodeInfo'
@@ -46,10 +44,10 @@ function Home () {
         <Search />
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={6}>
           <PostcodeInfo />
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={6}>
           <ServiceInfo />
         </Grid>
       </Grid>
@@ -59,9 +57,7 @@ function Home () {
         severity='warning'
         icon={<HelpIcon fontSize='inherit' />}
         sx={{
-          marginTop: theme => theme.spacing(2),
-          border: 1,
-          borderColor: grey[300]
+          marginTop: theme => theme.spacing(2)
         }}
         action={
           <Button

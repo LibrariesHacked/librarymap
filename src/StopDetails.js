@@ -23,8 +23,6 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
-import grey from '@mui/material/colors/grey'
-
 import CancelIcon from '@mui/icons-material/CancelRounded'
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
 import HelpIcon from '@mui/icons-material/HelpRounded'
@@ -138,7 +136,6 @@ function StopDetails () {
             <Alert
               severity='warning'
               icon={<HelpIcon fontSize='inherit' />}
-              sx={{ border: 1, borderColor: grey[300] }}
               action={
                 <Button
                   to='/data'

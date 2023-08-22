@@ -14,8 +14,6 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
-import grey from '@mui/material/colors/grey'
-
 import { lighten } from '@mui/material'
 
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
@@ -221,7 +219,6 @@ function LibraryDetails (props) {
           <Alert
             severity='warning'
             icon={<HelpIcon fontSize='inherit' />}
-            sx={{ border: 1, borderColor: grey[300] }}
             action={
               <Button
                 to='/data'

@@ -181,7 +181,8 @@ function Libraries () {
               border: 2,
               borderColor: lighten(theme.palette.primary.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.primary.main, 0.8)
+                backgroundColor: lighten(theme.palette.primary.main, 0.9),
+                color: theme.palette.primary.main
               },
               '&.Mui-hovered': {
                 backgroundColor: theme.palette.action.hover

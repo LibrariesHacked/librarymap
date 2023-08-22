@@ -2,15 +2,16 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
-import ListSubheader from '@mui/material/ListSubheader'
 import Typography from '@mui/material/Typography'
-
-import grey from '@mui/material/colors/grey'
 
 import InfoIcon from '@mui/icons-material/InfoOutlined'
 import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
+
+import { lighten } from '@mui/material'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -41,24 +42,28 @@ function PostcodeInfo () {
   return (
     <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
-        <Box
+        <Card
+          elevation={0}
           sx={{
-            backgroundColor: grey[200],
-            padding: theme => theme.spacing(1),
-            borderRadius: '6px'
+            border: 2,
+            borderColor: theme => lighten(theme.palette.primary.main, 0.5)
           }}
         >
-          <ListSubheader disableSticky disableGutters>
-            Search results
-          </ListSubheader>
-          <Typography variant='body' color='text.secondary'>
-            {`Your closest library is ${
-              nearestLibrary?.name
-            }, about ${Math.round(
-              nearestLibrary?.distance / 1609
-            )} mile(s) away.`}
-          </Typography>
-          <Box sx={{ paddingTop: theme => theme.spacing(2) }}>
+          <CardContent>
+            <Typography variant='subtitle1' color='text.secondary'>
+              {`Your closest library is ${Math.round(
+                nearestLibrary?.distance / 1609
+              )} mile(s) away`}
+            </Typography>
+            <Typography variant='h6' color='text.secondary'>
+              {`${nearestLibrary?.name}`}
+            </Typography>
+          </CardContent>
+          <CardActions
+            sx={{
+              backgroundColor: theme => lighten(theme.palette.primary.main, 0.9)
+            }}
+          >
             <Button
               variant='text'
               startIcon={<LocationOnIcon />}
@@ -76,8 +81,8 @@ function PostcodeInfo () {
             >
               Library details
             </Button>
-          </Box>
-        </Box>
+          </CardActions>
+        </Card>
       )}
     </>
   )
