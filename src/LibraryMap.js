@@ -10,8 +10,6 @@ import Map, {
   AttributionControl
 } from 'react-map-gl/maplibre'
 
-import * as turf from '@turf/turf'
-
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'
 
@@ -20,6 +18,8 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import MeAvatar from './MeAvatar'
+
+import * as geoHelper from './helpers/geo'
 
 const config = require('./helpers/config.json')
 
@@ -54,17 +54,9 @@ function LibraryMap (props) {
 
   let currentServiceMask = null
   if (currentService && currentService.geojson) {
-    const poly = turf.polygon(JSON.parse(currentService.geojson).coordinates[0])
-    const worldMask = turf.polygon([
-      [
-        [-180, -90],
-        [180, -90],
-        [180, 90],
-        [-180, 90],
-        [-180, -90]
-      ]
-    ])
-    currentServiceMask = turf.mask(poly, worldMask)
+    currentServiceMask = geoHelper.getMaskFromGeoJson(
+      JSON.parse(currentService.geojson)
+    )
   }
 
   useEffect(() => {

@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import * as turf from '@turf/turf'
+
 const config = require('./config.json')
 
 export const getPosition = (options = {}) => {
@@ -100,4 +102,18 @@ export const getLineGeoJsonFromPoints = (points, properties) => {
       coordinates: points
     }
   }
+}
+
+export const getMaskFromGeoJson = (geojson) => {
+  const poly = turf.polygon(geojson.coordinates[0])
+  const worldMask = turf.polygon([
+    [
+      [-180, -90],
+      [180, -90],
+      [180, 90],
+      [-180, 90],
+      [-180, -90]
+    ]
+  ])
+  return turf.mask(poly, worldMask)
 }

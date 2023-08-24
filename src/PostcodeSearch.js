@@ -117,7 +117,7 @@ function PostcodeSearch () {
       dispatchSearch({
         type: 'SetPostcodeSearch',
         searchPostcode: postcodeData.postcode,
-        searchPosition: postcodeData.location
+        searchPosition: pos
       })
 
       dispatchView({
