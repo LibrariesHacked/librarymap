@@ -124,7 +124,29 @@ function LibraryMap (props) {
             paint={{
               'line-opacity': 0.4,
               'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4],
-              'line-color': '#455a64'
+              'line-color': theme.palette.primary.main
+            }}
+          />
+          <Layer
+            type='symbol'
+            layout={{
+              'symbol-placement': 'line',
+              'text-field': ['get', 'distance'],
+              'text-font': ['Source Sans Pro Bold'],
+              'text-allow-overlap': false,
+              'text-size': {
+                base: 1.2,
+                stops: [
+                  [6, 14],
+                  [22, 24]
+                ]
+              }
+            }}
+            paint={{
+              'text-halo-color': 'rgba(255, 255, 255, 0.9)',
+              'text-halo-width': 0,
+              'text-halo-blur': 0,
+              'text-color': theme.palette.primary.main
             }}
           />
         </Source>
