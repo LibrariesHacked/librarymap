@@ -10,8 +10,6 @@ import Map, {
   AttributionControl
 } from 'react-map-gl/maplibre'
 
-import * as turf from '@turf/turf'
-
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'
 
@@ -20,6 +18,8 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 import MeAvatar from './MeAvatar'
+
+import * as geoHelper from './helpers/geo'
 
 const config = require('./helpers/config.json')
 
@@ -54,23 +54,15 @@ function LibraryMap (props) {
 
   let currentServiceMask = null
   if (currentService && currentService.geojson) {
-    const poly = turf.polygon(JSON.parse(currentService.geojson).coordinates[0])
-    const worldMask = turf.polygon([
-      [
-        [-180, -90],
-        [180, -90],
-        [180, 90],
-        [-180, 90],
-        [-180, -90]
-      ]
-    ])
-    currentServiceMask = turf.mask(poly, worldMask)
+    currentServiceMask = geoHelper.getMaskFromGeoJson(
+      JSON.parse(currentService.geojson)
+    )
   }
 
   useEffect(() => {
     if (mapBounds && map) {
       map.fitBounds(mapBounds, {
-        padding: 50
+        padding: 200
       })
     }
   }, [mapBounds, map])
@@ -79,7 +71,7 @@ function LibraryMap (props) {
     if (mapFlyToPosition && map) {
       map.flyTo({
         center: mapFlyToPosition,
-        zoom: 15
+        zoom: 18
       })
     }
   }, [mapFlyToPosition, map])
@@ -132,7 +124,33 @@ function LibraryMap (props) {
             paint={{
               'line-opacity': 0.4,
               'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4],
-              'line-color': '#455a64'
+              'line-color': theme.palette.primary.main
+            }}
+          />
+          <Layer
+            type='symbol'
+            layout={{
+              'symbol-placement': 'line',
+              'text-field': [
+                'concat',
+                ['round', ['/', ['to-number', ['get', 'distance']], 1609]],
+                ' mile(s)'
+              ],
+              'text-font': ['Source Sans Pro Bold'],
+              'text-allow-overlap': false,
+              'text-size': {
+                base: 1.2,
+                stops: [
+                  [6, 14],
+                  [22, 24]
+                ]
+              }
+            }}
+            paint={{
+              'text-halo-color': 'rgba(255, 255, 255, 0.9)',
+              'text-halo-width': 3,
+              'text-halo-blur': 0,
+              'text-color': theme.palette.primary.main
             }}
           />
         </Source>

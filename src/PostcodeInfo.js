@@ -17,10 +17,8 @@ import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
 function PostcodeInfo () {
-  const [
-    { searchType, searchPostcode, searchPosition, nearestLibrary },
-    dispatchSearch
-  ] = useSearchStateValue()
+  const [{ searchType, searchPostcode, nearestLibrary }, dispatchSearch] =
+    useSearchStateValue()
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const viewLibrary = () => {
@@ -34,8 +32,8 @@ function PostcodeInfo () {
   const viewMap = () => {
     dispatchView({
       type: 'FlyTo',
-      mapFlyToPosition: [searchPosition[0], searchPosition[1]],
-      mapZoom: 16
+      mapFlyToPosition: [nearestLibrary.longitude, nearestLibrary.latitude],
+      mapZoom: 18
     })
   }
 
