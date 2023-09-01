@@ -104,7 +104,7 @@ export const getLineGeoJsonFromPoints = (points, properties) => {
   }
 }
 
-export const getMaskFromGeoJson = (geojson) => {
+export const getMaskFromGeoJson = geojson => {
   const poly = turf.polygon(geojson.coordinates[0])
   const worldMask = turf.polygon([
     [
@@ -116,4 +116,9 @@ export const getMaskFromGeoJson = (geojson) => {
     ]
   ])
   return turf.mask(poly, worldMask)
+}
+
+export const getMapBounds = coordinates => {
+  const features = turf.featureCollection(coordinates.map(c => turf.point(c)))
+  return turf.bbox(features)
 }

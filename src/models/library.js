@@ -87,11 +87,15 @@ export async function getQueryLibraries (
     }`
   }
 
-  if (searchPosition && searchPosition.length > 1) { url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}` }
+  if (searchPosition && searchPosition.length > 1) {
+    url = `${url}&longitude=${searchPosition[0]}&latitude=${searchPosition[1]}`
+  }
 
   if (distance && distance !== '') url = `${url}&distance=${distance}`
 
-  if (serviceFilter && serviceFilter.length > 0) { url = `${url}&service_codes=${serviceFilter.join('|')}` }
+  if (serviceFilter && serviceFilter.length > 0) {
+    url = `${url}&service_codes=${serviceFilter.join('|')}`
+  }
 
   const response = await axios.get(url)
 

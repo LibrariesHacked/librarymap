@@ -62,7 +62,7 @@ function LibraryMap (props) {
   useEffect(() => {
     if (mapBounds && map) {
       map.fitBounds(mapBounds, {
-        padding: 50
+        padding: 200
       })
     }
   }, [mapBounds, map])
@@ -71,7 +71,7 @@ function LibraryMap (props) {
     if (mapFlyToPosition && map) {
       map.flyTo({
         center: mapFlyToPosition,
-        zoom: 15
+        zoom: 18
       })
     }
   }, [mapFlyToPosition, map])
@@ -131,7 +131,11 @@ function LibraryMap (props) {
             type='symbol'
             layout={{
               'symbol-placement': 'line',
-              'text-field': ['get', 'distance'],
+              'text-field': [
+                'concat',
+                ['round', ['/', ['to-number', ['get', 'distance']], 1609]],
+                ' mile(s)'
+              ],
               'text-font': ['Source Sans Pro Bold'],
               'text-allow-overlap': false,
               'text-size': {
@@ -144,7 +148,7 @@ function LibraryMap (props) {
             }}
             paint={{
               'text-halo-color': 'rgba(255, 255, 255, 0.9)',
-              'text-halo-width': 0,
+              'text-halo-width': 3,
               'text-halo-blur': 0,
               'text-color': theme.palette.primary.main
             }}

@@ -90,6 +90,17 @@ function PostcodeSearch () {
           { distance: nearestLibrary.libraries[0].distance }
         )
       })
+      const bounds = geoHelper.getMapBounds([
+        [
+          nearestLibrary.libraries[0].longitude,
+          nearestLibrary.libraries[0].latitude
+        ],
+        position
+      ])
+      dispatchView({
+        type: 'FitToBounds',
+        mapBounds: bounds
+      })
     }
   }
 
@@ -119,13 +130,6 @@ function PostcodeSearch () {
         searchPostcode: postcodeData.postcode,
         searchPosition: pos
       })
-
-      dispatchView({
-        type: 'FlyTo',
-        mapFlyToPosition: postcodeData.location,
-        mapZoom: 14
-      })
-
       setPostcodeService(postcodeData)
       getNearestLibrary(pos)
     }
@@ -162,11 +166,6 @@ function PostcodeSearch () {
           type: 'SetPostcodeSearch',
           searchPostcode: postcode,
           searchPosition: service.location
-        })
-        dispatchView({
-          type: 'FlyTo',
-          mapFlyToPosition: service.location,
-          mapZoom: 14
         })
         setPostcodeService(service)
         getNearestLibrary(service.location)
