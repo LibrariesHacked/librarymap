@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 import BusinessIcon from '@mui/icons-material/BusinessRounded'
@@ -10,6 +11,7 @@ import BusinessIcon from '@mui/icons-material/BusinessRounded'
 import LibraryMap from './LibraryMap'
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
+import ServiceInfo from './ServiceInfo'
 import SiteBreadcrumbs from './SiteBreadcrumbs'
 
 import { useApplicationStateValue } from './context/applicationState'
@@ -45,19 +47,26 @@ function Service () {
         currentPageIcon={BusinessIcon}
       />
       <Box sx={{ textAlign: 'center' }}>
-        <Typography component='h1' variant='h3'>
-          {`${currentService?.name} Libraries`}
+        <Typography component='h1' variant='h2'>
+          {`${currentService?.niceName}`}
         </Typography>
       </Box>
-      <Box sx={{ border: '1px solid #ccc' }}>
-        <LibraryMap
-          containerStyle={{
-            width: '100%',
-            height: '500px',
-            position: 'relative'
-          }}
-        />
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <ServiceInfo />
+        </Grid>
+        <Grid item xs={6}>
+          <Box sx={{ border: '1px solid #ccc' }}>
+            <LibraryMap
+              containerStyle={{
+                width: '100%',
+                height: '500px',
+                position: 'relative'
+              }}
+            />
+          </Box>
+        </Grid>
+      </Grid>
       <Libraries />
       <MobileLibraries />
     </>
