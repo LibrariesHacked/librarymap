@@ -62,7 +62,7 @@ function LibraryMap (props) {
   useEffect(() => {
     if (mapBounds && map) {
       map.fitBounds(mapBounds, {
-        padding: 200
+        padding: 20
       })
     }
   }, [mapBounds, map])

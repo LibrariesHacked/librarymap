@@ -15,7 +15,7 @@ import { lighten } from '@mui/material'
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 
-function ServiceInfo () {
+function PostcodeServiceInfo () {
   const [{ serviceLookup }] = useApplicationStateValue()
   const [{ searchType, searchPostcode, nearestLibrary, postcodeServiceCode }] =
     useSearchStateValue()
@@ -42,13 +42,18 @@ function ServiceInfo () {
               component='span'
               color='text.secondary'
             >
-              {`Your library service is `}
+              {'Your library service is '}
             </Typography>
             <Typography variant='h6' component='span' color='text.secondary'>
               {postcodeService?.niceName}
             </Typography>
           </CardContent>
-          <CardActions sx={{ backgroundColor: theme => lighten(theme.palette.secondary.main, 0.9) }}>
+          <CardActions
+            sx={{
+              backgroundColor: theme =>
+                lighten(theme.palette.secondary.main, 0.9)
+            }}
+          >
             <Button
               variant='text'
               color='secondary'
@@ -65,4 +70,4 @@ function ServiceInfo () {
   )
 }
 
-export default ServiceInfo
+export default PostcodeServiceInfo

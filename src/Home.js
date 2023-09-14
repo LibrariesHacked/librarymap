@@ -15,7 +15,7 @@ import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
 import PostcodeInfo from './PostcodeInfo'
 import Search from './Search'
-import ServiceInfo from './ServiceInfo'
+import PostcodeServiceInfo from './PostcodeServiceInfo'
 
 function Home () {
   return (
@@ -48,7 +48,7 @@ function Home () {
           <PostcodeInfo />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <ServiceInfo />
+          <PostcodeServiceInfo />
         </Grid>
       </Grid>
 

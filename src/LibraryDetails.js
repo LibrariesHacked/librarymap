@@ -52,15 +52,6 @@ function LibraryDetails (props) {
       .getAllHours(library)
       .filter(rs => rs.unstaffed !== null && rs.unstaffed.length > 0).length > 0
 
-  const close = () => {
-    dispatchSearch({
-      type: 'SetCurrentLibrary',
-      currentLibraryId: null,
-      currentPoint: null
-    })
-    dispatchView({ type: 'SetLibraryDialog', stopLibraryDialogOpen: false })
-  }
-
   return (
     <>
       {Object.keys(library).length > 0 ? (
@@ -225,7 +216,6 @@ function LibraryDetails (props) {
                 color='warning'
                 startIcon={<DataIcon />}
                 component={Link}
-                onClick={() => close()}
               >
                 Update
               </Button>
