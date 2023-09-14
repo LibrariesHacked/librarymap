@@ -51,6 +51,12 @@ function ServiceDetails (props) {
                   </TableCell>
                 </TableRow>
               )}
+            {service?.extended?.greenLibrary && (
+              <TableRow>
+                <TableCell variant='head'>Green library</TableCell>
+                <TableCell>This service has signed the green library manifesto</TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

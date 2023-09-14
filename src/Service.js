@@ -14,6 +14,7 @@ import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
 import ServiceDetails from './ServiceDetails'
 import SiteBreadcrumbs from './SiteBreadcrumbs'
+import SocialIcons from './SocialIcons'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
@@ -95,10 +96,14 @@ function Service () {
         currentPageName={currentService?.name}
         currentPageIcon={BusinessIcon}
       />
-      <Box sx={{ textAlign: 'center' }}>
-        <Typography component='h1' variant='h2' gutterBottom>
+      <Box sx={{ textAlign: 'center', margin: theme => theme.spacing() }}>
+        <Typography component='h1' variant='h2'>
           {`${currentService?.niceName}`}
         </Typography>
+        <SocialIcons
+          facebookPageName={currentService?.extended?.facebookPageName}
+          twitterHandle={currentService?.extended?.twitterHandle}
+        />
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
