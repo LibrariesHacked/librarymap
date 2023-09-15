@@ -13,6 +13,8 @@ import Map, {
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl'
 
+import { grey } from '@mui/material/colors'
+
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -359,7 +361,7 @@ function LibraryMap (props) {
             source-layer='library_authority_boundaries'
             minzoom={6}
             paint={{
-              'fill-color': '#ccc',
+              'fill-color': grey.A100,
               'fill-opacity': 0.1
             }}
           />

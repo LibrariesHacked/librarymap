@@ -12,6 +12,8 @@ import WebsiteIcon from '@mui/icons-material/LaunchRounded'
 
 import { lighten } from '@mui/material'
 
+import grey from '@mui/material/colors/grey'
+
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 
@@ -32,8 +34,8 @@ function PostcodeServiceInfo () {
         <Card
           elevation={0}
           sx={{
-            border: 2,
-            borderColor: theme => lighten(theme.palette.secondary.main, 0.5)
+            border: 1,
+            borderColor: grey[200]
           }}
         >
           <CardContent>
@@ -51,11 +53,10 @@ function PostcodeServiceInfo () {
           <CardActions
             sx={{
               backgroundColor: theme =>
-                lighten(theme.palette.secondary.main, 0.9)
+                lighten(grey[200], 0.6)
             }}
           >
             <Button
-              variant='text'
               color='secondary'
               startIcon={<WebsiteIcon />}
               onClick={handleGoToLibraryServiceWebsite}

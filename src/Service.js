@@ -16,6 +16,8 @@ import ServiceDetails from './ServiceDetails'
 import SiteBreadcrumbs from './SiteBreadcrumbs'
 import SocialIcons from './SocialIcons'
 
+import grey from '@mui/material/colors/grey'
+
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -110,7 +112,7 @@ function Service () {
           <ServiceDetails service={currentService} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box sx={{ border: '2px solid #ccc' }}>
+          <Box sx={{ border: '2px solid', borderColor: grey[200] }}>
             <ListSubheader>Map of libraries</ListSubheader>
             <LibraryMap
               containerStyle={{
