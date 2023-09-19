@@ -105,6 +105,7 @@ function Service () {
         <SocialIcons
           facebookPageName={currentService?.extended?.facebookPageName}
           twitterHandle={currentService?.extended?.twitterHandle}
+          youTubeId={currentService?.extended?.youTubeId}
         />
       </Box>
       <Grid container spacing={2}>

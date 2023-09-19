@@ -372,6 +372,7 @@ function LibraryMap (props) {
           type='line'
           source-layer='trip'
           minzoom={14}
+          filter={currentService ? ['==', currentService.code, ['get', 'Local authority code']] : []}
           layout={{
             'line-join': 'round',
             'line-cap': 'square'
@@ -391,6 +392,7 @@ function LibraryMap (props) {
             type='circle'
             source-layer='stop'
             minzoom={5}
+            filter={currentService ? ['==', currentService.code, ['get', 'Local authority code']] : []}
             layout={{}}
             paint={{
               'circle-radius': [
@@ -498,7 +500,15 @@ function LibraryMap (props) {
             type='symbol'
             source-layer='libraries'
             minzoom={11}
-            filter={['has', 'Year closed']}
+            filter={
+              currentService
+                ? [
+                    'all',
+                    ['has', 'Year closed'],
+                    ['==', currentService.code, ['get', 'Local authority code']]
+                  ]
+                : ['has', 'Year closed']
+            }
             layout={{
               'text-ignore-placement': false,
               'text-field': ['to-string', ['get', 'Library name']],
@@ -537,7 +547,15 @@ function LibraryMap (props) {
             type='symbol'
             source-layer='libraries'
             minzoom={12}
-            filter={['has', 'Year closed']}
+            filter={
+              currentService
+                ? [
+                    'all',
+                    ['has', 'Year closed'],
+                    ['==', currentService.code, ['get', 'Local authority code']]
+                  ]
+                : ['has', 'Year closed']
+            }
             layout={{
               'text-ignore-placement': false,
               'text-field': ['concat', 'Closed ', ['get', 'Year closed']],
@@ -576,7 +594,15 @@ function LibraryMap (props) {
             type='circle'
             source-layer='libraries'
             minzoom={11}
-            filter={['has', 'Year closed']}
+            filter={
+              currentService
+                ? [
+                    'all',
+                    ['has', 'Year closed'],
+                    ['==', currentService.code, ['get', 'Local authority code']]
+                  ]
+                : ['has', 'Year closed']
+            }
             paint={{
               'circle-radius': [
                 'interpolate',
@@ -608,7 +634,15 @@ function LibraryMap (props) {
             type='symbol'
             source-layer='libraries'
             minzoom={13}
-            filter={['!', ['has', 'Year closed']]}
+            filter={
+              currentService
+                ? [
+                    'all',
+                    ['!', ['has', 'Year closed']],
+                    ['==', currentService.code, ['get', 'Local authority code']]
+                  ]
+                : ['!', ['has', 'Year closed']]
+            }
             layout={{
               'text-ignore-placement': false,
               'text-field': [
@@ -663,7 +697,15 @@ function LibraryMap (props) {
             type='symbol'
             source-layer='libraries'
             minzoom={10}
-            filter={['!', ['has', 'Year closed']]}
+            filter={
+              currentService
+                ? [
+                    'all',
+                    ['!', ['has', 'Year closed']],
+                    ['==', currentService.code, ['get', 'Local authority code']]
+                  ]
+                : ['!', ['has', 'Year closed']]
+            }
             layout={{
               'text-ignore-placement': false,
               'text-field': ['to-string', ['get', 'Library name']],
@@ -703,7 +745,15 @@ function LibraryMap (props) {
             source-layer='libraries'
             minzoom={5}
             maxzoom={18}
-            filter={['!', ['has', 'Year closed']]}
+            filter={
+              currentService
+                ? [
+                    'all',
+                    ['!', ['has', 'Year closed']],
+                    ['==', currentService.code, ['get', 'Local authority code']]
+                  ]
+                : ['!', ['has', 'Year closed']]
+            }
             paint={{
               'circle-radius': [
                 'interpolate',

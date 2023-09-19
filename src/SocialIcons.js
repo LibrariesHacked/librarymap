@@ -21,30 +21,36 @@ function SocialIcons (props) {
 
   return (
     <>
-      <IconButton
-        size='large'
-        aria-label='twitter'
-        color='secondary'
-        onClick={handleOpenTwitter}
-      >
-        <TwitterIcon />
-      </IconButton>
-      <IconButton
-        size='large'
-        aria-label='facebook'
-        color='secondary'
-        onClick={handleOpenFacebook}
-      >
-        <FacebookIcon />
-      </IconButton>
-      <IconButton
-        size='large'
-        aria-label='youtube'
-        color='secondary'
-        onClick={handleOpenYouTube}
-      >
-        <YouTubeIcon />
-      </IconButton>
+      {twitterHandle && (
+        <IconButton
+          size='large'
+          aria-label='twitter'
+          color='secondary'
+          onClick={handleOpenTwitter}
+        >
+          <TwitterIcon />
+        </IconButton>
+      )}
+      {youTubeId && (
+        <IconButton
+          size='large'
+          aria-label='youtube'
+          color='secondary'
+          onClick={handleOpenYouTube}
+        >
+          <YouTubeIcon />
+        </IconButton>
+      )}
+      {facebookPageName && (
+        <IconButton
+          size='large'
+          aria-label='facebook'
+          color='secondary'
+          onClick={handleOpenFacebook}
+        >
+          <FacebookIcon />
+        </IconButton>
+      )}
     </>
   )
 }
