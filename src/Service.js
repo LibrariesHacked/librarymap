@@ -12,11 +12,10 @@ import BusinessIcon from '@mui/icons-material/BusinessRounded'
 import LibraryMap from './LibraryMap'
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
+import ServiceActions from './ServiceActions'
 import ServiceDetails from './ServiceDetails'
 import SiteBreadcrumbs from './SiteBreadcrumbs'
 import SocialIcons from './SocialIcons'
-
-import grey from '@mui/material/colors/grey'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
@@ -98,36 +97,43 @@ function Service () {
         currentPageName={currentService?.name}
         currentPageIcon={BusinessIcon}
       />
-      <Box sx={{ textAlign: 'center', margin: theme => theme.spacing() }}>
-        <Typography component='h1' variant='h2'>
-          {`${currentService?.niceName}`}
-        </Typography>
-        <SocialIcons
-          facebookPageName={currentService?.extended?.facebookPageName}
-          twitterHandle={currentService?.extended?.twitterHandle}
-          youTubeId={currentService?.extended?.youTubeId}
-        />
-      </Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <ServiceDetails service={currentService} />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Box sx={{ border: '2px solid', borderColor: grey[200] }}>
-            <ListSubheader>Map of libraries</ListSubheader>
-            <LibraryMap
-              containerStyle={{
-                width: '100%',
-                height: '500px',
-                position: 'relative'
-              }}
-              clickMap={clickMap}
+      {currentService && currentService.extended && (
+        <>
+          <Box sx={{ textAlign: 'center', margin: theme => theme.spacing() }}>
+            <Typography component='h1' variant='h2'>
+              {`${currentService?.niceName}`}
+            </Typography>
+            <SocialIcons
+              facebookPageName={currentService?.extended?.facebookPageName}
+              twitterHandle={currentService?.extended?.twitterHandle}
+              youTubeId={currentService?.extended?.youTubeId}
             />
           </Box>
-        </Grid>
-      </Grid>
-      <Libraries />
-      <MobileLibraries />
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <ServiceDetails service={currentService} />
+              <ServiceActions service={currentService} />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Box>
+                <ListSubheader disableGutters disableSticky>
+                  Map of libraries
+                </ListSubheader>
+                <LibraryMap
+                  containerStyle={{
+                    width: '100%',
+                    height: '500px',
+                    position: 'relative'
+                  }}
+                  clickMap={clickMap}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+          <Libraries />
+          <MobileLibraries />
+        </>
+      )}
     </>
   )
 }

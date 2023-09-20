@@ -36,5 +36,62 @@
       "interval": 120,
       "colour": "#b71c1c"
     }
+  ],
+  "service_links": [
+    {
+      "field": "librariesUrl",
+      "text": "Find your local library",
+      "icon": "FindInPageIcon"
+    },
+    {
+      "field": "ebookUrl",
+      "text": "Read ebooks on your devices",
+      "icon": "TabletMacIcon"
+    },
+    {
+      "field": "audiobookUrl",
+      "text": "Listen to audiobooks on your devices",
+      "icon": "SpeakerIcon"
+    },
+    {
+      "field": "mobileLibrariesUrl",
+      "text": "Discover when the mobile library visits",
+      "icon": "DirectionsBusIcon"
+    },
+    {
+      "field": "homeServiceUrl",
+      "text": "Check if the library can come to your home",
+      "icon": "HomeIcon"
+    },
+    {
+      "field": "eventsUrl",
+      "text": "See events in your libraries",
+      "icon": "EventIcon"
+    },
+    {
+      "field": "Computer access URL",
+      "text": "Book a computer in the library",
+      "icon": "ComputerIcon"
+    },
+    {
+      "field": "Wifi access URL",
+      "text": "Use Wifi in the library",
+      "icon": "WifiIcon"
+    },
+    {
+      "field": "Fees and charges URL",
+      "text": "Understand fees and charges for your library service",
+      "icon": "PaymentIcon"
+    },
+    {
+      "field": "News or Blog URL",
+      "text": "Read latest library news",
+      "icon": "DescriptionIcon"
+    },
+    {
+      "field": "Podcast URL",
+      "text": "Listen to a library Podcast",
+      "icon": "MicIcon"
+    }
   ]
 }

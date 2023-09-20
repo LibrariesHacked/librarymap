@@ -20,12 +20,9 @@ import usePrevious from './hooks/usePrevious'
 function Libraries () {
   const [
     {
-      currentService,
       displayClosedLibraries,
       librarySearchDistance,
       searchPosition,
-      searchPostcode,
-      searchType,
       serviceFilter
     },
     dispatchSearch
@@ -124,17 +121,6 @@ function Libraries () {
     dispatchView({ type: 'SetLibraryDialog', libraryDialogOpen: true })
   }
 
-  const librariesHeader = () => {
-    switch (searchType) {
-      case 'postcode':
-        return `Libraries near ${searchPostcode}`
-      case 'service':
-        return `Libraries in ${currentService.name}`
-      default:
-        return 'Libraries'
-    }
-  }
-
   const columns = [
     { field: 'name', headerName: 'Name', flex: 1 },
     { field: 'address1', headerName: 'Address', flex: 1 },
@@ -171,7 +157,7 @@ function Libraries () {
   return (
     <>
       <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-        {librariesHeader()}
+        List of libraries
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>

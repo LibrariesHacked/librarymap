@@ -62,7 +62,7 @@ function PostcodeServiceInfo () {
               onClick={handleGoToLibraryServiceWebsite}
               component={Link}
             >
-              Service website
+              Website
             </Button>
           </CardActions>
         </Card>
