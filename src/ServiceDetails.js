@@ -10,7 +10,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
-import { lighten } from '@mui/material'
+import grey from '@mui/material/colors/grey'
 
 import * as urlHelper from './helpers/url'
 
@@ -21,15 +21,13 @@ function ServiceDetails (props) {
 
   return (
     <>
-      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-        {`${service?.name}`}
-      </ListSubheader>
+      <ListSubheader disableSticky>{`${service?.name}`}</ListSubheader>
       <TableContainer
         component={Paper}
         elevation={0}
         sx={{
-          border: 2,
-          borderColor: theme => lighten(theme.palette.primary.main, 0.5),
+          border: 1,
+          borderColor: grey[200],
           marginBottom: theme => theme.spacing(1)
         }}
       >
@@ -38,8 +36,10 @@ function ServiceDetails (props) {
             {service?.extended?.serviceUrl &&
               service?.extended?.serviceUrl !== '' && (
                 <TableRow>
-                  <TableCell variant='head'>Website</TableCell>
-                  <TableCell>
+                  <TableCell variant='head' sx={{ borderBottom: 'none' }}>
+                    Website
+                  </TableCell>
+                  <TableCell sx={{ borderBottom: 'none' }}>
                     <Button
                       variant='text'
                       color='primary'
@@ -53,8 +53,12 @@ function ServiceDetails (props) {
               )}
             {service?.extended?.greenLibrary && (
               <TableRow>
-                <TableCell variant='head'>Green library</TableCell>
-                <TableCell>This service has signed the green library manifesto</TableCell>
+                <TableCell sx={{ borderBottom: 'none' }} variant='head'>
+                  Green library
+                </TableCell>
+                <TableCell sx={{ borderBottom: 'none' }}>
+                  This service has signed the green library manifesto
+                </TableCell>
               </TableRow>
             )}
           </TableBody>

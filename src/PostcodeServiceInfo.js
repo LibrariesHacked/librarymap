@@ -52,8 +52,7 @@ function PostcodeServiceInfo () {
           </CardContent>
           <CardActions
             sx={{
-              backgroundColor: theme =>
-                lighten(grey[200], 0.6)
+              backgroundColor: theme => lighten(grey[200], 0.6)
             }}
           >
             <Button

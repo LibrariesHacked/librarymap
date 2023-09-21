@@ -53,7 +53,7 @@ function ServiceActions (props) {
               <Typography
                 key={'typ_links_' + idx}
                 component='span'
-                xs={{
+                sx={{
                   verticalAlign: 'middle',
                   display: 'inline-flex',
                   padding: theme => theme.spacing(1)
@@ -69,6 +69,8 @@ function ServiceActions (props) {
                   rel='noopener'
                   href={service.extended[link.field]}
                   variant='subtitle2'
+                  color='secondary'
+                  sx={{ textDecoration: 'none' }}
                 >
                   {link.text}
                 </Link>
