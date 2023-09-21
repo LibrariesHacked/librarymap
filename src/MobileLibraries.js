@@ -19,14 +19,7 @@ import usePrevious from './hooks/usePrevious'
 
 function MobileLibraries () {
   const [
-    {
-      currentService,
-      mobileSearchDistance,
-      searchPosition,
-      searchPostcode,
-      searchType,
-      serviceFilter
-    },
+    { mobileSearchDistance, searchPosition, serviceFilter },
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
@@ -118,17 +111,6 @@ function MobileLibraries () {
     dispatchView({ type: 'SetStopDialog', stopDialogOpen: true })
   }
 
-  const mobilesHeader = () => {
-    switch (searchType) {
-      case 'postcode':
-        return `Mobile stops near ${searchPostcode}`
-      case 'service':
-        return `Mobile stops in ${currentService.name}`
-      default:
-        return 'Mobile stops'
-    }
-  }
-
   const columns = [
     { field: 'community', headerName: 'Community', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 1 },
@@ -167,7 +149,7 @@ function MobileLibraries () {
         disableSticky
         sx={{ textAlign: 'center', marginTop: theme => theme.spacing(3) }}
       >
-        {mobilesHeader()}
+        List of mobile library stops
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>

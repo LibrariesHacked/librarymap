@@ -52,15 +52,6 @@ function LibraryDetails (props) {
       .getAllHours(library)
       .filter(rs => rs.unstaffed !== null && rs.unstaffed.length > 0).length > 0
 
-  const close = () => {
-    dispatchSearch({
-      type: 'SetCurrentLibrary',
-      currentLibraryId: null,
-      currentPoint: null
-    })
-    dispatchView({ type: 'SetLibraryDialog', stopLibraryDialogOpen: false })
-  }
-
   return (
     <>
       {Object.keys(library).length > 0 ? (
@@ -102,7 +93,7 @@ function LibraryDetails (props) {
                 </TableRow>
                 {library.yearOpened && library.yearOpened !== '' ? (
                   <TableRow>
-                    <TableCell variant='head'>Year opened</TableCell>
+                    <TableCell variant='head'>Opened</TableCell>
                     <TableCell>{library.yearOpened}</TableCell>
                   </TableRow>
                 ) : null}
@@ -138,12 +129,11 @@ function LibraryDetails (props) {
                     <TableCell variant='head'>Email</TableCell>
                     <TableCell>
                       <Button
-                        variant='text'
                         color='primary'
                         disableElevation
                         onClick={emailLibrary}
                       >
-                        {library.emailAddress}
+                        Send email
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -225,13 +215,12 @@ function LibraryDetails (props) {
                 color='warning'
                 startIcon={<DataIcon />}
                 component={Link}
-                onClick={() => close()}
               >
                 Update
               </Button>
             }
           >
-            Are these details incorrect? You can help by updating them.
+            Are these details incorrect?
           </Alert>
         </>
       ) : (

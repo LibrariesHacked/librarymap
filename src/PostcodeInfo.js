@@ -13,6 +13,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 
 import { lighten } from '@mui/material'
 
+import { grey } from '@mui/material/colors'
+
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
@@ -43,8 +45,8 @@ function PostcodeInfo () {
         <Card
           elevation={0}
           sx={{
-            border: 2,
-            borderColor: theme => lighten(theme.palette.primary.main, 0.5)
+            border: 1,
+            borderColor: grey[200]
           }}
         >
           <CardContent>
@@ -59,11 +61,11 @@ function PostcodeInfo () {
           </CardContent>
           <CardActions
             sx={{
-              backgroundColor: theme => lighten(theme.palette.primary.main, 0.9)
+              backgroundColor: theme => lighten(grey[200], 0.6)
             }}
           >
             <Button
-              variant='text'
+              size='small'
               startIcon={<LocationOnIcon />}
               onClick={viewMap}
               component={Link}
@@ -72,7 +74,6 @@ function PostcodeInfo () {
               View on map
             </Button>
             <Button
-              variant='text'
               startIcon={<InfoIcon />}
               sx={{ marginLeft: theme => theme.spacing(1) }}
               onClick={viewLibrary}

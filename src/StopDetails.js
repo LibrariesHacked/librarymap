@@ -24,6 +24,8 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
+import grey from '@mui/material/colors/grey'
+
 import CancelIcon from '@mui/icons-material/CancelRounded'
 import DataIcon from '@mui/icons-material/EditLocationAltRounded'
 import HelpIcon from '@mui/icons-material/HelpRounded'
@@ -81,7 +83,7 @@ function StopDetails () {
       slotProps={{
         backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } }
       }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[200] } }}
     >
       {Object.keys(stop).length > 0 && stop.routeDays ? (
         <>
@@ -149,7 +151,7 @@ function StopDetails () {
                 </Button>
               }
             >
-              Are these details incorrect? You can help by updating them.
+              Are these details incorrect?
             </Alert>
           </DialogContent>
         </>

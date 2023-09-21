@@ -14,6 +14,8 @@ import { useTheme } from '@mui/material/styles'
 
 import CancelIcon from '@mui/icons-material/CancelRounded'
 
+import grey from '@mui/material/colors/grey'
+
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
@@ -60,7 +62,7 @@ function MapSettings () {
       BackdropProps={{
         invisible: true
       }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: '#ccc' } }}
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey.A100 } }}
     >
       <DialogTitle>Map settings</DialogTitle>
       <DialogContent>

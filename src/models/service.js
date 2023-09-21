@@ -35,10 +35,12 @@ export class ServiceExtended {
     this.catalogueUrl = json['Catalogue URL']
     this.audiobookUrl = json['Audiobook URL']
     this.homeServiceUrl = json['Home service URL']
-    this.greenLibrary = json['Green library']
+    this.greenLibrary = json['Green library'] && json['Green library'] === 'Yes'
     this.overdriveName = json['Overdrive name']
-    this.childrenServiceUrl = json['Childrens service URL']
+    this.childrensServiceUrl = json['Childrens service URL']
+    this.instagramName = json['Instagram name']
     this.twitterHandle = json['Twitter handle']
+    this.youTubeId = json['YouTube ID']
     this.name = json.Name
     this.facebookPageName = json['Facebook page name']
     this.onlineCatalogueSystem = json['Online catalogue system']
