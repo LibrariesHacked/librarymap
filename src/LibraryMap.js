@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import BenchImage from './bench.svg'
+
 import { useTheme } from '@mui/material/styles'
 
 import Map, {
@@ -31,6 +33,7 @@ const libraryBuildingsTiles = config.libraryBuildingsTiles
 const libraryAuthorityTiles = config.libraryAuthorityTiles
 const stopTiles = config.stopTiles
 const tripTiles = config.tripTiles
+const openBenchesTiles = config.openBenchesTiles
 
 function LibraryMap (props) {
   const [{ isochrones }] = useApplicationStateValue()
@@ -98,6 +101,11 @@ function LibraryMap (props) {
       maxZoom={18}
       onMove={evt => setViewState(evt.viewState)}
       onClick={evt => clickMap(map, evt)}
+      onLoad={() => {
+        let benchImg = new Image(256, 256)
+        benchImg.onload = () => map.addImage('bench', benchImg)
+        benchImg.src = BenchImage
+      }}
     >
       <AttributionControl customAttribution='Contains OS data © Crown copyright and database right 2023' />
       {currentService && currentService.geojson && currentServiceMask ? ( // eslint-disable-line
@@ -372,7 +380,9 @@ function LibraryMap (props) {
           type='line'
           source-layer='trip'
           minzoom={14}
-          filter={currentService ? ['==', currentService.code, ['get', 'Local authority code']] : []}
+          {...(currentService && {
+            filter: ['==', currentService.code, ['get', 'Local authority code']]
+          })}
           layout={{
             'line-join': 'round',
             'line-cap': 'square'
@@ -392,7 +402,13 @@ function LibraryMap (props) {
             type='circle'
             source-layer='stop'
             minzoom={5}
-            filter={currentService ? ['==', currentService.code, ['get', 'Local authority code']] : []}
+            {...(currentService && {
+              filter: [
+                '==',
+                currentService.code,
+                ['get', 'Local authority code']
+              ]
+            })}
             layout={{}}
             paint={{
               'circle-radius': [
@@ -810,6 +826,45 @@ function LibraryMap (props) {
             }}
           />
         ) : null}
+      </Source>
+      <Source type='vector' tiles={[openBenchesTiles]} minzoom={5} maxzoom={14}>
+        <Layer
+          type='symbol'
+          source-layer='benches'
+          minzoom={16}
+          maxzoom={22}
+          layout={{
+            'icon-image': 'bench', // reference the image
+            'icon-size': 0.1
+          }}
+        />
+        <Layer
+          type='symbol'
+          source-layer='benches'
+          minzoom={18}
+          maxzoom={22}
+          layout={{
+            'text-field': ['get', 'popupContent'],
+            'text-font': ['Source Sans Pro SemiBold'],
+            'text-allow-overlap': false,
+            'text-anchor': 'top',
+            'text-offset': [0, 1.5],
+            'text-size': {
+              base: 1.2,
+              stops: [
+                [18, 12],
+                [22, 14]
+              ]
+            }
+          }}
+          paint={{
+            'text-color': '#6a6f73',
+            'text-halo-color': 'rgba(255, 255, 255, 0.9)',
+            'text-halo-width': 1,
+            'text-halo-blur': 1,
+            'text-opacity': 0.9
+          }}
+        />
       </Source>
       {searchPosition && searchPosition.length > 1 ? ( // eslint-disable-line
         <Marker longitude={searchPosition[0]} latitude={searchPosition[1]}>
