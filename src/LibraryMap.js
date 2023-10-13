@@ -103,7 +103,9 @@ function LibraryMap (props) {
       onClick={evt => clickMap(map, evt)}
       onLoad={() => {
         let benchImg = new Image(256, 256)
-        benchImg.onload = () => map.addImage('bench', benchImg)
+        benchImg.onload = () => {
+          map.addImage('bench', benchImg)
+        }
         benchImg.src = BenchImage
       }}
     >

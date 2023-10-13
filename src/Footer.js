@@ -25,7 +25,7 @@ function Footer () {
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <Typography variant='h6'>
+            <Typography component='p' variant='h6'>
               <MaterialLink
                 component={Link}
                 to='/accessibility'
@@ -63,7 +63,7 @@ function Footer () {
             <Carbonbadge />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <Typography variant='body1'>
+            <Typography component='p' variant='body1'>
               In memory of Paul Rowe
               <FavoriteIcon
                 color='secondary'
@@ -74,7 +74,7 @@ function Footer () {
                 }}
               />
             </Typography>
-            <Typography variant='h6'>
+            <Typography component='p' variant='h6'>
               <MaterialLink
                 variant='inherit'
                 href='https://www.mind.org.uk/donate/'
