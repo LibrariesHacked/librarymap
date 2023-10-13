@@ -27,7 +27,12 @@ function Home () {
           paddingBottom: theme => theme.spacing(2)
         }}
       >
-        <img src='/android-icon-72x72.png' alt='Logo' />
+        <img
+          src='/android-icon-72x72.png'
+          alt='Logo'
+          width='72px'
+          height='72px'
+        />
         <Typography component='h1' variant='h2'>
           Library map
         </Typography>

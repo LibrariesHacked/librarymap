@@ -214,7 +214,7 @@ function PostcodeSearch () {
             paddingLeft: theme => theme.spacing(2),
             maxWidth: 110,
             color: theme => theme.palette.secondary.main,
-            fontWeight: 600
+            fontWeight: 700
           }}
         />
         {!loadingPostcode ? (
