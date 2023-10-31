@@ -60,7 +60,7 @@ function LibraryMap (props) {
   let currentServiceMask = null
   if (currentService && currentService.geojson) {
     currentServiceMask = geoHelper.getMaskFromGeoJson(
-      JSON.parse(currentService.geojson)
+      currentService.geojson
     )
   }
 
