@@ -17,6 +17,21 @@ const applicationReducer = (state, action) => {
         services: action.services,
         serviceLookup: action.serviceLookup
       }
+    case 'UpdateServiceGeo':
+      let services = state.services
+      let service = services.find(s => s.code === action.service.code)
+      service.geojson = action.service.geojson
+      service.bbox = action.service.bbox
+      let serviceLookup = state.serviceLookup
+      let serviceLookupInstance = serviceLookup[action.service.code]
+      serviceLookupInstance.geojson = action.service.geojson
+      serviceLookupInstance.bbox = action.service.bbox
+      serviceLookup[action.service.code] = serviceLookupInstance
+      return {
+        ...state,
+        service: services,
+        serviceLookup: serviceLookup
+      }
     case 'AddIsochrone':
       if (!isochrones[action.point]) isochrones[action.point] = {}
       isochrones[action.point][action.transport] = action.isochrone

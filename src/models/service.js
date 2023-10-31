@@ -12,8 +12,10 @@ export class Service {
     this.name = json.name
     this.niceName = json.nice_name
     this.systemName = getServiceSystemName(json.name)
-    this.geojson = json.geojson
-    this.bbox = json.bbox
+    this.geojson =
+      json.geojson && json.geojson !== '' ? JSON.parse(json.geojson) : null
+    this.bbox =
+      json.bbox && json.bbox !== '' ? JSON.parse(json.bbox) : null
 
     return this
   }
@@ -87,4 +89,15 @@ export async function getServicesExtended () {
 
 export function getServiceSystemName (name) {
   return name.replace(/[. ,:-]+/g, '-').toLowerCase()
+}
+
+export async function getService (code) {
+  const response = await axios.get(
+    `${config.servicesUrl}/${code}?geo=true&bbox=true`
+  )
+  if (response && response.data) {
+    return new Service().fromJson(response.data)
+  } else {
+    return null
+  }
 }
