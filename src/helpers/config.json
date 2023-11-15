@@ -4,7 +4,7 @@
   "isochroneApi": "https://api-geography.librarydata.uk/rest/routing/isochrone/",
   "postcodeApi": "https://api-geography.librarydata.uk/rest/postcodes",
   "builtUpAreaTiles": "https://api-geography.librarydata.uk/rest/builtupareas/{z}/{x}/{y}.mvt",
-  "libraryTiles": "https://api.librarydata.uk/libraries/{z}/{x}/{y}.mvt",
+  "libraryTiles": "https://tiles.librarymap.co.uk/libraries/{z}/{x}/{y}.mvt",
   "libraryBuildingsTiles": "https://api.librarydata.uk/libraries/buildings/{z}/{x}/{y}.mvt",
   "libraryAuthorityTiles": "https://api-geography.librarydata.uk/rest/libraryauthorities/{z}/{x}/{y}.mvt",
   "openBenchesTiles": "https://raw.githubusercontent.com/LibrariesHacked/openbenches-tiles/main/tiles/{z}/{x}/{y}.mvt",

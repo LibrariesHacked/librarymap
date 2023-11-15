@@ -512,7 +512,7 @@ function LibraryMap (props) {
           />
         ) : null}
       </Source>
-      <Source type='vector' tiles={[libraryTiles]}>
+      <Source type='vector' tiles={[libraryTiles]} minzoom={0} maxzoom={14}>
         {displayClosedLibraries ? ( // eslint-disable-line
           <Layer // Closed library names
             type='symbol'
