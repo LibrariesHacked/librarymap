@@ -23,6 +23,7 @@ import { useViewStateValue } from './context/viewState'
 
 import * as stopModel from './models/stop'
 import * as libraryModel from './models/library'
+import * as serviceModel from './models/service'
 
 function Service () {
   const [{ services }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
@@ -77,19 +78,27 @@ function Service () {
   }
 
   useEffect(() => {
-    services.forEach(service => {
-      if (service.systemName === serviceSystemName) {
-        dispatchSearch({
-          type: 'FilterByService',
-          service: service
-        })
+    const setService = async service => {
+      const serviceFull = await serviceModel.getService(service.code)
+      const coords = serviceFull.bbox.coordinates[0]
+      dispatchApplication({ type: 'UpdateServiceGeo', service: serviceFull })
+      dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
+      dispatchSearch({
+        type: 'FilterByService',
+        service: service
+      })
+    }
 
-        // Position map to service
-        const coords = JSON.parse(service.bbox).coordinates[0]
-        dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
-      }
+    services.forEach(service => {
+      if (service.systemName === serviceSystemName) setService(service)
     })
-  }, [services, dispatchSearch, serviceSystemName, dispatchView])
+  }, [
+    services,
+    serviceSystemName,
+    dispatchSearch,
+    dispatchView,
+    dispatchApplication
+  ])
 
   return (
     <>
