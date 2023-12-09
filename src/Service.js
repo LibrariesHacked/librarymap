@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography'
 
 import BusinessIcon from '@mui/icons-material/BusinessRounded'
 
-import LibraryMap from './LibraryMap'
 import Libraries from './Libraries'
+import LibraryMap from './LibraryMap'
 import MobileLibraries from './MobileLibraries'
 import ServiceActions from './ServiceActions'
 import ServiceDetails from './ServiceDetails'
@@ -21,9 +21,9 @@ import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 
-import * as stopModel from './models/stop'
 import * as libraryModel from './models/library'
 import * as serviceModel from './models/service'
+import * as stopModel from './models/stop'
 
 function Service () {
   const [{ services }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
@@ -108,9 +108,14 @@ function Service () {
       />
       {currentService && currentService.extended && (
         <>
-          <Box sx={{ textAlign: 'center', margin: theme => theme.spacing() }}>
-            <Typography component='h1' variant='h2'>
-              {`${currentService?.niceName}`}
+          <Box
+            sx={{
+              textAlign: 'center',
+              padding: theme => theme.spacing(2)
+            }}
+          >
+            <Typography component='h1' variant='h3' color="secondary">
+              {`${currentService?.niceName} libraries`}
             </Typography>
             <SocialIcons
               facebookPageName={currentService?.extended?.facebookPageName}
