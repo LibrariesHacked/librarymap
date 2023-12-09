@@ -7,49 +7,47 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 function SocialIcons (props) {
   const { facebookPageName, twitterHandle, youTubeId } = props
 
-  const handleOpenFacebook = () => {
-    window.open(`https://www.facebook.com/${facebookPageName}`, '_blank')
+  const handleOpenSocial = url => {
+    window.open(url, '_blank')
   }
 
-  const handleOpenTwitter = () => {
-    window.open(`https://twitter.com/${twitterHandle}`, '_blank')
-  }
-
-  const handleOpenYouTube = () => {
-    window.open(`https://www.youtube.com/user/${youTubeId}`, '_blank')
+  const SocialButton = ({ url, icon }) => {
+    const Icon = icon
+    return (
+      <IconButton
+        size='large'
+        color='primary'
+        onClick={() => handleOpenSocial(url)}
+        sx={{
+          border: theme => `1px solid ${theme.palette.grey[200]}`,
+          backgroundColor: theme => theme.palette.grey[50],
+          margin: theme => theme.spacing(1)
+        }}
+      >
+        {Icon}
+      </IconButton>
+    )
   }
 
   return (
     <>
       {twitterHandle && (
-        <IconButton
-          size='large'
-          aria-label='twitter'
-          color='secondary'
-          onClick={handleOpenTwitter}
-        >
-          <TwitterIcon />
-        </IconButton>
+        <SocialButton
+          url={`https://twitter.com/${twitterHandle}`}
+          icon={<TwitterIcon />}
+        />
       )}
       {youTubeId && (
-        <IconButton
-          size='large'
-          aria-label='youtube'
-          color='secondary'
-          onClick={handleOpenYouTube}
-        >
-          <YouTubeIcon />
-        </IconButton>
+        <SocialButton
+          url={`https://www.youtube.com/channel/${youTubeId}`}
+          icon={<YouTubeIcon />}
+        />
       )}
       {facebookPageName && (
-        <IconButton
-          size='large'
-          aria-label='facebook'
-          color='secondary'
-          onClick={handleOpenFacebook}
-        >
-          <FacebookIcon />
-        </IconButton>
+        <SocialButton
+          url={`https://www.facebook.com/${facebookPageName}`}
+          icon={<FacebookIcon />}
+        />
       )}
     </>
   )
