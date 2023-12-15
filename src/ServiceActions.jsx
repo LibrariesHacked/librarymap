@@ -19,7 +19,7 @@ import PaymentIcon from '@mui/icons-material/PaymentRounded'
 import TabletMacIcon from '@mui/icons-material/TabletMacRounded'
 import WifiIcon from '@mui/icons-material/WifiRounded'
 
-const config = require('./helpers/config.json')
+import config from './helpers/config.json'
 
 const linkIcons = {
   FaceIcon: FaceIcon,

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const config = require('../helpers/config.json')
+import config from '../helpers/config.json'
 
 const libraryTypes = {
   LAL: 'Local authority library',
