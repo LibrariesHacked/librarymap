@@ -56,9 +56,7 @@ function LibraryMap (props) {
 
   let currentServiceMask = null
   if (currentService && currentService.geojson) {
-    currentServiceMask = geoHelper.getMaskFromGeoJson(
-      currentService.geojson
-    )
+    currentServiceMask = geoHelper.getMaskFromGeoJson(currentService.geojson)
   }
 
   useEffect(() => {
@@ -89,7 +87,6 @@ function LibraryMap (props) {
   return (
     <Map
       ref={setMap}
-      mapLib={maplibregl}
       style={containerStyle}
       mapStyle='https://zoomstack.librarydata.uk/light.json'
       longitude={mapPosition[0]}
