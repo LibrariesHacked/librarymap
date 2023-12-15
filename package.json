@@ -6,8 +6,8 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^4.5.8",
-    "@mui/icons-material": "^5.14.19",
-    "@mui/material": "^5.14.20",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/material": "^5.15.0",
     "@mui/x-data-grid": "^5.17.26",
     "@turf/turf": "^6.5.0",
     "axios": "^1.6.2",
@@ -18,15 +18,14 @@
     "react-carbonbadge": "^2.0.0",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.1.6",
-    "react-router-dom": "^6.20.1",
+    "react-router-dom": "^6.21.0",
     "rrule": "^2.8.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "predeploy": "vite build",
     "deploy": "gh-pages -d build",
     "sitemap": "node ./src/sitemap.js",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
@@ -54,10 +53,10 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@vitejs/plugin-react": "^4.2.1",
     "gh-pages": "^3.2.3",
-    "react-scripts": "^5.0.1",
     "sitemap": "^7.1.1",
-    "standard": "^16.0.4"
+    "standard": "^16.0.4",
+    "vite": "^5.0.10"
   }
 }

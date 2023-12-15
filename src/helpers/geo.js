@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import * as turf from '@turf/turf'
 
-const config = require('./config.json')
+import config from './config.json'
 
 export const getPosition = (options = {}) => {
   return new Promise((resolve, reject) => {

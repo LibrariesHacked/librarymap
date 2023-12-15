@@ -12,9 +12,6 @@ import Map, {
   AttributionControl
 } from 'react-map-gl/maplibre'
 
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import maplibregl from '!maplibre-gl'
-
 import { grey } from '@mui/material/colors'
 
 import { useApplicationStateValue } from './context/applicationState'
@@ -25,7 +22,7 @@ import MeAvatar from './MeAvatar'
 
 import * as geoHelper from './helpers/geo'
 
-const config = require('./helpers/config.json')
+import config from './helpers/config.json'
 
 const builtUpAreaTiles = config.builtUpAreaTiles
 const libraryTiles = config.libraryTiles
@@ -59,9 +56,7 @@ function LibraryMap (props) {
 
   let currentServiceMask = null
   if (currentService && currentService.geojson) {
-    currentServiceMask = geoHelper.getMaskFromGeoJson(
-      currentService.geojson
-    )
+    currentServiceMask = geoHelper.getMaskFromGeoJson(currentService.geojson)
   }
 
   useEffect(() => {
@@ -92,7 +87,6 @@ function LibraryMap (props) {
   return (
     <Map
       ref={setMap}
-      mapLib={maplibregl}
       style={containerStyle}
       mapStyle='https://zoomstack.librarydata.uk/light.json'
       longitude={mapPosition[0]}

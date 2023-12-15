@@ -28,7 +28,7 @@ import * as isochroneModel from './models/isochrone'
 import * as stopModel from './models/stop'
 import * as libraryModel from './models/library'
 
-const config = require('./helpers/config.json')
+import config from './helpers/config.json'
 
 function MapPage (props) {
   const [{ isochrones }, dispatchApplication] = useApplicationStateValue() //eslint-disable-line
@@ -225,12 +225,12 @@ function MapPage (props) {
             zIndex: 1,
             color: 'white'
           }}
-          onClick={() =>
+          onClick={() => {
             dispatchView({
               type: 'SetMapSettingsDialog',
               mapSettingsDialogOpen: true
             })
-          }
+          }}
         >
           <LayersIcon />
         </Fab>
