@@ -45,18 +45,19 @@ function PostcodeInfo () {
         <Card
           elevation={0}
           sx={{
-            border: 1,
+            border: 2,
             borderColor: grey[200]
           }}
         >
           <CardContent>
+            <Typography variant='h5' component='span' color='text.secondary'>
+              {`${nearestLibrary?.name}`}
+            </Typography>
+            <br />
             <Typography variant='subtitle1' color='text.secondary'>
               {`Your closest library is ${Math.round(
                 nearestLibrary?.distance / 1609
-              )} mile(s) away`}
-            </Typography>
-            <Typography variant='h6' color='text.secondary'>
-              {`${nearestLibrary?.name}`}
+              )} mile(s) away.`}
             </Typography>
           </CardContent>
           <CardActions

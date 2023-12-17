@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 
-import WebsiteIcon from '@mui/icons-material/LaunchRounded'
+import ArrowRightIcon from '@mui/icons-material/ArrowRightAltRounded'
 
 import { lighten } from '@mui/material'
 
@@ -24,30 +24,23 @@ function PostcodeServiceInfo () {
 
   const postcodeService = serviceLookup[postcodeServiceCode]
 
-  const handleGoToLibraryServiceWebsite = () => {
-    window.open(postcodeService?.extended?.serviceUrl, '_blank')
-  }
-
   return (
     <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
         <Card
           elevation={0}
           sx={{
-            border: 1,
+            border: 2,
             borderColor: grey[200]
           }}
         >
           <CardContent>
-            <Typography
-              variant='subtitle1'
-              component='span'
-              color='text.secondary'
-            >
-              {'Your library service is '}
+            <Typography variant='h5' component='span' color='text.secondary'>
+              {postcodeService?.niceName} Libraries
             </Typography>
-            <Typography variant='h6' component='span' color='text.secondary'>
-              {postcodeService?.niceName}
+            <br />
+            <Typography variant='body1' component='span' color='text.secondary'>
+              {'Library services are provided by local authorities.'}
             </Typography>
           </CardContent>
           <CardActions
@@ -56,12 +49,14 @@ function PostcodeServiceInfo () {
             }}
           >
             <Button
-              color='secondary'
-              startIcon={<WebsiteIcon />}
-              onClick={handleGoToLibraryServiceWebsite}
+              color='primary'
+              variant='contained'
+              endIcon={<ArrowRightIcon />}
+              to={`/service/${postcodeService.systemName}`}
               component={Link}
+              disableElevation
             >
-              Website
+              {postcodeService?.niceName} libraries
             </Button>
           </CardActions>
         </Card>
