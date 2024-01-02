@@ -57,7 +57,7 @@ function LibraryDetails (props) {
       {Object.keys(library).length > 0 ? (
         <>
           <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-            Library details
+            Quick library view
           </ListSubheader>
           <TableContainer
             component={Paper}

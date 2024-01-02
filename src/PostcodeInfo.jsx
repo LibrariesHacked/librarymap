@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
+import ArrowRightIcon from '@mui/icons-material/ArrowRightTwoTone'
 import InfoIcon from '@mui/icons-material/InfoOutlined'
 import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 
@@ -66,20 +67,30 @@ function PostcodeInfo () {
             }}
           >
             <Button
-              size='small'
-              startIcon={<LocationOnIcon />}
-              onClick={viewMap}
+              color='primary'
+              variant='text'
+              endIcon={<ArrowRightIcon />}
+              to={`/service/${nearestLibrary?.serviceSystemName}/${nearestLibrary?.systemName}  `}
               component={Link}
-              to='/map'
+              disableElevation
             >
-              View on map
+              See {nearestLibrary?.name}
             </Button>
             <Button
               startIcon={<InfoIcon />}
               sx={{ marginLeft: theme => theme.spacing(1) }}
               onClick={viewLibrary}
             >
-              Library details
+              Quick library view
+            </Button>
+            <Button
+              size='small'
+              startIcon={<LocationOnIcon />}
+              onClick={viewMap}
+              component={Link}
+              to='/map'
+            >
+              Go to map
             </Button>
           </CardActions>
         </Card>

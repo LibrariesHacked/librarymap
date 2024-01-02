@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 
-import ArrowRightIcon from '@mui/icons-material/ArrowRightAltRounded'
+import ArrowRightIcon from '@mui/icons-material/ArrowRightTwoTone'
 
 import { lighten } from '@mui/material'
 
@@ -50,13 +50,13 @@ function PostcodeServiceInfo () {
           >
             <Button
               color='primary'
-              variant='contained'
+              variant='text'
               endIcon={<ArrowRightIcon />}
               to={`/service/${postcodeService.systemName}`}
               component={Link}
               disableElevation
             >
-              {postcodeService?.niceName} libraries
+              See all {postcodeService?.niceName}
             </Button>
           </CardActions>
         </Card>
