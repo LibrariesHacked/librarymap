@@ -27,18 +27,12 @@ function Home () {
           paddingBottom: theme => theme.spacing(2)
         }}
       >
-        <img
-          src='/android-icon-72x72.png'
-          alt='Logo'
-          width='72px'
-          height='72px'
-        />
         <Typography component='h1' variant='h2'>
           Library map
         </Typography>
         <Typography
           component='p'
-          variant='h5'
+          variant='h6'
           sx={{
             color: theme => theme.palette.secondary.main,
             margin: theme => theme.spacing(0, 0, 4, 0)
@@ -75,7 +69,7 @@ function Home () {
           </Button>
         }
       >
-        Are these listings incorrect? You can help by updating them.
+        Are these listings incorrect? Help everyone by updating them.
       </Alert>
       <MobileLibraries />
     </>

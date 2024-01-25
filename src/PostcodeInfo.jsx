@@ -68,29 +68,29 @@ function PostcodeInfo () {
           >
             <Button
               color='primary'
-              variant='text'
+              variant='outlined'
               endIcon={<ArrowRightIcon />}
               to={`/service/${nearestLibrary?.serviceSystemName}/${nearestLibrary?.systemName}  `}
               component={Link}
               disableElevation
             >
-              See {nearestLibrary?.name}
+              {nearestLibrary?.name}
             </Button>
             <Button
-              startIcon={<InfoIcon />}
+              endIcon={<InfoIcon />}
               sx={{ marginLeft: theme => theme.spacing(1) }}
               onClick={viewLibrary}
             >
-              Quick library view
+              Quick info
             </Button>
             <Button
               size='small'
-              startIcon={<LocationOnIcon />}
+              endIcon={<LocationOnIcon />}
               onClick={viewMap}
               component={Link}
               to='/map'
             >
-              Go to map
+              Map
             </Button>
           </CardActions>
         </Card>

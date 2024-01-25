@@ -57,7 +57,7 @@ function LibraryDetails (props) {
       {Object.keys(library).length > 0 ? (
         <>
           <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-            Quick library view
+            Quick info
           </ListSubheader>
           <TableContainer
             component={Paper}
@@ -220,7 +220,7 @@ function LibraryDetails (props) {
               </Button>
             }
           >
-            Are these details incorrect?
+            Is this incorrect? Help everyone by updating it.
           </Alert>
         </>
       ) : (

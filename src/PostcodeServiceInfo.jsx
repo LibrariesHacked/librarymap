@@ -50,13 +50,13 @@ function PostcodeServiceInfo () {
           >
             <Button
               color='primary'
-              variant='text'
+              variant='outlined'
               endIcon={<ArrowRightIcon />}
               to={`/service/${postcodeService.systemName}`}
               component={Link}
               disableElevation
             >
-              See all {postcodeService?.niceName}
+              {postcodeService?.niceName}
             </Button>
           </CardActions>
         </Card>

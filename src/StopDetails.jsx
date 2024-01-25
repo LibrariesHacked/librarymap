@@ -151,7 +151,7 @@ function StopDetails () {
                 </Button>
               }
             >
-              Are these details incorrect?
+              Is this incorrect? Help everyone by updating it.
             </Alert>
           </DialogContent>
         </>
