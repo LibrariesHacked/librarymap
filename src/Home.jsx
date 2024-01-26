@@ -38,7 +38,7 @@ function Home () {
             margin: theme => theme.spacing(0, 0, 4, 0)
           }}
         >
-          Find your library by postcode or service
+          Find your nearest library
         </Typography>
         <Search />
       </Box>

@@ -157,7 +157,7 @@ function Libraries () {
   return (
     <>
       <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-        List of libraries
+        Libraries
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>

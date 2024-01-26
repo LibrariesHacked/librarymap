@@ -149,7 +149,7 @@ function MobileLibraries () {
         disableSticky
         sx={{ textAlign: 'center', marginTop: theme => theme.spacing(3) }}
       >
-        List of mobile library stops
+        Mobile library stops
       </ListSubheader>
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flexGrow: 1 }}>

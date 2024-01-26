@@ -31,7 +31,7 @@ function PostcodeServiceInfo () {
           elevation={0}
           sx={{
             border: 2,
-            borderColor: grey[200]
+            borderColor: grey[300]
           }}
         >
           <CardContent>
@@ -45,7 +45,7 @@ function PostcodeServiceInfo () {
           </CardContent>
           <CardActions
             sx={{
-              backgroundColor: theme => lighten(grey[200], 0.6)
+              backgroundColor: theme => lighten(grey[300], 0.6)
             }}
           >
             <Button
