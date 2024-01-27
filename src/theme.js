@@ -3,6 +3,9 @@ import { createTheme } from '@mui/material/styles'
 import { blueGrey, deepOrange, grey } from '@mui/material/colors'
 
 const theme = createTheme({
+  typography: {
+    fontFamily: ['Urbanist Variable', 'sans-serif'].join(',')
+  },
   palette: {
     background: {
       default: grey.A100

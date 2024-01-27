@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography'
 
 import FavoriteIcon from '@mui/icons-material/FavoriteRounded'
 
+import { grey } from '@mui/material/colors'
+
 import { Carbonbadge } from 'react-carbonbadge'
 
 function Footer () {
@@ -19,7 +21,8 @@ function Footer () {
       sx={{
         paddingTop: theme => theme.spacing(4),
         paddingBottom: theme => theme.spacing(6),
-        display: !mapPage ? 'block' : 'none'
+        display: !mapPage ? 'block' : 'none',
+        backgroundColor: grey[200]
       }}
     >
       <Container>
@@ -69,19 +72,19 @@ function Footer () {
                 color='secondary'
                 sx={{
                   verticalAlign: 'middle',
-                  fontSize: '1.8rem',
+                  fontSize: '2rem',
                   paddingLeft: theme => theme.spacing(1)
                 }}
               />
             </Typography>
-            <Typography component='p' variant='h6'>
+            <Typography component='p' variant='subtitle2'>
               <MaterialLink
                 variant='inherit'
                 href='https://www.mind.org.uk/donate/'
                 title='Donate to Mind'
                 target='_blank'
               >
-                Donate to Mind
+                If you've enjoyed this site, please consider donating to Mind
               </MaterialLink>
             </Typography>
           </Grid>

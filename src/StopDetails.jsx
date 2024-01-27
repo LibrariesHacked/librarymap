@@ -83,7 +83,7 @@ function StopDetails () {
       slotProps={{
         backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } }
       }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[200] } }}
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[300] } }}
     >
       {Object.keys(stop).length > 0 && stop.routeDays ? (
         <>
@@ -151,7 +151,7 @@ function StopDetails () {
                 </Button>
               }
             >
-              Are these details incorrect?
+              Is this incorrect? Help everyone by updating it.
             </Alert>
           </DialogContent>
         </>

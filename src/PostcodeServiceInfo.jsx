@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 
-import ArrowRightIcon from '@mui/icons-material/ArrowRightAltRounded'
+import ArrowRightIcon from '@mui/icons-material/ArrowRightTwoTone'
 
 import { lighten } from '@mui/material'
 
@@ -31,7 +31,7 @@ function PostcodeServiceInfo () {
           elevation={0}
           sx={{
             border: 2,
-            borderColor: grey[200]
+            borderColor: grey[300]
           }}
         >
           <CardContent>
@@ -45,7 +45,7 @@ function PostcodeServiceInfo () {
           </CardContent>
           <CardActions
             sx={{
-              backgroundColor: theme => lighten(grey[200], 0.6)
+              backgroundColor: theme => lighten(grey[300], 0.6)
             }}
           >
             <Button
@@ -56,7 +56,7 @@ function PostcodeServiceInfo () {
               component={Link}
               disableElevation
             >
-              {postcodeService?.niceName} libraries
+              {postcodeService?.niceName}
             </Button>
           </CardActions>
         </Card>

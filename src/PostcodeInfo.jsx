@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
+import ArrowRightIcon from '@mui/icons-material/ArrowRightTwoTone'
 import InfoIcon from '@mui/icons-material/InfoOutlined'
 import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 
@@ -17,11 +18,13 @@ import { grey } from '@mui/material/colors'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
+import { useApplicationStateValue } from './context/applicationState'
 
 function PostcodeInfo () {
   const [{ searchType, searchPostcode, nearestLibrary }, dispatchSearch] =
     useSearchStateValue()
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{ serviceLookup }] = useApplicationStateValue()
 
   const viewLibrary = () => {
     dispatchSearch({
@@ -39,14 +42,16 @@ function PostcodeInfo () {
     })
   }
 
+  const serviceSystemName = serviceLookup[nearestLibrary?.localAuthorityCode]?.systemName
+
   return (
     <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
         <Card
           elevation={0}
           sx={{
-            border: 2,
-            borderColor: grey[200]
+            border: 1,
+            borderColor: grey[300]
           }}
         >
           <CardContent>
@@ -62,24 +67,34 @@ function PostcodeInfo () {
           </CardContent>
           <CardActions
             sx={{
-              backgroundColor: theme => lighten(grey[200], 0.6)
+              backgroundColor: theme => lighten(grey[300], 0.6)
             }}
           >
             <Button
+              color='primary'
+              variant='contained'
+              endIcon={<ArrowRightIcon />}
+              to={`/service/${serviceSystemName}/${nearestLibrary?.systemName}  `}
+              component={Link}
+              disableElevation
+            >
+              {nearestLibrary?.name}
+            </Button>
+            <Button
+              endIcon={<InfoIcon />}
+              sx={{ marginLeft: theme => theme.spacing(1) }}
+              onClick={viewLibrary}
+            >
+              Quick info
+            </Button>
+            <Button
               size='small'
-              startIcon={<LocationOnIcon />}
+              endIcon={<LocationOnIcon />}
               onClick={viewMap}
               component={Link}
               to='/map'
             >
-              View on map
-            </Button>
-            <Button
-              startIcon={<InfoIcon />}
-              sx={{ marginLeft: theme => theme.spacing(1) }}
-              onClick={viewLibrary}
-            >
-              Library details
+              Map
             </Button>
           </CardActions>
         </Card>
