@@ -18,11 +18,13 @@ import { grey } from '@mui/material/colors'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
+import { useApplicationStateValue } from './context/applicationState'
 
 function PostcodeInfo () {
   const [{ searchType, searchPostcode, nearestLibrary }, dispatchSearch] =
     useSearchStateValue()
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
+  const [{ serviceLookup }] = useApplicationStateValue()
 
   const viewLibrary = () => {
     dispatchSearch({
@@ -40,13 +42,15 @@ function PostcodeInfo () {
     })
   }
 
+  const serviceSystemName = serviceLookup[nearestLibrary?.localAuthorityCode]?.systemName
+
   return (
     <>
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
         <Card
           elevation={0}
           sx={{
-            border: 2,
+            border: 1,
             borderColor: grey[300]
           }}
         >
@@ -68,9 +72,9 @@ function PostcodeInfo () {
           >
             <Button
               color='primary'
-              variant='outlined'
+              variant='contained'
               endIcon={<ArrowRightIcon />}
-              to={`/service/${nearestLibrary?.serviceSystemName}/${nearestLibrary?.systemName}  `}
+              to={`/service/${serviceSystemName}/${nearestLibrary?.systemName}  `}
               component={Link}
               disableElevation
             >

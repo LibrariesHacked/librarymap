@@ -50,7 +50,7 @@ function PostcodeServiceInfo () {
           >
             <Button
               color='primary'
-              variant='outlined'
+              variant='contained'
               endIcon={<ArrowRightIcon />}
               to={`/service/${postcodeService.systemName}`}
               component={Link}
