@@ -52,26 +52,10 @@ function Home () {
       </Grid>
 
       <Libraries />
-      <Alert
-        severity='warning'
-        icon={<HelpIcon fontSize='inherit' />}
-        sx={{
-          marginTop: theme => theme.spacing(2)
-        }}
-        action={
-          <Button
-            to='/data'
-            startIcon={<DataIcon />}
-            color='warning'
-            component={Link}
-          >
-            Update
-          </Button>
-        }
-      >
-        Are these listings incorrect? Help everyone by updating them.
-      </Alert>
       <MobileLibraries />
+      <Typography variant='body1' sx={{ marginTop: theme => theme.spacing() }}>
+        Are these listings incorrect? Help everyone by updating them.
+      </Typography>
     </>
   )
 }

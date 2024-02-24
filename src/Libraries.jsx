@@ -165,10 +165,10 @@ function Libraries () {
             sx={theme => ({
               backgroundColor: 'white',
               border: 2,
-              borderColor: lighten(theme.palette.primary.main, 0.5),
+              borderColor: lighten(theme.palette.staticLibraries.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.primary.main, 0.9),
-                color: theme.palette.primary.main
+                backgroundColor: lighten(theme.palette.staticLibraries.main, 0.9),
+                color: theme.palette.staticLibraries.main
               },
               '&.Mui-hovered': {
                 backgroundColor: theme.palette.action.hover

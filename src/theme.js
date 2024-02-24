@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 
-import { blueGrey, deepOrange, grey } from '@mui/material/colors'
+import { blueGrey, blue, grey, green, deepOrange } from '@mui/material/colors'
 
 const theme = createTheme({
   palette: {
@@ -8,16 +8,16 @@ const theme = createTheme({
       default: grey.A100
     },
     primary: {
-      main: deepOrange[500]
+      main: blue[700]
     },
     secondary: {
       main: blueGrey[500]
     },
     staticLibraries: {
-      main: grey[500]
+      main: green[700]
     },
     mobileLibraries: {
-      main: blueGrey[500]
+      main: deepOrange[700]
     }
   },
   components: {

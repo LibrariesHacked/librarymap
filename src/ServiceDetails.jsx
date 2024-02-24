@@ -27,7 +27,7 @@ function ServiceDetails (props) {
         elevation={0}
         sx={{
           border: 1,
-          borderColor: grey[300],
+          borderColor: grey[200],
           marginBottom: theme => theme.spacing(1)
         }}
       >

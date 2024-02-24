@@ -67,7 +67,7 @@ function Library () {
               <LibraryDetails library={library} />
             </Grid>
             <Grid item xs={6}>
-              <Box sx={{ border: '1px solid', borderColor: grey[300] }}>
+              <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
                 <LibraryMap
                   containerStyle={{
                     width: '100%',

@@ -69,7 +69,7 @@ function Footer () {
             <Typography component='p' variant='body1'>
               In memory of Paul Rowe
               <FavoriteIcon
-                color='secondary'
+                color='primary'
                 sx={{
                   verticalAlign: 'middle',
                   fontSize: '2rem',
@@ -84,7 +84,8 @@ function Footer () {
                 title='Donate to Mind'
                 target='_blank'
               >
-                If you've enjoyed this site, please consider donating to Mind
+                If this site has been useful, it'd be great if you considered
+                donating to Mind
               </MaterialLink>
             </Typography>
           </Grid>

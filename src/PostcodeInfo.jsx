@@ -42,7 +42,8 @@ function PostcodeInfo () {
     })
   }
 
-  const serviceSystemName = serviceLookup[nearestLibrary?.localAuthorityCode]?.systemName
+  const serviceSystemName =
+    serviceLookup[nearestLibrary?.localAuthorityCode]?.systemName
 
   return (
     <>
@@ -51,7 +52,7 @@ function PostcodeInfo () {
           elevation={0}
           sx={{
             border: 1,
-            borderColor: grey[300]
+            borderColor: grey[200]
           }}
         >
           <CardContent>
@@ -60,19 +61,17 @@ function PostcodeInfo () {
             </Typography>
             <br />
             <Typography variant='subtitle1' color='text.secondary'>
-              {`Your closest library is ${Math.round(
-                nearestLibrary?.distance / 1609
-              )} mile(s) away.`}
+              {`${Math.round(nearestLibrary?.distance / 1609)} miles away`}
             </Typography>
           </CardContent>
           <CardActions
             sx={{
-              backgroundColor: theme => lighten(grey[300], 0.6)
+              backgroundColor: theme => lighten(grey[200], 0.6)
             }}
           >
             <Button
               color='primary'
-              variant='contained'
+              variant='text'
               endIcon={<ArrowRightIcon />}
               to={`/service/${serviceSystemName}/${nearestLibrary?.systemName}  `}
               component={Link}

@@ -31,7 +31,7 @@ function PostcodeServiceInfo () {
           elevation={0}
           sx={{
             border: 2,
-            borderColor: grey[300]
+            borderColor: grey[200]
           }}
         >
           <CardContent>

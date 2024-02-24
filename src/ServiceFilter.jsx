@@ -42,14 +42,14 @@ function ServiceFilter () {
   return (
     <>
       {serviceFilter.length === 0 ? (
-        <Tooltip title='Choose library service'>
+        <Tooltip title='Choose library authority'>
           <Button
             size='large'
             color='primary'
             onClick={e => openServiceMenu(e.currentTarget)}
             startIcon={<BusinessIcon />}
           >
-            Select library service
+            Select library authority
           </Button>
         </Tooltip>
       ) : (
