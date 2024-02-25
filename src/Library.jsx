@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-import LocationCityIcon from '@mui/icons-material/LocationCityRounded'
+import LocationCityIcon from '@mui/icons-material/LocationCity'
 
 import LibraryDetails from './LibraryDetails'
 import LibraryMap from './LibraryMap'

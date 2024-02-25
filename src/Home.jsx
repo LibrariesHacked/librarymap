@@ -2,14 +2,10 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import MaterialLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-
-import DataIcon from '@mui/icons-material/EditLocationAltRounded'
-import HelpIcon from '@mui/icons-material/HelpRounded'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
@@ -54,7 +50,11 @@ function Home () {
       <Libraries />
       <MobileLibraries />
       <Typography variant='body1' sx={{ marginTop: theme => theme.spacing() }}>
-        Are these listings incorrect? Help everyone by updating them.
+        Are these listings incorrect? Help everyone by {''}
+        <MaterialLink to='/data' component={Link} sx={{ fontWeight: 700 }}>
+          updating the data
+        </MaterialLink>
+        .
       </Typography>
     </>
   )

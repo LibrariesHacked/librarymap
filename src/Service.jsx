@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid'
 import ListSubheader from '@mui/material/ListSubheader'
 import Typography from '@mui/material/Typography'
 
-import BusinessIcon from '@mui/icons-material/BusinessRounded'
+import BusinessIcon from '@mui/icons-material/Business'
 
 import Libraries from './Libraries'
 import LibraryMap from './LibraryMap'

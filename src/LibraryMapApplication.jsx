@@ -6,8 +6,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 
 import AccessibilityIcon from '@mui/icons-material/Accessibility'
-import PrivacyIcon from '@mui/icons-material/PrivacyTip'
-import DataIcon from '@mui/icons-material/Info'
+import PrivacyIcon from '@mui/icons-material/PrivacyTipRounded'
+import DataIcon from '@mui/icons-material/Dataset'
 
 import BuiltUpAreaPopup from './BuiltUpAreaPopup'
 import Footer from './Footer'

@@ -77,12 +77,13 @@ function Footer () {
                 }}
               />
             </Typography>
-            <Typography component='p' variant='subtitle2'>
+            <Typography component='p' variant='body1'>
               <MaterialLink
                 variant='inherit'
                 href='https://www.mind.org.uk/donate/'
                 title='Donate to Mind'
                 target='_blank'
+                sx={{ fontWeight: 700 }}
               >
                 If this site has been useful, it'd be great if you considered
                 donating to Mind
