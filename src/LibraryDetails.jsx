@@ -2,10 +2,10 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import ListSubheader from '@mui/material/ListSubheader'
+import MaterialLink from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -13,11 +13,9 @@ import TableHead from '@mui/material/TableHead'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
 
 import { lighten } from '@mui/material'
-
-import DataIcon from '@mui/icons-material/EditLocationAltRounded'
-import HelpIcon from '@mui/icons-material/HelpRounded'
 
 import { useViewStateValue } from './context/viewState'
 import { useSearchStateValue } from './context/searchState'
@@ -206,22 +204,16 @@ function LibraryDetails (props) {
               </TableContainer>
             </>
           ) : null}
-          <Alert
-            severity='warning'
-            icon={<HelpIcon fontSize='inherit' />}
-            action={
-              <Button
-                to='/data'
-                color='warning'
-                startIcon={<DataIcon />}
-                component={Link}
-              >
-                Update
-              </Button>
-            }
+          <Typography
+            variant='body1'
+            sx={{ marginTop: theme => theme.spacing() }}
           >
-            Is this incorrect? Help everyone by updating it.
-          </Alert>
+            Is this information incorrect? Help everyone by {''}
+            <MaterialLink to='/data' component={Link} sx={{ fontWeight: 700 }}>
+              updating the data
+            </MaterialLink>
+            .
+          </Typography>
         </>
       ) : (
         <CircularProgress color='primary' size={30} />

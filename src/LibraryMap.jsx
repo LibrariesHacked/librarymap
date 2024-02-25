@@ -111,14 +111,14 @@ function LibraryMap (props) {
             paint={{
               'line-opacity': 0.4,
               'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4],
-              'line-color': '#455a64'
+              'line-color': theme.palette.secondary.main
             }}
           />
           <Layer
             type='fill'
             paint={{
               'fill-opacity': 0.1,
-              'fill-color': '#455a64'
+              'fill-color': theme.palette.secondary.main
             }}
           />
         </Source>
@@ -327,7 +327,7 @@ function LibraryMap (props) {
             'line-cap': 'square'
           }}
           paint={{
-            'line-color': '#455a64',
+            'line-color': theme.palette.staticLibraries.main,
             'line-opacity': 0.6,
             'line-width': ['interpolate', ['linear'], ['zoom'], 14, 2, 18, 3]
           }}
@@ -337,7 +337,7 @@ function LibraryMap (props) {
           source-layer='library_buildings'
           minzoom={16}
           paint={{
-            'fill-color': '#455a64',
+            'fill-color': theme.palette.staticLibraries.main,
             'fill-opacity': 0.1
           }}
         />
@@ -353,7 +353,7 @@ function LibraryMap (props) {
               'line-cap': 'square'
             }}
             paint={{
-              'line-color': '#a7a39b',
+              'line-color': theme.palette.secondary.main,
               'line-opacity': 1,
               'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4]
             }}
@@ -365,7 +365,7 @@ function LibraryMap (props) {
             source-layer='library_authority_boundaries'
             minzoom={6}
             paint={{
-              'fill-color': grey.A100,
+              'fill-color': theme.palette.secondary.main,
               'fill-opacity': 0.1
             }}
           />
@@ -384,7 +384,7 @@ function LibraryMap (props) {
             'line-cap': 'square'
           }}
           paint={{
-            'line-color': '#a7a39b',
+            'line-color': theme.palette.mobileLibraries.main,
             'line-offset': ['interpolate', ['linear'], ['zoom'], 14, 1, 18, 4],
             'line-opacity': 1,
             'line-width': ['interpolate', ['linear'], ['zoom'], 14, 1, 18, 4],
@@ -416,7 +416,7 @@ function LibraryMap (props) {
                 18,
                 8
               ],
-              'circle-color': '#455a64',
+              'circle-color': theme.palette.mobileLibraries.main,
               'circle-stroke-width': [
                 'interpolate',
                 ['linear'],
@@ -464,7 +464,7 @@ function LibraryMap (props) {
               'text-halo-color': 'hsl(0, 0%, 100%)',
               'text-halo-width': 1,
               'text-halo-blur': 1,
-              'text-color': '#6a6f73'
+              'text-color': theme.palette.mobileLibraries.main
             }}
           />
         ) : null}
@@ -501,7 +501,7 @@ function LibraryMap (props) {
               'text-halo-color': 'hsl(0, 0%, 100%)',
               'text-halo-width': 1,
               'text-halo-blur': 1,
-              'text-color': '#6a6f73'
+              'text-color': theme.palette.mobileLibraries.main
             }}
           />
         ) : null}
@@ -549,7 +549,7 @@ function LibraryMap (props) {
               'text-halo-color': 'hsl(0, 0%, 100%)',
               'text-halo-width': 0,
               'text-halo-blur': 0,
-              'text-color': '#d32f2f',
+              'text-color': theme.palette.staticLibraries.main,
               'text-opacity': 0.9
             }}
           />
@@ -596,7 +596,7 @@ function LibraryMap (props) {
               'text-halo-color': 'hsl(0, 0%, 100%)',
               'text-halo-width': 0,
               'text-halo-blur': 1,
-              'text-color': '#d32f2f',
+              'text-color': theme.palette.error.main,
               'text-opacity': 0.9
             }}
           />
@@ -625,7 +625,7 @@ function LibraryMap (props) {
                 18,
                 8
               ],
-              'circle-color': '#b71c1c',
+              'circle-color': theme.palette.error.main,
               'circle-stroke-width': [
                 'interpolate',
                 ['linear'],
@@ -699,7 +699,7 @@ function LibraryMap (props) {
               'text-halo-color': 'hsl(0, 0%, 100%)',
               'text-halo-width': 1,
               'text-halo-blur': 1,
-              'text-color': '#6a6f73'
+              'text-color': theme.palette.staticLibraries.main
             }}
             onClick={clickMap}
           />
@@ -746,7 +746,7 @@ function LibraryMap (props) {
               'text-halo-color': 'hsl(0, 0%, 100%)',
               'text-halo-width': 1,
               'text-halo-blur': 1,
-              'text-color': '#6a6f73',
+              'text-color': theme.palette.staticLibraries.main,
               'text-opacity': 1
             }}
           />
@@ -776,21 +776,7 @@ function LibraryMap (props) {
                 18,
                 12
               ],
-              'circle-color': [
-                'match',
-                ['get', 'Type of library'],
-                'LAL',
-                '#1b5e20',
-                'LAL-',
-                '#388e3c',
-                'CL',
-                '#0d47a1',
-                'CRL',
-                '#e65100',
-                'ICL',
-                '#bf360c',
-                '#bf360c'
-              ],
+              'circle-color': theme.palette.staticLibraries.main,
               'circle-stroke-width': [
                 'interpolate',
                 ['linear'],
@@ -854,7 +840,7 @@ function LibraryMap (props) {
             }
           }}
           paint={{
-            'text-color': '#6a6f73',
+            'text-color': theme.palette.secondary.main,
             'text-halo-color': 'rgba(255, 255, 255, 0.9)',
             'text-halo-width': 1,
             'text-halo-blur': 1,

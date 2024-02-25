@@ -8,6 +8,7 @@ import BusinessIcon from '@mui/icons-material/BusinessRounded'
 import HomeIcon from '@mui/icons-material/Home'
 
 import { useApplicationStateValue } from './context/applicationState'
+import { ThemeContext } from '@emotion/react'
 
 function SiteBreadcrumbs (props) {
   const { currentPageName } = props
@@ -35,9 +36,12 @@ function SiteBreadcrumbs (props) {
       <Breadcrumbs aria-label='breadcrumb' sx={{ pt: 2, pb: 2 }}>
         {!homePage && (
           <Typography
-            sx={{ display: 'flex', alignItems: 'center' }}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              color: theme => theme.palette.text.primary
+            }}
             component={Link}
-            color='text.primary'
             to='/'
           >
             <HomeIcon sx={{ mr: 0.5 }} />
@@ -46,9 +50,12 @@ function SiteBreadcrumbs (props) {
         )}
         {libraryPage && (
           <Typography
-            sx={{ display: 'flex', alignItems: 'center' }}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              color: theme => theme.palette.text.primary
+            }}
             component={Link}
-            color='text.primary'
             to={`/service/${libraryPage.params.serviceSystemName}`}
           >
             <BusinessIcon sx={{ mr: 0.5 }} />

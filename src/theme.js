@@ -1,20 +1,23 @@
 import { createTheme } from '@mui/material/styles'
 
-import { blueGrey, deepOrange, grey } from '@mui/material/colors'
+import { blueGrey, blue, grey, green, deepOrange } from '@mui/material/colors'
 
 const theme = createTheme({
-  typography: {
-    fontFamily: ['Urbanist Variable', 'sans-serif'].join(',')
-  },
   palette: {
     background: {
       default: grey.A100
     },
     primary: {
-      main: deepOrange[500]
+      main: blue[700]
     },
     secondary: {
       main: blueGrey[500]
+    },
+    staticLibraries: {
+      main: green[700]
+    },
+    mobileLibraries: {
+      main: deepOrange[700]
     }
   },
   components: {

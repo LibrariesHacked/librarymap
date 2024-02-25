@@ -157,10 +157,10 @@ function MobileLibraries () {
             sx={theme => ({
               backgroundColor: 'white',
               border: 2,
-              borderColor: lighten(theme.palette.secondary.main, 0.5),
+              borderColor: lighten(theme.palette.mobileLibraries.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.secondary.main, 0.9),
-                color: theme.palette.secondary.main
+                backgroundColor: lighten(theme.palette.mobileLibraries.main, 0.9),
+                color: theme.palette.mobileLibraries.main
               },
               '&.Mui-hovered': {
                 backgroundColor: theme.palette.action.hover

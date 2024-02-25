@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-import LocationCityIcon from '@mui/icons-material/LocationCityRounded'
+import LocationCityIcon from '@mui/icons-material/LocationCity'
 
 import LibraryDetails from './LibraryDetails'
 import LibraryMap from './LibraryMap'
@@ -67,7 +67,7 @@ function Library () {
               <LibraryDetails library={library} />
             </Grid>
             <Grid item xs={6}>
-              <Box sx={{ border: '1px solid', borderColor: grey[300] }}>
+              <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
                 <LibraryMap
                   containerStyle={{
                     width: '100%',

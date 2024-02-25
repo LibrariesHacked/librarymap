@@ -19,7 +19,7 @@ function SocialIcons (props) {
         color='primary'
         onClick={() => handleOpenSocial(url)}
         sx={{
-          border: theme => `1px solid ${theme.palette.grey[300]}`,
+          border: theme => `1px solid ${theme.palette.grey[200]}`,
           backgroundColor: theme => theme.palette.grey[50],
           margin: theme => theme.spacing(1)
         }}

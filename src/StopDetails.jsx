@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
-import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Dialog from '@mui/material/Dialog'
@@ -10,6 +9,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import ListSubheader from '@mui/material/ListSubheader'
+import MaterialLink from '@mui/material/Link'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
@@ -27,8 +27,6 @@ import { lighten } from '@mui/material'
 import grey from '@mui/material/colors/grey'
 
 import CancelIcon from '@mui/icons-material/CancelRounded'
-import DataIcon from '@mui/icons-material/EditLocationAltRounded'
-import HelpIcon from '@mui/icons-material/HelpRounded'
 import SaveIcon from '@mui/icons-material/SaveAltRounded'
 import PrintIcon from '@mui/icons-material/PrintRounded'
 import WebIcon from '@mui/icons-material/WebRounded'
@@ -83,7 +81,7 @@ function StopDetails () {
       slotProps={{
         backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } }
       }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[300] } }}
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[200] } }}
     >
       {Object.keys(stop).length > 0 && stop.routeDays ? (
         <>
@@ -136,23 +134,20 @@ function StopDetails () {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Alert
-              severity='warning'
-              icon={<HelpIcon fontSize='inherit' />}
-              action={
-                <Button
-                  to='/data'
-                  color='warning'
-                  startIcon={<DataIcon />}
-                  component={Link}
-                  onClick={() => close()}
-                >
-                  Update
-                </Button>
-              }
+            <Typography
+              variant='body1'
+              sx={{ marginTop: theme => theme.spacing() }}
             >
-              Is this incorrect? Help everyone by updating it.
-            </Alert>
+              Is this information incorrect? Help everyone by {''}
+              <MaterialLink
+                to='/data'
+                component={Link}
+                sx={{ fontWeight: 700 }}
+              >
+                updating the data
+              </MaterialLink>
+              .
+            </Typography>
           </DialogContent>
         </>
       ) : (

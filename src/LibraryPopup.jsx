@@ -65,7 +65,7 @@ function LibraryPopup () {
       slotProps={{
         backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } }
       }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[300] } }}
+      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[200] } }}
     >
       <DialogTitle id='dlg-title'>{library.name}</DialogTitle>
       <DialogContent>
