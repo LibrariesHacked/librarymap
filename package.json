@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@emotion/react": "^11.11.3",
+    "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.15.11",
@@ -19,7 +19,7 @@
     "react-carbonbadge": "^2.0.0",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.1.7",
-    "react-router-dom": "^6.22.1",
+    "react-router-dom": "^6.22.2",
     "rrule": "^2.8.1"
   },
   "scripts": {

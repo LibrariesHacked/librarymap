@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import ListSubheader from '@mui/material/ListSubheader'
@@ -14,6 +15,9 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
+
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmailRounded'
+import ExternalLinkIcon from '@mui/icons-material/OpenInNewRounded'
 
 import { lighten } from '@mui/material'
 
@@ -57,88 +61,95 @@ function LibraryDetails (props) {
           <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
             Quick info
           </ListSubheader>
-          <TableContainer
-            component={Paper}
-            elevation={0}
+          <Box
             sx={{
               border: 2,
-              borderColor: theme => lighten(theme.palette.primary.main, 0.5),
-              marginBottom: theme => theme.spacing(1)
+              borderRadius: 2,
+              borderColor: theme =>
+                lighten(theme.palette.staticLibraries.main, 0.5),
+              marginBottom: theme => theme.spacing(1),
+              padding: theme => theme.spacing(1)
             }}
           >
-            <Table size='small'>
-              <TableBody>
-                <TableRow>
-                  <TableCell variant='head'>Address</TableCell>
-                  <TableCell>
-                    {[
-                      library.address1,
-                      library.address2,
-                      library.address3,
-                      library.postcode
-                    ]
-                      .filter(l => Boolean(l))
-                      .join(', ')}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell variant='head'>Service</TableCell>
-                  <TableCell>{library.localAuthority}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell variant='head'>Type</TableCell>
-                  <TableCell>{library.typeDescription}</TableCell>
-                </TableRow>
-                {library.yearOpened && library.yearOpened !== '' ? (
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{
+                marginBottom: theme => theme.spacing(1)
+              }}
+            >
+              <Table size='small'>
+                <TableBody>
                   <TableRow>
-                    <TableCell variant='head'>Opened</TableCell>
-                    <TableCell>{library.yearOpened}</TableCell>
-                  </TableRow>
-                ) : null}
-                {library.yearClosed && library.yearClosed !== '' ? (
-                  <TableRow>
-                    <TableCell variant='head'>Year closed</TableCell>
-                    <TableCell>{library.yearClosed}</TableCell>
-                  </TableRow>
-                ) : null}
-                {library.notes && library.notes !== '' ? (
-                  <TableRow>
-                    <TableCell variant='head'>Notes</TableCell>
-                    <TableCell>{library.notes}</TableCell>
-                  </TableRow>
-                ) : null}
-                {library.url && library.url !== '' ? (
-                  <TableRow>
-                    <TableCell variant='head'>Website</TableCell>
+                    <TableCell variant='head'>Address</TableCell>
                     <TableCell>
-                      <Button
-                        variant='text'
-                        color='primary'
-                        disableElevation
-                        onClick={goToWebsite}
-                      >
-                        {urlHelper.getDomainFromUrl(library.url)}
-                      </Button>
+                      {[
+                        library.address1,
+                        library.address2,
+                        library.address3,
+                        library.postcode
+                      ]
+                        .filter(l => Boolean(l))
+                        .join(', ')}
                     </TableCell>
                   </TableRow>
-                ) : null}
-                {library.emailAddress && library.emailAddress !== '' ? (
                   <TableRow>
-                    <TableCell variant='head'>Email</TableCell>
-                    <TableCell>
-                      <Button
-                        color='primary'
-                        disableElevation
-                        onClick={emailLibrary}
-                      >
-                        Send email
-                      </Button>
-                    </TableCell>
+                    <TableCell variant='head'>Authority</TableCell>
+                    <TableCell>{library.localAuthority}</TableCell>
                   </TableRow>
-                ) : null}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  <TableRow>
+                    <TableCell variant='head'>Type</TableCell>
+                    <TableCell>{library.typeDescription}</TableCell>
+                  </TableRow>
+                  {library.yearOpened && library.yearOpened !== '' ? (
+                    <TableRow>
+                      <TableCell variant='head'>Opened</TableCell>
+                      <TableCell>{library.yearOpened}</TableCell>
+                    </TableRow>
+                  ) : null}
+                  {library.yearClosed && library.yearClosed !== '' ? (
+                    <TableRow>
+                      <TableCell variant='head'>Year closed</TableCell>
+                      <TableCell>{library.yearClosed}</TableCell>
+                    </TableRow>
+                  ) : null}
+                  {library.notes && library.notes !== '' ? (
+                    <TableRow>
+                      <TableCell variant='head'>Notes</TableCell>
+                      <TableCell>{library.notes}</TableCell>
+                    </TableRow>
+                  ) : null}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <>
+              {library.url && library.url !== '' && (
+                <Button
+                  variant='text'
+                  color='staticLibraries'
+                  disableElevation
+                  onClick={goToWebsite}
+                  startIcon={<ExternalLinkIcon />}
+                  sx={{
+                    marginRight: theme => theme.spacing(1)
+                  }}
+                >
+                  {urlHelper.getDomainFromUrl(library.url)}
+                </Button>
+              )}
+              {library.emailAddress && library.emailAddress !== '' && (
+                <Button
+                  variant='text'
+                  color='staticLibraries'
+                  disableElevation
+                  onClick={emailLibrary}
+                  startIcon={<AlternateEmailIcon />}
+                >
+                  Email library
+                </Button>
+              )}
+            </>
+          </Box>
           {(staffedHoursAvailable || unstaffedHoursAvailable) &&
           config.displayOpeningHours ? (
             <>

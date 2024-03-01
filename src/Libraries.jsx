@@ -165,6 +165,7 @@ function Libraries () {
             sx={theme => ({
               backgroundColor: 'white',
               border: 2,
+              borderRadius: 2,
               borderColor: lighten(theme.palette.staticLibraries.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
                 backgroundColor: lighten(theme.palette.staticLibraries.main, 0.9),
