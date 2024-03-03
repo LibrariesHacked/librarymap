@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
 import ListSubheader from '@mui/material/ListSubheader'
 import MaterialLink from '@mui/material/Link'
 import Table from '@mui/material/Table'
@@ -19,38 +15,18 @@ import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 
-import useMediaQuery from '@mui/material/useMediaQuery'
-
-import { useTheme } from '@mui/material/styles'
 import { lighten } from '@mui/material'
 
-import grey from '@mui/material/colors/grey'
-
-import CancelIcon from '@mui/icons-material/CancelRounded'
 import SaveIcon from '@mui/icons-material/SaveAltRounded'
 import PrintIcon from '@mui/icons-material/PrintRounded'
 import WebIcon from '@mui/icons-material/WebRounded'
 
-import { useSearchStateValue } from './context/searchState'
-import { useViewStateValue } from './context/viewState'
-
-import * as stopModel from './models/stop'
+import * as urlHelper from './helpers/url'
 
 import config from './helpers/config.json'
 
-function StopDetails () {
-  const [{ currentStopId }, dispatchSearch] = useSearchStateValue() //eslint-disable-line
-  const [{ stopDialogOpen }, dispatchView] = useViewStateValue() //eslint-disable-line
-
-  const [stop, setStop] = useState({})
-
-  useEffect(() => {
-    async function getStop (stopId) {
-      const stopData = await stopModel.getStopById(stopId)
-      setStop(stopData)
-    }
-    if (currentStopId != null) getStop(currentStopId)
-  }, [currentStopId])
+function StopDetails (props) {
+  const { stop } = props
 
   const getStopCalendar = () =>
     window.open(config.mobilesApi + '/stops/' + stop.id + '/ics')
@@ -60,128 +36,126 @@ function StopDetails () {
 
   const goToWebsite = () => window.open(stop.timetable, '_blank')
 
-  const close = () => {
-    dispatchSearch({
-      type: 'SetCurrentStop',
-      currentStopId: null,
-      currentPoint: null
-    })
-    dispatchView({ type: 'SetStopDialog', stopDialogOpen: false })
-  }
-
-  const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
-
   return (
-    <Dialog
-      fullScreen={fullScreen}
-      open={stopDialogOpen}
-      onClose={close}
-      aria-labelledby='dlg-title'
-      slotProps={{
-        backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.03)' } }
-      }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[200] } }}
-    >
-      {Object.keys(stop).length > 0 && stop.routeDays ? (
-        <>
-          <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
-          <DialogContent>
-            <Typography component='h4' variant='subtitle1'>
-              {stop.address}
-            </Typography>
-            <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-              Schedule
-            </ListSubheader>
-            <TableContainer
-              component={Paper}
-              elevation={0}
-              sx={{
-                border: 2,
-                borderColor: theme =>
-                  lighten(theme.palette.secondary.main, 0.5),
-                marginBottom: theme => theme.spacing(1)
-              }}
-            >
-              <Table
-                size='small'
-                sx={{
-                  [`& .${tableCellClasses.root}`]: { borderBottom: 'none' }
-                }}
-              >
-                <TableHead
-                  sx={{
-                    backgroundColor: theme =>
-                      lighten(theme.palette.secondary.main, 0.8)
-                  }}
+    <>
+      <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+        Quick info and schedule
+      </ListSubheader>
+      <Box
+        sx={{
+          border: 2,
+          borderRadius: 2,
+          borderColor: theme =>
+            lighten(theme.palette.mobileLibraries.main, 0.5),
+          marginBottom: theme => theme.spacing(1),
+          padding: theme => theme.spacing(1)
+        }}
+      >
+        <TableContainer
+          component={Paper}
+          elevation={0}
+          sx={{
+            marginBottom: theme => theme.spacing(3)
+          }}
+        >
+          <Table size='small'>
+            <TableBody>
+              <TableRow>
+                <TableCell variant='head'>Address</TableCell>
+                <TableCell>{stop.address}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell variant='head'>Authority</TableCell>
+                <TableCell>{stop.organisationName}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TableContainer
+          component={Paper}
+          elevation={0}
+          sx={{
+            backgroundColor: theme =>
+              lighten(theme.palette.mobileLibraries.main, 0.9),
+            marginBottom: theme => theme.spacing(2),
+            border: 1,
+            borderRadius: 2,
+            borderColor: theme =>
+              lighten(theme.palette.mobileLibraries.main, 0.8)
+          }}
+        >
+          <Table
+            size='small'
+            sx={{
+              [`& .${tableCellClasses.root}`]: { borderBottom: 'none' }
+            }}
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  sx={{ color: theme => theme.palette.mobileLibraries.main }}
                 >
-                  <TableRow>
-                    <TableCell>Frequency</TableCell>
-                    <TableCell align='right'>Next visit</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {stop.routeFrequencyDescriptions.map((rs, idx) => (
-                    <TableRow key={'tc_rs_' + idx}>
-                      <TableCell component='th' scope='row'>
-                        {`${stop.routeDays[0]}, ${rs}`}
-                      </TableCell>
-                      <TableCell align='right'>
-                        {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Typography
-              variant='body1'
-              sx={{ marginTop: theme => theme.spacing() }}
-            >
-              Is this information incorrect? Help everyone by {''}
-              <MaterialLink
-                to='/data'
-                component={Link}
-                sx={{ fontWeight: 700 }}
-              >
-                updating the data
-              </MaterialLink>
-              .
-            </Typography>
-          </DialogContent>
-        </>
-      ) : (
-        <CircularProgress color='primary' size={30} />
-      )}
-      <DialogActions>
+                  Frequency
+                </TableCell>
+                <TableCell align='right' sx={{ color: theme => theme.palette.mobileLibraries.main }}>Next visit</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {stop.routeFrequencyDescriptions.map((rs, idx) => (
+                <TableRow key={'tc_rs_' + idx}>
+                  <TableCell component='th' scope='row'>
+                    {`${stop.routeDays[0]}, ${rs}`}
+                  </TableCell>
+                  <TableCell align='right'>
+                    {stop.routeSchedule[0].format('dddd Do MMMM h:mma')}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
         {config.displayWebLinks && (
           <Button
             onClick={() => goToWebsite()}
-            color='primary'
+            color='mobileLibraries'
             startIcon={<WebIcon />}
+            sx={{
+              marginRight: theme => theme.spacing(1)
+            }}
           >
-            Web
+            {urlHelper.getDomainFromUrl(stop.timetable)}
           </Button>
         )}
         <Button
           onClick={getStopCalendar}
-          color='primary'
+          color='mobileLibraries'
           startIcon={<SaveIcon />}
+          sx={{
+            marginRight: theme => theme.spacing(1)
+          }}
         >
-          Save
-        </Button>
-        <Button onClick={getStopPdf} color='primary' startIcon={<PrintIcon />}>
-          Print
+          Save calendar file
         </Button>
         <Button
-          onClick={() => close()}
-          color='secondary'
-          endIcon={<CancelIcon />}
+          onClick={getStopPdf}
+          color='mobileLibraries'
+          startIcon={<PrintIcon />}
+          sx={{
+            marginRight: theme => theme.spacing(1)
+          }}
         >
-          Close
+          Print PDF
         </Button>
-      </DialogActions>
-    </Dialog>
+      </Box>
+
+      <Typography variant='body1' sx={{ marginTop: theme => theme.spacing() }}>
+        Is this information incorrect? Help everyone by {''}
+        <MaterialLink to='/data' component={Link} sx={{ fontWeight: 700 }}>
+          updating the data
+        </MaterialLink>
+        .
+      </Typography>
+    </>
   )
 }
 

@@ -18,7 +18,7 @@ import LibraryPopup from './LibraryPopup'
 import MapPage from './MapPage'
 import Notification from './Notification'
 import Service from './Service'
-import StopDetails from './StopDetails'
+import StopPopup from './StopPopup'
 
 import { MemoMarkdownPage } from './MarkdownPage'
 
@@ -119,8 +119,8 @@ function LibraryMapApplication () {
       </Container>
       <Footer />
       <Notification />
-      <StopDetails />
       <LibraryPopup />
+      <StopPopup />
       <BuiltUpAreaPopup />
       <Backdrop open={loadingLibraryOrMobileLibrary} invisible>
         <CircularProgress color='inherit' />
