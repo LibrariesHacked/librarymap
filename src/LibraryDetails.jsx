@@ -17,7 +17,7 @@ import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmailRounded'
-import ExternalLinkIcon from '@mui/icons-material/OpenInNewRounded'
+import WebIcon from '@mui/icons-material/WebRounded'
 
 import { lighten } from '@mui/material'
 
@@ -129,7 +129,7 @@ function LibraryDetails (props) {
                   color='staticLibraries'
                   disableElevation
                   onClick={goToWebsite}
-                  startIcon={<ExternalLinkIcon />}
+                  startIcon={<WebIcon />}
                   sx={{
                     marginRight: theme => theme.spacing(1)
                   }}
