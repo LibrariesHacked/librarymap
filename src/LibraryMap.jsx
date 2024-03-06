@@ -12,8 +12,6 @@ import Map, {
   AttributionControl
 } from 'react-map-gl/maplibre'
 
-import { grey } from '@mui/material/colors'
-
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
@@ -28,8 +26,7 @@ const builtUpAreaTiles = config.builtUpAreaTiles
 const libraryTiles = config.libraryTiles
 const libraryBuildingsTiles = config.libraryBuildingsTiles
 const libraryAuthorityTiles = config.libraryAuthorityTiles
-const stopTiles = config.stopTiles
-const tripTiles = config.tripTiles
+const mobileTiles = config.mobileTiles
 const openBenchesTiles = config.openBenchesTiles
 
 function LibraryMap (props) {
@@ -371,32 +368,11 @@ function LibraryMap (props) {
           />
         ) : null}
       </Source>
-      <Source type='vector' tiles={[tripTiles]}>
-        <Layer
-          type='line'
-          source-layer='trip'
-          minzoom={14}
-          {...(currentService && {
-            filter: ['==', currentService.code, ['get', 'Local authority code']]
-          })}
-          layout={{
-            'line-join': 'round',
-            'line-cap': 'square'
-          }}
-          paint={{
-            'line-color': theme.palette.mobileLibraries.main,
-            'line-offset': ['interpolate', ['linear'], ['zoom'], 14, 1, 18, 4],
-            'line-opacity': 1,
-            'line-width': ['interpolate', ['linear'], ['zoom'], 14, 1, 18, 4],
-            'line-dasharray': [2, 0.5]
-          }}
-        />
-      </Source>
-      <Source type='vector' tiles={[stopTiles]}>
+      <Source type='vector' tiles={[mobileTiles]} minzoom={0} maxzoom={14}>
         {mapSettings.mobileLibraryStops ? ( // eslint-disable-line
           <Layer
             type='circle'
-            source-layer='stop'
+            source-layer='stops'
             minzoom={5}
             {...(currentService && {
               filter: [
@@ -434,7 +410,7 @@ function LibraryMap (props) {
         {mapSettings.mobileLibraryStops ? ( // eslint-disable-line
           <Layer
             type='symbol'
-            source-layer='stop'
+            source-layer='stops'
             minzoom={13}
             layout={{
               'text-ignore-placement': false,
@@ -471,7 +447,7 @@ function LibraryMap (props) {
         {mapSettings.mobileLibraryStops ? (
           <Layer
             type='symbol'
-            source-layer='stop'
+            source-layer='stops'
             minzoom={14}
             layout={{
               'text-ignore-placement': false,
@@ -505,6 +481,25 @@ function LibraryMap (props) {
             }}
           />
         ) : null}
+        <Layer
+          type='line'
+          source-layer='trips'
+          minzoom={14}
+          {...(currentService && {
+            filter: ['==', currentService.code, ['get', 'Local authority code']]
+          })}
+          layout={{
+            'line-join': 'round',
+            'line-cap': 'square'
+          }}
+          paint={{
+            'line-color': theme.palette.mobileLibraries.main,
+            'line-offset': ['interpolate', ['linear'], ['zoom'], 14, 1, 18, 4],
+            'line-opacity': 1,
+            'line-width': ['interpolate', ['linear'], ['zoom'], 14, 1, 18, 4],
+            'line-dasharray': [2, 0.5]
+          }}
+        />
       </Source>
       <Source type='vector' tiles={[libraryTiles]} minzoom={0} maxzoom={14}>
         {displayClosedLibraries ? ( // eslint-disable-line
