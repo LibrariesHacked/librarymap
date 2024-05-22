@@ -40,6 +40,7 @@ function LibraryMap (props) {
       searchType,
       searchPosition,
       currentService,
+      currentLibraryId,
       displayClosedLibraries,
       nearestLibraryLine
     }
@@ -746,7 +747,7 @@ function LibraryMap (props) {
             }}
           />
         ) : null}
-        {mapSettings.libraries ? ( // eslint-disable-line
+        {mapSettings.libraries && ( // eslint-disable-line
           <Layer // Library circles
             type='circle'
             source-layer='libraries'
@@ -757,9 +758,14 @@ function LibraryMap (props) {
                 ? [
                     'all',
                     ['!', ['has', 'Year closed']],
+                    ['!=', ['get', 'id'], currentLibraryId],
                     ['==', currentService.code, ['get', 'Local authority code']]
                   ]
-                : ['!', ['has', 'Year closed']]
+                : [
+                    'all',
+                    ['!', ['has', 'Year closed']],
+                    ['!=', ['get', 'id'], currentLibraryId]
+                  ]
             }
             paint={{
               'circle-radius': [
@@ -802,7 +808,69 @@ function LibraryMap (props) {
               ]
             }}
           />
-        ) : null}
+        )}
+        {mapSettings.libraries && ( // eslint-disable-line
+          <Layer // Library circles
+            type='circle'
+            source-layer='libraries'
+            minzoom={5}
+            maxzoom={18}
+            filter={
+              currentService
+                ? [
+                    'all',
+                    ['!', ['has', 'Year closed']],
+                    ['==', ['get', 'id'], currentLibraryId],
+                    ['==', currentService.code, ['get', 'Local authority code']]
+                  ]
+                : [
+                    'all',
+                    ['!', ['has', 'Year closed']],
+                    ['==', ['get', 'id'], currentLibraryId]
+                  ]
+            }
+            paint={{
+              'circle-radius': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5,
+                5,
+                18,
+                16
+              ],
+              'circle-color': theme.palette.staticLibraries.main,
+              'circle-stroke-width': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5,
+                2,
+                18,
+                5
+              ],
+              'circle-stroke-color': '#ffffff',
+              'circle-stroke-opacity': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5,
+                0.8,
+                18,
+                1
+              ],
+              'circle-opacity': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                5,
+                0.4,
+                18,
+                1
+              ]
+            }}
+          />
+        )}
       </Source>
       <Source type='vector' tiles={[openBenchesTiles]} minzoom={5} maxzoom={14}>
         <Layer
