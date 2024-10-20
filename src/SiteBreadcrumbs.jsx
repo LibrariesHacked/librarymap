@@ -8,7 +8,6 @@ import BusinessIcon from '@mui/icons-material/BusinessRounded'
 import HomeIcon from '@mui/icons-material/Home'
 
 import { useApplicationStateValue } from './context/applicationState'
-import { ThemeContext } from '@emotion/react'
 
 function SiteBreadcrumbs (props) {
   const { currentPageName } = props

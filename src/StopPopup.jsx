@@ -69,13 +69,15 @@ function StopPopup () {
     >
       <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
       <DialogContent>
-        { 
+        {
           // eslint-disable-next-line no-nested-ternary
-          stop.id != null ? (
-            <StopDetails stop={stop} />
-          ) : (
-            <p>Loading...</p>
-          )
+          stop.id != null
+            ? (
+              <StopDetails stop={stop} />
+              )
+            : (
+              <p>Loading...</p>
+              )
         }
       </DialogContent>
       <DialogActions>

@@ -114,7 +114,7 @@ function Service () {
               padding: theme => theme.spacing(2)
             }}
           >
-            <Typography component='h1' variant='h3' color="secondary">
+            <Typography component='h1' variant='h3' color='secondary'>
               {`${currentService?.niceName} libraries`}
             </Typography>
             <SocialIcons

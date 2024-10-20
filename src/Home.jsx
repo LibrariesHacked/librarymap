@@ -50,7 +50,7 @@ function Home () {
       <Libraries />
       <MobileLibraries />
       <Typography variant='body1' sx={{ marginTop: theme => theme.spacing() }}>
-        Are these listings incorrect? Help everyone by {''}
+        {'Are these listings incorrect? Help everyone by '}
         <MaterialLink to='/data' component={Link} sx={{ fontWeight: 700 }}>
           updating the data
         </MaterialLink>
