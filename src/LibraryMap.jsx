@@ -94,7 +94,7 @@ function LibraryMap (props) {
       onMove={evt => setViewState(evt.viewState)}
       onClick={evt => clickMap(map, evt)}
       onLoad={() => {
-        let benchImg = new Image(256, 256)
+        const benchImg = new window.Image(256, 256)
         benchImg.onload = () => {
           map.addImage('bench', benchImg)
         }
@@ -341,33 +341,37 @@ function LibraryMap (props) {
         />
       </Source>
       <Source type='vector' tiles={[libraryAuthorityTiles]}>
-        {mapSettings.authorityBoundary ? (
-          <Layer
-            type='line'
-            source-layer='library_authority_boundaries'
-            minzoom={6}
-            layout={{
-              'line-join': 'round',
-              'line-cap': 'square'
-            }}
-            paint={{
-              'line-color': theme.palette.secondary.main,
-              'line-opacity': 1,
-              'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4]
-            }}
-          />
-        ) : null}
-        {mapSettings.authorityBoundary ? (
-          <Layer
-            type='fill'
-            source-layer='library_authority_boundaries'
-            minzoom={6}
-            paint={{
-              'fill-color': theme.palette.secondary.main,
-              'fill-opacity': 0.1
-            }}
-          />
-        ) : null}
+        {mapSettings.authorityBoundary
+          ? (
+            <Layer
+              type='line'
+              source-layer='library_authority_boundaries'
+              minzoom={6}
+              layout={{
+                'line-join': 'round',
+                'line-cap': 'square'
+              }}
+              paint={{
+                'line-color': theme.palette.secondary.main,
+                'line-opacity': 1,
+                'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4]
+              }}
+            />
+            )
+          : null}
+        {mapSettings.authorityBoundary
+          ? (
+            <Layer
+              type='fill'
+              source-layer='library_authority_boundaries'
+              minzoom={6}
+              paint={{
+                'fill-color': theme.palette.secondary.main,
+                'fill-opacity': 0.1
+              }}
+            />
+            )
+          : null}
       </Source>
       <Source type='vector' tiles={[mobileTiles]} minzoom={0} maxzoom={14}>
         {mapSettings.mobileLibraryStops ? ( // eslint-disable-line
@@ -445,43 +449,45 @@ function LibraryMap (props) {
             }}
           />
         ) : null}
-        {mapSettings.mobileLibraryStops ? (
-          <Layer
-            type='symbol'
-            source-layer='stops'
-            minzoom={14}
-            layout={{
-              'text-ignore-placement': false,
-              'text-field': ['to-string', ['get', 'next_visiting']],
-              'text-font': ['Source Sans Pro Bold'],
-              'text-line-height': 1,
-              'text-size': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                14,
-                10,
-                18,
-                16
-              ],
-              'text-offset': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                13,
-                ['literal', [0, -1.5]],
-                18,
-                ['literal', [0, -2]]
-              ]
-            }}
-            paint={{
-              'text-halo-color': 'hsl(0, 0%, 100%)',
-              'text-halo-width': 1,
-              'text-halo-blur': 1,
-              'text-color': theme.palette.mobileLibraries.main
-            }}
-          />
-        ) : null}
+        {mapSettings.mobileLibraryStops
+          ? (
+            <Layer
+              type='symbol'
+              source-layer='stops'
+              minzoom={14}
+              layout={{
+                'text-ignore-placement': false,
+                'text-field': ['to-string', ['get', 'next_visiting']],
+                'text-font': ['Source Sans Pro Bold'],
+                'text-line-height': 1,
+                'text-size': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  14,
+                  10,
+                  18,
+                  16
+                ],
+                'text-offset': [
+                  'interpolate',
+                  ['linear'],
+                  ['zoom'],
+                  13,
+                  ['literal', [0, -1.5]],
+                  18,
+                  ['literal', [0, -2]]
+                ]
+              }}
+              paint={{
+                'text-halo-color': 'hsl(0, 0%, 100%)',
+                'text-halo-width': 1,
+                'text-halo-blur': 1,
+                'text-color': theme.palette.mobileLibraries.main
+              }}
+            />
+            )
+          : null}
         <Layer
           type='line'
           source-layer='trips'

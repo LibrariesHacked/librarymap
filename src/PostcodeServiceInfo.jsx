@@ -40,7 +40,7 @@ function PostcodeServiceInfo () {
             </Typography>
             <br />
             <Typography variant='body1' component='span' color='text.secondary'>
-              {'Library services are provided by local authorities.'}
+              Library services are provided by local authorities.
             </Typography>
           </CardContent>
           <CardActions

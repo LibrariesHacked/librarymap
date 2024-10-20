@@ -18,41 +18,43 @@ function BuiltUpAreaDetails () {
 
   return (
     <>
-      {Object.keys(currentBuiltUpArea).length > 0 ? (
-        <>
-          <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-            Area details
-          </ListSubheader>
-          <TableContainer
-            component={Paper}
-            elevation={0}
-            sx={{
-              border: 2,
-              borderColor: theme => lighten(theme.palette.primary.main, 0.5),
-              marginBottom: theme => theme.spacing(1)
-            }}
-          >
-            <Table size='small'>
-              <TableBody>
-                <TableRow>
-                  <TableCell variant='head'>Name</TableCell>
-                  <TableCell>{currentBuiltUpArea.name}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell variant='head'>Classification</TableCell>
-                  <TableCell>{currentBuiltUpArea.classification}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell variant='head'>Population</TableCell>
-                  <TableCell>{currentBuiltUpArea.population}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
-      ) : (
-        <CircularProgress color='primary' size={30} />
-      )}
+      {Object.keys(currentBuiltUpArea).length > 0
+        ? (
+          <>
+            <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
+              Area details
+            </ListSubheader>
+            <TableContainer
+              component={Paper}
+              elevation={0}
+              sx={{
+                border: 2,
+                borderColor: theme => lighten(theme.palette.primary.main, 0.5),
+                marginBottom: theme => theme.spacing(1)
+              }}
+            >
+              <Table size='small'>
+                <TableBody>
+                  <TableRow>
+                    <TableCell variant='head'>Name</TableCell>
+                    <TableCell>{currentBuiltUpArea.name}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell variant='head'>Classification</TableCell>
+                    <TableCell>{currentBuiltUpArea.classification}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell variant='head'>Population</TableCell>
+                    <TableCell>{currentBuiltUpArea.population}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </>
+          )
+        : (
+          <CircularProgress color='primary' size={30} />
+          )}
     </>
   )
 }

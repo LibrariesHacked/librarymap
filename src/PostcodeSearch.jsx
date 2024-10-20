@@ -217,55 +217,61 @@ function PostcodeSearch () {
             fontWeight: 700
           }}
         />
-        {!loadingPostcode ? (
-          <Tooltip title='Search by postcode'>
-            <IconButton
-              aria-label='Search'
-              color='inherit'
-              onClick={() => postcodeSearch()}
-              size='large'
-              disabled={loadingPostcode || loadingLocation}
-            >
-              <SearchIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <SearchIconBox>
-            <CircularProgress color='secondary' size={22} />
-          </SearchIconBox>
-        )}
-        <Tooltip title='Use your current location'>
-          <>
-            {!loadingLocation ? (
+        {!loadingPostcode
+          ? (
+            <Tooltip title='Search by postcode'>
               <IconButton
-                aria-label='Search by current location'
+                aria-label='Search'
                 color='inherit'
-                onClick={() => getLocation()}
+                onClick={() => postcodeSearch()}
                 size='large'
                 disabled={loadingPostcode || loadingLocation}
               >
-                <MyLocationIcon />
+                <SearchIcon />
               </IconButton>
-            ) : (
-              <SearchIconBox>
-                <CircularProgress color='secondary' size={22} />
-              </SearchIconBox>
+            </Tooltip>
+            )
+          : (
+            <SearchIconBox>
+              <CircularProgress color='secondary' size={22} />
+            </SearchIconBox>
             )}
+        <Tooltip title='Use your current location'>
+          <>
+            {!loadingLocation
+              ? (
+                <IconButton
+                  aria-label='Search by current location'
+                  color='inherit'
+                  onClick={() => getLocation()}
+                  size='large'
+                  disabled={loadingPostcode || loadingLocation}
+                >
+                  <MyLocationIcon />
+                </IconButton>
+                )
+              : (
+                <SearchIconBox>
+                  <CircularProgress color='secondary' size={22} />
+                </SearchIconBox>
+                )}
           </>
         </Tooltip>
-        {searchType === 'postcode' ? (
-          <Tooltip title='Clear search'>
-            <IconButton
-              color='secondary'
-              aria-label='Clear search'
-              onClick={() => clearSearch()}
-              size='large'
-              disabled={loadingPostcode || loadingLocation}
-            >
-              <ClearIcon />
-            </IconButton>
-          </Tooltip>
-        ) : null}
+        {searchType === 'postcode'
+          ? (
+            <Tooltip title='Clear search'>
+              <IconButton
+                color='secondary'
+                aria-label='Clear search'
+                onClick={() => clearSearch()}
+                size='large'
+                disabled={loadingPostcode || loadingLocation}
+              >
+                <ClearIcon />
+              </IconButton>
+            </Tooltip>
+            )
+          : null}
       </Box>
     </>
   )

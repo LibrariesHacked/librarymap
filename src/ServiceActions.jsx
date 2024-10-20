@@ -66,7 +66,7 @@ function ServiceActions (props) {
                 <Link
                   key={'typ_link_' + idx}
                   target='_blank'
-                  rel='noopener'
+                  rel='noopener noreferrer'
                   href={service.extended[link.field]}
                   variant='subtitle2'
                   color='secondary'

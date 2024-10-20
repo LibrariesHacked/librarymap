@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { Link } from 'react-router-dom'
 
@@ -97,7 +97,12 @@ function StopDetails (props) {
                 >
                   Frequency
                 </TableCell>
-                <TableCell align='right' sx={{ color: theme => theme.palette.mobileLibraries.main }}>Next visit</TableCell>
+                <TableCell
+                  align='right'
+                  sx={{ color: theme => theme.palette.mobileLibraries.main }}
+                >
+                  Next visit
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -149,7 +154,7 @@ function StopDetails (props) {
       </Box>
 
       <Typography variant='body1' sx={{ marginTop: theme => theme.spacing() }}>
-        Is this information incorrect? Help everyone by {''}
+        {'Is this information incorrect? Help everyone by '}
         <MaterialLink to='/data' component={Link} sx={{ fontWeight: 700 }}>
           updating the data
         </MaterialLink>

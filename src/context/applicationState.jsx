@@ -10,6 +10,10 @@ const initialApplicationState = {
 
 const applicationReducer = (state, action) => {
   const isochrones = state.isochrones
+  let services = []
+  let service = {}
+  let serviceLookup = {}
+  let serviceLookupInstance = {}
   switch (action.type) {
     case 'AddServices':
       return {
@@ -18,12 +22,12 @@ const applicationReducer = (state, action) => {
         serviceLookup: action.serviceLookup
       }
     case 'UpdateServiceGeo':
-      let services = state.services
-      let service = services.find(s => s.code === action.service.code)
+      services = state.services
+      service = services.find(s => s.code === action.service.code)
       service.geojson = action.service.geojson
       service.bbox = action.service.bbox
-      let serviceLookup = state.serviceLookup
-      let serviceLookupInstance = serviceLookup[action.service.code]
+      serviceLookup = state.serviceLookup
+      serviceLookupInstance = serviceLookup[action.service.code]
       serviceLookupInstance.geojson = action.service.geojson
       serviceLookupInstance.bbox = action.service.bbox
       serviceLookup[action.service.code] = serviceLookupInstance

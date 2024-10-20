@@ -51,37 +51,39 @@ function Library () {
 
   return (
     <>
-      {Object.keys(library).length > 0 ? (
-        <>
-          <SiteBreadcrumbs
-            currentPageName={library.name}
-            currentPageIcon={LocationCityIcon}
-          />
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography component='h1' variant='h3'>
-              {`${library?.name}`}
-            </Typography>
-          </Box>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <LibraryDetails library={library} />
+      {Object.keys(library).length > 0
+        ? (
+          <>
+            <SiteBreadcrumbs
+              currentPageName={library.name}
+              currentPageIcon={LocationCityIcon}
+            />
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography component='h1' variant='h3'>
+                {`${library?.name}`}
+              </Typography>
+            </Box>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <LibraryDetails library={library} />
+              </Grid>
+              <Grid item xs={6}>
+                <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
+                  <LibraryMap
+                    containerStyle={{
+                      width: '100%',
+                      height: '250px',
+                      position: 'relative'
+                    }}
+                  />
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
-                <LibraryMap
-                  containerStyle={{
-                    width: '100%',
-                    height: '250px',
-                    position: 'relative'
-                  }}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <CircularProgress color='primary' size={30} />
-      )}
+          </>
+          )
+        : (
+          <CircularProgress color='primary' size={30} />
+          )}
     </>
   )
 }
