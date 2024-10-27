@@ -10,7 +10,7 @@
   "openBenchesTiles": "https://raw.githubusercontent.com/LibrariesHacked/openbenches-tiles/main/tiles/{z}/{x}/{y}.mvt",
   "servicesUrl": "https://api-geography.librarydata.uk/rest/libraryauthorities",
   "servicesExtendedUrl": "https://api.librarydata.uk/services/airtable",
-  "mobileTiles": "https://tiles.mobilelibraries.org/tiles/{z}/{x}/{y}.mvt",
+  "mobileTiles": "https://tiles.mobilelibraries.org/{z}/{x}/{y}.mvt",
   "displayOpeningHours": false,
   "displayWebLinks": true,
   "displayEmails": false,
