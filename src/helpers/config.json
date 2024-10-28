@@ -7,7 +7,7 @@
   "libraryTiles": "https://tiles.librarymap.co.uk/libraries/{z}/{x}/{y}.mvt",
   "libraryBuildingsTiles": "https://api.librarydata.uk/libraries/buildings/{z}/{x}/{y}.mvt",
   "libraryAuthorityTiles": "https://api-geography.librarydata.uk/rest/libraryauthorities/{z}/{x}/{y}.mvt",
-  "openBenchesTiles": "https://raw.githubusercontent.com/LibrariesHacked/openbenches-tiles/main/tiles/{z}/{x}/{y}.mvt",
+  "openBenchesTiles": "https://openbenches.librarydata.uk/{z}/{x}/{y}.mvt",
   "servicesUrl": "https://api-geography.librarydata.uk/rest/libraryauthorities",
   "servicesExtendedUrl": "https://api.librarydata.uk/services/airtable",
   "mobileTiles": "https://tiles.mobilelibraries.org/{z}/{x}/{y}.mvt",
