@@ -36,8 +36,8 @@ function MobileLibraries () {
   const [filterModel, setFilterModel] = useState({
     items: [
       {
-        columnField: 'localAuthority',
-        operatorValue: 'contains',
+        field: 'localAuthority',
+        operator: 'contains',
         value: ''
       }
     ]
@@ -45,11 +45,11 @@ function MobileLibraries () {
 
   const initialState = {
     sorting: {
-      sortModel: sortModel
+      sortModel
     },
     pagination: {
-      page: page,
-      pageSize: pageSize
+      page,
+      pageSize
     },
     filter: filterModel
   }
@@ -120,7 +120,7 @@ function MobileLibraries () {
       headerName: 'Distance',
       flex: 1,
       valueFormatter: params => {
-        if (params.value == null) {
+        if (params?.value == null) {
           return ''
         }
 
@@ -159,7 +159,10 @@ function MobileLibraries () {
               border: 2,
               borderColor: lighten(theme.palette.mobileLibraries.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.mobileLibraries.main, 0.9),
+                backgroundColor: lighten(
+                  theme.palette.mobileLibraries.main,
+                  0.9
+                ),
                 color: theme.palette.mobileLibraries.main
               },
               '&.Mui-hovered': {
@@ -195,7 +198,8 @@ function MobileLibraries () {
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
-              setFilterModel(newFilterModel)}
+              setFilterModel(newFilterModel)
+            }
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {

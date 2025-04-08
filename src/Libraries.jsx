@@ -41,8 +41,8 @@ function Libraries () {
   const [filterModel, setFilterModel] = useState({
     items: [
       {
-        columnField: 'localAuthority',
-        operatorValue: 'contains',
+        field: 'localAuthority',
+        operator: 'contains',
         value: ''
       }
     ]
@@ -50,11 +50,11 @@ function Libraries () {
 
   const initialState = {
     sorting: {
-      sortModel: sortModel
+      sortModel
     },
     pagination: {
-      page: page,
-      pageSize: pageSize
+      page,
+      pageSize
     },
     filter: filterModel
   }
@@ -84,13 +84,13 @@ function Libraries () {
       return
     }
     getLibrariesFromQuery({
-      page: page,
-      pageSize: pageSize,
-      sortModel: sortModel,
-      searchPosition: searchPosition,
+      page,
+      pageSize,
+      sortModel,
+      searchPosition,
       searchDistance: librarySearchDistance,
-      serviceFilter: serviceFilter,
-      displayClosedLibraries: displayClosedLibraries
+      serviceFilter,
+      displayClosedLibraries
     })
 
     // eslint-disable-next-line
@@ -131,7 +131,7 @@ function Libraries () {
       headerName: 'Distance',
       flex: 1,
       valueFormatter: params => {
-        if (params.value == null) {
+        if (params?.value == null) {
           return ''
         }
 
@@ -168,7 +168,10 @@ function Libraries () {
               borderRadius: 2,
               borderColor: lighten(theme.palette.staticLibraries.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.staticLibraries.main, 0.9),
+                backgroundColor: lighten(
+                  theme.palette.staticLibraries.main,
+                  0.9
+                ),
                 color: theme.palette.staticLibraries.main
               },
               '&.Mui-hovered': {
@@ -205,7 +208,8 @@ function Libraries () {
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
-              setFilterModel(newFilterModel)}
+              setFilterModel(newFilterModel)
+            }
             onPageChange={newPage => setPage(newPage)}
             onPageSizeChange={newPageSize => setPageSize(newPageSize)}
             onSortModelChange={newSortModel => {
