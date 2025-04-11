@@ -22,21 +22,21 @@ import WifiIcon from '@mui/icons-material/WifiRounded'
 import config from './helpers/config.json'
 
 const linkIcons = {
-  FaceIcon: FaceIcon,
-  GroupIcon: GroupIcon,
-  ComputerIcon: ComputerIcon,
-  DescriptionIcon: DescriptionIcon,
-  DirectionsBusIcon: DirectionsBusIcon,
-  EventIcon: EventIcon,
-  ExploreIcon: ExploreIcon,
-  FindInPageIcon: FindInPageIcon,
-  SpeakerIcon: SpeakerIcon,
-  HomeIcon: HomeIcon,
-  MicIcon: MicIcon,
-  OpenInBrowserIcon: OpenInBrowserIcon,
-  PaymentIcon: PaymentIcon,
-  TabletMacIcon: TabletMacIcon,
-  WifiIcon: WifiIcon
+  FaceIcon,
+  GroupIcon,
+  ComputerIcon,
+  DescriptionIcon,
+  DirectionsBusIcon,
+  EventIcon,
+  ExploreIcon,
+  FindInPageIcon,
+  SpeakerIcon,
+  HomeIcon,
+  MicIcon,
+  OpenInBrowserIcon,
+  PaymentIcon,
+  TabletMacIcon,
+  WifiIcon
 }
 
 function ServiceActions (props) {

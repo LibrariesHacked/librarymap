@@ -34,7 +34,7 @@ const applicationReducer = (state, action) => {
       return {
         ...state,
         service: services,
-        serviceLookup: serviceLookup
+        serviceLookup
       }
     case 'AddIsochrone':
       if (!isochrones[action.point]) isochrones[action.point] = {}
@@ -42,13 +42,13 @@ const applicationReducer = (state, action) => {
       console.log(isochrones)
       return {
         ...state,
-        isochrones: isochrones
+        isochrones
       }
     case 'SetIsochroneDisplay':
       isochrones[action.point][action.transport].display = action.display
       return {
         ...state,
-        isochrones: isochrones
+        isochrones
       }
     case 'SetIsochroneLoading':
       if (!isochrones[action.point]) isochrones[action.point] = {}
@@ -59,7 +59,7 @@ const applicationReducer = (state, action) => {
       }
       return {
         ...state,
-        isochrones: isochrones
+        isochrones
       }
     default:
       return state

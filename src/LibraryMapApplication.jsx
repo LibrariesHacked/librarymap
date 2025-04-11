@@ -51,8 +51,8 @@ function LibraryMapApplication () {
       })
       dispatchApplication({
         type: 'AddServices',
-        services: services,
-        serviceLookup: serviceLookup
+        services,
+        serviceLookup
       })
     }
     getServices()

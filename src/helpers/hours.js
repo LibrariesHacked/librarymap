@@ -21,7 +21,7 @@ export function getDayHours (place, day) {
       ? place[dayProp + 'UnstaffedHours']
       : null
   return {
-    day: day,
+    day,
     staffed: staffedHours
       ? staffedHours.split(',').map(h => h.split('-'))
       : null,

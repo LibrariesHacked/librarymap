@@ -13,11 +13,11 @@ import grey from '@mui/material/colors/grey'
 
 import CancelIcon from '@mui/icons-material/CancelRounded'
 
-import StopDetails from './StopDetails'
-
+import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
-import { useApplicationStateValue } from './context/applicationState'
+
+import StopDetails from './StopDetails'
 
 import * as stopModel from './models/stop'
 
@@ -27,19 +27,11 @@ function StopPopup () {
   const [{ services }] = useApplicationStateValue()
 
   const [stop, setStop] = useState({})
-  const [service, setService] = useState({}) //eslint-disable-line
 
   useEffect(() => {
     async function getStop (stopId) {
       const stopData = await stopModel.getStopById(stopId)
       setStop(stopData)
-      services.every(service => {
-        if (service.code === stopData.localAuthorityCode) {
-          setService(service)
-          return false
-        }
-        return true
-      })
     }
     if (currentStopId != null) getStop(currentStopId)
   }, [currentStopId, services])
@@ -63,21 +55,15 @@ function StopPopup () {
       onClose={close}
       aria-labelledby='dlg-title'
       slotProps={{
-        backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0)' } }
+        backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0)' } },
+        paper: { elevation: 0, sx: { border: 1, borderColor: grey[200] } }
       }}
-      PaperProps={{ elevation: 0, sx: { border: 1, borderColor: grey[200] } }}
     >
       <DialogTitle id='dlg-title'>{stop.name}</DialogTitle>
       <DialogContent>
         {
           // eslint-disable-next-line no-nested-ternary
-          stop.id != null
-            ? (
-              <StopDetails stop={stop} />
-              )
-            : (
-              <p>Loading...</p>
-              )
+          stop.id != null ? <StopDetails stop={stop} /> : <p>Loading...</p>
         }
       </DialogContent>
       <DialogActions>

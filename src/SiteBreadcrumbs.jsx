@@ -32,7 +32,7 @@ function SiteBreadcrumbs (props) {
 
   return (
     <div role='presentation'>
-      <Breadcrumbs aria-label='breadcrumb' sx={{ pt: 2, pb: 2 }}>
+      <Breadcrumbs aria-label='breadcrumb'>
         {!homePage && (
           <Typography
             sx={{

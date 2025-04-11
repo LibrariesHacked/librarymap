@@ -85,7 +85,7 @@ function Service () {
       dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
       dispatchSearch({
         type: 'FilterByService',
-        service: service
+        service
       })
     }
 
@@ -119,7 +119,6 @@ function Service () {
             </Typography>
             <SocialIcons
               facebookPageName={currentService?.extended?.facebookPageName}
-              twitterHandle={currentService?.extended?.twitterHandle}
               youTubeId={currentService?.extended?.youTubeId}
             />
           </Box>

@@ -31,7 +31,7 @@ function ServiceFilter () {
     const serviceFull = await serviceModel.getService(service.code)
     const coords = serviceFull.bbox.coordinates[0]
     dispatchApplication({ type: 'UpdateServiceGeo', service: serviceFull })
-    dispatchSearch({ type: 'FilterByService', service: service })
+    dispatchSearch({ type: 'FilterByService', service })
     dispatchView({ type: 'FitToBounds', mapBounds: [coords[0], coords[2]] })
   }
 
