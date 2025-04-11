@@ -129,7 +129,7 @@ function MapPage (props) {
       dispatchApplication({
         type: 'SetIsochroneDisplay',
         point: currentPoint,
-        transport: transport,
+        transport,
         display: !isochrones[currentPoint][transport].display
       })
     } else {
@@ -140,8 +140,8 @@ function MapPage (props) {
       dispatchApplication({
         type: 'AddIsochrone',
         point: currentPoint,
-        transport: transport,
-        isochrone: isochrone
+        transport,
+        isochrone
       })
     }
   }

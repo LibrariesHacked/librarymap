@@ -30,26 +30,27 @@ function MobileLibraries () {
 
   const initialSortModel = [{ field: 'name', sort: 'asc' }]
 
-  const [page, setPage] = useState(0)
-  const [pageSize, setPageSize] = useState(5)
   const [sortModel, setSortModel] = useState(initialSortModel)
   const [filterModel, setFilterModel] = useState({
     items: [
       {
-        columnField: 'localAuthority',
-        operatorValue: 'contains',
+        field: 'localAuthority',
+        operator: 'contains',
         value: ''
       }
     ]
   })
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 5
+  })
 
   const initialState = {
     sorting: {
-      sortModel: sortModel
+      sortModel
     },
     pagination: {
-      page: page,
-      pageSize: pageSize
+      paginationModel
     },
     filter: filterModel
   }
@@ -79,17 +80,17 @@ function MobileLibraries () {
       return
     }
     getMobileStopsFromQuery({
-      page: page,
-      pageSize: pageSize,
-      sortModel: sortModel,
-      searchPosition: searchPosition,
+      page: paginationModel.page,
+      pageSize: paginationModel.pageSize,
+      sortModel,
+      searchPosition,
       searchDistance: mobileSearchDistance,
-      serviceFilter: serviceFilter
+      serviceFilter
     })
     // eslint-disable-next-line
   }, [
-    page,
-    pageSize,
+    paginationModel.page,
+    paginationModel.pageSize,
     sortModel,
     searchPosition,
     mobileSearchDistance,
@@ -120,7 +121,7 @@ function MobileLibraries () {
       headerName: 'Distance',
       flex: 1,
       valueFormatter: params => {
-        if (params.value == null) {
+        if (params?.value == null) {
           return ''
         }
 
@@ -159,7 +160,10 @@ function MobileLibraries () {
               border: 2,
               borderColor: lighten(theme.palette.mobileLibraries.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.mobileLibraries.main, 0.9),
+                backgroundColor: lighten(
+                  theme.palette.mobileLibraries.main,
+                  0.9
+                ),
                 color: theme.palette.mobileLibraries.main
               },
               '&.Mui-hovered': {
@@ -173,7 +177,6 @@ function MobileLibraries () {
                   outline: 'none !important'
                 }
             })}
-            autoHeight
             columnVisibilityModel={{
               community: true,
               name: useMediaQuery(theme.breakpoints.up('sm')),
@@ -185,19 +188,21 @@ function MobileLibraries () {
             filterMode='server'
             filterModel={filterModel}
             loading={loadingMobileStops}
-            page={page}
-            pageSize={pageSize}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
             pagination
             paginationMode='server'
+            pageSizeOptions={[5]}
             rows={mobileStops}
             rowCount={rowCountState}
-            rowsPerPageOptions={[5]}
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
               setFilterModel(newFilterModel)}
-            onPageChange={newPage => setPage(newPage)}
-            onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+            onPageChange={newPage =>
+              setPaginationModel({ ...paginationModel, page: newPage })}
+            onPageSizeChange={newPageSize =>
+              setPaginationModel({ ...paginationModel, pageSize: newPageSize })}
             onSortModelChange={newSortModel => {
               if (newSortModel.length === 0) {
                 setSortModel(initialSortModel)

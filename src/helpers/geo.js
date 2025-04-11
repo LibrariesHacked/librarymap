@@ -96,7 +96,7 @@ export const validatePostcode = postcode => {
 export const getLineGeoJsonFromPoints = (points, properties) => {
   return {
     type: 'Feature',
-    properties: properties,
+    properties,
     geometry: {
       type: 'LineString',
       coordinates: points

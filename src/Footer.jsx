@@ -11,7 +11,7 @@ import FavoriteIcon from '@mui/icons-material/FavoriteRounded'
 
 import { grey } from '@mui/material/colors'
 
-import { Carbonbadge } from 'react-carbonbadge'
+import { WebsiteCarbonBadge } from 'react-websitecarbon-badge'
 
 function Footer () {
   const mapPage = useMatch('/map')
@@ -63,7 +63,7 @@ function Footer () {
             xl={4}
             sx={{ display: mapPage ? 'none' : 'block' }}
           >
-            <Carbonbadge />
+            <WebsiteCarbonBadge url={window.location.href} />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <Typography component='p' variant='body1'>
@@ -78,6 +78,7 @@ function Footer () {
               />
             </Typography>
             <Typography component='p' variant='body1'>
+              If this site has been useful, it'd be great if you considered{' '}
               <MaterialLink
                 variant='inherit'
                 href='https://www.mind.org.uk/donate/'
@@ -85,7 +86,6 @@ function Footer () {
                 target='_blank'
                 sx={{ fontWeight: 700 }}
               >
-                If this site has been useful, it'd be great if you considered
                 donating to Mind
               </MaterialLink>
             </Typography>

@@ -39,7 +39,7 @@ function StopDetails (props) {
   return (
     <>
       <ListSubheader disableSticky sx={{ textAlign: 'center' }}>
-        Quick info and schedule
+        Quick info
       </ListSubheader>
       <Box
         sx={{
@@ -154,7 +154,7 @@ function StopDetails (props) {
       </Box>
 
       <Typography variant='body1' sx={{ marginTop: theme => theme.spacing() }}>
-        {'Is this information incorrect? Help everyone by '}
+        {'Is this information incorrect? Help out by '}
         <MaterialLink to='/data' component={Link} sx={{ fontWeight: 700 }}>
           updating the data
         </MaterialLink>

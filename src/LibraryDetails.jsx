@@ -204,14 +204,14 @@ function LibraryDetails (props) {
                               <TableCell>
                                 {rs.staffed !== null && rs.staffed.length > 0
                                   ? rs.staffed
-                                      .map(h =>
-                                        h
-                                          .map(a =>
-                                            moment(a, 'hh:mm').format('h:mma')
-                                          )
-                                          .join(' - ')
-                                      )
-                                      .join(', ')
+                                    .map(h =>
+                                      h
+                                        .map(a =>
+                                          moment(a, 'hh:mm').format('h:mma')
+                                        )
+                                        .join(' - ')
+                                    )
+                                    .join(', ')
                                   : ''}
                               </TableCell>
                               {unstaffedHoursAvailable
@@ -231,7 +231,7 @@ function LibraryDetails (props) {
               variant='body1'
               sx={{ marginTop: theme => theme.spacing() }}
             >
-              {'Is this information incorrect? Help everyone by '}
+              {'Is this information incorrect? Help out by '}
               <MaterialLink to='/data' component={Link} sx={{ fontWeight: 700 }}>
                 updating the data
               </MaterialLink>

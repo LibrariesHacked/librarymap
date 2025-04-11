@@ -35,26 +35,27 @@ function Libraries () {
 
   const initialSortModel = [{ field: 'name', sort: 'asc' }]
 
-  const [page, setPage] = useState(0)
-  const [pageSize, setPageSize] = useState(5)
   const [sortModel, setSortModel] = useState(initialSortModel)
   const [filterModel, setFilterModel] = useState({
     items: [
       {
-        columnField: 'localAuthority',
-        operatorValue: 'contains',
+        field: 'localAuthority',
+        operator: 'contains',
         value: ''
       }
     ]
   })
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 5
+  })
 
   const initialState = {
     sorting: {
-      sortModel: sortModel
+      sortModel
     },
     pagination: {
-      page: page,
-      pageSize: pageSize
+      paginationModel
     },
     filter: filterModel
   }
@@ -84,19 +85,18 @@ function Libraries () {
       return
     }
     getLibrariesFromQuery({
-      page: page,
-      pageSize: pageSize,
-      sortModel: sortModel,
-      searchPosition: searchPosition,
+      page: paginationModel.page,
+      pageSize: paginationModel.pageSize,
+      sortModel,
+      searchPosition,
       searchDistance: librarySearchDistance,
-      serviceFilter: serviceFilter,
-      displayClosedLibraries: displayClosedLibraries
+      serviceFilter,
+      displayClosedLibraries
     })
-
     // eslint-disable-next-line
   }, [
-    page,
-    pageSize,
+    paginationModel.page,
+    paginationModel.pageSize,
     sortModel,
     searchPosition,
     librarySearchDistance,
@@ -131,7 +131,7 @@ function Libraries () {
       headerName: 'Distance',
       flex: 1,
       valueFormatter: params => {
-        if (params.value == null) {
+        if (params?.value == null) {
           return ''
         }
 
@@ -168,7 +168,10 @@ function Libraries () {
               borderRadius: 2,
               borderColor: lighten(theme.palette.staticLibraries.main, 0.5),
               '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: lighten(theme.palette.staticLibraries.main, 0.9),
+                backgroundColor: lighten(
+                  theme.palette.staticLibraries.main,
+                  0.9
+                ),
                 color: theme.palette.staticLibraries.main
               },
               '&.Mui-hovered': {
@@ -182,7 +185,6 @@ function Libraries () {
                   outline: 'none !important'
                 }
             })}
-            autoHeight
             columnVisibilityModel={{
               name: true,
               address1: useMediaQuery(theme.breakpoints.up('md')),
@@ -195,19 +197,21 @@ function Libraries () {
             filterMode='server'
             filterModel={filterModel}
             loading={loadingLibraries}
-            page={page}
-            pageSize={pageSize}
-            pagination
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
             paginationMode='server'
             rows={libraries}
             rowCount={rowCountState}
-            rowsPerPageOptions={[5]}
+            pageSizeOptions={[5]}
             sortingMode='server'
             sortModel={sortModel}
             onFilterModelChange={newFilterModel =>
               setFilterModel(newFilterModel)}
-            onPageChange={newPage => setPage(newPage)}
-            onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+            onPageChange={newPage => {
+              setPaginationModel(prev => ({ ...prev, page: newPage }))
+            }}
+            onPageSizeChange={newPageSize =>
+              setPaginationModel({ ...paginationModel, pageSize: newPageSize })}
             onSortModelChange={newSortModel => {
               if (newSortModel.length === 0) {
                 setSortModel(initialSortModel)

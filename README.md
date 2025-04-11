@@ -1,6 +1,6 @@
 # Library map
 
-A map of UK public libraries where the data is published to the standard [library locations schema](https://schema.librarydata.uk/libraries).
+A map of UK public libraries where the data is published to the [library locations schema](https://schema.librarydata.uk/libraries) standard.
 
 ## Getting Started
 
@@ -14,6 +14,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ```console
 npm install
+```
+
+### Running the app
+
+```console
+npm start
 ```
 
 ## Deployment
