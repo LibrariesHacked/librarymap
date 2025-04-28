@@ -8,8 +8,7 @@ import Map, {
   Source,
   Layer,
   Marker,
-  NavigationControl,
-  AttributionControl
+  NavigationControl
 } from 'react-map-gl/maplibre'
 
 import { useApplicationStateValue } from './context/applicationState'
@@ -86,7 +85,7 @@ function LibraryMap (props) {
     <Map
       ref={setMap}
       style={containerStyle}
-      mapStyle='https://zoomstack.librarydata.uk/light.json'
+      mapStyle='https://api.maptiler.com/maps/dataviz/style.json?key=1OK05AJqNta7xYzrG2kA'
       longitude={mapPosition[0]}
       latitude={mapPosition[1]}
       zoom={mapZoom}
@@ -101,7 +100,6 @@ function LibraryMap (props) {
         benchImg.src = BenchImage
       }}
     >
-      <AttributionControl customAttribution='Contains OS data © Crown copyright and database right 2023' />
       {currentService && currentService.geojson && currentServiceMask ? ( // eslint-disable-line
         <Source type='geojson' data={currentServiceMask}>
           <Layer
@@ -341,37 +339,33 @@ function LibraryMap (props) {
         />
       </Source>
       <Source type='vector' tiles={[libraryAuthorityTiles]}>
-        {mapSettings.authorityBoundary
-          ? (
-            <Layer
-              type='line'
-              source-layer='library_authority_boundaries'
-              minzoom={6}
-              layout={{
-                'line-join': 'round',
-                'line-cap': 'square'
-              }}
-              paint={{
-                'line-color': theme.palette.secondary.main,
-                'line-opacity': 1,
-                'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4]
-              }}
-            />
-            )
-          : null}
-        {mapSettings.authorityBoundary
-          ? (
-            <Layer
-              type='fill'
-              source-layer='library_authority_boundaries'
-              minzoom={6}
-              paint={{
-                'fill-color': theme.palette.secondary.main,
-                'fill-opacity': 0.1
-              }}
-            />
-            )
-          : null}
+        {mapSettings.authorityBoundary ? (
+          <Layer
+            type='line'
+            source-layer='library_authority_boundaries'
+            minzoom={6}
+            layout={{
+              'line-join': 'round',
+              'line-cap': 'square'
+            }}
+            paint={{
+              'line-color': theme.palette.secondary.main,
+              'line-opacity': 1,
+              'line-width': ['interpolate', ['linear'], ['zoom'], 6, 1, 18, 4]
+            }}
+          />
+        ) : null}
+        {mapSettings.authorityBoundary ? (
+          <Layer
+            type='fill'
+            source-layer='library_authority_boundaries'
+            minzoom={6}
+            paint={{
+              'fill-color': theme.palette.secondary.main,
+              'fill-opacity': 0.1
+            }}
+          />
+        ) : null}
       </Source>
       <Source type='vector' tiles={[mobileTiles]} minzoom={0} maxzoom={14}>
         {mapSettings.mobileLibraryStops ? ( // eslint-disable-line
@@ -416,18 +410,18 @@ function LibraryMap (props) {
           <Layer
             type='symbol'
             source-layer='stops'
-            minzoom={13}
+            minzoom={11}
             layout={{
               'text-ignore-placement': false,
-              'text-field': ['concat', 'Mobile: ', ['get', 'name']],
+              'text-field': ['concat', 'Mobile stop: ', ['get', 'name']],
               'text-font': ['Source Sans Pro Bold'],
               'text-line-height': 1,
               'text-size': [
                 'interpolate',
                 ['linear'],
                 ['zoom'],
-                13,
-                12,
+                11,
+                10,
                 18,
                 18
               ],
@@ -449,45 +443,43 @@ function LibraryMap (props) {
             }}
           />
         ) : null}
-        {mapSettings.mobileLibraryStops
-          ? (
-            <Layer
-              type='symbol'
-              source-layer='stops'
-              minzoom={14}
-              layout={{
-                'text-ignore-placement': false,
-                'text-field': ['to-string', ['get', 'next_visiting']],
-                'text-font': ['Source Sans Pro Bold'],
-                'text-line-height': 1,
-                'text-size': [
-                  'interpolate',
-                  ['linear'],
-                  ['zoom'],
-                  14,
-                  10,
-                  18,
-                  16
-                ],
-                'text-offset': [
-                  'interpolate',
-                  ['linear'],
-                  ['zoom'],
-                  13,
-                  ['literal', [0, -1.5]],
-                  18,
-                  ['literal', [0, -2]]
-                ]
-              }}
-              paint={{
-                'text-halo-color': 'hsl(0, 0%, 100%)',
-                'text-halo-width': 1,
-                'text-halo-blur': 1,
-                'text-color': theme.palette.mobileLibraries.main
-              }}
-            />
-            )
-          : null}
+        {mapSettings.mobileLibraryStops ? (
+          <Layer
+            type='symbol'
+            source-layer='stops'
+            minzoom={14}
+            layout={{
+              'text-ignore-placement': false,
+              'text-field': ['to-string', ['get', 'next_visiting']],
+              'text-font': ['Source Sans Pro Bold'],
+              'text-line-height': 1,
+              'text-size': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                14,
+                10,
+                18,
+                16
+              ],
+              'text-offset': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                13,
+                ['literal', [0, -1.5]],
+                18,
+                ['literal', [0, -2]]
+              ]
+            }}
+            paint={{
+              'text-halo-color': 'hsl(0, 0%, 100%)',
+              'text-halo-width': 1,
+              'text-halo-blur': 1,
+              'text-color': theme.palette.mobileLibraries.main
+            }}
+          />
+        ) : null}
         <Layer
           type='line'
           source-layer='trips'
@@ -513,7 +505,7 @@ function LibraryMap (props) {
           <Layer // Closed library names
             type='symbol'
             source-layer='libraries'
-            minzoom={11}
+            minzoom={8}
             filter={
               currentService
                 ? [
@@ -528,15 +520,7 @@ function LibraryMap (props) {
               'text-field': ['to-string', ['get', 'Library name']],
               'text-font': ['Source Sans Pro Bold'],
               'text-line-height': 1,
-              'text-size': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                12,
-                10,
-                18,
-                14
-              ],
+              'text-size': ['interpolate', ['linear'], ['zoom'], 10, 8, 18, 14],
               'text-offset': [
                 'interpolate',
                 ['linear'],
@@ -730,7 +714,7 @@ function LibraryMap (props) {
                 ['linear'],
                 ['zoom'],
                 10,
-                14,
+                10,
                 18,
                 18
               ],
