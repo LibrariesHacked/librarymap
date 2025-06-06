@@ -19,12 +19,7 @@ import usePrevious from './hooks/usePrevious'
 
 function Libraries () {
   const [
-    {
-      displayClosedLibraries,
-      librarySearchDistance,
-      searchPosition,
-      serviceFilter
-    },
+    { displayClosedLibraries, searchDistance, searchPosition, serviceFilter },
     dispatchSearch
   ] = useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
@@ -89,7 +84,7 @@ function Libraries () {
       pageSize: paginationModel.pageSize,
       sortModel,
       searchPosition,
-      searchDistance: librarySearchDistance,
+      searchDistance,
       serviceFilter,
       displayClosedLibraries
     })
@@ -99,7 +94,7 @@ function Libraries () {
     paginationModel.pageSize,
     sortModel,
     searchPosition,
-    librarySearchDistance,
+    searchDistance,
     serviceFilter,
     displayClosedLibraries
   ])

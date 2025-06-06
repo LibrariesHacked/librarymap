@@ -19,14 +19,15 @@ import { useSearchStateValue } from './context/searchState'
 
 function PostcodeServiceInfo () {
   const [{ serviceLookup }] = useApplicationStateValue()
-  const [{ searchType, searchPostcode, nearestLibrary, postcodeServiceCode }] =
-    useSearchStateValue()
+  const [
+    { searchType, searchPostcode, nearestLibraries, postcodeServiceCode }
+  ] = useSearchStateValue()
 
   const postcodeService = serviceLookup[postcodeServiceCode]
 
   return (
     <>
-      {searchType === 'postcode' && searchPostcode && nearestLibrary && (
+      {searchType === 'postcode' && searchPostcode && nearestLibraries && (
         <Card
           elevation={0}
           sx={{

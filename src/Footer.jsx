@@ -3,15 +3,13 @@ import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
 
 import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid'
+import Grid2 from '@mui/material/Grid2'
 import MaterialLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 import FavoriteIcon from '@mui/icons-material/FavoriteRounded'
 
 import { grey } from '@mui/material/colors'
-
-import { WebsiteCarbonBadge } from 'react-websitecarbon-badge'
 
 function Footer () {
   const mapPage = useMatch('/map')
@@ -26,8 +24,8 @@ function Footer () {
       }}
     >
       <Container>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        <Grid2 container spacing={2}>
+          <Grid2 item xs={12} sm={12} md={4} lg={4} xl={4}>
             <Typography component='p' variant='h6'>
               <MaterialLink
                 component={Link}
@@ -53,19 +51,8 @@ function Footer () {
                 Privacy
               </MaterialLink>
             </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={4}
-            lg={4}
-            xl={4}
-            sx={{ display: mapPage ? 'none' : 'block' }}
-          >
-            <WebsiteCarbonBadge url={window.location.href} />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          </Grid2>
+          <Grid2 item xs={12} sm={12} md={4} lg={4} xl={4}>
             <Typography component='p' variant='body1'>
               In memory of Paul Rowe
               <FavoriteIcon
@@ -89,8 +76,8 @@ function Footer () {
                 donating to Mind
               </MaterialLink>
             </Typography>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </Container>
     </Container>
   )

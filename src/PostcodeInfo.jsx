@@ -21,10 +21,12 @@ import { useViewStateValue } from './context/viewState'
 import { useApplicationStateValue } from './context/applicationState'
 
 function PostcodeInfo () {
-  const [{ searchType, searchPostcode, nearestLibrary }, dispatchSearch] =
+  const [{ searchType, searchPostcode, nearestLibraries }, dispatchSearch] =
     useSearchStateValue()
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
   const [{ serviceLookup }] = useApplicationStateValue()
+
+  const nearestLibrary = nearestLibraries?.[0]
 
   const viewLibrary = () => {
     dispatchSearch({

@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
+import Slider from '@mui/material/Slider'
 import Tooltip from '@mui/material/Tooltip'
 
 import { alpha, lighten } from '@mui/material/styles'
@@ -47,8 +48,10 @@ const SearchIconBox = ({ children }) => {
 }
 
 function PostcodeSearch () {
-  const [{ searchType, searchPostcode, searchPosition }, dispatchSearch] =
-    useSearchStateValue()
+  const [
+    { searchType, searchPostcode, searchPosition, searchDistance },
+    dispatchSearch
+  ] = useSearchStateValue()
   const [{ loadingPostcode, loadingLocation }, dispatchView] =
     useViewStateValue()
 
@@ -64,42 +67,27 @@ function PostcodeSearch () {
     }
   }, [searchPostcode, prevProps])
 
-  const getNearestLibrary = async position => {
-    const nearestLibrary = await getLibrariesFromQuery({
+  const getNearestLibraries = async position => {
+    const nearestLibraries = await getLibrariesFromQuery({
       page: 0,
-      pageSize: 1,
+      pageSize: 5,
       sortModel: [{ field: 'distance', sort: 'asc' }],
       searchPosition: position,
-      searchDistance: 16090,
+      searchDistance,
       displayClosedLibraries: false,
       serviceFilter: []
     })
 
-    if (nearestLibrary.libraries.length > 0) {
+    if (nearestLibraries.libraries.length > 0) {
       dispatchSearch({
-        type: 'SetNearestLibrary',
-        nearestLibrary: nearestLibrary.libraries[0],
-        nearestLibraryLine: geoHelper.getLineGeoJsonFromPoints(
-          [
-            position,
-            [
-              nearestLibrary.libraries[0].longitude,
-              nearestLibrary.libraries[0].latitude
-            ]
-          ],
-          { distance: nearestLibrary.libraries[0].distance }
-        )
-      })
-      const bounds = geoHelper.getMapBounds([
-        [
-          nearestLibrary.libraries[0].longitude,
-          nearestLibrary.libraries[0].latitude
-        ],
-        position
-      ])
-      dispatchView({
-        type: 'FitToBounds',
-        mapBounds: bounds
+        type: 'SetNearestLibraries',
+        nearestLibraries: nearestLibraries.libraries,
+        nearestLibrariesLines: nearestLibraries.libraries.map(library => {
+          return geoHelper.getLineGeoJsonFromPoints(
+            [position, [library.longitude, library.latitude]],
+            { distance: library.distance }
+          )
+        })
       })
     }
   }
@@ -131,7 +119,7 @@ function PostcodeSearch () {
         searchPosition: pos
       })
       setPostcodeService(postcodeData)
-      getNearestLibrary(pos)
+      getNearestLibraries(pos)
     }
   }
 
@@ -168,7 +156,7 @@ function PostcodeSearch () {
           searchPosition: service.location
         })
         setPostcodeService(service)
-        getNearestLibrary(service.location)
+        getNearestLibraries(service.location)
       } else {
         dispatchView({
           type: 'ShowNotification',
@@ -187,19 +175,24 @@ function PostcodeSearch () {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        borderRadius: '6px',
+        border: theme =>
+          `2px solid ${lighten(theme.palette.primary.main, 0.5)}`,
+        backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
+        position: 'relative',
+        display: 'inline-block'
+      }}
+    >
       <Box
         sx={{
           position: 'relative',
-          backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
           marginLeft: 0,
           paddingLeft: 0,
           whitespace: 'nowrap',
           display: 'inline-flex',
-          color: theme => theme.palette.primary.main,
-          borderRadius: '6px',
-          border: theme =>
-            `2px solid ${lighten(theme.palette.primary.main, 0.5)}`
+          color: theme => theme.palette.primary.main
         }}
       >
         <InputBase
@@ -217,63 +210,82 @@ function PostcodeSearch () {
             fontWeight: 700
           }}
         />
-        {!loadingPostcode
-          ? (
-            <Tooltip title='Search by postcode'>
-              <IconButton
-                aria-label='Search'
-                color='inherit'
-                onClick={() => postcodeSearch()}
-                size='large'
-                disabled={loadingPostcode || loadingLocation}
-              >
-                <SearchIcon />
-              </IconButton>
-            </Tooltip>
-            )
-          : (
-            <SearchIconBox>
-              <CircularProgress color='secondary' size={22} />
-            </SearchIconBox>
-            )}
+        {!loadingPostcode ? (
+          <Tooltip title='Search by postcode'>
+            <IconButton
+              aria-label='Search'
+              color='inherit'
+              onClick={() => postcodeSearch()}
+              size='large'
+              disabled={loadingPostcode || loadingLocation}
+            >
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <SearchIconBox>
+            <CircularProgress color='secondary' size={22} />
+          </SearchIconBox>
+        )}
         <Tooltip title='Use your current location'>
           <>
-            {!loadingLocation
-              ? (
-                <IconButton
-                  aria-label='Search by current location'
-                  color='inherit'
-                  onClick={() => getLocation()}
-                  size='large'
-                  disabled={loadingPostcode || loadingLocation}
-                >
-                  <MyLocationIcon />
-                </IconButton>
-                )
-              : (
-                <SearchIconBox>
-                  <CircularProgress color='secondary' size={22} />
-                </SearchIconBox>
-                )}
-          </>
-        </Tooltip>
-        {searchType === 'postcode'
-          ? (
-            <Tooltip title='Clear search'>
+            {!loadingLocation ? (
               <IconButton
-                color='secondary'
-                aria-label='Clear search'
-                onClick={() => clearSearch()}
+                aria-label='Search by current location'
+                color='inherit'
+                onClick={() => getLocation()}
                 size='large'
                 disabled={loadingPostcode || loadingLocation}
               >
-                <ClearIcon />
+                <MyLocationIcon />
               </IconButton>
-            </Tooltip>
-            )
-          : null}
+            ) : (
+              <SearchIconBox>
+                <CircularProgress color='secondary' size={22} />
+              </SearchIconBox>
+            )}
+          </>
+        </Tooltip>
+        {searchType === 'postcode' ? (
+          <Tooltip title='Clear search'>
+            <IconButton
+              color='secondary'
+              aria-label='Clear search'
+              onClick={() => clearSearch()}
+              size='large'
+              disabled={loadingPostcode || loadingLocation}
+            >
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+        ) : null}
       </Box>
-    </>
+      <br />
+      <Box
+        sx={{
+          width: 180,
+          display: 'inline-block',
+          marginTop: theme => theme.spacing(1)
+        }}
+      >
+        <Slider
+          step={1609}
+          min={1609}
+          max={16090}
+          marks={false}
+          size='small'
+          valueLabelDisplay='auto'
+          value={searchDistance}
+          scale={value => Math.round(value / 1609)}
+          onChange={(e, newValue) => {
+            dispatchSearch({
+              type: 'SetSearchDistance',
+              searchDistance: newValue
+            })
+          }}
+        />
+      </Box>
+    </Box>
   )
 }
 

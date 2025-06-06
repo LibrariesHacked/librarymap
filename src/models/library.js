@@ -54,8 +54,8 @@ export class Library {
     this.notes = json.Notes
     this.url = json.URL
     this.emailAddress = json['Email address']
-    this.longitude = json.Longitude
-    this.latitude = json.Latitude
+    this.longitude = json.Longitude ? parseFloat(json.Longitude) : null
+    this.latitude = json.Latitude ? parseFloat(json.Latitude) : null
     this.distance = json.distance
     this.systemName = getLibrarySystemName(json['Library name'])
     return this
