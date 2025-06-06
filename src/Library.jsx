@@ -13,7 +13,7 @@ import LibraryDetails from './LibraryDetails'
 import LibraryMap from './LibraryMap'
 import SiteBreadcrumbs from './SiteBreadcrumbs'
 
-import grey from '@mui/material/colors/grey'
+import { grey } from '@mui/material/colors'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useViewStateValue } from './context/viewState'
@@ -51,39 +51,37 @@ function Library () {
 
   return (
     <>
-      {Object.keys(library).length > 0
-        ? (
-          <>
-            <SiteBreadcrumbs
-              currentPageName={library.name}
-              currentPageIcon={LocationCityIcon}
-            />
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography component='h1' variant='h3'>
-                {`${library?.name}`}
-              </Typography>
-            </Box>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <LibraryDetails library={library} />
-              </Grid>
-              <Grid item xs={6}>
-                <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
-                  <LibraryMap
-                    containerStyle={{
-                      width: '100%',
-                      height: '250px',
-                      position: 'relative'
-                    }}
-                  />
-                </Box>
-              </Grid>
+      {Object.keys(library).length > 0 ? (
+        <>
+          <SiteBreadcrumbs
+            currentPageName={library.name}
+            currentPageIcon={LocationCityIcon}
+          />
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography component='h1' variant='h3'>
+              {`${library?.name}`}
+            </Typography>
+          </Box>
+          <Grid container spacing={2}>
+            <Grid xs={6}>
+              <LibraryDetails library={library} />
             </Grid>
-          </>
-          )
-        : (
-          <CircularProgress color='primary' size={30} />
-          )}
+            <Grid xs={6}>
+              <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
+                <LibraryMap
+                  containerStyle={{
+                    width: '100%',
+                    height: '250px',
+                    position: 'relative'
+                  }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        <CircularProgress color='primary' size={30} />
+      )}
     </>
   )
 }

@@ -12,7 +12,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRightTwoTone'
 
 import { lighten } from '@mui/material'
 
-import grey from '@mui/material/colors/grey'
+import { grey } from '@mui/material/colors'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'

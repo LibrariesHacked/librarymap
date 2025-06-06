@@ -3,7 +3,7 @@ import React from 'react'
 import { Link, useMatch } from 'react-router-dom'
 
 import Container from '@mui/material/Container'
-import Grid2 from '@mui/material/Grid2'
+import Grid from '@mui/material/Grid'
 import MaterialLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
@@ -24,8 +24,8 @@ function Footer () {
       }}
     >
       <Container>
-        <Grid2 container spacing={2}>
-          <Grid2 item xs={12} sm={12} md={4} lg={4} xl={4}>
+        <Grid container spacing={2}>
+          <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
             <Typography component='p' variant='h6'>
               <MaterialLink
                 component={Link}
@@ -51,8 +51,8 @@ function Footer () {
                 Privacy
               </MaterialLink>
             </Typography>
-          </Grid2>
-          <Grid2 item xs={12} sm={12} md={4} lg={4} xl={4}>
+          </Grid>
+          <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
             <Typography component='p' variant='body1'>
               In memory of Paul Rowe
               <FavoriteIcon
@@ -76,8 +76,8 @@ function Footer () {
                 donating to Mind
               </MaterialLink>
             </Typography>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
       </Container>
     </Container>
   )

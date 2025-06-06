@@ -39,10 +39,10 @@ function Home () {
         <Search />
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <PostcodeInfo />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid xs={12} sm={6}>
           <PostcodeServiceInfo />
         </Grid>
       </Grid>
