@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
+import Typography from '@mui/material/Typography'
 import Slider from '@mui/material/Slider'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -70,7 +71,7 @@ function PostcodeSearch () {
   const getNearestLibraries = async position => {
     const nearestLibraries = await getLibrariesFromQuery({
       page: 0,
-      pageSize: 5,
+      pageSize: 10,
       sortModel: [{ field: 'distance', sort: 'asc' }],
       searchPosition: position,
       searchDistance,
@@ -174,13 +175,24 @@ function PostcodeSearch () {
     dispatchView({ type: 'ToggleLoadingPostcode' })
   }
 
+  const changeSearchDistance = distance => {
+    dispatchSearch({
+      type: 'SetSearchDistance',
+      searchDistance: distance
+    })
+    // Update nearest libraries if we already have existing search results
+    if (searchPosition.length > 0) {
+      getNearestLibraries(searchPosition)
+    }
+  }
+
   return (
     <Box
       sx={{
         borderRadius: '6px',
         border: theme =>
           `2px solid ${lighten(theme.palette.primary.main, 0.5)}`,
-        backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
+        backgroundColor: theme => alpha(theme.palette.primary.main, 0.1),
         position: 'relative',
         display: 'inline-block'
       }}
@@ -270,10 +282,21 @@ function PostcodeSearch () {
       <Box
         sx={{
           width: 180,
-          display: 'inline-block',
-          marginTop: theme => theme.spacing(1)
+          margin: 'auto'
         }}
       >
+        <Typography
+          variant='subtitle1'
+          disableSticky
+          disableGutters
+          sx={{
+            textAlign: 'center',
+            color: theme => theme.palette.primary.main,
+            fontWeight: 700
+          }}
+        >
+          Distance
+        </Typography>
         <Slider
           step={1609}
           min={1609}
@@ -283,12 +306,7 @@ function PostcodeSearch () {
           valueLabelDisplay='auto'
           value={searchDistance}
           scale={value => Math.round(value / 1609)}
-          onChange={(e, newValue) => {
-            dispatchSearch({
-              type: 'SetSearchDistance',
-              searchDistance: newValue
-            })
-          }}
+          onChange={(e, newValue) => changeSearchDistance(newValue)}
         />
       </Box>
     </Box>

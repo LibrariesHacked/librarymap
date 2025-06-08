@@ -116,7 +116,7 @@ function LibraryMap (props) {
       onLoad={() => {
         const benchImg = new window.Image(256, 256)
         benchImg.onload = () => {
-          map.addImage('bench', benchImg)
+          map.addImage('memorialbench', benchImg)
         }
         benchImg.src = BenchImage
       }}
@@ -837,7 +837,7 @@ function LibraryMap (props) {
           minzoom={16}
           maxzoom={22}
           layout={{
-            'icon-image': 'bench', // reference the image
+            'icon-image': 'memorialbench', // reference the image
             'icon-size': 0.1
           }}
         />

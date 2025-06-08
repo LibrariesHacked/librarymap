@@ -50,7 +50,7 @@ function ServiceDetails (props) {
                     </Button>
                   </TableCell>
                 </TableRow>
-              )}
+            )}
             {service?.extended?.greenLibrary && (
               <TableRow>
                 <TableCell sx={{ borderBottom: 'none' }} variant='head'>
