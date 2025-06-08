@@ -10,7 +10,7 @@ const initialSearchState = {
   nearestMobileLibrary: null,
   nearestMobileLibraryLine: null,
   postcodeServiceCode: null,
-  searchDistance: 1609 * 3, // 3 miles in meters
+  searchDistance: 1609 * 2, // 2 miles in meters
   searchPosition: [],
   currentStopId: null,
   currentLibraryId: null,

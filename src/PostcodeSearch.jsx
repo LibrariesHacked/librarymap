@@ -70,7 +70,7 @@ function PostcodeSearch () {
     }
   }, [searchPostcode, prevProps])
 
-  const getNearestLibraries = async position => {
+  const getNearestLibraries = async (position, distance) => {
     // Abort any previous request if it exists
     if (abortController) {
       abortController.abort()
@@ -81,10 +81,10 @@ function PostcodeSearch () {
     setAbortController(newAbortController)
     const nearestLibraries = await getLibrariesFromQuery({
       page: 0,
-      pageSize: 10,
+      pageSize: 20,
       sortModel: [{ field: 'distance', sort: 'asc' }],
       searchPosition: position,
-      searchDistance,
+      searchDistance: distance,
       displayClosedLibraries: false,
       serviceFilter: [],
       signal: newAbortController.signal
@@ -131,7 +131,7 @@ function PostcodeSearch () {
         searchPosition: pos
       })
       setPostcodeService(postcodeData)
-      getNearestLibraries(pos)
+      getNearestLibraries(pos, searchDistance)
     }
   }
 
@@ -168,7 +168,7 @@ function PostcodeSearch () {
           searchPosition: service.location
         })
         setPostcodeService(service)
-        getNearestLibraries(service.location)
+        getNearestLibraries(service.location, searchDistance)
       } else {
         dispatchView({
           type: 'ShowNotification',
@@ -193,7 +193,7 @@ function PostcodeSearch () {
     })
     // Update nearest libraries if we already have existing search results
     if (searchPosition.length > 0) {
-      getNearestLibraries(searchPosition)
+      getNearestLibraries(searchPosition, distance)
     }
   }
 
@@ -300,7 +300,7 @@ function PostcodeSearch () {
             fontWeight: 700
           }}
         >
-          Distance
+          Adjust search radius
         </Typography>
         <Slider
           step={1609}
