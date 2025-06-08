@@ -56,6 +56,8 @@ function PostcodeSearch () {
   const [{ loadingPostcode, loadingLocation }, dispatchView] =
     useViewStateValue()
 
+  const [abortController, setAbortController] = useState()
+
   const { getLibrariesFromQuery } = useLibraryQuery()
 
   const [tempPostcode, setTempPostcode] = useState(searchPostcode || '')
@@ -69,6 +71,14 @@ function PostcodeSearch () {
   }, [searchPostcode, prevProps])
 
   const getNearestLibraries = async position => {
+    // Abort any previous request if it exists
+    if (abortController) {
+      abortController.abort()
+      setAbortController(null)
+    }
+
+    const newAbortController = new AbortController()
+    setAbortController(newAbortController)
     const nearestLibraries = await getLibrariesFromQuery({
       page: 0,
       pageSize: 10,
@@ -76,7 +86,8 @@ function PostcodeSearch () {
       searchPosition: position,
       searchDistance,
       displayClosedLibraries: false,
-      serviceFilter: []
+      serviceFilter: [],
+      signal: newAbortController.signal
     })
 
     if (nearestLibraries.libraries.length > 0) {
@@ -222,61 +233,55 @@ function PostcodeSearch () {
             fontWeight: 700
           }}
         />
-        {!loadingPostcode
-          ? (
-            <Tooltip title='Search by postcode'>
-              <IconButton
-                aria-label='Search'
-                color='inherit'
-                onClick={() => postcodeSearch()}
-                size='large'
-                disabled={loadingPostcode || loadingLocation}
-              >
-                <SearchIcon />
-              </IconButton>
-            </Tooltip>
-            )
-          : (
-            <SearchIconBox>
-              <CircularProgress color='secondary' size={22} />
-            </SearchIconBox>
-            )}
+        {!loadingPostcode ? (
+          <Tooltip title='Search by postcode'>
+            <IconButton
+              aria-label='Search'
+              color='inherit'
+              onClick={() => postcodeSearch()}
+              size='large'
+              disabled={loadingPostcode || loadingLocation}
+            >
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <SearchIconBox>
+            <CircularProgress color='secondary' size={22} />
+          </SearchIconBox>
+        )}
         <Tooltip title='Use your current location'>
           <>
-            {!loadingLocation
-              ? (
-                <IconButton
-                  aria-label='Search by current location'
-                  color='inherit'
-                  onClick={() => getLocation()}
-                  size='large'
-                  disabled={loadingPostcode || loadingLocation}
-                >
-                  <MyLocationIcon />
-                </IconButton>
-                )
-              : (
-                <SearchIconBox>
-                  <CircularProgress color='secondary' size={22} />
-                </SearchIconBox>
-                )}
-          </>
-        </Tooltip>
-        {searchType === 'postcode'
-          ? (
-            <Tooltip title='Clear search'>
+            {!loadingLocation ? (
               <IconButton
-                color='secondary'
-                aria-label='Clear search'
-                onClick={() => clearSearch()}
+                aria-label='Search by current location'
+                color='inherit'
+                onClick={() => getLocation()}
                 size='large'
                 disabled={loadingPostcode || loadingLocation}
               >
-                <ClearIcon />
+                <MyLocationIcon />
               </IconButton>
-            </Tooltip>
-            )
-          : null}
+            ) : (
+              <SearchIconBox>
+                <CircularProgress color='secondary' size={22} />
+              </SearchIconBox>
+            )}
+          </>
+        </Tooltip>
+        {searchType === 'postcode' ? (
+          <Tooltip title='Clear search'>
+            <IconButton
+              color='secondary'
+              aria-label='Clear search'
+              onClick={() => clearSearch()}
+              size='large'
+              disabled={loadingPostcode || loadingLocation}
+            >
+              <ClearIcon />
+            </IconButton>
+          </Tooltip>
+        ) : null}
       </Box>
       <br />
       <Box

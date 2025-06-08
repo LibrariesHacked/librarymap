@@ -7,7 +7,7 @@ const useLibraryQuery = () => {
   const [libraries, setLibraries] = useState([])
   const [pageInfo, setPageInfo] = useState([])
 
-  const getLibrariesFromQuery = async queryOptions => {
+  const getLibrariesFromQuery = async (queryOptions, signal) => {
     setLoadingLibraries(true)
     const response = await libraryModel.getQueryLibraries(
       {
@@ -21,7 +21,8 @@ const useLibraryQuery = () => {
       queryOptions.searchPosition,
       queryOptions.searchDistance,
       queryOptions.serviceFilter,
-      queryOptions.displayClosedLibraries
+      queryOptions.displayClosedLibraries,
+      signal
     )
     setLoadingLibraries(false)
     setLibraries(response.libraries)
