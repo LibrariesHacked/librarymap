@@ -90,18 +90,20 @@ function PostcodeSearch () {
       signal: newAbortController.signal
     })
 
+    let nearestLibraryLines = []
     if (nearestLibraries.libraries.length > 0) {
-      dispatchSearch({
-        type: 'SetNearestLibraries',
-        nearestLibraries: nearestLibraries.libraries,
-        nearestLibrariesLines: nearestLibraries.libraries.map(library => {
-          return geoHelper.getLineGeoJsonFromPoints(
-            [position, [library.longitude, library.latitude]],
-            { distance: library.distance }
-          )
-        })
+      nearestLibraryLines = nearestLibraries.libraries.map(library => {
+        return geoHelper.getLineGeoJsonFromPoints(
+          [position, [library.longitude, library.latitude]],
+          { distance: library.distance }
+        )
       })
     }
+    dispatchSearch({
+      type: 'SetNearestLibraries',
+      nearestLibraries: nearestLibraries.libraries,
+      nearestLibrariesLines: nearestLibraryLines
+    })
   }
 
   const setPostcodeService = postcodeData => {
