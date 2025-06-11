@@ -4,6 +4,8 @@ import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
 import InputBase from '@mui/material/InputBase'
+import Typography from '@mui/material/Typography'
+import Slider from '@mui/material/Slider'
 import Tooltip from '@mui/material/Tooltip'
 
 import { alpha, lighten } from '@mui/material/styles'
@@ -46,9 +48,19 @@ const SearchIconBox = ({ children }) => {
   )
 }
 
+const debounce = (func, delay) => {
+  let timer
+  return function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(() => func.apply(this, args), delay)
+  }
+}
+
 function PostcodeSearch () {
-  const [{ searchType, searchPostcode, searchPosition }, dispatchSearch] =
-    useSearchStateValue()
+  const [
+    { searchType, searchPostcode, searchPosition, searchDistance },
+    dispatchSearch
+  ] = useSearchStateValue()
   const [{ loadingPostcode, loadingLocation }, dispatchView] =
     useViewStateValue()
 
@@ -64,44 +76,31 @@ function PostcodeSearch () {
     }
   }, [searchPostcode, prevProps])
 
-  const getNearestLibrary = async position => {
-    const nearestLibrary = await getLibrariesFromQuery({
+  const getNearestLibraries = async (position, distance) => {
+    const nearestLibraries = await getLibrariesFromQuery({
       page: 0,
-      pageSize: 1,
+      pageSize: 20,
       sortModel: [{ field: 'distance', sort: 'asc' }],
       searchPosition: position,
-      searchDistance: 16090,
+      searchDistance: distance,
       displayClosedLibraries: false,
       serviceFilter: []
     })
 
-    if (nearestLibrary.libraries.length > 0) {
-      dispatchSearch({
-        type: 'SetNearestLibrary',
-        nearestLibrary: nearestLibrary.libraries[0],
-        nearestLibraryLine: geoHelper.getLineGeoJsonFromPoints(
-          [
-            position,
-            [
-              nearestLibrary.libraries[0].longitude,
-              nearestLibrary.libraries[0].latitude
-            ]
-          ],
-          { distance: nearestLibrary.libraries[0].distance }
+    let nearestLibraryLines = []
+    if (nearestLibraries.libraries.length > 0) {
+      nearestLibraryLines = nearestLibraries.libraries.map(library => {
+        return geoHelper.getLineGeoJsonFromPoints(
+          [position, [library.longitude, library.latitude]],
+          { distance: library.distance }
         )
       })
-      const bounds = geoHelper.getMapBounds([
-        [
-          nearestLibrary.libraries[0].longitude,
-          nearestLibrary.libraries[0].latitude
-        ],
-        position
-      ])
-      dispatchView({
-        type: 'FitToBounds',
-        mapBounds: bounds
-      })
     }
+    dispatchSearch({
+      type: 'SetNearestLibraries',
+      nearestLibraries: nearestLibraries.libraries,
+      nearestLibrariesLines: nearestLibraryLines
+    })
   }
 
   const setPostcodeService = postcodeData => {
@@ -131,7 +130,7 @@ function PostcodeSearch () {
         searchPosition: pos
       })
       setPostcodeService(postcodeData)
-      getNearestLibrary(pos)
+      getNearestLibraries(pos, searchDistance)
     }
   }
 
@@ -168,7 +167,7 @@ function PostcodeSearch () {
           searchPosition: service.location
         })
         setPostcodeService(service)
-        getNearestLibrary(service.location)
+        getNearestLibraries(service.location, searchDistance)
       } else {
         dispatchView({
           type: 'ShowNotification',
@@ -186,20 +185,40 @@ function PostcodeSearch () {
     dispatchView({ type: 'ToggleLoadingPostcode' })
   }
 
+  const updateSearchDistance = distance => {
+    getNearestLibraries(searchPosition, distance)
+  }
+  const debouncedUpdateSearchDistance = debounce(updateSearchDistance, 500)
+
+  const handleSearchDistanceChange = (e, newValue) => {
+    dispatchSearch({
+      type: 'SetSearchDistance',
+      searchDistance: newValue
+    })
+    if (searchPosition.length > 0) {
+      debouncedUpdateSearchDistance(newValue)
+    }
+  }
+
   return (
-    <>
+    <Box
+      sx={{
+        borderRadius: '6px',
+        border: theme =>
+          `2px solid ${lighten(theme.palette.primary.main, 0.5)}`,
+        backgroundColor: theme => alpha(theme.palette.primary.main, 0.1),
+        position: 'relative',
+        display: 'inline-block'
+      }}
+    >
       <Box
         sx={{
           position: 'relative',
-          backgroundColor: theme => alpha(theme.palette.primary.main, 0.05),
           marginLeft: 0,
           paddingLeft: 0,
           whitespace: 'nowrap',
           display: 'inline-flex',
-          color: theme => theme.palette.primary.main,
-          borderRadius: '6px',
-          border: theme =>
-            `2px solid ${lighten(theme.palette.primary.main, 0.5)}`
+          color: theme => theme.palette.primary.main
         }}
       >
         <InputBase
@@ -273,7 +292,37 @@ function PostcodeSearch () {
             )
           : null}
       </Box>
-    </>
+      <br />
+      <Box
+        sx={{
+          width: 180,
+          margin: 'auto'
+        }}
+      >
+        <Typography
+          variant='subtitle1'
+          sx={{
+            textAlign: 'center',
+            color: theme => theme.palette.primary.main,
+            fontWeight: 700
+          }}
+        >
+          Adjust search radius
+        </Typography>
+        <Slider
+          step={1609}
+          min={1609}
+          max={16090}
+          marks={false}
+          size='small'
+          valueLabelDisplay='auto'
+          valueLabelFormat={value => `${Math.round(value)} mi`}
+          value={searchDistance}
+          scale={value => Math.round(value / 1609)}
+          onChange={handleSearchDistanceChange}
+        />
+      </Box>
+    </Box>
   )
 }
 

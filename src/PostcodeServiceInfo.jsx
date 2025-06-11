@@ -12,21 +12,22 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRightTwoTone'
 
 import { lighten } from '@mui/material'
 
-import grey from '@mui/material/colors/grey'
+import { grey } from '@mui/material/colors'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useSearchStateValue } from './context/searchState'
 
 function PostcodeServiceInfo () {
   const [{ serviceLookup }] = useApplicationStateValue()
-  const [{ searchType, searchPostcode, nearestLibrary, postcodeServiceCode }] =
-    useSearchStateValue()
+  const [
+    { searchType, searchPostcode, nearestLibraries, postcodeServiceCode }
+  ] = useSearchStateValue()
 
   const postcodeService = serviceLookup[postcodeServiceCode]
 
   return (
     <>
-      {searchType === 'postcode' && searchPostcode && nearestLibrary && (
+      {searchType === 'postcode' && searchPostcode && nearestLibraries && (
         <Card
           elevation={0}
           sx={{

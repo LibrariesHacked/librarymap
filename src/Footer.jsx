@@ -11,8 +11,6 @@ import FavoriteIcon from '@mui/icons-material/FavoriteRounded'
 
 import { grey } from '@mui/material/colors'
 
-import { WebsiteCarbonBadge } from 'react-websitecarbon-badge'
-
 function Footer () {
   const mapPage = useMatch('/map')
   return (
@@ -27,7 +25,7 @@ function Footer () {
     >
       <Container>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
             <Typography component='p' variant='h6'>
               <MaterialLink
                 component={Link}
@@ -54,18 +52,7 @@ function Footer () {
               </MaterialLink>
             </Typography>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={4}
-            lg={4}
-            xl={4}
-            sx={{ display: mapPage ? 'none' : 'block' }}
-          >
-            <WebsiteCarbonBadge url={window.location.href} />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
             <Typography component='p' variant='body1'>
               In memory of Paul Rowe
               <FavoriteIcon

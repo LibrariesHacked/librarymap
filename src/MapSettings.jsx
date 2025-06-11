@@ -14,7 +14,7 @@ import { useTheme } from '@mui/material/styles'
 
 import CancelIcon from '@mui/icons-material/CancelRounded'
 
-import grey from '@mui/material/colors/grey'
+import { grey } from '@mui/material/colors'
 
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'

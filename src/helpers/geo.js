@@ -18,7 +18,10 @@ export const getCurrentPosition = async () => {
   }
 
   const position = await getPosition(options)
-  return [position.coords.longitude, position.coords.latitude]
+  return [
+    parseFloat(position.coords.longitude),
+    parseFloat(position.coords.latitude)
+  ]
 }
 
 export const getCurrentPostcode = async location => {
@@ -45,7 +48,10 @@ export const getPostcode = async postcode => {
 
     if (response.status === 200 && response.data) {
       return {
-        location: [response.data.longitude, response.data.latitude],
+        location: [
+          parseFloat(response.data.longitude),
+          parseFloat(response.data.latitude)
+        ],
         library_service_name: response.data.library_service_name,
         library_service: response.data.library_service,
         postcode: response.data.postcode
@@ -65,28 +71,6 @@ export const getServiceDataFromPostcode = async (postcode, services) => {
     return { service: servicesFiltered[0], location: postcodeData.location }
   }
   return {}
-}
-
-export const getNearestLibrary = async location => {
-  const response = await axios.get(
-    config.libraryApi + '?latitude=' + location[1] + '&longitude=' + location[0]
-  )
-  return response && response.data && response.data.length > 0
-    ? response.data[0]
-    : null
-}
-
-export const getNearestMobileLibrary = async location => {
-  const response = await axios.get(
-    config.mobileLibraryApi +
-      '?latitude=' +
-      location[1] +
-      '&longitude=' +
-      location[0]
-  )
-  return response && response.data && response.data.length > 0
-    ? response.data[0]
-    : null
 }
 
 export const validatePostcode = postcode => {
@@ -121,4 +105,10 @@ export const getMaskFromGeoJson = geojson => {
 export const getMapBounds = coordinates => {
   const features = turf.featureCollection(coordinates.map(c => turf.point(c)))
   return turf.bbox(features)
+}
+
+export const getBufferedPoint = (point, radius) => {
+  const center = turf.point(point)
+  const buffered = turf.buffer(center, radius, { units: 'meters' })
+  return buffered.geometry
 }

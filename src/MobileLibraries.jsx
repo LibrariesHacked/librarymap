@@ -18,10 +18,8 @@ import useMobileStopsQuery from './hooks/useMobileStopsQuery'
 import usePrevious from './hooks/usePrevious'
 
 function MobileLibraries () {
-  const [
-    { mobileSearchDistance, searchPosition, serviceFilter },
-    dispatchSearch
-  ] = useSearchStateValue() //eslint-disable-line
+  const [{ searchDistance, searchPosition, serviceFilter }, dispatchSearch] =
+    useSearchStateValue() //eslint-disable-line
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
 
   const theme = useTheme()
@@ -84,7 +82,7 @@ function MobileLibraries () {
       pageSize: paginationModel.pageSize,
       sortModel,
       searchPosition,
-      searchDistance: mobileSearchDistance,
+      searchDistance,
       serviceFilter
     })
     // eslint-disable-next-line
@@ -93,7 +91,7 @@ function MobileLibraries () {
     paginationModel.pageSize,
     sortModel,
     searchPosition,
-    mobileSearchDistance,
+    searchDistance,
     serviceFilter
   ])
 

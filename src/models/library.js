@@ -54,8 +54,8 @@ export class Library {
     this.notes = json.Notes
     this.url = json.URL
     this.emailAddress = json['Email address']
-    this.longitude = json.Longitude
-    this.latitude = json.Latitude
+    this.longitude = json.Longitude ? parseFloat(json.Longitude) : null
+    this.latitude = json.Latitude ? parseFloat(json.Latitude) : null
     this.distance = json.distance
     this.systemName = getLibrarySystemName(json['Library name'])
     return this
@@ -67,7 +67,8 @@ export async function getQueryLibraries (
   searchPosition,
   distance,
   serviceFilter,
-  closed
+  closed,
+  signal = null
 ) {
   let url = `${config.api}/libraries?page=${query.page + 1}&limit=${
     query.pageSize
@@ -97,7 +98,7 @@ export async function getQueryLibraries (
     url = `${url}&service_codes=${serviceFilter.join('|')}`
   }
 
-  const response = await axios.get(url)
+  const response = await axios.get(url, { signal })
 
   if (response && response.data && response.data.length > 0) {
     return {

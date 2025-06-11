@@ -4,7 +4,7 @@ import { Link, useMatch } from 'react-router-dom'
 
 import { alpha } from '@mui/material'
 
-import grey from '@mui/material/colors/grey'
+import { grey } from '@mui/material/colors'
 
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'

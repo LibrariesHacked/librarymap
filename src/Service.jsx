@@ -123,11 +123,11 @@ function Service () {
             />
           </Box>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <ServiceDetails service={currentService} />
               <ServiceActions service={currentService} />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid xs={12} sm={6}>
               <Box>
                 <ListSubheader disableGutters disableSticky>
                   Map of libraries

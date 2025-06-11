@@ -5,13 +5,12 @@ export const SearchStateContext = createContext()
 const initialSearchState = {
   searchPostcode: '',
   searchType: '',
-  nearestLibrary: null,
-  nearestLibraryLine: null,
+  nearestLibraries: [],
+  nearestLibrariesLines: [],
   nearestMobileLibrary: null,
   nearestMobileLibraryLine: null,
   postcodeServiceCode: null,
-  librarySearchDistance: 12872,
-  mobileSearchDistance: 3218,
+  searchDistance: 1609 * 2, // 2 miles in meters
   searchPosition: [],
   currentStopId: null,
   currentLibraryId: null,
@@ -44,15 +43,10 @@ const searchReducer = (state, action) => {
         ...state,
         currentBuiltUpArea: action.currentBuiltUpArea
       }
-    case 'SetLibrarySearchDistance':
+    case 'SetSearchDistance':
       return {
         ...state,
-        librarySearchDistance: action.librarySearchDistance
-      }
-    case 'SetMobileSearchDistance':
-      return {
-        ...state,
-        mobileSearchDistance: action.mobileSearchDistance
+        searchDistance: action.searchDistance
       }
     case 'SetPostcodeSearch':
       return {
@@ -79,11 +73,11 @@ const searchReducer = (state, action) => {
         searchPosition: [],
         searchType: 'service'
       }
-    case 'SetNearestLibrary':
+    case 'SetNearestLibraries':
       return {
         ...state,
-        nearestLibrary: action.nearestLibrary,
-        nearestLibraryLine: action.nearestLibraryLine
+        nearestLibraries: action.nearestLibraries,
+        nearestLibrariesLines: action.nearestLibrariesLines
       }
     case 'SetNearestMobileLibrary':
       return {
@@ -113,8 +107,8 @@ const searchReducer = (state, action) => {
           searchPostcode: '',
           searchPosition: [],
           searchType: '',
-          nearestLibrary: null,
-          nearestLibraryLine: null,
+          nearestLibraries: [],
+          nearestLibrariesLines: [],
           nearestMobileLibrary: null,
           nearestMobileLibraryLine: null,
           postcodeServiceCode: null

@@ -13,7 +13,7 @@ import LibraryDetails from './LibraryDetails'
 import LibraryMap from './LibraryMap'
 import SiteBreadcrumbs from './SiteBreadcrumbs'
 
-import grey from '@mui/material/colors/grey'
+import { grey } from '@mui/material/colors'
 
 import { useApplicationStateValue } from './context/applicationState'
 import { useViewStateValue } from './context/viewState'
@@ -64,10 +64,10 @@ function Library () {
               </Typography>
             </Box>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid xs={6}>
                 <LibraryDetails library={library} />
               </Grid>
-              <Grid item xs={6}>
+              <Grid xs={6}>
                 <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
                   <LibraryMap
                     containerStyle={{

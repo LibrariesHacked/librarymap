@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import * as libraryModel from '../models/library'
 
@@ -7,7 +7,15 @@ const useLibraryQuery = () => {
   const [libraries, setLibraries] = useState([])
   const [pageInfo, setPageInfo] = useState([])
 
+  const abortControllerRef = useRef(null)
+
   const getLibrariesFromQuery = async queryOptions => {
+    // If a previous request is still in progress, abort it
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+    }
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
     setLoadingLibraries(true)
     const response = await libraryModel.getQueryLibraries(
       {
@@ -21,7 +29,8 @@ const useLibraryQuery = () => {
       queryOptions.searchPosition,
       queryOptions.searchDistance,
       queryOptions.serviceFilter,
-      queryOptions.displayClosedLibraries
+      queryOptions.displayClosedLibraries,
+      abortControllerRef.current.signal
     )
     setLoadingLibraries(false)
     setLibraries(response.libraries)
@@ -29,6 +38,8 @@ const useLibraryQuery = () => {
       totalRowCount: response.totalRowCount,
       currentPage: response.currentPage
     })
+    abortController.abort()
+    abortControllerRef.current = null
     return response
   }
 
