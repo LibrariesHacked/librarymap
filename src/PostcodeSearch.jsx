@@ -56,8 +56,6 @@ function PostcodeSearch () {
   const [{ loadingPostcode, loadingLocation }, dispatchView] =
     useViewStateValue()
 
-  const [abortController, setAbortController] = useState()
-
   const { getLibrariesFromQuery } = useLibraryQuery()
 
   const [tempPostcode, setTempPostcode] = useState(searchPostcode || '')
@@ -71,14 +69,6 @@ function PostcodeSearch () {
   }, [searchPostcode, prevProps])
 
   const getNearestLibraries = async (position, distance) => {
-    // Abort any previous request if it exists
-    if (abortController) {
-      abortController.abort()
-      setAbortController(null)
-    }
-
-    const newAbortController = new AbortController()
-    setAbortController(newAbortController)
     const nearestLibraries = await getLibrariesFromQuery({
       page: 0,
       pageSize: 20,
@@ -86,8 +76,7 @@ function PostcodeSearch () {
       searchPosition: position,
       searchDistance: distance,
       displayClosedLibraries: false,
-      serviceFilter: [],
-      signal: newAbortController.signal
+      serviceFilter: []
     })
 
     let nearestLibraryLines = []
@@ -294,8 +283,6 @@ function PostcodeSearch () {
       >
         <Typography
           variant='subtitle1'
-          disableSticky
-          disableGutters
           sx={{
             textAlign: 'center',
             color: theme => theme.palette.primary.main,
@@ -311,6 +298,7 @@ function PostcodeSearch () {
           marks={false}
           size='small'
           valueLabelDisplay='auto'
+          valueLabelFormat={value => `${Math.round(value)} mi`}
           value={searchDistance}
           scale={value => Math.round(value / 1609)}
           onChange={(e, newValue) => changeSearchDistance(newValue)}
