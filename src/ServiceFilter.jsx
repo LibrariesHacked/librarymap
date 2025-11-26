@@ -41,26 +41,24 @@ function ServiceFilter () {
 
   return (
     <>
-      {serviceFilter.length === 0
-        ? (
-          <Tooltip title='Choose library authority'>
-            <Button
-              size='large'
-              color='primary'
-              onClick={e => openServiceMenu(e.currentTarget)}
-              startIcon={<BusinessIcon />}
-            >
-              Select library authority
-            </Button>
-          </Tooltip>
-          )
-        : (
-          <Chip
+      {serviceFilter.length === 0 ? (
+        <Tooltip title='Choose library authority'>
+          <Button
+            size='large'
             color='primary'
-            onDelete={clearServiceFilter}
-            label={serviceLookup[serviceFilter[0]].name}
-          />
-          )}
+            onClick={e => openServiceMenu(e.currentTarget)}
+            startIcon={<BusinessIcon />}
+          >
+            Select library authority
+          </Button>
+        </Tooltip>
+      ) : (
+        <Chip
+          color='primary'
+          onDelete={clearServiceFilter}
+          label={serviceLookup[serviceFilter[0]].name}
+        />
+      )}
       <Menu
         id='menu-library-service'
         anchorEl={serviceMenuAnchor}
