@@ -37,11 +37,10 @@ function PostcodeServiceInfo () {
         >
           <CardContent>
             <Typography variant='h5' component='span' color='text.secondary'>
-              {postcodeService?.niceName} Libraries
+              Your library service
             </Typography>
-            <br />
-            <Typography variant='body1' component='span' color='text.secondary'>
-              Library services are provided by local authorities.
+            <Typography color='primary' variant='h5' component='p' sx={{ fontWeight: 600 }}>
+              {postcodeService?.niceName}
             </Typography>
           </CardContent>
           <CardActions
@@ -51,13 +50,13 @@ function PostcodeServiceInfo () {
           >
             <Button
               color='primary'
-              variant='contained'
+              variant='text'
               endIcon={<ArrowRightIcon />}
               to={`/service/${postcodeService.systemName}`}
               component={Link}
               disableElevation
             >
-              {postcodeService?.niceName}
+              Service page
             </Button>
           </CardActions>
         </Card>

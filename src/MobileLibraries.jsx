@@ -32,7 +32,7 @@ function MobileLibraries () {
   const [filterModel, setFilterModel] = useState({
     items: [
       {
-        field: 'localAuthority',
+        field: 'organisationName',
         operator: 'contains',
         value: ''
       }
@@ -42,16 +42,6 @@ function MobileLibraries () {
     page: 0,
     pageSize: 5
   })
-
-  const initialState = {
-    sorting: {
-      sortModel
-    },
-    pagination: {
-      paginationModel
-    },
-    filter: filterModel
-  }
 
   const { loadingMobileStops, mobileStops, pageInfo, getMobileStopsFromQuery } =
     useMobileStopsQuery()
@@ -210,7 +200,6 @@ function MobileLibraries () {
             }}
             onRowClick={params => selectStop(params.row)}
             columns={columns}
-            initialState={initialState}
           />
         </div>
       </div>

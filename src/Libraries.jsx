@@ -45,16 +45,6 @@ function Libraries () {
     pageSize: 5
   })
 
-  const initialState = {
-    sorting: {
-      sortModel
-    },
-    pagination: {
-      paginationModel
-    },
-    filter: filterModel
-  }
-
   const { loadingLibraries, libraries, pageInfo, getLibrariesFromQuery } =
     useLibraryQuery()
 
@@ -216,7 +206,6 @@ function Libraries () {
             }}
             onRowClick={params => selectLibrary(params.row)}
             columns={columns}
-            initialState={initialState}
           />
         </div>
       </div>

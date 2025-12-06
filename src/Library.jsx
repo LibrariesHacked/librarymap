@@ -64,10 +64,10 @@ function Library () {
               </Typography>
             </Box>
             <Grid container spacing={2}>
-              <Grid xs={6}>
+              <Grid size={{ xs: 6 }}>
                 <LibraryDetails library={library} />
               </Grid>
-              <Grid xs={6}>
+              <Grid size={{ xs: 6 }}>
                 <Box sx={{ border: '1px solid', borderColor: grey[200] }}>
                   <LibraryMap
                     containerStyle={{

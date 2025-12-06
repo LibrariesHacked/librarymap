@@ -25,7 +25,7 @@ function Footer () {
     >
       <Container>
         <Grid container spacing={2}>
-          <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Grid size={{ xs: 12, sm: 12, md: 4, lg: 4, xl: 4 }}>
             <Typography component='p' variant='h6'>
               <MaterialLink
                 component={Link}
@@ -52,7 +52,7 @@ function Footer () {
               </MaterialLink>
             </Typography>
           </Grid>
-          <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Grid size={{ xs: 12, sm: 12, md: 4, lg: 4, xl: 4 }}>
             <Typography component='p' variant='body1'>
               In memory of Paul Rowe
               <FavoriteIcon
