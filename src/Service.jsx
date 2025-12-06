@@ -123,11 +123,11 @@ function Service () {
             />
           </Box>
           <Grid container spacing={2}>
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <ServiceDetails service={currentService} />
               <ServiceActions service={currentService} />
             </Grid>
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <Box>
                 <ListSubheader disableGutters disableSticky>
                   Map of libraries

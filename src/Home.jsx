@@ -9,9 +9,10 @@ import Typography from '@mui/material/Typography'
 
 import Libraries from './Libraries'
 import MobileLibraries from './MobileLibraries'
-import PostcodeInfo from './PostcodeInfo'
+import PostcodeInfoLibrary from './PostcodeInfoLibrary'
 import Search from './Search'
 import PostcodeServiceInfo from './PostcodeServiceInfo'
+import PostcodeInfoMobileStop from './PostcodeInfoMobileStop'
 
 function Home () {
   return (
@@ -39,10 +40,13 @@ function Home () {
         <Search />
       </Box>
       <Grid container spacing={2}>
-        <Grid xs={12} sm={6}>
-          <PostcodeInfo />
+        <Grid size={{ xs: 12, sm: 4 }}>
+          <PostcodeInfoLibrary />
         </Grid>
-        <Grid xs={12} sm={6}>
+        <Grid size={{ xs: 12, sm: 4 }}>
+          <PostcodeInfoMobileStop />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 4 }}>
           <PostcodeServiceInfo />
         </Grid>
       </Grid>

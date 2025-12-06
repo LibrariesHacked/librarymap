@@ -79,11 +79,11 @@ const searchReducer = (state, action) => {
         nearestLibraries: action.nearestLibraries,
         nearestLibrariesLines: action.nearestLibrariesLines
       }
-    case 'SetNearestMobileLibrary':
+    case 'SetNearestMobileLibraryStops':
       return {
         ...state,
-        nearestMobileLibrary: action.nearestMobileLibrary,
-        nearestMobileLibraryLine: action.nearestMobileLibraryLine
+        nearestMobileLibraryStops: action.nearestMobileLibraryStops,
+        nearestMobileLibraryLines: action.nearestMobileLibraryLines
       }
     case 'SetPostcodeServiceCode':
       return {

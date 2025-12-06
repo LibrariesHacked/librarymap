@@ -6,6 +6,7 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
 import ArrowRightIcon from '@mui/icons-material/ArrowRightTwoTone'
@@ -14,13 +15,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOnRounded'
 
 import { lighten } from '@mui/material'
 
-import { grey } from '@mui/material/colors'
-
 import { useSearchStateValue } from './context/searchState'
 import { useViewStateValue } from './context/viewState'
 import { useApplicationStateValue } from './context/applicationState'
 
-function PostcodeInfo () {
+function PostcodeInfoLibrary () {
   const [{ searchType, searchPostcode, nearestLibraries }, dispatchSearch] =
     useSearchStateValue()
   const [{}, dispatchView] = useViewStateValue() //eslint-disable-line
@@ -52,41 +51,42 @@ function PostcodeInfo () {
       {searchType === 'postcode' && searchPostcode && nearestLibrary && (
         <Card
           elevation={0}
-          sx={{
-            border: 1,
-            borderColor: grey[200]
-          }}
+          sx={theme => ({
+            border: 2,
+            borderColor: lighten(theme.palette.staticLibraries.main, 0.6)
+          })}
         >
           <CardContent>
             <Typography variant='h5' component='span' color='text.secondary'>
-              {`${nearestLibrary?.name}`}
+              {`${Math.round(
+                nearestLibrary?.distance / 1609
+              )} miles from nearest library`}
             </Typography>
-            <br />
-            <Typography variant='subtitle1' color='text.secondary'>
-              {`${Math.round(nearestLibrary?.distance / 1609)} miles away`}
+            <Typography
+              color='staticLibraries.main'
+              variant='h5'
+              component='p'
+              sx={{ fontWeight: 600 }}
+            >
+              {`${nearestLibrary?.name}`}
             </Typography>
           </CardContent>
           <CardActions
             sx={{
-              backgroundColor: theme => lighten(grey[200], 0.6)
+              backgroundColor: theme =>
+                lighten(theme.palette.staticLibraries.main, 0.9),
+              justifyContent: 'space-between'
             }}
           >
             <Button
-              color='primary'
+              color='secondary'
               variant='text'
               endIcon={<ArrowRightIcon />}
               to={`/service/${serviceSystemName}/${nearestLibrary?.systemName}  `}
               component={Link}
               disableElevation
             >
-              {nearestLibrary?.name}
-            </Button>
-            <Button
-              endIcon={<InfoIcon />}
-              sx={{ marginLeft: theme => theme.spacing(1) }}
-              onClick={viewLibrary}
-            >
-              Quick info
+              Library page
             </Button>
             <Button
               size='small'
@@ -94,9 +94,13 @@ function PostcodeInfo () {
               onClick={viewMap}
               component={Link}
               to='/map'
+              color='secondary'
             >
-              Map
+              On map
             </Button>
+            <IconButton onClick={viewLibrary} color='secondary' size='small'>
+              <InfoIcon />
+            </IconButton>
           </CardActions>
         </Card>
       )}
@@ -104,4 +108,4 @@ function PostcodeInfo () {
   )
 }
 
-export default PostcodeInfo
+export default PostcodeInfoLibrary
