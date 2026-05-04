@@ -112,7 +112,7 @@ function LibraryMapApplication () {
                 path='/service/:serviceSystemName/:librarySystemName'
                 element={<Library />}
               />
-              <Route element={Page404} />
+              <Route path='*' element={<Page404 />} />
             </Routes>
           </main>
         </Container>

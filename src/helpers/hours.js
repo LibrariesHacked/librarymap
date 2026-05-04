@@ -51,9 +51,8 @@ export function getCurrentlyOpen (place) {
   let open = false
   if (hours) {
     hours.split(',').forEach(entry => {
-      const start = entry[0]
-      const end = entry[1]
-      if (now.isBetween(moment(start), moment(end))) open = true
+      const [start, end] = entry.split('-')
+      if (now.isBetween(moment(start, 'HH:mm'), moment(end, 'HH:mm'))) open = true
     })
   }
   return open

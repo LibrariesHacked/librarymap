@@ -146,11 +146,9 @@ function PostcodeSearch () {
         searchPosition.length > 0
           ? searchPosition
           : await geoHelper.getCurrentPosition()
-      dispatchSearch({ type: 'SetLocation', searchPosition: pos })
 
       const postcodeData = await getLocationPostcode(pos)
 
-      dispatchView({ type: 'SetLocationLoaded' })
       dispatchView({ type: 'ToggleLoadingLocation' })
 
       dispatchSearch({
@@ -187,7 +185,6 @@ function PostcodeSearch () {
       return
     }
     dispatchView({ type: 'ToggleLoadingPostcode' })
-    dispatchView({ type: 'LoadingPostcode' })
     if (geoHelper.validatePostcode(postcode)) {
       const service = await geoHelper.getPostcode(postcode.trim())
       if (service && service.location && service.location.length > 0) {

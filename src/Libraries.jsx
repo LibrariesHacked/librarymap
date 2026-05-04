@@ -120,7 +120,7 @@ function Libraries () {
           return ''
         }
 
-        const valueFormatted = Math.round(Number(params.value / 1608))
+        const valueFormatted = Math.round(Number(params.value / 1609))
         return `${valueFormatted} mi`
       }
     },

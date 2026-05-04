@@ -89,7 +89,7 @@ export const getLineGeoJsonFromPoints = (points, properties) => {
 }
 
 export const getMaskFromGeoJson = geojson => {
-  const poly = turf.polygon(geojson.coordinates)
+  const poly = turf.polygon(geojson.type === 'MultiPolygon' ? geojson.coordinates[0] : geojson.coordinates)
   const worldMask = turf.polygon([
     [
       [-180, -90],

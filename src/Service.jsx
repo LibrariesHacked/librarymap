@@ -44,7 +44,7 @@ function Service () {
           await clickLibrary(feature, event.point)
           break
         }
-        if (feature.sourceLayer === 'stop') {
+        if (feature.sourceLayer === 'stops') {
           await clickStop(feature, event.point)
           break
         }

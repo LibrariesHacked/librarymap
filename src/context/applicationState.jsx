@@ -33,7 +33,7 @@ const applicationReducer = (state, action) => {
       serviceLookup[action.service.code] = serviceLookupInstance
       return {
         ...state,
-        service: services,
+        services,
         serviceLookup
       }
     case 'AddIsochrone':

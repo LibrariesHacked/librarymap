@@ -29,7 +29,7 @@ export class Library {
     this.postcodeLatitude = json['Postcode latitude']
     this.uprn = json['Unique property reference number']
     this.uprnLongitude = json['Unique property reference number longitude']
-    this.uprnLongitude = json['Unique property reference number latitude']
+    this.uprnLatitude = json['Unique property reference number latitude']
     this.statutory = json.Statutory
     this.type = json['Type of library']
     this.typeDescription = libraryTypes[json['Type of library']]

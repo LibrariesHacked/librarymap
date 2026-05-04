@@ -7,8 +7,8 @@ const initialSearchState = {
   searchType: '',
   nearestLibraries: [],
   nearestLibrariesLines: [],
-  nearestMobileLibrary: null,
-  nearestMobileLibraryLine: null,
+  nearestMobileLibraryStops: null,
+  nearestMobileLibraryStopsLines: null,
   postcodeServiceCode: null,
   searchDistance: 1609 * 2, // 2 miles in meters
   searchPosition: [],
@@ -68,7 +68,7 @@ const searchReducer = (state, action) => {
         ...state,
         serviceFilter: [action.service.code],
         currentService: action.service,
-        currentServiceSystemName: action.service.systemName,
+        currentServiceSystemName: action.service?.systemName,
         searchPostcode: '',
         searchPosition: [],
         searchType: 'service'
@@ -83,7 +83,7 @@ const searchReducer = (state, action) => {
       return {
         ...state,
         nearestMobileLibraryStops: action.nearestMobileLibraryStops,
-        nearestMobileLibraryLines: action.nearestMobileLibraryLines
+        nearestMobileLibraryStopsLines: action.nearestMobileLibraryStopsLines
       }
     case 'SetPostcodeServiceCode':
       return {
@@ -109,8 +109,8 @@ const searchReducer = (state, action) => {
           searchType: '',
           nearestLibraries: [],
           nearestLibrariesLines: [],
-          nearestMobileLibrary: null,
-          nearestMobileLibraryLine: null,
+          nearestMobileLibraryStops: null,
+          nearestMobileLibraryStopsLines: null,
           postcodeServiceCode: null
         }
       } else {
